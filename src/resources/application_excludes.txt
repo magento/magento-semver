@@ -1,0 +1,3 @@
+app/code/*/*/Test
+lib/internal/Magento/*/Test
+lib/internal/Magento/*/*/Test
