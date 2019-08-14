@@ -123,9 +123,11 @@ class ReportBuilder
             $afterRegistryList[self::REPORT_TYPE_API]
         );
 
-        $analyzer = new Analyzer();
         $allReport = $this->dampenNonApiReport(
-            $analyzer->analyze($beforeRegistryList[self::REPORT_TYPE_ALL], $afterRegistryList[self::REPORT_TYPE_ALL])
+            $analyzer->analyze(
+                $beforeRegistryList[self::REPORT_TYPE_ALL],
+                $afterRegistryList[self::REPORT_TYPE_ALL]
+            )
         );
 
         return $allReport->merge($apiReport);

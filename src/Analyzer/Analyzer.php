@@ -27,6 +27,7 @@ class Analyzer implements AnalyzerInterface
         $analyzers = [
             new ClassAnalyzer(),
             new InterfaceAnalyzer(),
+            // @todo should moved in a extra analyzer for a better extendability.
             new DbSchemaAnalyzer(),
             new DbSchemaWhitelistAnalyzer(),
             new DbSchemaWhitelistReductionAnalyzer()
