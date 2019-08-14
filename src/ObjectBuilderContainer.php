@@ -21,27 +21,16 @@ use PHPSemVerChecker\Visitor\TraitVisitor;
 class ObjectBuilderContainer
 {
 
-    public function getScannerByKey(string $reportType)
-    {
-        $allScanner = $this->getAllScanner();
-
-        if ($reportType === 'api') {
-            return [$allScanner['api'], $allScanner['dbSchema']];
-        }
-
-        return $allScanner;
-    }
-
-
     public function getAllScanner(): array
     {
         // @todo use dependency injection
         $scanner = $this->buildFullScanner();
         $scannerApi = $this->buildApiScanner();
+        // @todo refactoring should use own registry step 1 to get an working poc
         $scannerDb = new DbSchemaScannerDecorator($scanner->getRegistry());
 
         return [
-            'full' => [
+            'all' => [
                 'type' => 'php',
                 'pattern' => [
                     '*.php',

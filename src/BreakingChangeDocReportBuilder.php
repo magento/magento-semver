@@ -82,10 +82,10 @@ class BreakingChangeDocReportBuilder extends ReportBuilder
 
         $analyzer = new ApiMembershipAnalyzer();
         $analyzer->analyzeWithMembership(
-            $beforeRegistryList['api'],
-            $afterRegistryList['api'],
-            $beforeRegistryList['full'],
-            $afterRegistryList['full']
+            $beforeRegistryList[self::REPORT_TYPE_API],
+            $afterRegistryList[self::REPORT_TYPE_API],
+            $beforeRegistryList[self::REPORT_TYPE_ALL],
+            $afterRegistryList[self::REPORT_TYPE_ALL]
         );
 
         $this->changeReport = $analyzer->getBreakingChangeReport();

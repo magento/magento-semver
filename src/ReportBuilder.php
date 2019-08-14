@@ -100,8 +100,7 @@ class ReportBuilder
         $scannerBefore = new ScannerRegistry($this->objectContainer->getAllScanner());
         $scannerAfter = new ScannerRegistry($this->objectContainer->getAllScanner());
 
-        $filters = $this->getFilters($this->sourceBeforeDir, $this->sourceAfterDir);
-        foreach ($filters as $filter) {
+        foreach ($this->getFilters($this->sourceBeforeDir, $this->sourceAfterDir) as $filter) {
             // filters modify arrays by reference
             $filter->filter($sourceBeforeFiles, $sourceAfterFiles);
         }
@@ -117,12 +116,16 @@ class ReportBuilder
         $beforeRegistryList = $scannerBefore->getScannerRegistryList();
         $afterRegistryList = $scannerAfter->getScannerRegistryList();
 
+        // @todo Refactor should merge all report types to own report (POC implementation)
         $analyzer = new Analyzer();
-        $apiReport = $analyzer->analyze($beforeRegistryList['api'], $afterRegistryList['api']);
+        $apiReport = $analyzer->analyze(
+            $beforeRegistryList[self::REPORT_TYPE_API],
+            $afterRegistryList[self::REPORT_TYPE_API]
+        );
 
         $analyzer = new Analyzer();
         $allReport = $this->dampenNonApiReport(
-            $analyzer->analyze($beforeRegistryList['full'], $afterRegistryList['full'])
+            $analyzer->analyze($beforeRegistryList[self::REPORT_TYPE_ALL], $afterRegistryList[self::REPORT_TYPE_ALL])
         );
 
         return $allReport->merge($apiReport);
@@ -170,6 +173,7 @@ class ReportBuilder
             $dampenedDifferences[$context][Level::MINOR] = [];
             $dampenedDifferences[$context][Level::MAJOR] = [];
         }
+
         return new InjectableReport($dampenedDifferences);
     }
 }

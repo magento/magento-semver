@@ -54,24 +54,6 @@ class ScannerRegistry
     /**
      * @return Registry[]
      */
-    public function getPhpScannerRegistryList(): array
-    {
-        $registryList = [];
-        foreach ($this->scanners as $key => $scanner) {
-            if ($scanner['type'] !== 'php') {
-                continue;
-            }
-            /** @var Scanner $scannerObject */
-            $scannerObject = $scanner['scanner'];
-            $registryList[$key] = $scannerObject->getRegistry();
-        }
-
-        return $registryList;
-    }
-
-    /**
-     * @return Registry[]
-     */
     public function getScannerRegistryList(): array
     {
         $registryList = [];
