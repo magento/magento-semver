@@ -3,13 +3,14 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
 // @codingStandardsIgnoreFile
 namespace Magento\SemanticVersionChecker;
 
+use Exception;
 use Magento\SemanticVersionChecker\Analyzer\Analyzer;
 use Magento\SemanticVersionChecker\Filter\FilePatternFilter;
 use Magento\SemanticVersionChecker\Finder\DbSchemaFinderDecorator;
-use Magento\SemanticVersionChecker\Scanner\DbSchemaScannerDecorator;
 use PHPSemVerChecker\Configuration\LevelMapping;
 use PHPSemVerChecker\Filter\SourceFilter;
 use PHPSemVerChecker\Report\Report;
@@ -28,12 +29,19 @@ class ReportBuilder
     protected $sourceBeforeDir;
     protected $sourceAfterDir;
 
+    /**
+     * @var ObjectBuilderContainer
+     */
+    protected $objectContainer;
+
     public function __construct($includePatternsPath, $excludePatternsPath, $sourceBeforeDir, $sourceAfterDir)
     {
         $this->includePatternsPath = $includePatternsPath;
         $this->excludePatternsPath = $excludePatternsPath;
         $this->sourceBeforeDir = $sourceBeforeDir;
         $this->sourceAfterDir = $sourceAfterDir;
+
+        $this->objectContainer = new ObjectBuilderContainer();
     }
 
     /**
@@ -41,35 +49,7 @@ class ReportBuilder
      */
     public function makeCompleteVersionReport()
     {
-        $apiReport = $this->makeVersionReport(self::REPORT_TYPE_API);
-        $allReport = $this->dampenNonApiReport(
-            $this->makeVersionReport(self::REPORT_TYPE_ALL)
-        );
-        return $allReport->merge($apiReport);
-    }
-
-    /**
-     * Get filters for source files
-     *
-     * @param string $sourceBeforeDir
-     * @param string $sourceAfterDir
-     * @return array
-     */
-    protected function getFilters($sourceBeforeDir, $sourceAfterDir)
-    {
-        $filters = [
-            // always filter out files that are identical before and after
-            new SourceFilter(),
-            // process the include and exclude patterns
-            new FilePatternFilter(
-                $this->includePatternsPath,
-                $this->excludePatternsPath,
-                $sourceBeforeDir,
-                $sourceAfterDir
-            )
-        ];
-
-        return $filters;
+        return $this->makeVersionReport();
     }
 
     /**
@@ -78,7 +58,7 @@ class ReportBuilder
      * @param string $reportType REPORT_TYPE_API|REPORT_TYPE_ALL
      * @return Report
      */
-    protected function makeVersionReport($reportType)
+    protected function makeVersionReport()
     {
         $originalMapping = LevelMapping::$mapping;
         // Customize severity level of some @api changes
@@ -95,7 +75,7 @@ class ReportBuilder
         );
 
         try {
-            $report = $this->buildReport($reportType);
+            $report = $this->buildReport();
         } finally {
             // Restore original severity levels
             LevelMapping::setOverrides($originalMapping);
@@ -109,16 +89,16 @@ class ReportBuilder
      *
      * @param string $reportType
      * @return Report
-     * @throws \Exception
+     * @throws Exception
      */
-    protected function buildReport($reportType)
+    protected function buildReport()
     {
         $fileIterator = new DbSchemaFinderDecorator();
         $sourceBeforeFiles = $fileIterator->findFromString($this->sourceBeforeDir, '', '');
         $sourceAfterFiles = $fileIterator->findFromString($this->sourceAfterDir, '', '');
 
-        $scannerBefore = new DbSchemaScannerDecorator($reportType);
-        $scannerAfter = new DbSchemaScannerDecorator($reportType);
+        $scannerBefore = new ScannerRegistry($this->objectContainer->getAllScanner());
+        $scannerAfter = new ScannerRegistry($this->objectContainer->getAllScanner());
 
         $filters = $this->getFilters($this->sourceBeforeDir, $this->sourceAfterDir);
         foreach ($filters as $filter) {
@@ -127,18 +107,49 @@ class ReportBuilder
         }
 
         foreach ($sourceBeforeFiles as $file) {
-            $scannerBefore->scan($file);
+            $scannerBefore->scanFile($file);
         }
 
         foreach ($sourceAfterFiles as $file) {
-            $scannerAfter->scan($file);
+            $scannerAfter->scanFile($file);
         }
 
-        $registryBefore = $scannerBefore->getRegistry();
-        $registryAfter = $scannerAfter->getRegistry();
+        $beforeRegistryList = $scannerBefore->getScannerRegistryList();
+        $afterRegistryList = $scannerAfter->getScannerRegistryList();
 
         $analyzer = new Analyzer();
-        return $analyzer->analyze($registryBefore, $registryAfter);
+        $apiReport = $analyzer->analyze($beforeRegistryList['api'], $afterRegistryList['api']);
+
+        $analyzer = new Analyzer();
+        $allReport = $this->dampenNonApiReport(
+            $analyzer->analyze($beforeRegistryList['full'], $afterRegistryList['full'])
+        );
+
+        return $allReport->merge($apiReport);
+    }
+
+    /**
+     * Get filters for source files
+     *
+     * @param string $sourceBeforeDir
+     * @param string $sourceAfterDir
+     * @return array
+     */
+    protected function getFilters($sourceBeforeDir, $sourceAfterDir): array
+    {
+        $filters = [
+            // always filter out files that are identical before and after
+            new SourceFilter(),
+            // process the include and exclude patterns
+            new FilePatternFilter(
+                $this->includePatternsPath,
+                $this->excludePatternsPath,
+                $sourceBeforeDir,
+                $sourceAfterDir
+            ),
+        ];
+
+        return $filters;
     }
 
     /**

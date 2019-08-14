@@ -6,9 +6,9 @@
 
 namespace Magento\SemanticVersionChecker;
 
+use Exception;
 use Magento\SemanticVersionChecker\Analyzer\ApiMembership\ApiMembershipAnalyzer;
 use Magento\SemanticVersionChecker\Finder\DbSchemaFinderDecorator;
-use Magento\SemanticVersionChecker\Scanner\DbSchemaScannerDecorator;
 use PHPSemVerChecker\Report\Report;
 
 class BreakingChangeDocReportBuilder extends ReportBuilder
@@ -28,59 +28,7 @@ class BreakingChangeDocReportBuilder extends ReportBuilder
      */
     public function makeCompleteVersionReport()
     {
-        $this->makeVersionReport(static::REPORT_TYPE_API);
-    }
-
-    /**
-     * Create BIC reports for API changes and existing code that gained or lost API membership
-     *
-     * @param string $ignoredReportType
-     * @return void
-     * @throws \Exception
-     */
-    protected function buildReport($ignoredReportType = null)
-    {
-        $fileIterator = new DbSchemaFinderDecorator();
-        $sourceBeforeFiles = $fileIterator->findFromString($this->sourceBeforeDir, '', '');
-        $sourceAfterFiles = $fileIterator->findFromString($this->sourceAfterDir, '', '');
-
-        $apiScannerBefore = new DbSchemaScannerDecorator(static::REPORT_TYPE_API);
-        $apiScannerAfter = new DbSchemaScannerDecorator(static::REPORT_TYPE_API);
-
-        $fullScannerBefore = new DbSchemaScannerDecorator(static::REPORT_TYPE_ALL);
-        $fullScannerAfter = new DbSchemaScannerDecorator(static::REPORT_TYPE_ALL);
-
-        $filters = $this->getFilters($this->sourceBeforeDir, $this->sourceAfterDir);
-        foreach ($filters as $filter) {
-            $filter->filter($sourceBeforeFiles, $sourceAfterFiles);
-        }
-
-        foreach ($sourceBeforeFiles as $file) {
-            $fullScannerBefore->scan($file);
-            $apiScannerBefore->scan($file);
-        }
-
-        foreach ($sourceAfterFiles as $file) {
-            $fullScannerAfter->scan($file);
-            $apiScannerAfter->scan($file);
-        }
-
-        $apiRegistryBefore = $apiScannerBefore->getRegistry();
-        $apiRegistryAfter = $apiScannerAfter->getRegistry();
-
-        $fullRegistryBefore = $fullScannerBefore->getRegistry();
-        $fullRegistryAfter = $fullScannerAfter->getRegistry();
-
-        $analyzer = new ApiMembershipAnalyzer();
-        $analyzer->analyzeWithMembership(
-            $apiRegistryBefore,
-            $apiRegistryAfter,
-            $fullRegistryBefore,
-            $fullRegistryAfter
-        );
-
-        $this->changeReport = $analyzer->getBreakingChangeReport();
-        $this->membershipReport = $analyzer->getApiMembershipReport();
+        $this->makeVersionReport();
     }
 
     /**
@@ -101,5 +49,46 @@ class BreakingChangeDocReportBuilder extends ReportBuilder
     public function getApiMembershipReport()
     {
         return $this->membershipReport;
+    }
+
+    /**
+     * Create BIC reports for API changes and existing code that gained or lost API membership
+     * @return void
+     * @throws Exception
+     */
+    protected function buildReport()
+    {
+        $fileIterator = new DbSchemaFinderDecorator();
+        $sourceBeforeFiles = $fileIterator->findFromString($this->sourceBeforeDir, '', '');
+        $sourceAfterFiles = $fileIterator->findFromString($this->sourceAfterDir, '', '');
+        $scannerRegistryBefore = new ScannerRegistry($this->objectContainer->getAllScanner());
+        $scannerRegistryAfter = new ScannerRegistry($this->objectContainer->getAllScanner());
+
+        $filters = $this->getFilters($this->sourceBeforeDir, $this->sourceAfterDir);
+        foreach ($filters as $filter) {
+            $filter->filter($sourceBeforeFiles, $sourceAfterFiles);
+        }
+
+        foreach ($sourceBeforeFiles as $file) {
+            $scannerRegistryBefore->scanFile($file);
+        }
+
+        foreach ($sourceAfterFiles as $file) {
+            $scannerRegistryAfter->scanFile($file);
+        }
+
+        $beforeRegistryList = $scannerRegistryBefore->getScannerRegistryList();
+        $afterRegistryList = $scannerRegistryAfter->getScannerRegistryList();
+
+        $analyzer = new ApiMembershipAnalyzer();
+        $analyzer->analyzeWithMembership(
+            $beforeRegistryList['api'],
+            $afterRegistryList['api'],
+            $beforeRegistryList['full'],
+            $afterRegistryList['full']
+        );
+
+        $this->changeReport = $analyzer->getBreakingChangeReport();
+        $this->membershipReport = $analyzer->getApiMembershipReport();
     }
 }
