@@ -1,0 +1,31 @@
+#!/usr/bin/env php
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+require __DIR__ . '/../vendor/autoload.php';
+
+use Symfony\Component\Console\Application;
+use Magento\SemanticVersionChecker\Console\Command\BackwardIncompatibleChangesCommand;
+use Magento\SemanticVersionChecker\Console\Command\CompareSourceCommand;
+
+if (PHP_SAPI !== 'cli') {
+    echo 'Command "bin/svc" must be run as a CLI application.' . PHP_EOL;
+    exit(1);
+}
+
+try {
+    $application = new Application();
+    $application->add(new BackwardIncompatibleChangesCommand());
+    $application->add(new CompareSourceCommand());
+    $application->run();
+} catch (\Exception $e) {
+    while ($e) {
+        echo $e->getMessage();
+        echo $e->getTraceAsString();
+        echo "\n\n";
+        $e = $e->getPrevious();
+    }
+    exit(1);
+}
