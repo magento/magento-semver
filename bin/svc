@@ -4,7 +4,7 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-require __DIR__ . '/../vendor/autoload.php';
+require __DIR__ . '/../bootstrap.php';
 
 use Symfony\Component\Console\Application;
 use Magento\SemanticVersionChecker\Console\Command\BackwardIncompatibleChangesCommand;
@@ -16,7 +16,23 @@ if (PHP_SAPI !== 'cli') {
 }
 
 try {
-    $application = new Application();
+/*
+    $directoryList = new \Magento\Framework\App\Filesystem\DirectoryList(dirname(__DIR__));
+    $driverPool = new \Magento\Framework\Filesystem\DriverPool;
+    $configFilePool = new \Magento\Framework\Config\File\ConfigFilePool;
+    $objectManagerFactory = new ObjectManagerFactory($directoryList, $driverPool, $configFilePool);
+
+*/
+//    $magentoObjectManagerFactory = \Magento\Framework\App\Bootstrap::createObjectManagerFactory(BP);
+//    $magentoObjectManager = $objectManagerFactory->create([]);
+//    $application = $magentoObjectManager->create(Application::class);
+
+//    $this->dirList = new \Magento\Framework\App\Filesystem\DirectoryList(dirname(__DIR__));
+//    $driverPool = new \Magento\Framework\Filesystem\DriverPool;
+//    $configFilePool = new \Magento\Framework\Config\File\ConfigFilePool;
+//    $this->_factory = new \Magento\SemanticVersionChecker\ObjectManagerFactory($this->dirList, $driverPool, $configFilePool);
+
+    $application = $objectManager->create(Application::class);
     $application->add(new BackwardIncompatibleChangesCommand());
     $application->add(new CompareSourceCommand());
     $application->run();
