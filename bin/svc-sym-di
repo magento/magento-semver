@@ -1,0 +1,42 @@
+#!/usr/bin/env php
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+require __DIR__ . '/../vendor/autoload.php';
+
+use Symfony\Component\Console\Application;
+use Symfony\Component\Config\FileLocator;
+use Symfony\Component\Console\DependencyInjection\AddConsoleCommandPass;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+
+if (PHP_SAPI !== 'cli') {
+    echo 'Command "bin/svc" must be run as a CLI application.' . PHP_EOL;
+    exit(1);
+}
+
+try {
+    $container = new ContainerBuilder();
+
+    $loader = new XmlFileLoader($container, new FileLocator(dirname(__DIR__)));
+    $loader->load('src/etc/services.xml');
+
+    $container->addCompilerPass(new AddConsoleCommandPass);
+    $container->compile();
+
+    $application = new Application();
+    foreach ($container->getParameter('console.command.ids') as $id) {
+        $application->add($container->get($id));
+    }
+    $application->run();
+} catch (\Exception $e) {
+    while ($e) {
+        echo $e->getMessage();
+        echo $e->getTraceAsString();
+        echo "\n\n";
+        $e = $e->getPrevious();
+    }
+    exit(1);
+}
