@@ -83,7 +83,8 @@ class BackwardIncompatibleChangesCommandTest extends \PHPUnit\Framework\TestCase
     {
         return array_merge(
             $this->apiInterfaceChangesDataProvider(),
-            $this->apiClassChangesDataProvider()
+            $this->apiClassChangesDataProvider(),
+            $this->dataBaseSchemaChangedDataProvider()
         );
     }
 
@@ -176,6 +177,63 @@ class BackwardIncompatibleChangesCommandTest extends \PHPUnit\Framework\TestCase
                 ],
                 [
                     'class' => ['Test\Vcs\TestClass::testMembershipMethod|[public] Method has been removed.']
+                ]
+            ]
+        ];
+    }
+
+    private function dataBaseSchemaChangedDataProvider()
+    {
+        $pathToFixtures = __DIR__ . '/BackwardIncompatibleChangesCommandTest/_files/db_schema';
+        return [
+            'drop-foreign-key' => [
+                $pathToFixtures . '/drop-foreign-key/source-code-before',
+                $pathToFixtures . '/drop-foreign-key/source-code-after',
+                [
+                    'database' => ['db_schema/unit_test_table/severity|Foreign key removed from declaration but it may have had business logic in onDelete statement']
+                ],
+                [
+                    'database' => ['db_schema/unit_test_table/severity|Foreign key removed from declaration but it may have had business logic in onDelete statement']
+                ]
+            ],
+            'drop-key' => [
+                $pathToFixtures . '/drop-key/source-code-before',
+                $pathToFixtures . '/drop-key/source-code-after',
+                [
+                    'database' => ['db_schema/unit_test_table/severity|Key was dropped. But it can be used for 3-rd parties foreign keys']
+                ],
+                [
+                    'database' => ['db_schema/unit_test_table/severity|Key was dropped. But it can be used for 3-rd parties foreign keys']
+                ]
+            ],
+            'column-removed' => [
+                $pathToFixtures . '/column-removed/source-code-before',
+                $pathToFixtures . '/column-removed/source-code-after',
+                [
+                    'database' => ['db_schema/unit_test_table/severity|Column was removed']
+                ],
+                [
+                    'database' => ['db_schema/unit_test_table/severity|Column was removed']
+                ]
+            ],
+            'table-dropped' => [
+                $pathToFixtures . '/table-dropped/source-code-before',
+                $pathToFixtures . '/table-dropped/source-code-after',
+                [
+                    'database' => ['db_schema/unit_test_table|Table was dropped']
+                ],
+                [
+                    'database' => ['db_schema/unit_test_table|Table was dropped']
+                ]
+            ],
+            'table-changed' => [
+                $pathToFixtures . '/table-changed/source-code-before',
+                $pathToFixtures . '/table-changed/source-code-after',
+                [
+                    'database' => ['db_schema/unit_test_table|Table chard was changed from unit_test_table to new_unit_test_table']
+                ],
+                [
+                    'database' => ['db_schema/unit_test_table|Table chard was changed from unit_test_table to new_unit_test_table']
                 ]
             ]
         ];
