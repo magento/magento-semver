@@ -107,8 +107,8 @@ class DbSchemaScannerDecorator
     {
         $name = $data['@attributes']['name'];
         $moduleName = $this->getModuleName();
-        $this->getRegistry()->data['table'][$moduleName][$name]['resource'] =
-            $data['@attributes']['resource'];
+        $resource = isset($data['@attributes']['resource']) ? $data['@attributes']['resource'] : 'default';
+        $this->getRegistry()->data['table'][$moduleName][$name]['resource'] = $resource;
 
         $types = ['column', 'constraint', 'index'];
         foreach ($types as $type) {
