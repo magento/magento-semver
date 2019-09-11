@@ -1,0 +1,3 @@
+This file is changed in the "after" state and should be returned by the file change detector.
+
+This is a change to the file.

@@ -1,0 +1,6 @@
+{
+    "name": "test/ignore_non_composer_file",
+    "description": "Test that the filter does not remove non-composer.json files even if they are identical",
+    "type": "package",
+    "version": "*"
+}

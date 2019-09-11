@@ -1,0 +1,10 @@
+{
+    "name": "require-section-dependency-matches",
+    "description": "Test ignoring require section constraints when the required package name matches the filter pattern",
+    "type": "package",
+    "require": {
+        "test/dep-1-name": "*",
+        "test/dep-2-name": "*",
+        "realpkg/pkg-name": "1.0.0"
+    }
+}
