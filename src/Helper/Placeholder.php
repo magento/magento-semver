@@ -1,15 +1,45 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: terskine
- * Date: 9/11/19
- * Time: 10:31 AM
+ *
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
  */
 
 namespace Magento\SemanticVersionChecker\Helper;
 
+use Magento\SemanticVersionChecker\Helper\RendererInterface;
 
-class Placeholder
+class Placeholder implements RendererInterface
 {
+    /**
+     * Render source text
+     *
+     * @param [] $source
+     * @param [] $arguments
+     * @return string
+     */
+    public function render(array $source, array $arguments)
+    {
+        $text = end($source);
 
+        if ($arguments) {
+            $placeholders = array_map([$this, 'keyToPlaceholder'], array_keys($arguments));
+            $pairs = array_combine($placeholders, $arguments);
+            $text = strtr($text, $pairs);
+        }
+
+        return $text;
+    }
+
+    /**
+     * Get key to placeholder
+     *
+     * @param string|int $key
+     * @return string
+     * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
+     */
+    private function keyToPlaceholder($key)
+    {
+        return '%' . (is_int($key) ? (string)($key + 1) : $key);
+    }
 }

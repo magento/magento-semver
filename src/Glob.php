@@ -1,15 +1,35 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: terskine
- * Date: 9/9/19
- * Time: 2:34 PM
+ *
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
  */
 
 namespace Magento\SemanticVersionChecker;
 
+use Zend\Stdlib\Glob as ZendGlob;
+use Zend\Stdlib\Exception\RuntimeException as ZendRuntimeException;
 
-class Glob
+/**
+ * Wrapper for Zend\Stdlib\Glob
+ */
+class Glob extends ZendGlob
 {
-
+    /**
+     * Find pathnames matching a pattern.
+     *
+     * @param  string  $pattern
+     * @param  int $flags
+     * @param  bool $forceFallback
+     * @return array
+     */
+    public static function glob($pattern, $flags = 0, $forceFallback = false)
+    {
+        try {
+            $result = ZendGlob::glob($pattern, $flags, $forceFallback);
+        } catch (ZendRuntimeException $e) {
+            $result = [];
+        }
+        return $result;
+    }
 }

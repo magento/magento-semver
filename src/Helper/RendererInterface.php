@@ -1,15 +1,21 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: terskine
- * Date: 9/11/19
- * Time: 10:31 AM
+ *
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
  */
 
 namespace Magento\SemanticVersionChecker\Helper;
 
 
-class RendererInterface
+interface RendererInterface
 {
-
+    /**
+     * Render source text
+     *
+     * @param [] $source
+     * @param [] $arguments
+     * @return string
+     */
+    public function render(array $source, array $arguments);
 }
