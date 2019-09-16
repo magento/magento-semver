@@ -21,11 +21,5 @@
         "psr-4": {
             "Magento\\SemanticVersionChecker\\": "src/"
         }
-    },
-    "repositories": [
-        {
-            "type": "composer",
-            "url": "https://repo.magento.com/"
-        }
-    ]
+    }
 }
