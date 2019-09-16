@@ -12,8 +12,6 @@ require_once __DIR__ . '/../../vendor/autoload.php';
 
 setCustomErrorHandler();
 
-\Magento\SemanticVersionChecker\Helper\Phrase::setRenderer(new \Magento\SemanticVersionChecker\Helper\Placeholder());
-
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 

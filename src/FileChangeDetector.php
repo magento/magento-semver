@@ -19,15 +19,28 @@ class FileChangeDetector
         $this->sourceAfterDir = $sourceAfterDir;
     }
 
+    /**
+     * Get files that have changed
+     *
+     * @return array
+     */
     public function getChangedFiles()
     {
-        $sourceBeforeFiles = self::getFiles([$this->sourceBeforeDir], '*', true);
-        $sourceAfterFiles = self::getFiles([$this->sourceAfterDir], '*', true);
+        $sourceBeforeFiles = $this->getFiles([$this->sourceBeforeDir], '*', true);
+        $sourceAfterFiles = $this->getFiles([$this->sourceAfterDir], '*', true);
         $identicalFilter = new SourceFilter();
         $identicalFilter->filter($sourceBeforeFiles, $sourceAfterFiles);
         return array_merge($sourceAfterFiles, $sourceBeforeFiles);
     }
 
+    /**
+     * Retrieve all files in folders and sub-folders that match pattern (glob syntax)
+     *
+     * @param array $dirPatterns
+     * @param string $fileNamePattern
+     * @param bool $recursive
+     * @return array
+     */
     public function getFiles(array $dirPatterns, $fileNamePattern, $recursive = true)
     {
         $result = [];
