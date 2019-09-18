@@ -6,9 +6,6 @@
 - `cd magento-semver`
 - `composer install`
 
-*Note:* package `magento/framework` is hosted on `repo.magento.com`, so Composer keys need to be added to `auth.json` or configured globally.
-*ToDo:* get rid of this dependency.
-
 ## Usage
 - `php bin/svc --help`
 
