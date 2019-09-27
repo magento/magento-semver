@@ -30,7 +30,7 @@ The Magento-Semver development team will review all issues and contributions sub
 If you are a new GitHub user, we recommend that you create your own [free github account](https://github.com/signup/free). This will allow you to collaborate with the Magento-Semver development team, fork the Magento-Semver project and send pull requests.
 
 1. Search current [listed issues](https://github.com/magento/magento-semver/issues) (open or closed) for similar proposals of intended contribution before starting work on a new contribution.
-2. Review the [Adobe Contributor License Agreement](https://opensource.adobe.com/cla.html) if this is your first time contributing.
+2. Sign the [Adobe Contributor License Agreement](https://opensource.adobe.com/cla.html) if this is your first time contributing.
 3. Create and test your work.
 4. Fork this repository according to the [Fork A Repository instructions](https://devdocs.magento.com/guides/v2.3/contributor-guide/contributing.html#fork) and when you are ready to send us a pull request – follow the [Create A Pull Request instructions](https://devdocs.magento.com/guides/v2.3/contributor-guide/contributing.html#pull_request).
 5. Once your contribution is received the Magento-Semver development team will review the contribution and collaborate with you as needed.
