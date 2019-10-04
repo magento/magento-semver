@@ -1,10 +1,6 @@
 <?php
-/**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
 
-namespace Magento\SemanticVersionChecker\Reporter;
+namespace Magento\Tools\SemanticVersionChecker\Reporter;
 
 use PHPSemVerChecker\Report\Report;
 use PHPSemVerChecker\Reporter\Reporter;

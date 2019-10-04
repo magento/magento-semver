@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<alr:test-suite xmlns:alr="urn:model.allure.qatools.yandex.ru" start="1568225730990" stop="1568225731019" version="1.4.0">
+  <name>Magento\Tools\SemanticVersionChecker\Test\Unit\Filter\AllowedChangeFilter\ComposerVersionFilterTest</name>
+  <test-cases>
+    <test-case start="1568225730992" stop="1568225731003" status="passed">
+      <name>testFilter with data set #0</name>
+    </test-case>
+    <test-case start="1568225731003" stop="1568225731004" status="passed">
+      <name>testFilter with data set #1</name>
+    </test-case>
+    <test-case start="1568225731004" stop="1568225731005" status="passed">
+      <name>testFilter with data set #2</name>
+    </test-case>
+    <test-case start="1568225731006" stop="1568225731007" status="passed">
+      <name>testFilter with data set #3</name>
+    </test-case>
+    <test-case start="1568225731008" stop="1568225731009" status="passed">
+      <name>testFilter with data set #4</name>
+    </test-case>
+    <test-case start="1568225731009" stop="1568225731010" status="passed">
+      <name>testFilter with data set #5</name>
+    </test-case>
+    <test-case start="1568225731011" stop="1568225731012" status="passed">
+      <name>testFilter with data set #6</name>
+    </test-case>
+    <test-case start="1568225731013" stop="1568225731014" status="passed">
+      <name>testFilter with data set #7</name>
+    </test-case>
+    <test-case start="1568225731014" stop="1568225731016" status="passed">
+      <name>testFilter with data set #8</name>
+    </test-case>
+    <test-case start="1568225731016" stop="1568225731017" status="passed">
+      <name>testFilter with data set #9</name>
+    </test-case>
+    <test-case start="1568225731018" stop="1568225731019" status="passed">
+      <name>testFilter with data set #10</name>
+    </test-case>
+  </test-cases>
+</alr:test-suite>

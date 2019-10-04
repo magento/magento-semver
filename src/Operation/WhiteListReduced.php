@@ -6,7 +6,7 @@
 
 declare(strict_types=1);
 
-namespace Magento\SemanticVersionChecker\Operation;
+namespace Magento\Tools\SemanticVersionChecker\Operation;
 
 use PHPSemVerChecker\SemanticVersioning\Level;
 
@@ -15,7 +15,7 @@ use PHPSemVerChecker\SemanticVersioning\Level;
  *
  * Generated when schema whitelist is reduced.
  *
- * @package Magento\SemanticVersionChecker\Operation
+ * @package Magento\Tools\SemanticVersionChecker\Operation
  */
 class WhiteListReduced extends \PHPSemVerChecker\Operation\Operation
 {

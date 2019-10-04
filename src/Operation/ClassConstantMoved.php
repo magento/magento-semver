@@ -4,12 +4,14 @@
  * See COPYING.txt for license details.
  */
 
-namespace Magento\SemanticVersionChecker\Operation;
+declare(strict_types=1);
+
+namespace Magento\Tools\SemanticVersionChecker\Operation;
 
 use PhpParser\Node\Stmt;
 use PhpParser\Node\Stmt\ClassConst;
 use PHPSemVerChecker\SemanticVersioning\Level;
-use Magento\SemanticVersionChecker\Node\Statement\ClassConstant;
+use Magento\Tools\SemanticVersionChecker\Node\Statement\ClassConstant;
 
 class ClassConstantMoved extends ClassConstantOperation
 {

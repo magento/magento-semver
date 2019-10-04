@@ -6,16 +6,16 @@
 
 declare(strict_types=1);
 
-namespace Magento\SemanticVersionChecker\Analyzer;
+namespace Magento\Tools\SemanticVersionChecker\Analyzer;
 
-use Magento\SemanticVersionChecker\Operation\WhiteListReduced;
+use Magento\Tools\SemanticVersionChecker\Operation\WhiteListReduced;
 use PHPSemVerChecker\Registry\Registry;
 use PHPSemVerChecker\Report\Report;
 
 /**
  * Whiltelist elements removal analyzer.
  *
- * @package Magento\SemanticVersionChecker\Analyzer
+ * @package Magento\Tools\SemanticVersionChecker\Analyzer
  */
 class DbSchemaWhitelistReductionAnalyzer implements AnalyzerInterface
 {
@@ -35,7 +35,10 @@ class DbSchemaWhitelistReductionAnalyzer implements AnalyzerInterface
         if (preg_match('/db_schema_whitelist\.json$/', $registryBefore->getCurrentFile())) {
             $whitelistBefore = json_decode(file_get_contents($registryBefore->getCurrentFile()), true);
             $whitelistAfter = json_decode(file_get_contents($registryAfter->getCurrentFile()), true);
-            $diff = $this->compareWhitelists($whitelistBefore, $whitelistAfter);
+
+            if (is_array($whitelistBefore) && is_array($whitelistAfter)) {
+                $diff = $this->compareWhitelists($whitelistBefore, $whitelistAfter);
+            }
 
             if (!empty($diff)) {
                 $operation = new WhiteListReduced($registryAfter->getCurrentFile());

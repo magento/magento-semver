@@ -3,16 +3,15 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-
 declare(strict_types=1);
 
-namespace Magento\SemanticVersionChecker\Analyzer;
+namespace Magento\Tools\SemanticVersionChecker\Analyzer;
 
-use Magento\SemanticVersionChecker\Operation\ColumnRemove;
-use Magento\SemanticVersionChecker\Operation\DropForeignKey;
-use Magento\SemanticVersionChecker\Operation\DropKey;
-use Magento\SemanticVersionChecker\Operation\TableChangeResource;
-use Magento\SemanticVersionChecker\Operation\TableDropped;
+use Magento\Tools\SemanticVersionChecker\Operation\ColumnRemove;
+use Magento\Tools\SemanticVersionChecker\Operation\DropForeignKey;
+use Magento\Tools\SemanticVersionChecker\Operation\DropKey;
+use Magento\Tools\SemanticVersionChecker\Operation\TableChangeResource;
+use Magento\Tools\SemanticVersionChecker\Operation\TableDropped;
 use PHPSemVerChecker\Registry\Registry;
 use PHPSemVerChecker\Report\Report;
 
@@ -82,14 +81,13 @@ class DbSchemaAnalyzer implements AnalyzerInterface
      * @param array $registryTablesAfter
      * @param string $moduleName
      * @param string $tableName
-     * @return bool
      */
     private function validateDatabaseChanges(
         array $tableData,
         array $registryTablesAfter,
         string $moduleName,
         string $tableName
-    ): bool {
+    ) {
         $columns = $tableData['column'] ?? [];
         $keys = $tableData['key'] ?? [];
         $fks = $tableData['foreign'] ?? [];

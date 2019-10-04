@@ -1,0 +1,6 @@
+{
+    "name": "test/new_composer_file",
+    "description": "Test that new composer.json files are not filtered out",
+    "type": "package",
+    "version": "*"
+}

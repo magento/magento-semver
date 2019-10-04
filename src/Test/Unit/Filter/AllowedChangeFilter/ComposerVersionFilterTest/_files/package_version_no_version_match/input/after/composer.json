@@ -1,0 +1,6 @@
+{
+    "name": "test/version-field-no-version-match",
+    "description": "Test not ignoring the version field when the after version doesn't match the filter pattern",
+    "type": "package",
+    "version": "^1.0.0"
+}

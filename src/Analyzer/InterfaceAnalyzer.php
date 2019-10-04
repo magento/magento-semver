@@ -3,8 +3,9 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+declare(strict_types=1);
 
-namespace Magento\SemanticVersionChecker\Analyzer;
+namespace Magento\Tools\SemanticVersionChecker\Analyzer;
 
 use PhpParser\Node\Stmt\Interface_;
 use PHPSemVerChecker\Operation\InterfaceAdded;
@@ -119,6 +120,8 @@ class InterfaceAnalyzer extends AbstractCodeAnalyzer
                 $analyzers = [
                     new ClassMethodAnalyzer(static::CONTEXT, $fileBefore, $fileAfter),
                     new ClassConstantAnalyzer(static::CONTEXT, $fileBefore, $fileAfter),
+                    new ClassMethodExceptionAnalyzer(static::CONTEXT, $fileBefore, $fileAfter),
+                    new InterfaceExtendsAnalyzer(static::CONTEXT, $fileBefore, $fileAfter)
                 ];
 
                 foreach ($analyzers as $analyzer) {

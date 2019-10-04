@@ -3,10 +3,11 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+declare(strict_types=1);
 
-namespace Magento\SemanticVersionChecker\Analyzer\ApiMembership;
+namespace Magento\Tools\SemanticVersionChecker\Analyzer\ApiMembership;
 
-use Magento\SemanticVersionChecker\Analyzer\PropertyAnalyzer;
+use Magento\Tools\SemanticVersionChecker\Analyzer\PropertyAnalyzer;
 
 /**
  * Property analyzer with separate API membership report.

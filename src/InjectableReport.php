@@ -4,7 +4,7 @@
  * See COPYING.txt for license details.
  */
 
-namespace Magento\SemanticVersionChecker;
+namespace Magento\Tools\SemanticVersionChecker;
 
 use PHPSemVerChecker\Report\Report;
 

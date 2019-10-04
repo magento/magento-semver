@@ -3,30 +3,43 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+declare(strict_types=1);
 
-namespace Magento\SemanticVersionChecker\Analyzer;
+namespace Magento\Tools\SemanticVersionChecker\Analyzer;
 
-use Magento\SemanticVersionChecker\Comparator\Signature;
-use Magento\SemanticVersionChecker\Operation\ClassConstructorLastParameterRemoved;
-use Magento\SemanticVersionChecker\Operation\ClassConstructorObjectParameterAdded;
-use Magento\SemanticVersionChecker\Operation\ClassConstructorOptionalParameterAdded;
-use Magento\SemanticVersionChecker\Operation\ClassMethodLastParameterRemoved;
-use Magento\SemanticVersionChecker\Operation\ClassMethodMoved;
-use Magento\SemanticVersionChecker\Operation\ClassMethodOptionalParameterAdded;
-use Magento\SemanticVersionChecker\Operation\ClassMethodParameterTypingChanged;
-use Magento\SemanticVersionChecker\Operation\ExtendableClassConstructorOptionalParameterAdded;
-use PhpParser\Node\Stmt\ClassLike;
+use Magento\Tools\SemanticVersionChecker\Comparator\Signature;
+use Magento\Tools\SemanticVersionChecker\Comparator\Visibility;
+use Magento\Tools\SemanticVersionChecker\Operation\ClassConstructorLastParameterRemoved;
+use Magento\Tools\SemanticVersionChecker\Operation\ClassConstructorObjectParameterAdded;
+use Magento\Tools\SemanticVersionChecker\Operation\ClassConstructorOptionalParameterAdded;
+use Magento\Tools\SemanticVersionChecker\Operation\ClassMethodLastParameterRemoved;
+use Magento\Tools\SemanticVersionChecker\Operation\ClassMethodMoved;
+use Magento\Tools\SemanticVersionChecker\Operation\ClassMethodOptionalParameterAdded;
+use Magento\Tools\SemanticVersionChecker\Operation\ClassMethodParameterTypingChanged;
+use Magento\Tools\SemanticVersionChecker\Operation\ClassMethodReturnTypingChanged;
+use Magento\Tools\SemanticVersionChecker\Operation\ExtendableClassConstructorOptionalParameterAdded;
+use Magento\Tools\SemanticVersionChecker\Operation\Visibility\MethodIncreased as VisibilityMethodIncreased;
+use Magento\Tools\SemanticVersionChecker\Operation\Visibility\MethodDecreased as VisibilityMethodDecreased;
 use PhpParser\Node\Stmt;
+use PhpParser\Node\Stmt\ClassLike;
 use PhpParser\Node\Stmt\ClassMethod;
 use PHPSemVerChecker\Comparator\Implementation;
 use PHPSemVerChecker\Operation\ClassMethodAdded;
-use PHPSemVerChecker\Operation\ClassMethodRemoved;
+use PHPSemVerChecker\Operation\ClassMethodImplementationChanged;
 use PHPSemVerChecker\Operation\ClassMethodOperationUnary;
 use PHPSemVerChecker\Operation\ClassMethodParameterAdded;
-use PHPSemVerChecker\Operation\ClassMethodParameterRemoved;
 use PHPSemVerChecker\Operation\ClassMethodParameterNameChanged;
-use PHPSemVerChecker\Operation\ClassMethodImplementationChanged;
+use PHPSemVerChecker\Operation\ClassMethodParameterRemoved;
+use PHPSemVerChecker\Operation\ClassMethodParameterTypingAdded;
+use PHPSemVerChecker\Operation\ClassMethodParameterTypingRemoved;
+use PHPSemVerChecker\Operation\ClassMethodRemoved;
 use PHPSemVerChecker\Report\Report;
+use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagNode;
+use PHPStan\PhpDocParser\Lexer\Lexer;
+use PHPStan\PhpDocParser\Parser\ConstExprParser;
+use PHPStan\PhpDocParser\Parser\PhpDocParser;
+use PHPStan\PhpDocParser\Parser\TokenIterator;
+use PHPStan\PhpDocParser\Parser\TypeParser;
 
 /**
  * Class method analyzer.
@@ -35,6 +48,7 @@ use PHPSemVerChecker\Report\Report;
  * - class method removed
  * - class method added
  * - class method parameters changed
+ * - class method return type changed
  * - class method implementation changed
  */
 class ClassMethodAnalyzer extends AbstractCodeAnalyzer
@@ -58,7 +72,7 @@ class ClassMethodAnalyzer extends AbstractCodeAnalyzer
         'Magento\Framework\App\Action\AbstractAction',
         'Magento\Framework\View\Element\AbstractBlock',
         'Magento\Framework\View\Element\Template',
-        'Magento\Framework\Data\Collection'
+        'Magento\Framework\Data\Collection',
     ];
 
     /**
@@ -140,11 +154,20 @@ class ClassMethodAnalyzer extends AbstractCodeAnalyzer
         /** @var ClassMethod[] $afterNameMap */
         $afterNameMap = $this->getNodeNameMap($contextAfter);
         foreach ($methodsToVerify as $method) {
-            /** @var \PhpParser\Node\Stmt\ClassMethod $methodBefore */
+            /** @var ClassMethod $methodBefore */
             $methodBefore = $beforeNameMap[$method];
-            /** @var \PhpParser\Node\Stmt\ClassMethod $methodAfter */
+            /** @var ClassMethod $methodAfter */
             $methodAfter = $afterNameMap[$method];
 
+            if ($this->isReturnTypeChanged($methodBefore, $methodAfter) === true) {
+                $data = new ClassMethodReturnTypingChanged(
+                    $this->context,
+                    $this->fileAfter,
+                    $contextAfter,
+                    $methodAfter
+                );
+                $report->add($this->context, $data);
+            }
             if ($methodBefore !== $methodAfter) {
                 $paramsBefore = $methodBefore->params;
                 $paramsAfter = $methodAfter->params;
@@ -155,10 +178,10 @@ class ClassMethodAnalyzer extends AbstractCodeAnalyzer
 
                 $beforeCount = count($paramsBefore);
                 $afterCount = count($paramsAfter);
-                $minCount= min($beforeCount, $afterCount);
+                $minCount = min($beforeCount, $afterCount);
 
                 if ($signatureChanges['parameter_typing_added']) {
-                    $data = new \PHPSemVerChecker\Operation\ClassMethodParameterTypingAdded(
+                    $data = new ClassMethodParameterTypingAdded(
                         $this->context,
                         $this->fileAfter,
                         $contextAfter,
@@ -168,7 +191,7 @@ class ClassMethodAnalyzer extends AbstractCodeAnalyzer
                     $signatureChanged = true;
                 }
                 if ($signatureChanges['parameter_typing_removed']) {
-                    $data = new \PHPSemVerChecker\Operation\ClassMethodParameterTypingRemoved(
+                    $data = new ClassMethodParameterTypingRemoved(
                         $this->context,
                         $this->fileAfter,
                         $contextAfter,
@@ -245,6 +268,34 @@ class ClassMethodAnalyzer extends AbstractCodeAnalyzer
                     );
                     $report->add($this->context, $data);
                 }
+
+                // Visibility
+                $visibilityChanged = Visibility::analyze($methodBefore, $methodAfter);
+                if ($visibilityChanged && $visibilityChanged > 0) {
+                    $data = new VisibilityMethodDecreased(
+                        $this->context,
+                        $this->fileBefore,
+                        $contextBefore,
+                        $methodBefore,
+                        $this->fileAfter,
+                        $contextAfter,
+                        $methodAfter
+                    );
+                    $report->add($this->context, $data);
+                }
+                if ($visibilityChanged && $visibilityChanged < 0) {
+                    $data = new VisibilityMethodIncreased(
+                        $this->context,
+                        $this->fileBefore,
+                        $contextBefore,
+                        $methodBefore,
+                        $this->fileAfter,
+                        $contextAfter,
+                        $methodAfter
+                    );
+                    $report->add($this->context, $data);
+                }
+
                 // Difference in source code
                 $stmtsBefore = empty($methodBefore->stmts) ? [] : $methodBefore->stmts;
                 $stmtsAfter = empty($methodAfter->stmts) ? [] : $methodAfter->stmts;
@@ -262,6 +313,49 @@ class ClassMethodAnalyzer extends AbstractCodeAnalyzer
                 }
             }
         }
+    }
+
+    /**
+     * Checks if return type declaration or annotation was changed
+     *
+     * @param ClassMethod $methodBefore
+     * @param ClassMethod $methodAfter
+     *
+     * @return bool
+     */
+    private function isReturnTypeChanged(ClassMethod $methodBefore, ClassMethod $methodAfter): bool
+    {
+        $hasPHP7ReturnDeclarationChanged = $methodBefore->returnType !== $methodAfter->returnType;
+
+        $returnBefore = $this->getDocReturnDeclaration($methodBefore);
+        $returnAfter  = $this->getDocReturnDeclaration($methodAfter);
+
+        return $hasPHP7ReturnDeclarationChanged || $returnBefore !== $returnAfter;
+    }
+
+    /**
+     * Analyses the Method doc block and returns the return type declaration
+     *
+     * @param ClassMethod $method
+     *
+     * @return string
+     */
+    private function getDocReturnDeclaration(ClassMethod $method)
+    {
+        if ($method->getDocComment() !== null) {
+            $lexer           = new Lexer();
+            $typeParser      = new TypeParser();
+            $constExprParser = new ConstExprParser();
+            $phpDocParser    = new PhpDocParser($typeParser, $constExprParser);
+
+            $tokens        = $lexer->tokenize((string)$method->getDocComment());
+            $tokenIterator = new TokenIterator($tokens);
+            $phpDocNode    = $phpDocParser->parse($tokenIterator);
+            $tags          = $phpDocNode->getTagsByName('@return');
+            /** @var PhpDocTagNode $tag */
+            $tag = array_shift($tags);
+        }
+        return isset($tag) ? (string)$tag->value : ' ';
     }
 
     /**
@@ -291,20 +385,22 @@ class ClassMethodAnalyzer extends AbstractCodeAnalyzer
                     $methodAfter
                 );
             }
-        } else if (Signature::isObjectParams($remainingAfter)) {
-            $data = new ClassConstructorObjectParameterAdded(
-                $this->context,
-                $this->fileAfter,
-                $contextAfter,
-                $methodAfter
-            );
         } else {
-            $data = new ClassMethodParameterAdded(
-                $this->context,
-                $this->fileAfter,
-                $contextAfter,
-                $methodAfter
-            );
+            if (Signature::isObjectParams($remainingAfter)) {
+                $data = new ClassConstructorObjectParameterAdded(
+                    $this->context,
+                    $this->fileAfter,
+                    $contextAfter,
+                    $methodAfter
+                );
+            } else {
+                $data = new ClassMethodParameterAdded(
+                    $this->context,
+                    $this->fileAfter,
+                    $contextAfter,
+                    $methodAfter
+                );
+            }
         }
 
         return $data;

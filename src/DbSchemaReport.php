@@ -3,13 +3,13 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-
 // @codingStandardsIgnoreFile
-namespace Magento\SemanticVersionChecker;
+namespace Magento\Tools\SemanticVersionChecker;
 
+use PHPSemVerChecker\Report\Report as ReportAlias;
 use PHPSemVerChecker\SemanticVersioning\Level;
 
-class DbSchemaReport extends \PHPSemVerChecker\Report\Report
+class DbSchemaReport extends ReportAlias
 {
     /**
      * Report constructor.
@@ -19,5 +19,7 @@ class DbSchemaReport extends \PHPSemVerChecker\Report\Report
         $levels = array_fill_keys(Level::asList(), []);
         parent::__construct();
         $this->differences['database'] = $levels;
+        $this->differences['di'] = $levels;
+        $this->differences['layout'] = $levels;
     }
 }

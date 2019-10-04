@@ -3,17 +3,18 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+declare(strict_types=1);
 
-namespace Magento\SemanticVersionChecker\Analyzer;
+namespace Magento\Tools\SemanticVersionChecker\Analyzer;
 
-use Magento\SemanticVersionChecker\Operation\InvalidWhitelist;
-use Magento\SemanticVersionChecker\Operation\WhiteListWasRemoved;
+use Magento\Tools\SemanticVersionChecker\Operation\InvalidWhitelist;
+use Magento\Tools\SemanticVersionChecker\Operation\WhiteListWasRemoved;
 use PHPSemVerChecker\Registry\Registry;
 use PHPSemVerChecker\Report\Report;
 
 /**
  * Class DbSchemaAnalyzer
- * @package Magento\SemanticVersionChecker\Analyzer
+ * @package Magento\Tools\SemanticVersionChecker\Analyzer
  */
 class DbSchemaWhitelistAnalyzer implements AnalyzerInterface
 {

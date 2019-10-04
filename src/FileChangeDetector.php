@@ -3,59 +3,98 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-
 // @codingStandardsIgnoreFile
-namespace Magento\SemanticVersionChecker;
+namespace Magento\Tools\SemanticVersionChecker;
 
-use PHPSemVerChecker\Filter\SourceFilter;
+use Magento\Framework\App\Utility\Files;
+use Magento\Tools\SemanticVersionChecker\Filter\AllowedChangeFilter\ChangedFileFilterInterface;
+use Magento\Tools\SemanticVersionChecker\Filter\SourceFilter;
 
 class FileChangeDetector
 {
+    /** @var string */
     private $sourceBeforeDir;
+
+    /** @var string */
     private $sourceAfterDir;
 
-    public function __construct($sourceBeforeDir, $sourceAfterDir)
+    /** @var ChangedFileFilterInterface[] */
+    private $changedFileFilters;
+
+    /**
+     * FileChangeDetector constructor.
+     *
+     * Can supply additional filters to ignore files that only differ due to specific kinds of changes
+     *
+     * @param string $sourceBeforeDir
+     * @param string $sourceAfterDir
+     * @param ChangedFileFilterInterface[] $changedFileFilters
+     */
+    public function __construct($sourceBeforeDir, $sourceAfterDir, $changedFileFilters = [])
     {
         $this->sourceBeforeDir = $sourceBeforeDir;
         $this->sourceAfterDir = $sourceAfterDir;
+        $this->changedFileFilters = $changedFileFilters;
     }
 
     /**
-     * Get files that have changed
+     * Get the set of files that were added, removed, or changed between before and after source
      *
-     * @return array
+     * @return string[]
      */
     public function getChangedFiles()
     {
-        $sourceBeforeFiles = $this->getFiles([$this->sourceBeforeDir], '*', true);
-        $sourceAfterFiles = $this->getFiles([$this->sourceAfterDir], '*', true);
+        $beforeDir = $this->sourceBeforeDir;
+        $afterDir = $this->sourceAfterDir;
+        $beforeFiles = Files::getFiles([$beforeDir], '*', true);
+        $afterFiles = Files::getFiles([$afterDir], '*', true);
         $identicalFilter = new SourceFilter();
-        $identicalFilter->filter($sourceBeforeFiles, $sourceAfterFiles);
-        return array_merge($sourceAfterFiles, $sourceBeforeFiles);
+        $identicalFilter->filter($beforeFiles, $afterFiles);
+
+        if ($afterFiles) {
+            if ($this->changedFileFilters) {
+                $beforeFiltered = $this->getFileContentMap($beforeFiles, $beforeDir);
+                $afterFiltered = $this->getFileContentMap($afterFiles, $afterDir);
+                foreach ($this->changedFileFilters as $filter) {
+                    $filter->filter($beforeFiltered, $afterFiltered);
+                }
+                $beforeFiles = array_filter($beforeFiles, function($file) use ($beforeDir, $beforeFiltered) {
+                    return key_exists($this->getRelativePath($file, $beforeDir), $beforeFiltered);
+                });
+                $afterFiles = array_filter($afterFiles, function($file) use ($afterDir, $afterFiltered) {
+                    return key_exists($this->getRelativePath($file, $afterDir), $afterFiltered);
+                });
+            }
+        }
+        return array_merge($afterFiles, $beforeFiles);
     }
 
     /**
-     * Retrieve all files in folders and sub-folders that match pattern (glob syntax)
+     * Construct an in-memory map of <relative_file_path> => [<lines_of_file>]
      *
-     * @param array $dirPatterns
-     * @param string $fileNamePattern
-     * @param bool $recursive
-     * @return array
+     * @param string[] $fileList
+     * @param string $dir
+     * @return array[]
      */
-    public function getFiles(array $dirPatterns, $fileNamePattern, $recursive = true)
+    private function getFileContentMap($fileList, $dir)
     {
-        $result = [];
-        foreach ($dirPatterns as $oneDirPattern) {
-            $oneDirPattern = str_replace('\\', '/', $oneDirPattern);
-            $entriesInDir = Glob::glob("{$oneDirPattern}/{$fileNamePattern}", Glob::GLOB_NOSORT | Glob::GLOB_BRACE);
-            $subDirs = Glob::glob("{$oneDirPattern}/*", Glob::GLOB_ONLYDIR | Glob::GLOB_NOSORT | Glob::GLOB_BRACE);
-            $filesInDir = array_diff($entriesInDir, $subDirs);
-
-            if ($recursive) {
-                $filesInSubDir = self::getFiles($subDirs, $fileNamePattern);
-                $result = array_merge($result, $filesInDir, $filesInSubDir);
-            }
+        $fileMap = [];
+        foreach ($fileList as $file) {
+            $relativePath = $this->getRelativePath($file, $dir);
+            $fileMap[$relativePath] = file($file, FILE_IGNORE_NEW_LINES);
         }
-        return $result;
+        return $fileMap;
+    }
+
+    /**
+     * Helper function to get the relative directory to a file from the base directory
+     *
+     * @param string $file
+     * @param string $dir
+     * @return string
+     */
+    private function getRelativePath($file, $dir)
+    {
+        return substr($file, strlen($dir) + 1);
     }
 }
