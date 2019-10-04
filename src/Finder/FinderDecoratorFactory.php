@@ -5,7 +5,7 @@
  */
 declare(strict_types=1);
 
-namespace Magento\Tools\SemanticVersionChecker\Finder;
+namespace Magento\SemanticVersionChecker\Finder;
 
 class FinderDecoratorFactory
 {

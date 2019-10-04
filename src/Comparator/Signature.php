@@ -5,7 +5,7 @@
  */
 declare(strict_types=1);
 
-namespace Magento\Tools\SemanticVersionChecker\Comparator;
+namespace Magento\SemanticVersionChecker\Comparator;
 
 use PHPSemVerChecker\Comparator\Type;
 

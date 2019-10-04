@@ -5,7 +5,7 @@
  */
 declare(strict_types=1);
 
-namespace Magento\Tools\SemanticVersionChecker\Visitor;
+namespace Magento\SemanticVersionChecker\Visitor;
 
 use PhpParser\Node;
 use PhpParser\Node\Stmt\Trait_;

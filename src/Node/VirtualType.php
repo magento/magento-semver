@@ -5,7 +5,7 @@
  */
 declare(strict_types=1);
 
-namespace Magento\Tools\SemanticVersionChecker\Node;
+namespace Magento\SemanticVersionChecker\Node;
 
 class VirtualType
 {

@@ -5,7 +5,7 @@
  */
 declare(strict_types=1);
 
-namespace Magento\Tools\SemanticVersionChecker\Operation;
+namespace Magento\SemanticVersionChecker\Operation;
 
 use PHPSemVerChecker\Operation\ClassMethodOperationUnary;
 use PHPSemVerChecker\SemanticVersioning\Level;

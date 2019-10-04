@@ -4,11 +4,11 @@
  * See COPYING.txt for license details.
  */
 // @codingStandardsIgnoreFile
-namespace Magento\Tools\SemanticVersionChecker;
+namespace Magento\SemanticVersionChecker;
 
 use Magento\Framework\App\Utility\Files;
-use Magento\Tools\SemanticVersionChecker\Filter\AllowedChangeFilter\ChangedFileFilterInterface;
-use Magento\Tools\SemanticVersionChecker\Filter\SourceFilter;
+use Magento\SemanticVersionChecker\Filter\AllowedChangeFilter\ChangedFileFilterInterface;
+use Magento\SemanticVersionChecker\Filter\SourceFilter;
 
 class FileChangeDetector
 {

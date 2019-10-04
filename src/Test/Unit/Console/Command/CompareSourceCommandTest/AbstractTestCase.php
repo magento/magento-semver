@@ -3,14 +3,14 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Magento\Tools\SemanticVersionChecker\Test\Unit\Console\Command\CompareSourceCommandTest;
+namespace Magento\SemanticVersionChecker\Test\Unit\Console\Command\CompareSourceCommandTest;
 
-use Magento\Tools\SemanticVersionChecker\Console\Command\CompareSourceCommand;
+use Magento\SemanticVersionChecker\Console\Command\CompareSourceCommand;
 use Symfony\Component\Console\Tester\CommandTester;
 
 /**
  * Defines an abstract base class for testing
- * {@link \Magento\Tools\SemanticVersionChecker\Console\Command\CompareSourceCommand}.
+ * {@link \Magento\SemanticVersionChecker\Console\Command\CompareSourceCommand}.
  */
 abstract class AbstractTestCase extends \PHPUnit\Framework\TestCase
 {

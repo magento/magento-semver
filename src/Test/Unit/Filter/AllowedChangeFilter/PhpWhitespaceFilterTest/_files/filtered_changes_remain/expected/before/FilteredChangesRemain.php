@@ -3,7 +3,7 @@
 * Copyright © Magento, Inc. All rights reserved.
 * See COPYING.txt for license details.
 */
-namespace Magento\Tools\SemanticVersionChecker\Test\Unit\Filter\AllowedChangeFilter\PhpWhitespaceFilterTest;
+namespace Magento\SemanticVersionChecker\Test\Unit\Filter\AllowedChangeFilter\PhpWhitespaceFilterTest;
 class FilteredChangesRemain
 {
 /** This class has whitespace removed */

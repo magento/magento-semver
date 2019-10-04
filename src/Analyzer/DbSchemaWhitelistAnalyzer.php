@@ -5,16 +5,16 @@
  */
 declare(strict_types=1);
 
-namespace Magento\Tools\SemanticVersionChecker\Analyzer;
+namespace Magento\SemanticVersionChecker\Analyzer;
 
-use Magento\Tools\SemanticVersionChecker\Operation\InvalidWhitelist;
-use Magento\Tools\SemanticVersionChecker\Operation\WhiteListWasRemoved;
+use Magento\SemanticVersionChecker\Operation\InvalidWhitelist;
+use Magento\SemanticVersionChecker\Operation\WhiteListWasRemoved;
 use PHPSemVerChecker\Registry\Registry;
 use PHPSemVerChecker\Report\Report;
 
 /**
  * Class DbSchemaAnalyzer
- * @package Magento\Tools\SemanticVersionChecker\Analyzer
+ * @package Magento\SemanticVersionChecker\Analyzer
  */
 class DbSchemaWhitelistAnalyzer implements AnalyzerInterface
 {

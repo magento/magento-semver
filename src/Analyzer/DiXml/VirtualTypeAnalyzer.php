@@ -5,13 +5,13 @@
  */
 declare(strict_types=1);
 
-namespace Magento\Tools\SemanticVersionChecker\Analyzer\DiXml;
+namespace Magento\SemanticVersionChecker\Analyzer\DiXml;
 
-use Magento\Tools\SemanticVersionChecker\Analyzer\AnalyzerInterface;
-use Magento\Tools\SemanticVersionChecker\Node\VirtualType;
-use Magento\Tools\SemanticVersionChecker\Operation\DiXml\VirtualTypeChanged;
-use Magento\Tools\SemanticVersionChecker\Operation\DiXml\VirtualTypeRemoved;
-use Magento\Tools\SemanticVersionChecker\Registry\XmlRegistry;
+use Magento\SemanticVersionChecker\Analyzer\AnalyzerInterface;
+use Magento\SemanticVersionChecker\Node\VirtualType;
+use Magento\SemanticVersionChecker\Operation\DiXml\VirtualTypeChanged;
+use Magento\SemanticVersionChecker\Operation\DiXml\VirtualTypeRemoved;
+use Magento\SemanticVersionChecker\Registry\XmlRegistry;
 use PHPSemVerChecker\Report\Report;
 
 /**

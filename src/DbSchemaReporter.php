@@ -4,14 +4,14 @@
  * See COPYING.txt for license details.
  */
 // @codingStandardsIgnoreFile
-namespace Magento\Tools\SemanticVersionChecker;
+namespace Magento\SemanticVersionChecker;
 
-use Magento\Tools\SemanticVersionChecker\Reporter\TableReporter;
+use Magento\SemanticVersionChecker\Reporter\TableReporter;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Class DbSchemaReporter
- * @package Magento\Tools\SemanticVersionChecker
+ * @package Magento\SemanticVersionChecker
  */
 class DbSchemaReporter extends TableReporter
 {

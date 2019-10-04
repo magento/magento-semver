@@ -6,7 +6,7 @@
 
 declare(strict_types=1);
 
-namespace Magento\Tools\SemanticVersionChecker\Operation\DiXml;
+namespace Magento\SemanticVersionChecker\Operation\DiXml;
 
 use PhpParser\Node\Stmt;
 use PhpParser\Node\Stmt\Property;

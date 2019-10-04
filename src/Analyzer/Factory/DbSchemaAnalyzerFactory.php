@@ -5,13 +5,13 @@
  */
 declare(strict_types=1);
 
-namespace Magento\Tools\SemanticVersionChecker\Analyzer\Factory;
+namespace Magento\SemanticVersionChecker\Analyzer\Factory;
 
-use Magento\Tools\SemanticVersionChecker\Analyzer\Analyzer;
-use Magento\Tools\SemanticVersionChecker\Analyzer\AnalyzerInterface;
-use Magento\Tools\SemanticVersionChecker\Analyzer\DbSchemaAnalyzer;
-use Magento\Tools\SemanticVersionChecker\Analyzer\DbSchemaWhitelistAnalyzer;
-use Magento\Tools\SemanticVersionChecker\Analyzer\DbSchemaWhitelistReductionAnalyzer;
+use Magento\SemanticVersionChecker\Analyzer\Analyzer;
+use Magento\SemanticVersionChecker\Analyzer\AnalyzerInterface;
+use Magento\SemanticVersionChecker\Analyzer\DbSchemaAnalyzer;
+use Magento\SemanticVersionChecker\Analyzer\DbSchemaWhitelistAnalyzer;
+use Magento\SemanticVersionChecker\Analyzer\DbSchemaWhitelistReductionAnalyzer;
 
 /**
  * Build and DB Schema File Analyzer

@@ -4,7 +4,7 @@
  * See COPYING.txt for license details.
  */
 
-namespace Magento\Tools\SemanticVersionChecker\Filter\AllowedChangeFilter;
+namespace Magento\SemanticVersionChecker\Filter\AllowedChangeFilter;
 
 class PhpIgnoredTagFilter implements ChangedFileFilterInterface
 {

@@ -5,12 +5,12 @@
  */
 declare(strict_types=1);
 
-namespace Magento\Tools\SemanticVersionChecker\Analyzer\Factory;
+namespace Magento\SemanticVersionChecker\Analyzer\Factory;
 
-use Magento\Tools\SemanticVersionChecker\Analyzer\Analyzer;
-use Magento\Tools\SemanticVersionChecker\Analyzer\AnalyzerInterface;
-use Magento\Tools\SemanticVersionChecker\Analyzer\DiXml\VirtualTypeAnalyzer;
-use Magento\Tools\SemanticVersionChecker\DbSchemaReport;
+use Magento\SemanticVersionChecker\Analyzer\Analyzer;
+use Magento\SemanticVersionChecker\Analyzer\AnalyzerInterface;
+use Magento\SemanticVersionChecker\Analyzer\DiXml\VirtualTypeAnalyzer;
+use Magento\SemanticVersionChecker\DbSchemaReport;
 
 /**
  * Build and DI XML File Analyzer.

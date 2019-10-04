@@ -5,9 +5,9 @@
  */
 declare(strict_types=1);
 
-namespace Magento\Tools\SemanticVersionChecker\Test\Unit\Console\Command;
+namespace Magento\SemanticVersionChecker\Test\Unit\Console\Command;
 
-use Magento\Tools\SemanticVersionChecker\Test\Unit\Console\Command\CompareSourceCommandTest\AbstractTestCase;
+use Magento\SemanticVersionChecker\Test\Unit\Console\Command\CompareSourceCommandTest\AbstractTestCase;
 
 /**
  * Test semantic version checker CLI command dealing with API traits.

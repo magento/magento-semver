@@ -5,7 +5,7 @@
  */
 declare(strict_types=1);
 
-namespace Magento\Tools\SemanticVersionChecker\Registry;
+namespace Magento\SemanticVersionChecker\Registry;
 
 use PHPSemVerChecker\Registry\Registry;
 

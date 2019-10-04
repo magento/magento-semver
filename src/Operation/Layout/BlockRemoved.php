@@ -6,7 +6,7 @@
 
 declare(strict_types=1);
 
-namespace Magento\Tools\SemanticVersionChecker\Operation\Layout;
+namespace Magento\SemanticVersionChecker\Operation\Layout;
 
 use PhpParser\Node\Stmt;
 use PhpParser\Node\Stmt\Property;

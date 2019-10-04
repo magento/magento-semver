@@ -5,17 +5,17 @@
  */
 declare(strict_types=1);
 
-namespace Magento\Tools\SemanticVersionChecker\Analyzer\Layout;
+namespace Magento\SemanticVersionChecker\Analyzer\Layout;
 
-use Magento\Tools\SemanticVersionChecker\Analyzer\AnalyzerInterface;
-use Magento\Tools\SemanticVersionChecker\Node\Layout\Block;
-use Magento\Tools\SemanticVersionChecker\Node\Layout\Container;
-use Magento\Tools\SemanticVersionChecker\Node\Layout\LayoutNodeInterface;
-use Magento\Tools\SemanticVersionChecker\Node\Layout\Update;
-use Magento\Tools\SemanticVersionChecker\Operation\Layout\BlockRemoved;
-use Magento\Tools\SemanticVersionChecker\Operation\Layout\ContainerRemoved;
-use Magento\Tools\SemanticVersionChecker\Operation\Layout\UpdateRemoved;
-use Magento\Tools\SemanticVersionChecker\Registry\XmlRegistry;
+use Magento\SemanticVersionChecker\Analyzer\AnalyzerInterface;
+use Magento\SemanticVersionChecker\Node\Layout\Block;
+use Magento\SemanticVersionChecker\Node\Layout\Container;
+use Magento\SemanticVersionChecker\Node\Layout\LayoutNodeInterface;
+use Magento\SemanticVersionChecker\Node\Layout\Update;
+use Magento\SemanticVersionChecker\Operation\Layout\BlockRemoved;
+use Magento\SemanticVersionChecker\Operation\Layout\ContainerRemoved;
+use Magento\SemanticVersionChecker\Operation\Layout\UpdateRemoved;
+use Magento\SemanticVersionChecker\Registry\XmlRegistry;
 use PHPSemVerChecker\Report\Report;
 
 /**

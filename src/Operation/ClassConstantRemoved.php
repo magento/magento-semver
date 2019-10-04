@@ -6,12 +6,12 @@
 
 declare(strict_types=1);
 
-namespace Magento\Tools\SemanticVersionChecker\Operation;
+namespace Magento\SemanticVersionChecker\Operation;
 
 use PhpParser\Node\Stmt;
 use PhpParser\Node\Stmt\ClassConst;
 use PHPSemVerChecker\SemanticVersioning\Level;
-use Magento\Tools\SemanticVersionChecker\Node\Statement\ClassConstant;
+use Magento\SemanticVersionChecker\Node\Statement\ClassConstant;
 
 class ClassConstantRemoved extends ClassConstantOperation
 {

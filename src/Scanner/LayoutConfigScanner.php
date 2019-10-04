@@ -5,22 +5,22 @@
  */
 declare(strict_types=1);
 
-namespace Magento\Tools\SemanticVersionChecker\Scanner;
+namespace Magento\SemanticVersionChecker\Scanner;
 
 use DOMDocument;
 use DOMNode;
 use DOMNodeList;
-use Magento\Tools\SemanticVersionChecker\Node\Layout\Block;
-use Magento\Tools\SemanticVersionChecker\Node\Layout\Container;
-use Magento\Tools\SemanticVersionChecker\Node\Layout\Update;
-use Magento\Tools\SemanticVersionChecker\Registry\XmlRegistry;
+use Magento\SemanticVersionChecker\Node\Layout\Block;
+use Magento\SemanticVersionChecker\Node\Layout\Container;
+use Magento\SemanticVersionChecker\Node\Layout\Update;
+use Magento\SemanticVersionChecker\Registry\XmlRegistry;
 use PHPSemVerChecker\Registry\Registry;
 
 /**
  * Handle *layout xml files* and tokenize them to the different types:
- * - `<block>`  {@link \Magento\Tools\SemanticVersionChecker\Node\Layout\Block}
- * - `<container>` {@link \Magento\Tools\SemanticVersionChecker\Node\Layout\Container}
- * - `<update>`  {@link \Magento\Tools\SemanticVersionChecker\Node\Layout\Update}
+ * - `<block>`  {@link \Magento\SemanticVersionChecker\Node\Layout\Block}
+ * - `<container>` {@link \Magento\SemanticVersionChecker\Node\Layout\Container}
+ * - `<update>`  {@link \Magento\SemanticVersionChecker\Node\Layout\Update}
  */
 class LayoutConfigScanner implements ScannerInterface
 {

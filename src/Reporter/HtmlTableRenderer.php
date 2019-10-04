@@ -1,6 +1,6 @@
 <?php
 
-namespace Magento\Tools\SemanticVersionChecker\Reporter;
+namespace Magento\SemanticVersionChecker\Reporter;
 
 use Symfony\Component\Console\Output\OutputInterface;
 

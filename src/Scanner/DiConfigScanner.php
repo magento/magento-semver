@@ -5,13 +5,13 @@
  */
 declare(strict_types=1);
 
-namespace Magento\Tools\SemanticVersionChecker\Scanner;
+namespace Magento\SemanticVersionChecker\Scanner;
 
 use DOMDocument;
 use DOMNode;
 use DOMNodeList;
-use Magento\Tools\SemanticVersionChecker\Node\VirtualType;
-use Magento\Tools\SemanticVersionChecker\Registry\XmlRegistry;
+use Magento\SemanticVersionChecker\Node\VirtualType;
+use Magento\SemanticVersionChecker\Registry\XmlRegistry;
 use PHPSemVerChecker\Registry\Registry;
 
 class DiConfigScanner implements ScannerInterface

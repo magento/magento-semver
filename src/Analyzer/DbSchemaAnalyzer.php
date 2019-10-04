@@ -5,13 +5,13 @@
  */
 declare(strict_types=1);
 
-namespace Magento\Tools\SemanticVersionChecker\Analyzer;
+namespace Magento\SemanticVersionChecker\Analyzer;
 
-use Magento\Tools\SemanticVersionChecker\Operation\ColumnRemove;
-use Magento\Tools\SemanticVersionChecker\Operation\DropForeignKey;
-use Magento\Tools\SemanticVersionChecker\Operation\DropKey;
-use Magento\Tools\SemanticVersionChecker\Operation\TableChangeResource;
-use Magento\Tools\SemanticVersionChecker\Operation\TableDropped;
+use Magento\SemanticVersionChecker\Operation\ColumnRemove;
+use Magento\SemanticVersionChecker\Operation\DropForeignKey;
+use Magento\SemanticVersionChecker\Operation\DropKey;
+use Magento\SemanticVersionChecker\Operation\TableChangeResource;
+use Magento\SemanticVersionChecker\Operation\TableDropped;
 use PHPSemVerChecker\Registry\Registry;
 use PHPSemVerChecker\Report\Report;
 

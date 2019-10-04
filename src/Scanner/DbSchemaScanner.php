@@ -4,15 +4,15 @@
  * See COPYING.txt for license details.
  */
 
-namespace Magento\Tools\SemanticVersionChecker\Scanner;
+namespace Magento\SemanticVersionChecker\Scanner;
 
 use Magento\Framework\Convert\Xml;
-use Magento\Tools\SemanticVersionChecker\Registry\XmlRegistry;
+use Magento\SemanticVersionChecker\Registry\XmlRegistry;
 use PHPSemVerChecker\Registry\Registry;
 
 /**
  * Class ScannerDecorator
- * @package Magento\Tools\SemanticVersionChecker\Scanner
+ * @package Magento\SemanticVersionChecker\Scanner
  */
 class DbSchemaScanner implements ScannerInterface
 {

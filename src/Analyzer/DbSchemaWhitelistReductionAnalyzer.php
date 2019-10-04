@@ -6,16 +6,16 @@
 
 declare(strict_types=1);
 
-namespace Magento\Tools\SemanticVersionChecker\Analyzer;
+namespace Magento\SemanticVersionChecker\Analyzer;
 
-use Magento\Tools\SemanticVersionChecker\Operation\WhiteListReduced;
+use Magento\SemanticVersionChecker\Operation\WhiteListReduced;
 use PHPSemVerChecker\Registry\Registry;
 use PHPSemVerChecker\Report\Report;
 
 /**
  * Whiltelist elements removal analyzer.
  *
- * @package Magento\Tools\SemanticVersionChecker\Analyzer
+ * @package Magento\SemanticVersionChecker\Analyzer
  */
 class DbSchemaWhitelistReductionAnalyzer implements AnalyzerInterface
 {

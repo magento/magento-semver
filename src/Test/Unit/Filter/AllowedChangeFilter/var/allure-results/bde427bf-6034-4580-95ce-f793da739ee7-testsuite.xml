@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <alr:test-suite xmlns:alr="urn:model.allure.qatools.yandex.ru" start="1568225730990" stop="1568225731019" version="1.4.0">
-  <name>Magento\Tools\SemanticVersionChecker\Test\Unit\Filter\AllowedChangeFilter\ComposerVersionFilterTest</name>
+  <name>Magento\SemanticVersionChecker\Test\Unit\Filter\AllowedChangeFilter\ComposerVersionFilterTest</name>
   <test-cases>
     <test-case start="1568225730992" stop="1568225731003" status="passed">
       <name>testFilter with data set #0</name>

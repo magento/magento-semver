@@ -4,10 +4,10 @@
  * See COPYING.txt for license details.
  */
 
-namespace Magento\Tools\SemanticVersionChecker\Test\Unit;
+namespace Magento\SemanticVersionChecker\Test\Unit;
 
-use Magento\Tools\SemanticVersionChecker\FileChangeDetector;
-use Magento\Tools\SemanticVersionChecker\Filter\AllowedChangeFilter\ChangedFileFilterInterface;
+use Magento\SemanticVersionChecker\FileChangeDetector;
+use Magento\SemanticVersionChecker\Filter\AllowedChangeFilter\ChangedFileFilterInterface;
 
 class FileChangeDetectorTest extends \PHPUnit\Framework\TestCase
 {

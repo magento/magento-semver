@@ -4,9 +4,9 @@
  * See COPYING.txt for license details.
  */
 
-namespace Magento\Tools\SemanticVersionChecker\Visitor;
+namespace Magento\SemanticVersionChecker\Visitor;
 
-use Magento\Tools\SemanticVersionChecker\SemanticVersionChecker;
+use Magento\SemanticVersionChecker\SemanticVersionChecker;
 use PhpParser\Node;
 use PhpParser\NodeVisitorAbstract;
 use PHPSemVerChecker\Registry\Registry;

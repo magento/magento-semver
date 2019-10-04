@@ -3,9 +3,9 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Magento\Tools\SemanticVersionChecker\Test\Unit\Filter\AllowedChangeFilter;
+namespace Magento\SemanticVersionChecker\Test\Unit\Filter\AllowedChangeFilter;
 
-use Magento\Tools\SemanticVersionChecker\Filter\AllowedChangeFilter\PhpCommentFormattingFilter;
+use Magento\SemanticVersionChecker\Filter\AllowedChangeFilter\PhpCommentFormattingFilter;
 
 class PhpCommentFormattingFilterTest extends \PHPUnit\Framework\TestCase
 {

@@ -5,12 +5,12 @@
  */
 declare(strict_types=1);
 
-namespace Magento\Tools\SemanticVersionChecker\Analyzer;
+namespace Magento\SemanticVersionChecker\Analyzer;
 
-use Magento\Tools\SemanticVersionChecker\Comparator\Visibility;
-use Magento\Tools\SemanticVersionChecker\Operation\PropertyMoved;
-use Magento\Tools\SemanticVersionChecker\Operation\Visibility\PropertyDecreased as VisibilityPropertyDecreased;
-use Magento\Tools\SemanticVersionChecker\Operation\Visibility\PropertyIncreased as VisibilityPropertyIncreased;
+use Magento\SemanticVersionChecker\Comparator\Visibility;
+use Magento\SemanticVersionChecker\Operation\PropertyMoved;
+use Magento\SemanticVersionChecker\Operation\Visibility\PropertyDecreased as VisibilityPropertyDecreased;
+use Magento\SemanticVersionChecker\Operation\Visibility\PropertyIncreased as VisibilityPropertyIncreased;
 use PhpParser\Node;
 use PhpParser\Node\Stmt\ClassLike;
 use PhpParser\Node\Stmt\Property;
