@@ -4,7 +4,7 @@
  * See COPYING.txt for license details.
  */
 
-namespace Magento\SemanticVersionCheckr;
+namespace Magento\SemanticVersionChecker;
 
 use PHPSemVerChecker\Report\Report;
 use PHPSemVerChecker\SemanticVersioning\Level;
@@ -38,7 +38,7 @@ class SemanticVersionChecker
     /**
      * Initialize dependencies.
      *
-     * @param \Magento\SemanticVersionCheckr\ReportBuilder $reportBuilder
+     * @param \Magento\SemanticVersionChecker\ReportBuilder $reportBuilder
      * @param FileChangeDetector $fileChangeDetector
      */
     public function __construct(

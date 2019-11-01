@@ -5,21 +5,21 @@
  */
 declare(strict_types=1);
 
-namespace Magento\SemanticVersionCheckr\Analyzer;
+namespace Magento\SemanticVersionChecker\Analyzer;
 
-use Magento\SemanticVersionCheckr\Comparator\Signature;
-use Magento\SemanticVersionCheckr\Comparator\Visibility;
-use Magento\SemanticVersionCheckr\Operation\ClassConstructorLastParameterRemoved;
-use Magento\SemanticVersionCheckr\Operation\ClassConstructorObjectParameterAdded;
-use Magento\SemanticVersionCheckr\Operation\ClassConstructorOptionalParameterAdded;
-use Magento\SemanticVersionCheckr\Operation\ClassMethodLastParameterRemoved;
-use Magento\SemanticVersionCheckr\Operation\ClassMethodMoved;
-use Magento\SemanticVersionCheckr\Operation\ClassMethodOptionalParameterAdded;
-use Magento\SemanticVersionCheckr\Operation\ClassMethodParameterTypingChanged;
-use Magento\SemanticVersionCheckr\Operation\ClassMethodReturnTypingChanged;
-use Magento\SemanticVersionCheckr\Operation\ExtendableClassConstructorOptionalParameterAdded;
-use Magento\SemanticVersionCheckr\Operation\Visibility\MethodDecreased as VisibilityMethodDecreased;
-use Magento\SemanticVersionCheckr\Operation\Visibility\MethodIncreased as VisibilityMethodIncreased;
+use Magento\SemanticVersionChecker\Comparator\Signature;
+use Magento\SemanticVersionChecker\Comparator\Visibility;
+use Magento\SemanticVersionChecker\Operation\ClassConstructorLastParameterRemoved;
+use Magento\SemanticVersionChecker\Operation\ClassConstructorObjectParameterAdded;
+use Magento\SemanticVersionChecker\Operation\ClassConstructorOptionalParameterAdded;
+use Magento\SemanticVersionChecker\Operation\ClassMethodLastParameterRemoved;
+use Magento\SemanticVersionChecker\Operation\ClassMethodMoved;
+use Magento\SemanticVersionChecker\Operation\ClassMethodOptionalParameterAdded;
+use Magento\SemanticVersionChecker\Operation\ClassMethodParameterTypingChanged;
+use Magento\SemanticVersionChecker\Operation\ClassMethodReturnTypingChanged;
+use Magento\SemanticVersionChecker\Operation\ExtendableClassConstructorOptionalParameterAdded;
+use Magento\SemanticVersionChecker\Operation\Visibility\MethodDecreased as VisibilityMethodDecreased;
+use Magento\SemanticVersionChecker\Operation\Visibility\MethodIncreased as VisibilityMethodIncreased;
 use PhpParser\Node\Stmt;
 use PhpParser\Node\Stmt\ClassLike;
 use PhpParser\Node\Stmt\ClassMethod;

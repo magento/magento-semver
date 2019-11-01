@@ -5,7 +5,7 @@
  */
 declare(strict_types=1);
 
-namespace Magento\SemanticVersionCheckr;
+namespace Magento\SemanticVersionChecker;
 
 /**
  * Holds the different report type keys.

@@ -5,9 +5,9 @@
  */
 declare(strict_types=1);
 
-namespace Magento\SemanticVersionCheckr\ClassHierarchy;
+namespace Magento\SemanticVersionChecker\ClassHierarchy;
 
-use Magento\SemanticVersionCheckr\Helper\Node as NodeHelper;
+use Magento\SemanticVersionChecker\Helper\Node as NodeHelper;
 use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitor\NameResolver;
 use PhpParser\ParserFactory;

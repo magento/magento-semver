@@ -6,7 +6,7 @@
 declare(strict_types=1);
 
 // @codingStandardsIgnoreFile
-namespace Magento\SemanticVersionCheckr\Finder;
+namespace Magento\SemanticVersionChecker\Finder;
 
 /**
  * Decorate finder and allow to add db_schema files there

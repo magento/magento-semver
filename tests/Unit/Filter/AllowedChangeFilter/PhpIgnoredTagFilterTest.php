@@ -3,9 +3,9 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Magento\SemanticVersionCheckr\Test\Unit\Filter\AllowedChangeFilter;
+namespace Magento\SemanticVersionChecker\Test\Unit\Filter\AllowedChangeFilter;
 
-use Magento\SemanticVersionCheckr\Filter\AllowedChangeFilter\PhpIgnoredTagFilter;
+use Magento\SemanticVersionChecker\Filter\AllowedChangeFilter\PhpIgnoredTagFilter;
 
 class PhpIgnoredTagFilterTest extends \PHPUnit\Framework\TestCase
 {

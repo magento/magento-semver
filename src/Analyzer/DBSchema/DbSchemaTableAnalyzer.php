@@ -5,12 +5,12 @@
  */
 declare(strict_types=1);
 
-namespace Magento\SemanticVersionCheckr\Analyzer\DBSchema;
+namespace Magento\SemanticVersionChecker\Analyzer\DBSchema;
 
-use Magento\SemanticVersionCheckr\Analyzer\AnalyzerInterface;
-use Magento\SemanticVersionCheckr\Operation\TableAdded;
-use Magento\SemanticVersionCheckr\Operation\TableChangeResource;
-use Magento\SemanticVersionCheckr\Operation\TableDropped;
+use Magento\SemanticVersionChecker\Analyzer\AnalyzerInterface;
+use Magento\SemanticVersionChecker\Operation\TableAdded;
+use Magento\SemanticVersionChecker\Operation\TableChangeResource;
+use Magento\SemanticVersionChecker\Operation\TableDropped;
 use PHPSemVerChecker\Registry\Registry;
 use PHPSemVerChecker\Report\Report;
 

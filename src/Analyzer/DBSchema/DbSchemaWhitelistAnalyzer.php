@@ -5,10 +5,10 @@
  */
 declare(strict_types=1);
 
-namespace Magento\SemanticVersionCheckr\Analyzer\DBSchema;
+namespace Magento\SemanticVersionChecker\Analyzer\DBSchema;
 
-use Magento\SemanticVersionCheckr\Analyzer\AnalyzerInterface;
-use Magento\SemanticVersionCheckr\Operation\InvalidWhitelist;
+use Magento\SemanticVersionChecker\Analyzer\AnalyzerInterface;
+use Magento\SemanticVersionChecker\Operation\InvalidWhitelist;
 use PHPSemVerChecker\Registry\Registry;
 use PHPSemVerChecker\Report\Report;
 

@@ -6,7 +6,7 @@
 
 declare(strict_types=1);
 
-namespace Magento\SemanticVersionCheckr\Node\Layout;
+namespace Magento\SemanticVersionChecker\Node\Layout;
 
 /**
  * Data Object for layout element type <pre><container><pre>

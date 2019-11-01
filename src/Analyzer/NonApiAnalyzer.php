@@ -5,9 +5,9 @@
  */
 declare(strict_types=1);
 
-namespace Magento\SemanticVersionCheckr\Analyzer;
+namespace Magento\SemanticVersionChecker\Analyzer;
 
-use Magento\SemanticVersionCheckr\InjectableReport;
+use Magento\SemanticVersionChecker\InjectableReport;
 use PHPSemVerChecker\Registry\Registry;
 use PHPSemVerChecker\Report\Report;
 use PHPSemVerChecker\SemanticVersioning\Level;

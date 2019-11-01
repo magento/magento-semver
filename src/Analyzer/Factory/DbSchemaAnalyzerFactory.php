@@ -5,17 +5,17 @@
  */
 declare(strict_types=1);
 
-namespace Magento\SemanticVersionCheckr\Analyzer\Factory;
+namespace Magento\SemanticVersionChecker\Analyzer\Factory;
 
-use Magento\SemanticVersionCheckr\Analyzer\Analyzer;
-use Magento\SemanticVersionCheckr\Analyzer\AnalyzerInterface;
-use Magento\SemanticVersionCheckr\Analyzer\DBSchema\DbSchemaForeignKeyAnalyzer;
-use Magento\SemanticVersionCheckr\Analyzer\DBSchema\DbSchemaPrimaryKeyAnalyzer;
-use Magento\SemanticVersionCheckr\Analyzer\DBSchema\DbSchemaUniqueKeyAnalyzer;
-use Magento\SemanticVersionCheckr\Analyzer\DBSchema\DbSchemaTableAnalyzer;
-use Magento\SemanticVersionCheckr\Analyzer\DBSchema\DbSchemaColumnAnalyzer;
-use Magento\SemanticVersionCheckr\Analyzer\DBSchema\DbSchemaWhitelistAnalyzer;
-use Magento\SemanticVersionCheckr\Analyzer\DBSchema\DbSchemaWhitelistReductionOrRemovalAnalyzer;
+use Magento\SemanticVersionChecker\Analyzer\Analyzer;
+use Magento\SemanticVersionChecker\Analyzer\AnalyzerInterface;
+use Magento\SemanticVersionChecker\Analyzer\DBSchema\DbSchemaForeignKeyAnalyzer;
+use Magento\SemanticVersionChecker\Analyzer\DBSchema\DbSchemaPrimaryKeyAnalyzer;
+use Magento\SemanticVersionChecker\Analyzer\DBSchema\DbSchemaUniqueKeyAnalyzer;
+use Magento\SemanticVersionChecker\Analyzer\DBSchema\DbSchemaTableAnalyzer;
+use Magento\SemanticVersionChecker\Analyzer\DBSchema\DbSchemaColumnAnalyzer;
+use Magento\SemanticVersionChecker\Analyzer\DBSchema\DbSchemaWhitelistAnalyzer;
+use Magento\SemanticVersionChecker\Analyzer\DBSchema\DbSchemaWhitelistReductionOrRemovalAnalyzer;
 use PHPSemVerChecker\Report\Report;
 
 /**

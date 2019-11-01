@@ -5,16 +5,16 @@
  */
 declare(strict_types=1);
 
-namespace Magento\SemanticVersionCheckr\Reporter;
+namespace Magento\SemanticVersionChecker\Reporter;
 
-use Magento\SemanticVersionCheckr\DbSchemaReporter;
+use Magento\SemanticVersionChecker\DbSchemaReporter;
 use PHPSemVerChecker\Report\Report;
 use PHPSemVerChecker\SemanticVersioning\Level;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @package Magento\SemanticVersionCheckr
+ * @package Magento\SemanticVersionChecker
  */
 class HtmlDbSchemaReporter extends DbSchemaReporter
 {

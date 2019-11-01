@@ -5,10 +5,10 @@
  */
 declare(strict_types=1);
 
-namespace Magento\SemanticVersionCheckr\Operation\Less;
+namespace Magento\SemanticVersionChecker\Operation\Less;
 
 use PHPSemVerChecker\SemanticVersioning\Level;
-use Magento\SemanticVersionCheckr\Operation\AbstractOperation;
+use Magento\SemanticVersionChecker\Operation\AbstractOperation;
 
 /**
  * When a <kbd>mixin</kbd> node is removed.

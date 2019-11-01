@@ -6,13 +6,13 @@
 declare(strict_types=1);
 
 // @codingStandardsIgnoreFile
-namespace Magento\SemanticVersionCheckr\Console\Command;
+namespace Magento\SemanticVersionChecker\Console\Command;
 
-use Magento\SemanticVersionCheckr\DbSchemaReporter;
-use Magento\SemanticVersionCheckr\FileChangeDetector;
-use Magento\SemanticVersionCheckr\ReportBuilder;
-use Magento\SemanticVersionCheckr\Reporter\HtmlDbSchemaReporter;
-use Magento\SemanticVersionCheckr\SemanticVersionChecker;
+use Magento\SemanticVersionChecker\DbSchemaReporter;
+use Magento\SemanticVersionChecker\FileChangeDetector;
+use Magento\SemanticVersionChecker\ReportBuilder;
+use Magento\SemanticVersionChecker\Reporter\HtmlDbSchemaReporter;
+use Magento\SemanticVersionChecker\SemanticVersionChecker;
 use PHPSemVerChecker\SemanticVersioning\Level;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;

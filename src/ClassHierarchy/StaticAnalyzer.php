@@ -5,7 +5,7 @@
  */
 declare(strict_types=1);
 
-namespace Magento\SemanticVersionCheckr\ClassHierarchy;
+namespace Magento\SemanticVersionChecker\ClassHierarchy;
 
 use PhpParser\Error;
 use PhpParser\NodeTraverser;

@@ -5,7 +5,7 @@
  */
 declare(strict_types=1);
 
-namespace Magento\SemanticVersionCheckr\ClassHierarchy;
+namespace Magento\SemanticVersionChecker\ClassHierarchy;
 
 /**
  * Implements a dependency graph that stores {@link Entity} nodes and allows to find them by name and type.

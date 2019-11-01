@@ -5,14 +5,14 @@
  */
 declare(strict_types=1);
 
-namespace Magento\SemanticVersionCheckr\Analyzer\Less;
+namespace Magento\SemanticVersionChecker\Analyzer\Less;
 
-use Magento\SemanticVersionCheckr\Analyzer\AnalyzerInterface;
-use Magento\SemanticVersionCheckr\Operation\Less\ImportRemoved;
-use Magento\SemanticVersionCheckr\Operation\Less\MixinParameterAdded;
-use Magento\SemanticVersionCheckr\Operation\Less\VariableRemoved;
-use Magento\SemanticVersionCheckr\Operation\Less\MixinRemoved;
-use Magento\SemanticVersionCheckr\Registry\LessRegistry;
+use Magento\SemanticVersionChecker\Analyzer\AnalyzerInterface;
+use Magento\SemanticVersionChecker\Operation\Less\ImportRemoved;
+use Magento\SemanticVersionChecker\Operation\Less\MixinParameterAdded;
+use Magento\SemanticVersionChecker\Operation\Less\VariableRemoved;
+use Magento\SemanticVersionChecker\Operation\Less\MixinRemoved;
+use Magento\SemanticVersionChecker\Registry\LessRegistry;
 use PHPSemVerChecker\Registry\Registry;
 use PHPSemVerChecker\Report\Report;
 use Less_Tree;

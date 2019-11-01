@@ -5,9 +5,9 @@
  */
 declare(strict_types=1);
 
-namespace Magento\SemanticVersionCheckr\Test\Unit\Console\Command;
+namespace Magento\SemanticVersionChecker\Test\Unit\Console\Command;
 
-use Magento\SemanticVersionCheckr\Test\Unit\Console\Command\CompareSourceCommandTest\AbstractTestCaseWithRegExp;
+use Magento\SemanticVersionChecker\Test\Unit\Console\Command\CompareSourceCommandTest\AbstractTestCaseWithRegExp;
 
 /**
  * Test semantic version checker CLI command dealing with database schemas.

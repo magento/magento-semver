@@ -4,7 +4,7 @@
  * See COPYING.txt for license details.
  */
 
-namespace Magento\SemanticVersionCheckr\Visitor;
+namespace Magento\SemanticVersionChecker\Visitor;
 
 use PhpParser\Node;
 

@@ -5,13 +5,13 @@
  */
 declare(strict_types=1);
 
-namespace Magento\SemanticVersionCheckr\Analyzer\Factory;
+namespace Magento\SemanticVersionChecker\Analyzer\Factory;
 
-use Magento\SemanticVersionCheckr\Analyzer\AnalyzerInterface;
-use Magento\SemanticVersionCheckr\Analyzer\ClassAnalyzer;
-use Magento\SemanticVersionCheckr\Analyzer\InterfaceAnalyzer;
-use Magento\SemanticVersionCheckr\Analyzer\NonApiAnalyzer;
-use Magento\SemanticVersionCheckr\Analyzer\TraitAnalyzer;
+use Magento\SemanticVersionChecker\Analyzer\AnalyzerInterface;
+use Magento\SemanticVersionChecker\Analyzer\ClassAnalyzer;
+use Magento\SemanticVersionChecker\Analyzer\InterfaceAnalyzer;
+use Magento\SemanticVersionChecker\Analyzer\NonApiAnalyzer;
+use Magento\SemanticVersionChecker\Analyzer\TraitAnalyzer;
 
 /**
  * Implements a factory for {@link NonApiAnalyzer}.

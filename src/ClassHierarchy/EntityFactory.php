@@ -5,7 +5,7 @@
  */
 declare(strict_types=1);
 
-namespace Magento\SemanticVersionCheckr\ClassHierarchy;
+namespace Magento\SemanticVersionChecker\ClassHierarchy;
 
 /**
  * Implements a factory that creates new instances of {@link Entity}.

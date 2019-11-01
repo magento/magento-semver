@@ -5,11 +5,11 @@
  */
 declare(strict_types=1);
 
-namespace Magento\SemanticVersionCheckr\Analyzer\DBSchema;
+namespace Magento\SemanticVersionChecker\Analyzer\DBSchema;
 
-use Magento\SemanticVersionCheckr\Analyzer\AnalyzerInterface;
-use Magento\SemanticVersionCheckr\Operation\ColumnAdd;
-use Magento\SemanticVersionCheckr\Operation\ColumnRemove;
+use Magento\SemanticVersionChecker\Analyzer\AnalyzerInterface;
+use Magento\SemanticVersionChecker\Operation\ColumnAdd;
+use Magento\SemanticVersionChecker\Operation\ColumnRemove;
 use PHPSemVerChecker\Registry\Registry;
 use PHPSemVerChecker\Report\Report;
 

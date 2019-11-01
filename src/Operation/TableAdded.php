@@ -1,6 +1,6 @@
 <?php
 
-namespace Magento\SemanticVersionCheckr\Operation;
+namespace Magento\SemanticVersionChecker\Operation;
 
 use PhpParser\Node\Stmt;
 use PHPSemVerChecker\Operation\Operation;

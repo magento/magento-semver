@@ -6,7 +6,7 @@
 
 declare(strict_types=1);
 
-namespace Magento\SemanticVersionCheckr\ClassHierarchy;
+namespace Magento\SemanticVersionChecker\ClassHierarchy;
 
 /**
  * Implements an entity that reflects a `class`, `interface` or `trait` and its dependencies.

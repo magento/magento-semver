@@ -5,7 +5,7 @@
  */
 declare(strict_types=1);
 
-namespace Magento\SemanticVersionCheckr\Filter;
+namespace Magento\SemanticVersionChecker\Filter;
 
 /**
  * Filter Implementation to remove not changed files from the file list.

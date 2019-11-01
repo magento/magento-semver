@@ -5,12 +5,12 @@
  */
 declare(strict_types=1);
 
-namespace Magento\SemanticVersionCheckr\Analyzer\Factory;
+namespace Magento\SemanticVersionChecker\Analyzer\Factory;
 
-use Magento\SemanticVersionCheckr\Analyzer\Analyzer;
-use Magento\SemanticVersionCheckr\Analyzer\AnalyzerInterface;
-use Magento\SemanticVersionCheckr\Analyzer\Layout\Analyzer as LayoutAnalyzer;
-use Magento\SemanticVersionCheckr\DbSchemaReport;
+use Magento\SemanticVersionChecker\Analyzer\Analyzer;
+use Magento\SemanticVersionChecker\Analyzer\AnalyzerInterface;
+use Magento\SemanticVersionChecker\Analyzer\Layout\Analyzer as LayoutAnalyzer;
+use Magento\SemanticVersionChecker\DbSchemaReport;
 
 /**
  * Build and Layout XML File Analyzer.

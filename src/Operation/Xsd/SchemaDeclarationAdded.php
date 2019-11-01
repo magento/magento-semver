@@ -5,10 +5,10 @@
  */
 declare(strict_types=1);
 
-namespace Magento\SemanticVersionCheckr\Operation\Xsd;
+namespace Magento\SemanticVersionChecker\Operation\Xsd;
 
 use PHPSemVerChecker\SemanticVersioning\Level;
-use Magento\SemanticVersionCheckr\Operation\AbstractOperation;
+use Magento\SemanticVersionChecker\Operation\AbstractOperation;
 
 /**
  * When a schema declaration was added

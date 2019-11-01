@@ -1,6 +1,6 @@
 <?php
 
-namespace Magento\SemanticVersionCheckr\Reporter;
+namespace Magento\SemanticVersionChecker\Reporter;
 
 use PHPSemVerChecker\Report\Report;
 use PHPSemVerChecker\Reporter\Reporter;

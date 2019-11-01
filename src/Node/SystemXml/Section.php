@@ -5,7 +5,7 @@
  */
 declare(strict_types=1);
 
-namespace Magento\SemanticVersionCheckr\Node\SystemXml;
+namespace Magento\SemanticVersionChecker\Node\SystemXml;
 
 /**
  * Data object for system configuration <kbd>section</kbd> element.

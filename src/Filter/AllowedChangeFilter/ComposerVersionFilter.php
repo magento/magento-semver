@@ -4,7 +4,7 @@
  * See COPYING.txt for license details.
  */
 
-namespace Magento\SemanticVersionCheckr\Filter\AllowedChangeFilter;
+namespace Magento\SemanticVersionChecker\Filter\AllowedChangeFilter;
 
 class ComposerVersionFilter implements ChangedFileFilterInterface
 {

@@ -6,7 +6,7 @@
 
 declare(strict_types=1);
 
-namespace Magento\SemanticVersionCheckr\Node\Statement;
+namespace Magento\SemanticVersionChecker\Node\Statement;
 
 use PhpParser\Node\Stmt;
 use PhpParser\Node\Stmt\ClassConst as BaseClassConstant;

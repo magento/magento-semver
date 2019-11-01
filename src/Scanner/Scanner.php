@@ -4,9 +4,9 @@
  * See COPYING.txt for license details.
  */
 
-namespace Magento\SemanticVersionCheckr\Scanner;
+namespace Magento\SemanticVersionChecker\Scanner;
 
-use Magento\SemanticVersionCheckr\Registry\RegistryInterface;
+use Magento\SemanticVersionChecker\Registry\RegistryInterface;
 use PhpParser\Error;
 use PhpParser\NodeTraverser;
 use PhpParser\Parser\Php7 as Parser;

@@ -5,9 +5,9 @@
  */
 declare(strict_types=1);
 
-namespace Magento\SemanticVersionCheckr\Analyzer;
+namespace Magento\SemanticVersionChecker\Analyzer;
 
-use Magento\SemanticVersionCheckr\Operation\ClassTraitAdded;
+use Magento\SemanticVersionChecker\Operation\ClassTraitAdded;
 use PhpParser\Node\Name;
 use PhpParser\Node\Stmt;
 use PhpParser\Node\Stmt\Class_;

@@ -4,10 +4,10 @@
  * See COPYING.txt for license details.
  */
 
-namespace Magento\SemanticVersionCheckr;
+namespace Magento\SemanticVersionChecker;
 
 use Finder\FilenameMatch;
-use Magento\SemanticVersionCheckr\Scanner\ScannerInterface;
+use Magento\SemanticVersionChecker\Scanner\ScannerInterface;
 use PHPSemVerChecker\Registry\Registry;
 
 /**

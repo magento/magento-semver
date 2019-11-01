@@ -5,24 +5,24 @@
  */
 
 // @codingStandardsIgnoreFile
-namespace Magento\SemanticVersionCheckr;
+namespace Magento\SemanticVersionChecker;
 
 use Exception;
-use Magento\SemanticVersionCheckr\Analyzer\AnalyzerInterface;
-use Magento\SemanticVersionCheckr\Analyzer\Factory\AnalyzerFactory;
-use Magento\SemanticVersionCheckr\Analyzer\Factory\AnalyzerFactoryInterface;
-use Magento\SemanticVersionCheckr\Analyzer\Factory\DbSchemaAnalyzerFactory;
-use Magento\SemanticVersionCheckr\Analyzer\Factory\DiAnalyzerFactory;
-use Magento\SemanticVersionCheckr\Analyzer\Factory\LayoutAnalyzerFactory;
-use Magento\SemanticVersionCheckr\Analyzer\Factory\NonApiAnalyzerFactory;
-use Magento\SemanticVersionCheckr\Analyzer\Factory\SystemXmlAnalyzerFactory;
-use Magento\SemanticVersionCheckr\Analyzer\Factory\XsdAnalyzerFactory;
-use Magento\SemanticVersionCheckr\ClassHierarchy\StaticAnalyzerFactory;
-use Magento\SemanticVersionCheckr\Analyzer\Factory\LessAnalyzerFactory;
-use Magento\SemanticVersionCheckr\Filter\FilePatternFilter;
-use Magento\SemanticVersionCheckr\Filter\SourceFilter;
-use Magento\SemanticVersionCheckr\Finder\FinderDecoratorFactory;
-use Magento\SemanticVersionCheckr\Scanner\ScannerRegistryFactory;
+use Magento\SemanticVersionChecker\Analyzer\AnalyzerInterface;
+use Magento\SemanticVersionChecker\Analyzer\Factory\AnalyzerFactory;
+use Magento\SemanticVersionChecker\Analyzer\Factory\AnalyzerFactoryInterface;
+use Magento\SemanticVersionChecker\Analyzer\Factory\DbSchemaAnalyzerFactory;
+use Magento\SemanticVersionChecker\Analyzer\Factory\DiAnalyzerFactory;
+use Magento\SemanticVersionChecker\Analyzer\Factory\LayoutAnalyzerFactory;
+use Magento\SemanticVersionChecker\Analyzer\Factory\NonApiAnalyzerFactory;
+use Magento\SemanticVersionChecker\Analyzer\Factory\SystemXmlAnalyzerFactory;
+use Magento\SemanticVersionChecker\Analyzer\Factory\XsdAnalyzerFactory;
+use Magento\SemanticVersionChecker\ClassHierarchy\StaticAnalyzerFactory;
+use Magento\SemanticVersionChecker\Analyzer\Factory\LessAnalyzerFactory;
+use Magento\SemanticVersionChecker\Filter\FilePatternFilter;
+use Magento\SemanticVersionChecker\Filter\SourceFilter;
+use Magento\SemanticVersionChecker\Finder\FinderDecoratorFactory;
+use Magento\SemanticVersionChecker\Scanner\ScannerRegistryFactory;
 use PHPSemVerChecker\Configuration\LevelMapping;
 use PHPSemVerChecker\Report\Report;
 use PHPSemVerChecker\SemanticVersioning\Level;

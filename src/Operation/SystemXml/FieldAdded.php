@@ -5,9 +5,9 @@
  */
 declare(strict_types=1);
 
-namespace Magento\SemanticVersionCheckr\Operation\SystemXml;
+namespace Magento\SemanticVersionChecker\Operation\SystemXml;
 
-use Magento\SemanticVersionCheckr\Operation\AbstractOperation;
+use Magento\SemanticVersionChecker\Operation\AbstractOperation;
 use PHPSemVerChecker\SemanticVersioning\Level;
 
 /**

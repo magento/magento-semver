@@ -5,12 +5,12 @@
  */
 declare(strict_types=1);
 
-namespace Magento\SemanticVersionCheckr\Analyzer\DBSchema;
+namespace Magento\SemanticVersionChecker\Analyzer\DBSchema;
 
-use Magento\SemanticVersionCheckr\Analyzer\AnalyzerInterface;
-use Magento\SemanticVersionCheckr\Operation\ForeignKeyAdd;
-use Magento\SemanticVersionCheckr\Operation\ForeignKeyChange;
-use Magento\SemanticVersionCheckr\Operation\ForeignKeyDrop;
+use Magento\SemanticVersionChecker\Analyzer\AnalyzerInterface;
+use Magento\SemanticVersionChecker\Operation\ForeignKeyAdd;
+use Magento\SemanticVersionChecker\Operation\ForeignKeyChange;
+use Magento\SemanticVersionChecker\Operation\ForeignKeyDrop;
 use PHPSemVerChecker\Registry\Registry;
 use PHPSemVerChecker\Report\Report;
 

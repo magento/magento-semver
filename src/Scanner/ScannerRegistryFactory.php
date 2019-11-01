@@ -4,17 +4,17 @@
  * See COPYING.txt for license details.
  */
 
-namespace Magento\SemanticVersionCheckr\Scanner;
+namespace Magento\SemanticVersionChecker\Scanner;
 
-use Magento\SemanticVersionCheckr\ClassHierarchy\DependencyGraph;
-use Magento\SemanticVersionCheckr\Helper\Node as NodeHelper;
-use Magento\SemanticVersionCheckr\Parser\LessParser;
-use Magento\SemanticVersionCheckr\Registry\LessRegistry;
-use Magento\SemanticVersionCheckr\Registry\XmlRegistry;
-use Magento\SemanticVersionCheckr\ReportTypes;
-use Magento\SemanticVersionCheckr\Visitor\ApiClassVisitor;
-use Magento\SemanticVersionCheckr\Visitor\ApiInterfaceVisitor;
-use Magento\SemanticVersionCheckr\Visitor\ApiTraitVisitor;
+use Magento\SemanticVersionChecker\ClassHierarchy\DependencyGraph;
+use Magento\SemanticVersionChecker\Helper\Node as NodeHelper;
+use Magento\SemanticVersionChecker\Parser\LessParser;
+use Magento\SemanticVersionChecker\Registry\LessRegistry;
+use Magento\SemanticVersionChecker\Registry\XmlRegistry;
+use Magento\SemanticVersionChecker\ReportTypes;
+use Magento\SemanticVersionChecker\Visitor\ApiClassVisitor;
+use Magento\SemanticVersionChecker\Visitor\ApiInterfaceVisitor;
+use Magento\SemanticVersionChecker\Visitor\ApiTraitVisitor;
 use PhpParser\Lexer\Emulative;
 use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitor\NameResolver;

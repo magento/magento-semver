@@ -5,12 +5,12 @@
  */
 declare(strict_types=1);
 
-namespace Magento\SemanticVersionCheckr\Analyzer\DBSchema;
+namespace Magento\SemanticVersionChecker\Analyzer\DBSchema;
 
-use Magento\SemanticVersionCheckr\Analyzer\AnalyzerInterface;
-use Magento\SemanticVersionCheckr\Operation\UniqueKeyAdd;
-use Magento\SemanticVersionCheckr\Operation\UniqueKeyChange;
-use Magento\SemanticVersionCheckr\Operation\UniqueKeyDrop;
+use Magento\SemanticVersionChecker\Analyzer\AnalyzerInterface;
+use Magento\SemanticVersionChecker\Operation\UniqueKeyAdd;
+use Magento\SemanticVersionChecker\Operation\UniqueKeyChange;
+use Magento\SemanticVersionChecker\Operation\UniqueKeyDrop;
 use PHPSemVerChecker\Registry\Registry;
 use PHPSemVerChecker\Report\Report;
 

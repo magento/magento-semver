@@ -5,7 +5,7 @@
  */
 declare(strict_types=1);
 
-namespace Magento\SemanticVersionCheckr\Operation\DiXml;
+namespace Magento\SemanticVersionChecker\Operation\DiXml;
 
 use PHPSemVerChecker\SemanticVersioning\Level;
 

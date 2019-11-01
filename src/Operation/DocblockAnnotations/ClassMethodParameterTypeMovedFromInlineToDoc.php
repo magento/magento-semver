@@ -5,7 +5,7 @@
  */
 declare(strict_types=1);
 
-namespace Magento\SemanticVersionCheckr\Operation\DocblockAnnotations;
+namespace Magento\SemanticVersionChecker\Operation\DocblockAnnotations;
 
 use PhpParser\Node\Stmt\Class_;
 use PHPSemVerChecker\Operation\ClassMethodOperationUnary;

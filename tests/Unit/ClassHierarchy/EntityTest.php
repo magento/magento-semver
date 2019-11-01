@@ -5,13 +5,13 @@
  */
 declare(strict_types=1);
 
-namespace Magento\SemanticVersionCheckr\Test\Unit\ClassHierarchy;
+namespace Magento\SemanticVersionChecker\Test\Unit\ClassHierarchy;
 
-use Magento\SemanticVersionCheckr\ClassHierarchy\Entity;
+use Magento\SemanticVersionChecker\ClassHierarchy\Entity;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Contains unit test cases for {@link \Magento\SemanticVersionCheckr\ClassHierarchy\Entity}
+ * Contains unit test cases for {@link \Magento\SemanticVersionChecker\ClassHierarchy\Entity}
  */
 class EntityTest extends TestCase
 {

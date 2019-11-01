@@ -3,13 +3,13 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Magento\SemanticVersionCheckr\Test\Unit\Console\Command;
+namespace Magento\SemanticVersionChecker\Test\Unit\Console\Command;
 
-use Magento\SemanticVersionCheckr\Test\Unit\Console\Command\BackwardIncompatibleChangesCommandTest\AbstractTestCase;
+use Magento\SemanticVersionChecker\Test\Unit\Console\Command\BackwardIncompatibleChangesCommandTest\AbstractTestCase;
 
 /**
  * Contains unit test cases for
- * {@link \Magento\SemanticVersionCheckr\Console\Command\BackwardIncompatibleChangesCommand} dealing with changes
+ * {@link \Magento\SemanticVersionChecker\Console\Command\BackwardIncompatibleChangesCommand} dealing with changes
  * on interfaces.
  */
 class BackwardIncompatibleChangesCommandInterfacesTest extends AbstractTestCase

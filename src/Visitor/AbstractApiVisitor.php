@@ -4,10 +4,10 @@
  * See COPYING.txt for license details.
  */
 
-namespace Magento\SemanticVersionCheckr\Visitor;
+namespace Magento\SemanticVersionChecker\Visitor;
 
-use Magento\SemanticVersionCheckr\ClassHierarchy\DependencyGraph;
-use Magento\SemanticVersionCheckr\Helper\Node as NodeHelper;
+use Magento\SemanticVersionChecker\ClassHierarchy\DependencyGraph;
+use Magento\SemanticVersionChecker\Helper\Node as NodeHelper;
 use PhpParser\Node;
 use PhpParser\NodeVisitorAbstract;
 use PHPSemVerChecker\Registry\Registry;

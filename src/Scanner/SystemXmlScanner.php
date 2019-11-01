@@ -5,17 +5,17 @@
  */
 declare(strict_types=1);
 
-namespace Magento\SemanticVersionCheckr\Scanner;
+namespace Magento\SemanticVersionChecker\Scanner;
 
 use DOMDocument;
 use DOMElement;
 use DOMNodeList;
 use DOMXPath;
-use Magento\SemanticVersionCheckr\Node\SystemXml\Field;
-use Magento\SemanticVersionCheckr\Node\SystemXml\Group;
-use Magento\SemanticVersionCheckr\Node\SystemXml\NodeInterface;
-use Magento\SemanticVersionCheckr\Node\SystemXml\Section;
-use Magento\SemanticVersionCheckr\Registry\XmlRegistry;
+use Magento\SemanticVersionChecker\Node\SystemXml\Field;
+use Magento\SemanticVersionChecker\Node\SystemXml\Group;
+use Magento\SemanticVersionChecker\Node\SystemXml\NodeInterface;
+use Magento\SemanticVersionChecker\Node\SystemXml\Section;
+use Magento\SemanticVersionChecker\Registry\XmlRegistry;
 use PHPSemVerChecker\Registry\Registry;
 
 /**

@@ -5,14 +5,14 @@
  */
 declare(strict_types=1);
 
-namespace Magento\SemanticVersionCheckr\Analyzer;
+namespace Magento\SemanticVersionChecker\Analyzer;
 
-use Magento\SemanticVersionCheckr\Comparator\Visibility;
-use Magento\SemanticVersionCheckr\Operation\ClassConstantAdded;
-use Magento\SemanticVersionCheckr\Operation\ClassConstantMoved;
-use Magento\SemanticVersionCheckr\Operation\ClassConstantRemoved;
-use Magento\SemanticVersionCheckr\Operation\Visibility\ConstantDecreased as VisibilityConstantDecreased;
-use Magento\SemanticVersionCheckr\Operation\Visibility\ConstantIncreased as VisibilityConstantIncreased;
+use Magento\SemanticVersionChecker\Comparator\Visibility;
+use Magento\SemanticVersionChecker\Operation\ClassConstantAdded;
+use Magento\SemanticVersionChecker\Operation\ClassConstantMoved;
+use Magento\SemanticVersionChecker\Operation\ClassConstantRemoved;
+use Magento\SemanticVersionChecker\Operation\Visibility\ConstantDecreased as VisibilityConstantDecreased;
+use Magento\SemanticVersionChecker\Operation\Visibility\ConstantIncreased as VisibilityConstantIncreased;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\ClassConst;
 use PhpParser\Node\Stmt\ClassLike;

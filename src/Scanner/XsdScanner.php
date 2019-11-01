@@ -5,15 +5,15 @@
  */
 declare(strict_types=1);
 
-namespace Magento\SemanticVersionCheckr\Scanner;
+namespace Magento\SemanticVersionChecker\Scanner;
 
 use DOMDocument;
 use DOMElement;
 use DOMNodeList;
-use Magento\SemanticVersionCheckr\Node\Xsd\AttributeNode;
-use Magento\SemanticVersionCheckr\Node\Xsd\ElementNode;
-use Magento\SemanticVersionCheckr\Node\Xsd\NodeInterface;
-use Magento\SemanticVersionCheckr\Registry\XmlRegistry;
+use Magento\SemanticVersionChecker\Node\Xsd\AttributeNode;
+use Magento\SemanticVersionChecker\Node\Xsd\ElementNode;
+use Magento\SemanticVersionChecker\Node\Xsd\NodeInterface;
+use Magento\SemanticVersionChecker\Registry\XmlRegistry;
 use PHPSemVerChecker\Registry\Registry;
 
 class XsdScanner implements ScannerInterface

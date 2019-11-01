@@ -5,7 +5,7 @@
  */
 declare(strict_types=1);
 
-namespace Magento\SemanticVersionCheckr\Operation;
+namespace Magento\SemanticVersionChecker\Operation;
 
 use PhpParser\Node\Stmt\Interface_;
 use PHPSemVerChecker\Node\Statement\Interface_ as Interface_Statement;

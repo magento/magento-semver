@@ -6,9 +6,9 @@
 
 declare(strict_types=1);
 
-namespace Magento\SemanticVersionCheckr\Operation\Visibility;
+namespace Magento\SemanticVersionChecker\Operation\Visibility;
 
-use Magento\SemanticVersionCheckr\Operation\VisibilityOperation;
+use Magento\SemanticVersionChecker\Operation\VisibilityOperation;
 
 /**
  * Abstract Class for visibility compare operation for Constants

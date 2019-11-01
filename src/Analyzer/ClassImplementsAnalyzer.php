@@ -5,10 +5,10 @@
  */
 declare(strict_types=1);
 
-namespace Magento\SemanticVersionCheckr\Analyzer;
+namespace Magento\SemanticVersionChecker\Analyzer;
 
-use Magento\SemanticVersionCheckr\Operation\ClassImplementsAdded;
-use Magento\SemanticVersionCheckr\Operation\ClassImplementsRemove;
+use Magento\SemanticVersionChecker\Operation\ClassImplementsAdded;
+use Magento\SemanticVersionChecker\Operation\ClassImplementsRemove;
 use PhpParser\Node\Name;
 use PhpParser\Node\Stmt\Class_;
 use PHPSemVerChecker\Report\Report;

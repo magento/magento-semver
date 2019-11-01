@@ -6,7 +6,7 @@
 
 declare(strict_types=1);
 
-namespace Magento\SemanticVersionCheckr\Operation\Layout;
+namespace Magento\SemanticVersionChecker\Operation\Layout;
 
 /**
  * When a `<update>` is removed.

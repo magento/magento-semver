@@ -5,7 +5,7 @@
  */
 declare(strict_types=1);
 
-namespace Magento\SemanticVersionCheckr\Helper;
+namespace Magento\SemanticVersionChecker\Helper;
 
 use PhpParser\Lexer\Emulative;
 use PhpParser\Node;

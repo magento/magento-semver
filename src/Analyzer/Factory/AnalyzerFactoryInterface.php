@@ -5,9 +5,9 @@
  */
 declare(strict_types=1);
 
-namespace Magento\SemanticVersionCheckr\Analyzer\Factory;
+namespace Magento\SemanticVersionChecker\Analyzer\Factory;
 
-use Magento\SemanticVersionCheckr\Analyzer\AnalyzerInterface;
+use Magento\SemanticVersionChecker\Analyzer\AnalyzerInterface;
 
 /**
  * Defines an interface for analyzer factory to build analyzer.

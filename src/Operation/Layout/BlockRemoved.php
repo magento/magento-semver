@@ -5,7 +5,7 @@
  */
 declare(strict_types=1);
 
-namespace Magento\SemanticVersionCheckr\Operation\Layout;
+namespace Magento\SemanticVersionChecker\Operation\Layout;
 
 use PHPSemVerChecker\SemanticVersioning\Level;
 

@@ -4,7 +4,7 @@
  * See COPYING.txt for license details.
  */
 
-namespace Magento\SemanticVersionCheckr\Test\Unit\Filter\AllowedChangeFilter\PhpWhitespaceFilterTest;
+namespace Magento\SemanticVersionChecker\Test\Unit\Filter\AllowedChangeFilter\PhpWhitespaceFilterTest;
 
 class RemovedPhpFile
 {

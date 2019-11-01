@@ -6,7 +6,7 @@
 
 declare(strict_types=1);
 
-namespace Magento\SemanticVersionCheckr\Operation\Visibility;
+namespace Magento\SemanticVersionChecker\Operation\Visibility;
 
 use PHPSemVerChecker\SemanticVersioning\Level;
 

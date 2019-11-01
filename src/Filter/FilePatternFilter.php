@@ -6,7 +6,7 @@
 declare(strict_types=1);
 
 // @codingStandardsIgnoreFile
-namespace Magento\SemanticVersionCheckr\Filter;
+namespace Magento\SemanticVersionChecker\Filter;
 
 class FilePatternFilter
 {

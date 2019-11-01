@@ -5,21 +5,21 @@
  */
 declare(strict_types=1);
 
-namespace Magento\SemanticVersionCheckr\Analyzer\Xsd;
+namespace Magento\SemanticVersionChecker\Analyzer\Xsd;
 
-use Magento\SemanticVersionCheckr\Analyzer\AnalyzerInterface;
-use Magento\SemanticVersionCheckr\Node\Xsd\AttributeNode;
-use Magento\SemanticVersionCheckr\Node\Xsd\ElementNode;
-use Magento\SemanticVersionCheckr\Node\Xsd\NodeInterface;
-use Magento\SemanticVersionCheckr\Operation\Xsd\AttributeRemoved;
-use Magento\SemanticVersionCheckr\Operation\Xsd\NodeRemoved;
-use Magento\SemanticVersionCheckr\Operation\Xsd\OptionalAttributeAdded;
-use Magento\SemanticVersionCheckr\Operation\Xsd\OptionalNodeAdded;
-use Magento\SemanticVersionCheckr\Operation\Xsd\RequiredAttributeAdded;
-use Magento\SemanticVersionCheckr\Operation\Xsd\RequiredNodeAdded;
-use Magento\SemanticVersionCheckr\Operation\Xsd\SchemaDeclarationAdded;
-use Magento\SemanticVersionCheckr\Operation\Xsd\SchemaDeclarationRemoved;
-use Magento\SemanticVersionCheckr\Registry\XmlRegistry;
+use Magento\SemanticVersionChecker\Analyzer\AnalyzerInterface;
+use Magento\SemanticVersionChecker\Node\Xsd\AttributeNode;
+use Magento\SemanticVersionChecker\Node\Xsd\ElementNode;
+use Magento\SemanticVersionChecker\Node\Xsd\NodeInterface;
+use Magento\SemanticVersionChecker\Operation\Xsd\AttributeRemoved;
+use Magento\SemanticVersionChecker\Operation\Xsd\NodeRemoved;
+use Magento\SemanticVersionChecker\Operation\Xsd\OptionalAttributeAdded;
+use Magento\SemanticVersionChecker\Operation\Xsd\OptionalNodeAdded;
+use Magento\SemanticVersionChecker\Operation\Xsd\RequiredAttributeAdded;
+use Magento\SemanticVersionChecker\Operation\Xsd\RequiredNodeAdded;
+use Magento\SemanticVersionChecker\Operation\Xsd\SchemaDeclarationAdded;
+use Magento\SemanticVersionChecker\Operation\Xsd\SchemaDeclarationRemoved;
+use Magento\SemanticVersionChecker\Registry\XmlRegistry;
 use PHPSemVerChecker\Registry\Registry;
 use PHPSemVerChecker\Report\Report;
 

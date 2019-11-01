@@ -5,11 +5,11 @@
  */
 declare(strict_types=1);
 
-namespace Magento\SemanticVersionCheckr\Scanner;
+namespace Magento\SemanticVersionChecker\Scanner;
 
 use Less_Exception_Parser;
-use Magento\SemanticVersionCheckr\Registry\LessRegistry;
-use Magento\SemanticVersionCheckr\Parser\LessParser;
+use Magento\SemanticVersionChecker\Registry\LessRegistry;
+use Magento\SemanticVersionChecker\Parser\LessParser;
 use PHPSemVerChecker\Registry\Registry;
 use Less_Tree;
 

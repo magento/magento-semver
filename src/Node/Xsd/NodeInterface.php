@@ -5,7 +5,7 @@
  */
 declare(strict_types=1);
 
-namespace Magento\SemanticVersionCheckr\Node\Xsd;
+namespace Magento\SemanticVersionChecker\Node\Xsd;
 
 /**
  * Defines an interface for all entities of an XSD file.

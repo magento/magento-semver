@@ -5,7 +5,7 @@
  */
 declare(strict_types=1);
 
-namespace Magento\SemanticVersionCheckr\Operation;
+namespace Magento\SemanticVersionChecker\Operation;
 
 use PhpParser\Node\Stmt\Class_ as BaseClass;
 use PHPSemVerChecker\Node\Statement\Class_ as Class_Alias;

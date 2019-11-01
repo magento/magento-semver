@@ -5,10 +5,10 @@
  */
 declare(strict_types=1);
 
-namespace Magento\SemanticVersionCheckr\Analyzer;
+namespace Magento\SemanticVersionChecker\Analyzer;
 
-use Magento\SemanticVersionCheckr\Operation\InterfaceExtendsAdded;
-use Magento\SemanticVersionCheckr\Operation\InterfaceExtendsRemove;
+use Magento\SemanticVersionChecker\Operation\InterfaceExtendsAdded;
+use Magento\SemanticVersionChecker\Operation\InterfaceExtendsRemove;
 use PhpParser\Node\Name;
 use PhpParser\Node\Stmt\Interface_;
 use PHPSemVerChecker\Report\Report;

@@ -5,12 +5,12 @@
  */
 declare(strict_types=1);
 
-namespace Magento\SemanticVersionCheckr\Analyzer\Factory;
+namespace Magento\SemanticVersionChecker\Analyzer\Factory;
 
-use Magento\SemanticVersionCheckr\Analyzer\Analyzer;
-use Magento\SemanticVersionCheckr\Analyzer\AnalyzerInterface;
-use Magento\SemanticVersionCheckr\Analyzer\SystemXml\Analyzer as SystemXmlAnalyzer;
-use Magento\SemanticVersionCheckr\DbSchemaReport;
+use Magento\SemanticVersionChecker\Analyzer\Analyzer;
+use Magento\SemanticVersionChecker\Analyzer\AnalyzerInterface;
+use Magento\SemanticVersionChecker\Analyzer\SystemXml\Analyzer as SystemXmlAnalyzer;
+use Magento\SemanticVersionChecker\DbSchemaReport;
 
 /**
  * Builds an analyzer for analysis of <kbd>system.xml</kbd> files.

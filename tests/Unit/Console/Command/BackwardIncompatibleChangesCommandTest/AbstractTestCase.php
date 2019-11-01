@@ -3,15 +3,15 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Magento\SemanticVersionCheckr\Test\Unit\Console\Command\BackwardIncompatibleChangesCommandTest;
+namespace Magento\SemanticVersionChecker\Test\Unit\Console\Command\BackwardIncompatibleChangesCommandTest;
 
-use Magento\SemanticVersionCheckr\Console\Command\BackwardIncompatibleChangesCommand;
-use Magento\SemanticVersionCheckr\Reporter\BreakingChangeTableReporter;
+use Magento\SemanticVersionChecker\Console\Command\BackwardIncompatibleChangesCommand;
+use Magento\SemanticVersionChecker\Reporter\BreakingChangeTableReporter;
 use Symfony\Component\Console\Tester\CommandTester;
 
 /**
  * Defines an abstract base class for testing
- * {@link \Magento\SemanticVersionCheckr\Console\Command\BackwardIncompatibleChangesCommand}.
+ * {@link \Magento\SemanticVersionChecker\Console\Command\BackwardIncompatibleChangesCommand}.
  */
 abstract class AbstractTestCase extends \PHPUnit\Framework\TestCase
 {

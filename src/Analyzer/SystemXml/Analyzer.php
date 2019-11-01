@@ -5,22 +5,22 @@
  */
 declare(strict_types=1);
 
-namespace Magento\SemanticVersionCheckr\Analyzer\SystemXml;
+namespace Magento\SemanticVersionChecker\Analyzer\SystemXml;
 
-use Magento\SemanticVersionCheckr\Analyzer\AnalyzerInterface;
-use Magento\SemanticVersionCheckr\Node\SystemXml\Field;
-use Magento\SemanticVersionCheckr\Node\SystemXml\Group;
-use Magento\SemanticVersionCheckr\Node\SystemXml\NodeInterface;
-use Magento\SemanticVersionCheckr\Node\SystemXml\Section;
-use Magento\SemanticVersionCheckr\Operation\SystemXml\FieldAdded;
-use Magento\SemanticVersionCheckr\Operation\SystemXml\FieldRemoved;
-use Magento\SemanticVersionCheckr\Operation\SystemXml\FileAdded;
-use Magento\SemanticVersionCheckr\Operation\SystemXml\FileRemoved;
-use Magento\SemanticVersionCheckr\Operation\SystemXml\GroupAdded;
-use Magento\SemanticVersionCheckr\Operation\SystemXml\GroupRemoved;
-use Magento\SemanticVersionCheckr\Operation\SystemXml\SectionAdded;
-use Magento\SemanticVersionCheckr\Operation\SystemXml\SectionRemoved;
-use Magento\SemanticVersionCheckr\Registry\XmlRegistry;
+use Magento\SemanticVersionChecker\Analyzer\AnalyzerInterface;
+use Magento\SemanticVersionChecker\Node\SystemXml\Field;
+use Magento\SemanticVersionChecker\Node\SystemXml\Group;
+use Magento\SemanticVersionChecker\Node\SystemXml\NodeInterface;
+use Magento\SemanticVersionChecker\Node\SystemXml\Section;
+use Magento\SemanticVersionChecker\Operation\SystemXml\FieldAdded;
+use Magento\SemanticVersionChecker\Operation\SystemXml\FieldRemoved;
+use Magento\SemanticVersionChecker\Operation\SystemXml\FileAdded;
+use Magento\SemanticVersionChecker\Operation\SystemXml\FileRemoved;
+use Magento\SemanticVersionChecker\Operation\SystemXml\GroupAdded;
+use Magento\SemanticVersionChecker\Operation\SystemXml\GroupRemoved;
+use Magento\SemanticVersionChecker\Operation\SystemXml\SectionAdded;
+use Magento\SemanticVersionChecker\Operation\SystemXml\SectionRemoved;
+use Magento\SemanticVersionChecker\Registry\XmlRegistry;
 use PHPSemVerChecker\Registry\Registry;
 use PHPSemVerChecker\Report\Report;
 

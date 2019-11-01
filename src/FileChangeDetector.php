@@ -4,11 +4,11 @@
  * See COPYING.txt for license details.
  */
 // @codingStandardsIgnoreFile
-namespace Magento\SemanticVersionCheckr;
+namespace Magento\SemanticVersionChecker;
 
-use Magento\Framework\App\Utility\Files;
-use Magento\SemanticVersionCheckr\Filter\AllowedChangeFilter\ChangedFileFilterInterface;
-use Magento\SemanticVersionCheckr\Filter\SourceFilter;
+//use Magento\Framework\App\Utility\Files;
+use Magento\SemanticVersionChecker\Filter\AllowedChangeFilter\ChangedFileFilterInterface;
+use Magento\SemanticVersionChecker\Filter\SourceFilter;
 
 class FileChangeDetector
 {
@@ -46,8 +46,8 @@ class FileChangeDetector
     {
         $beforeDir = $this->sourceBeforeDir;
         $afterDir = $this->sourceAfterDir;
-        $beforeFiles = Files::getFiles([$beforeDir], '*', true);
-        $afterFiles = Files::getFiles([$afterDir], '*', true);
+        $beforeFiles = $this->getFiles([$beforeDir], '*', true);
+        $afterFiles = $this->getFiles([$afterDir], '*', true);
         $identicalFilter = new SourceFilter();
         $identicalFilter->filter($beforeFiles, $afterFiles);
 
@@ -67,6 +67,30 @@ class FileChangeDetector
             }
         }
         return array_merge($afterFiles, $beforeFiles);
+    }
+
+    /**
+     * Retrieve all files in folders and sub-folders that match pattern (glob syntax)
+     *
+     * @param array $dirPatterns
+     * @param string $fileNamePattern
+     * @param bool $recursive
+     * @return array
+     */
+    public function getFiles(array $dirPatterns, $fileNamePattern, $recursive = true)
+    {
+        $result = [];
+        foreach ($dirPatterns as $oneDirPattern) {
+            $oneDirPattern = str_replace('\\', '/', $oneDirPattern);
+            $entriesInDir = Glob::glob("{$oneDirPattern}/{$fileNamePattern}", Glob::GLOB_NOSORT | Glob::GLOB_BRACE);
+            $subDirs = Glob::glob("{$oneDirPattern}/*", Glob::GLOB_ONLYDIR | Glob::GLOB_NOSORT | Glob::GLOB_BRACE);
+            $filesInDir = array_diff($entriesInDir, $subDirs);
+            if ($recursive) {
+                $filesInSubDir = self::getFiles($subDirs, $fileNamePattern);
+                $result = array_merge($result, $filesInDir, $filesInSubDir);
+            }
+        }
+        return $result;
     }
 
     /**

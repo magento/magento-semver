@@ -5,9 +5,9 @@
  */
 declare(strict_types=1);
 
-namespace Magento\SemanticVersionCheckr\Helper;
+namespace Magento\SemanticVersionChecker\Helper;
 
-use Magento\SemanticVersionCheckr\SemanticVersionChecker;
+use Magento\SemanticVersionChecker\SemanticVersionChecker;
 use PhpParser\Node as PhpNode;
 use PhpParser\Node\Stmt\TraitUse;
 

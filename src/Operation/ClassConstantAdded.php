@@ -6,9 +6,9 @@
 
 declare(strict_types=1);
 
-namespace Magento\SemanticVersionCheckr\Operation;
+namespace Magento\SemanticVersionChecker\Operation;
 
-use Magento\SemanticVersionCheckr\Node\Statement\ClassConstant;
+use Magento\SemanticVersionChecker\Node\Statement\ClassConstant;
 use PhpParser\Node\Stmt;
 use PhpParser\Node\Stmt\ClassConst;
 use PHPSemVerChecker\SemanticVersioning\Level;

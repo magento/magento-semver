@@ -5,7 +5,7 @@
  */
 declare(strict_types=1);
 
-namespace Magento\SemanticVersionCheckr\Parser;
+namespace Magento\SemanticVersionChecker\Parser;
 
 use Less_Parser;
 

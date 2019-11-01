@@ -5,12 +5,12 @@
  */
 declare(strict_types=1);
 
-namespace Magento\SemanticVersionCheckr\Analyzer;
+namespace Magento\SemanticVersionChecker\Analyzer;
 
-use Magento\SemanticVersionCheckr\Helper\ClassParser;
-use Magento\SemanticVersionCheckr\Operation\ExceptionSubclassed;
-use Magento\SemanticVersionCheckr\Operation\ExceptionSuperclassAdded;
-use Magento\SemanticVersionCheckr\Operation\ExceptionSuperclassed;
+use Magento\SemanticVersionChecker\Helper\ClassParser;
+use Magento\SemanticVersionChecker\Operation\ExceptionSubclassed;
+use Magento\SemanticVersionChecker\Operation\ExceptionSuperclassAdded;
+use Magento\SemanticVersionChecker\Operation\ExceptionSuperclassed;
 use PhpParser\Node\Stmt\ClassLike;
 use PhpParser\Node\Stmt\ClassMethod;
 use PHPSemVerChecker\Report\Report;

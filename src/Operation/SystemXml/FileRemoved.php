@@ -5,10 +5,10 @@
  */
 declare(strict_types=1);
 
-namespace Magento\SemanticVersionCheckr\Operation\SystemXml;
+namespace Magento\SemanticVersionChecker\Operation\SystemXml;
 
 use PHPSemVerChecker\SemanticVersioning\Level;
-use Magento\SemanticVersionCheckr\Operation\AbstractOperation;
+use Magento\SemanticVersionChecker\Operation\AbstractOperation;
 
 /**
  * When a <kbd>system.xml</kbd> is removed.
