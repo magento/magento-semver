@@ -3,11 +3,12 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+declare(strict_types=1);
 
-namespace Magento\SemanticVersionChecker\Console\Command;
+namespace Magento\SemanticVersionCheckr\Console\Command;
 
-use Magento\SemanticVersionChecker\BreakingChangeDocReportBuilder;
-use Magento\SemanticVersionChecker\Reporter\BreakingChangeTableReporter;
+use Magento\SemanticVersionCheckr\BreakingChangeDocReportBuilder;
+use Magento\SemanticVersionCheckr\Reporter\BreakingChangeTableReporter;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;

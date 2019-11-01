@@ -3,18 +3,18 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+declare(strict_types=1);
 
-// @codingStandardsIgnoreFile
-namespace Magento\SemanticVersionChecker\Reporter;
+namespace Magento\SemanticVersionCheckr\Reporter;
 
-use Magento\SemanticVersionChecker\DbSchemaReporter;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
+use Magento\SemanticVersionCheckr\DbSchemaReporter;
 use PHPSemVerChecker\Report\Report;
 use PHPSemVerChecker\SemanticVersioning\Level;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @package SemanticVersionChecker
+ * @package Magento\SemanticVersionCheckr
  */
 class HtmlDbSchemaReporter extends DbSchemaReporter
 {
@@ -33,7 +33,6 @@ class HtmlDbSchemaReporter extends DbSchemaReporter
 
         parent::__construct($report);
     }
-
 
     /**
      * @param \Symfony\Component\Console\Output\OutputInterface $output

@@ -3,8 +3,9 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+declare(strict_types=1);
 
-namespace Magento\SemanticVersionChecker\Analyzer\ApiMembership;
+namespace Magento\SemanticVersionCheckr\Analyzer\ApiMembership;
 
 use PhpParser\Node;
 use PHPSemVerChecker\Registry\Registry;
@@ -107,10 +108,11 @@ trait ApiMembershipAnalyzerTrait
      *
      * @param Registry $registryBefore
      * @param Registry $registryAfter
+     *
      * @return void
      * @throws \BadMethodCallException
      */
-    public function analyze($registryBefore, $registryAfter)
+    public function analyze($registryBefore, $registryAfter): void
     {
         throw new \BadMethodCallException('API Membership Analyzers use analyzeWithMembership() instead of analyze()');
     }

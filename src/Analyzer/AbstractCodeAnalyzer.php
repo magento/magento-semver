@@ -3,10 +3,11 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+declare(strict_types=1);
 
-namespace Magento\SemanticVersionChecker\Analyzer;
+namespace Magento\SemanticVersionCheckr\Analyzer;
 
-use Magento\SemanticVersionChecker\Helper\ClassParser;
+use Magento\SemanticVersionCheckr\Helper\ClassParser;
 use PhpParser\Node;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\ClassLike;
@@ -48,12 +49,12 @@ abstract class AbstractCodeAnalyzer implements AnalyzerInterface
         $this->fileAfter = $fileAfter;
     }
 
-    public function analyze($contextBefore, $contextAfter)
+    public function analyze($registryBefore, $registryAfter)
     {
         $report = new Report();
 
-        $beforeNameMap = $this->getNodeNameMap($contextBefore);
-        $afterNameMap = $this->getNodeNameMap($contextAfter);
+        $beforeNameMap = $this->getNodeNameMap($registryBefore);
+        $afterNameMap = $this->getNodeNameMap($registryAfter);
 
         $namesBefore = array_keys($beforeNameMap);
         $namesAfter = array_keys($afterNameMap);
@@ -61,13 +62,13 @@ abstract class AbstractCodeAnalyzer implements AnalyzerInterface
         $removed = array_diff($namesBefore, $namesAfter);
         $toVerify = array_intersect($namesBefore, $namesAfter);
 
-        $this->reportAdded($report, $contextAfter, $added);
-        $this->reportMovedOrRemoved($report, $contextBefore, $contextAfter, $removed);
+        $this->reportAdded($report, $registryAfter, $added);
+        $this->reportMovedOrRemoved($report, $registryBefore, $registryAfter, $removed);
 
         $this->reportChanged(
             $report,
-            $contextBefore,
-            $contextAfter,
+            $registryBefore,
+            $registryAfter,
             $toVerify
         );
 

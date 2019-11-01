@@ -3,8 +3,9 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+declare(strict_types=1);
 
-namespace Magento\SemanticVersionChecker\Helper;
+namespace Magento\SemanticVersionCheckr\Helper;
 
 use PhpParser\Lexer\Emulative;
 use PhpParser\Node;
@@ -181,6 +182,40 @@ class ClassParser
     }
 
     /**
+     * Retrieves the ancestors of <var>$className</var> that is found in current file.
+     *
+     * Note that <var>$className</var> may refer to either an actual class, interface or trait defined in the file or
+     * any class, interface or trait that is used in the file.
+     *
+     * Currently only actual parents of <var>$className</var> are returned, implemented interfaces and used traits are
+     * ignored!
+     *
+     * @param string $className
+     * @return array The ancestors of <var>$className</var> if it could be found, empty array otherwise
+     */
+    public function getAncestors(string $className): array
+    {
+        $ancestors               = [];
+        $fullyQualifiedClassName = $this->getFullyQualifiedName($className);
+
+        //bail out if className could not be resolved
+        if (strlen($fullyQualifiedClassName) === 0) {
+            return $ancestors;
+        }
+
+        $classParser     = new ClassParser($this->retrieveFilePath($fullyQualifiedClassName));
+        $parentClassName = $classParser->getParentFullClassName();
+
+        while ($parentClassName !== null) {
+            $ancestors[]     = $parentClassName;
+            $classParser     = $classParser->getParentClass();
+            $parentClassName = $classParser->getParentFullClassName();
+        }
+
+        return $ancestors;
+    }
+
+    /**
      * Returns properties of current parsed class.
      *
      * @return array
@@ -239,6 +274,57 @@ class ClassParser
     }
 
     /**
+     * Returns the fully qualified name of <var>$alias</var> in current file.
+     *
+     * This is useful for resolving aliases that were found in e.g. PHP DocBlocks.
+     *
+     * @param string $alias
+     * @return string Empty string if alias cannot be resolved, fully qualified name of alias otherwise
+     */
+    public function getFullyQualifiedName(string $alias): string
+    {
+        //bail out if file does not exist
+        if (!file_exists($this->filePath)) {
+            return '';
+        }
+
+        //bail out if alias is already fully qualified (i.e. native classes like \Exception)
+        if (class_exists($alias, false)) {
+            return $alias;
+        }
+
+        try {
+            $nodeTree = $this->getNamespaceNode();
+
+            foreach ($nodeTree->stmts as $stmt) {
+                //is the class, interface, trait defined in the very same file?
+                if ($stmt instanceof ClassLike
+                    && $stmt->name === $alias
+                ) {
+                    return $nodeTree->name->toString() . '\\' . $stmt->name;
+                }
+
+                //is the class being imported?
+                if ($stmt instanceof Use_) {
+                    foreach ($stmt->uses as $useUseStmnt) {
+                        $fullyQualifiedName = $useUseStmnt->name->toString();
+
+                        if ($useUseStmnt->alias === $alias || $fullyQualifiedName === $alias) {
+                            return $fullyQualifiedName;
+                        }
+                    }
+                }
+            }
+        } catch (\Exception $e) {
+            //NOP We simply return an empty string
+        }
+
+        //we could not find the alias, thus we return an empty string
+        return '';
+
+    }
+
+    /**
      * Retrieves file path from full class or interface name.
      *
      * @param string $namespace
@@ -250,7 +336,7 @@ class ClassParser
         $testDirPath = 'SemanticVersionChecker' . DIRECTORY_SEPARATOR . 'Test' . DIRECTORY_SEPARATOR;
         if (strpos($this->filePath, $testDirPath) !== false) {
             $testSourceDir = substr($this->filePath, 0, strrpos($this->filePath, DIRECTORY_SEPARATOR));
-            $fileName = substr($namespace, strrpos($namespace, '\\')) . '.php';
+            $fileName = substr($namespace, strrpos($namespace, '\\') ?: 0) . '.php';
             return str_replace('\\', DIRECTORY_SEPARATOR, $testSourceDir . $fileName);
         }
 

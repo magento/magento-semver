@@ -3,16 +3,16 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+declare(strict_types=1);
 
 // @codingStandardsIgnoreFile
-namespace Magento\SemanticVersionChecker\Console\Command;
+namespace Magento\SemanticVersionCheckr\Console\Command;
 
-use Magento\SemanticVersionChecker\DbSchemaReporter;
-use Magento\SemanticVersionChecker\FileChangeDetector;
-use Magento\SemanticVersionChecker\ReportBuilder;
-use Magento\SemanticVersionChecker\Reporter\HtmlDbSchemaReporter;
-use Magento\SemanticVersionChecker\SemanticVersionChecker;
-use Magento\SemanticVersionChecker\Reporter\TableReporter;
+use Magento\SemanticVersionCheckr\DbSchemaReporter;
+use Magento\SemanticVersionCheckr\FileChangeDetector;
+use Magento\SemanticVersionCheckr\ReportBuilder;
+use Magento\SemanticVersionCheckr\Reporter\HtmlDbSchemaReporter;
+use Magento\SemanticVersionCheckr\SemanticVersionChecker;
 use PHPSemVerChecker\SemanticVersioning\Level;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -37,7 +37,7 @@ class CompareSourceCommand extends Command
     {
         $this
             ->setName('compare')
-            ->setDescription('Compare a set of files to determine what semantic versioning change needs to be done.')
+            ->setDescription('Compare a set of files to determine what semantic versioning change needs to be done')
             ->setDefinition([
                 new InputArgument('source-before', InputArgument::REQUIRED, 'A directory to check'),
                 new InputArgument('source-after', InputArgument::REQUIRED, 'A directory to check against'),

@@ -1,0 +1,216 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+declare(strict_types=1);
+
+namespace Magento\SemanticVersionCheckr\Analyzer;
+
+use Magento\SemanticVersionCheckr\Operation\DocblockAnnotations\ClassMethodParameterTypeMovedFromDocToInline;
+use Magento\SemanticVersionCheckr\Operation\DocblockAnnotations\ClassMethodParameterTypeMovedFromInlineToDoc;
+use Magento\SemanticVersionCheckr\Operation\DocblockAnnotations\ClassMethodReturnTypeMovedFromDocToInline;
+use Magento\SemanticVersionCheckr\Operation\DocblockAnnotations\ClassMethodReturnTypeMovedFromInlineToDoc;
+use Magento\SemanticVersionCheckr\Operation\DocblockAnnotations\ClassMethodVariableTypeMovedFromDocToInline;
+use Magento\SemanticVersionCheckr\Operation\DocblockAnnotations\ClassMethodVariableTypeMovedFromInlineToDoc;
+use PhpParser\Node\Stmt\ClassLike;
+use PhpParser\Node\Stmt\ClassMethod;
+use PhpParser\Node\Param;
+use PHPSemVerChecker\Operation\ClassMethodOperationUnary;
+use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagNode;
+use PHPStan\PhpDocParser\Lexer\Lexer;
+use PHPStan\PhpDocParser\Parser\ConstExprParser;
+use PHPStan\PhpDocParser\Parser\PhpDocParser;
+use PHPStan\PhpDocParser\Parser\TokenIterator;
+use PHPStan\PhpDocParser\Parser\TypeParser;
+
+/**
+ * Method doc block analyzer.
+ * Performs comparison of changed method doc blocks and creates reports such as:
+ * - method param typehint moved from doc block to in-line
+ * - method param typehint moved from in-line to doc block
+ * - method return typehint moved from doc block to in-line
+ * - method return typehint moved from in-line to doc block
+ */
+class MethodDocBlockAnalyzer
+{
+    const DOC_RETURN_TAG = '@return';
+    const DOC_PARAM_TAG = '@param';
+    const DOC_VAR_TAG = '@var';
+
+    /**
+     * Analyses the Method doc block and returns the return type declaration.
+     *
+     * @param ClassMethod $method
+     * @param string $tagname
+     *
+     * @return array
+     */
+    public function getMethodDocDeclarationByTag(ClassMethod $method, string $tagname): array
+    {
+        $formattedTags = [];
+
+        if ($method->getDocComment() !== null) {
+            $lexer = new Lexer();
+            $typeParser = new TypeParser();
+            $constExprParser = new ConstExprParser();
+            $phpDocParser = new PhpDocParser($typeParser, $constExprParser);
+
+            $tokens = $lexer->tokenize((string)$method->getDocComment());
+            $tokenIterator = new TokenIterator($tokens);
+            $phpDocNode = $phpDocParser->parse($tokenIterator);
+            $tags = $phpDocNode->getTagsByName($tagname);
+
+            if ($tagname === self::DOC_RETURN_TAG) {
+                /** @var PhpDocTagNode $tag */
+                $tag = array_shift($tags);
+                $formattedTags[0] = isset($tag) ? (string)$tag->value : '';
+            } elseif (count($tags)) {
+                /** @var PhpDocTagNode $tag */
+                foreach ($tags as $tag) {
+                    $tagName = $tag->value->parameterName ?? '';
+                    if (empty($tagName)) {
+                        $tagName = $tag->value->value ?? '';
+                    }
+                    if (empty($tagName)) {
+                        $tagName = $tag->value->variableName ?? '';
+                    }
+                    $tagType = $tag->value->type->name ?? '';
+                    if (!empty($tagType)) {
+                        $formattedTags[$tagName] = $tagType;
+                    }
+                }
+            }
+        }
+
+        return count($formattedTags) ? $formattedTags : [''];
+    }
+
+    /**
+     * Analyzes the given methods and returns the specific operation
+     * for movement between doc block and in-line declaration.
+     *
+     * @param ClassMethod $methodBefore
+     * @param ClassMethod $methodAfter
+     * @param string $context
+     * @param string $fileAfter
+     * @param ClassLike $contextAfter
+     *
+     * @return null|ClassMethodOperationUnary
+     */
+    public function analyzeTypeHintMovementsBetweenDocAndMethod(
+        ClassMethod $methodBefore,
+        ClassMethod $methodAfter,
+        string $context,
+        string $fileAfter,
+        ClassLike $contextAfter
+    ): ?ClassMethodOperationUnary {
+        //check parameters
+        $inlineParamTypesBefore = $this->getParamTypes($methodBefore->getParams());
+        $inlineParamTypesAfter = $this->getParamTypes($methodAfter->getParams());
+        $inlineParamTypesAdded = array_diff($inlineParamTypesAfter, $inlineParamTypesBefore) ?? [''];
+        $inlineParamTypesRemoved = array_diff($inlineParamTypesBefore, $inlineParamTypesAfter) ?? [''];
+
+        $docParamTypesBefore = $this->getMethodDocDeclarationByTag($methodBefore, self::DOC_PARAM_TAG) ?? [''];
+        $docParamTypesAfter = $this->getMethodDocDeclarationByTag($methodAfter, self::DOC_PARAM_TAG) ?? [''];
+        $docParamTypesAdded = array_diff($docParamTypesAfter, $docParamTypesBefore) ?? [''];
+        $docParamTypesRemoved = array_diff($docParamTypesBefore, $docParamTypesAfter) ?? [''];
+
+        //check return type
+        $inlineReturnTypeBefore[] = $methodBefore->returnType ?? '';
+        if (is_object($inlineReturnTypeBefore[0]) && property_exists($inlineReturnTypeBefore[0], 'parts')) {
+            $inlineReturnTypeBefore[0] = end($inlineReturnTypeBefore[0]->parts);
+        } elseif (is_object($inlineReturnTypeBefore[0]) && property_exists($inlineReturnTypeBefore[0], 'type')) {
+            $inlineReturnTypeBefore[0] = $inlineReturnTypeBefore[0]->type;
+        }
+        $inlineReturnTypeAfter[] = $methodAfter->returnType ?? '';
+        if (is_object($inlineReturnTypeAfter[0]) && property_exists($inlineReturnTypeAfter[0], 'parts')) {
+            $inlineReturnTypeAfter[0] = end($inlineReturnTypeAfter[0]->parts);
+        } elseif (is_object($inlineReturnTypeAfter[0]) && property_exists($inlineReturnTypeAfter[0], 'type')) {
+                $inlineReturnTypeAfter[0] = $inlineReturnTypeAfter[0]->type;
+        }
+        $docReturnTypeBefore = $this->getMethodDocDeclarationByTag($methodBefore, self::DOC_RETURN_TAG) ?? [''];
+        $docReturnTypeAfter = $this->getMethodDocDeclarationByTag($methodAfter, self::DOC_RETURN_TAG) ?? [''];
+        $returnTypeMovedFromInlineToDoc = false;
+        $returnTypeMovedFromDocToInline = false;
+        if ($inlineReturnTypeBefore  !== $inlineReturnTypeAfter && $docReturnTypeBefore !== $docReturnTypeAfter) {
+            $returnTypeMovedFromInlineToDoc = $inlineReturnTypeBefore[0] !== '' && $inlineReturnTypeBefore === $docReturnTypeAfter;
+            $returnTypeMovedFromDocToInline = $inlineReturnTypeAfter[0] !== '' && $inlineReturnTypeAfter === $docReturnTypeBefore;
+        }
+
+        //check variables
+        $docVarTypesBefore = $this->getMethodDocDeclarationByTag($methodBefore, self::DOC_VAR_TAG) ?? [''];
+        $docVarTypesAfter = $this->getMethodDocDeclarationByTag($methodAfter, self::DOC_VAR_TAG) ?? [''];
+        $docVarTypesAdded = array_diff($docVarTypesAfter, $docVarTypesBefore) ?? [''];
+        $docVarTypesRemoved = array_diff($docVarTypesBefore, $docVarTypesAfter) ?? [''];
+        switch (true) {
+            case count($docParamTypesRemoved) && $inlineParamTypesAdded == $docParamTypesRemoved:
+                return new ClassMethodParameterTypeMovedFromDocToInline(
+                    $context,
+                    $fileAfter,
+                    $contextAfter,
+                    $methodAfter
+                );
+            case count($docParamTypesAdded) && $inlineParamTypesRemoved == $docParamTypesAdded:
+                return new ClassMethodParameterTypeMovedFromInlineToDoc(
+                    $context,
+                    $fileAfter,
+                    $contextAfter,
+                    $methodAfter
+                );
+            case $returnTypeMovedFromDocToInline:
+                return new ClassMethodReturnTypeMovedFromDocToInline(
+                    $context,
+                    $fileAfter,
+                    $contextAfter,
+                    $methodAfter
+                );
+            case $returnTypeMovedFromInlineToDoc:
+                return new ClassMethodReturnTypeMovedFromInlineToDoc(
+                    $context,
+                    $fileAfter,
+                    $contextAfter,
+                    $methodAfter
+                );
+            case count($docVarTypesRemoved) && $inlineParamTypesAdded == $docVarTypesRemoved:
+                return new ClassMethodVariableTypeMovedFromDocToInline(
+                    $context,
+                    $fileAfter,
+                    $contextAfter,
+                    $methodAfter
+                );
+            case count($docVarTypesAdded) && $inlineParamTypesRemoved == $docVarTypesAdded:
+                return new ClassMethodVariableTypeMovedFromInlineToDoc(
+                    $context,
+                    $fileAfter,
+                    $contextAfter,
+                    $methodAfter
+                );
+            default:
+                return null;
+        }
+    }
+
+    /**
+     * Gives back an array of in-line param types by name.
+     *
+     * @param Param[] $params
+     *
+     * @return array
+     */
+    private function getParamTypes(array $params): array
+    {
+        $formattedParams = [];
+        /** @var Param $param */
+        foreach ($params as $param) {
+            $paramType = $param->type;
+            if (!empty($paramType) && is_object($paramType)) {
+                $formattedParams['$' . $param->name] = end($paramType->parts);
+            } elseif (!empty($paramType)) {
+                $formattedParams['$' . $param->name] = $paramType;
+            }
+        }
+
+        return $formattedParams ?? [''];
+    }
+}

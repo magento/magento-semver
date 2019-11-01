@@ -3,13 +3,10 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+declare(strict_types=1);
 
-namespace Magento\SemanticVersionChecker\Operation;
+namespace Magento\SemanticVersionCheckr\Operation;
 
-use PhpParser\Node\Stmt;
-use PhpParser\Node\Stmt\Property;
-use PHPSemVerChecker\Node\Statement\Property as PProperty;
-use PHPSemVerChecker\Operation\PropertyOperation;
 use PHPSemVerChecker\SemanticVersioning\Level;
 
 /**

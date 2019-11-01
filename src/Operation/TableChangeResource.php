@@ -3,19 +3,19 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+declare(strict_types=1);
 
-namespace Magento\SemanticVersionChecker\Operation;
+namespace Magento\SemanticVersionCheckr\Operation;
 
 use PhpParser\Node\Stmt;
 use PhpParser\Node\Stmt\Property;
-use PHPSemVerChecker\Node\Statement\Property as PProperty;
-use PHPSemVerChecker\Operation\PropertyOperation;
+use PHPSemVerChecker\Operation\Operation;
 use PHPSemVerChecker\SemanticVersioning\Level;
 
 /**
  * Change table resource
  */
-class TableChangeResource extends \PHPSemVerChecker\Operation\Operation
+class TableChangeResource extends Operation
 {
     /**
      * Error codes.
@@ -48,14 +48,14 @@ class TableChangeResource extends \PHPSemVerChecker\Operation\Operation
     /**
      * Property context before changes.
      *
-     * @var \PhpParser\Node\Stmt
+     * @var Stmt
      */
     protected $contextBefore;
 
     /**
      * Property before changes.
      *
-     * @var \PhpParser\Node\Stmt\Property
+     * @var Property
      */
     protected $propertyBefore;
 

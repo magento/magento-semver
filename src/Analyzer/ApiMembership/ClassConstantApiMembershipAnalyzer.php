@@ -3,10 +3,11 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+declare(strict_types=1);
 
-namespace Magento\SemanticVersionChecker\Analyzer\ApiMembership;
+namespace Magento\SemanticVersionCheckr\Analyzer\ApiMembership;
 
-use Magento\SemanticVersionChecker\Analyzer\ClassConstantAnalyzer;
+use Magento\SemanticVersionCheckr\Analyzer\ClassConstantAnalyzer;
 
 /**
  * Class constant analyzer.

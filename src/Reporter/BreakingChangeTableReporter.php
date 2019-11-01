@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright © Magento, Inc. All rights reserved.
+ *
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-
 // @codingStandardsIgnoreFile
-namespace Magento\SemanticVersionChecker\Reporter;
+namespace Magento\SemanticVersionCheckr\Reporter;
 
 use PHPSemVerChecker\Report\Report;
 use PHPSemVerChecker\SemanticVersioning\Level;
