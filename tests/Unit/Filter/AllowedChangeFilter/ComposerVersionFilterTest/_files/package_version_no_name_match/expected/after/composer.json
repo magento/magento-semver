@@ -1,0 +1,6 @@
+{
+    "name": "badname/version-field-no-name-match",
+    "description": "Test not ignoring the version field when the name doesn't match the filter pattern",
+    "type": "package",
+    "version": "*"
+}

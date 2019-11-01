@@ -1,0 +1,1 @@
+This is not a composer file so it should not be filtered out even though it is identical between before and after.

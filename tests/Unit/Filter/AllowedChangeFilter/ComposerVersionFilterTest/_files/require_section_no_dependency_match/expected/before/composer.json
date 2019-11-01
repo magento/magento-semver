@@ -1,0 +1,8 @@
+{
+    "name": "require-section-no-dependency-match",
+    "description": "Test not ignoring require section constraints when the required package name doesn't match the filter pattern",
+    "type": "package",
+    "require": {
+        "othertestlib/dep-2-name": "1.0.0"
+    }
+}

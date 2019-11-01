@@ -1,0 +1,9 @@
+{
+    "name": "filtered-changes-remain",
+    "description": "Test that filtered changes are still applied to results if the file doesn't match",
+    "type": "package",
+    "require": {
+        "test/dep-1-name": "1.0.0",
+        "test/dep-2-name": "2.0.0"
+    }
+}
