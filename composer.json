@@ -21,7 +21,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Magento\\SemanticVersionChecker\\": "src/"
+            "Magento\\SemanticVersionChecker\\": "src/",
+            "Magento\\SemanticVersionChecker\\Test\\": "tests/"
         }
     }
 }
