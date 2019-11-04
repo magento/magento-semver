@@ -121,7 +121,7 @@ class Analyzer implements AnalyzerInterface
                     }
                     if (property_exists($node, 'name')) {
                         $nodeKey = $node->name;
-                    } elseif (property_exists($node, 'type')) {
+                    } elseif (property_exists($node, 'type') && property_exists($node, 'path')) {
                         $nodeKey = $node->type . ' with value: \'' . $node->path->value . '\'';
                     } else {
                         $nodeKey = get_class($node);

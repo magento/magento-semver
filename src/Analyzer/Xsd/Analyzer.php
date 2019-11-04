@@ -78,8 +78,10 @@ class Analyzer implements AnalyzerInterface
 
         //process common modules
         foreach ($commonModules as $moduleName) {
-            $filesBefore  = array_keys($nodesBefore[$moduleName]);
-            $filesAfter   = array_keys($nodesAfter[$moduleName]);
+            $nodesBeforeByModule = $nodesBefore[$moduleName] ?: [];
+            $nodesAfterByModule = $nodesAfter[$moduleName] ?: [];
+            $filesBefore  = array_keys($nodesBeforeByModule);
+            $filesAfter   = array_keys($nodesAfterByModule);
 
             //compute differences
             $addedFiles   = array_diff($filesAfter, $filesBefore);
@@ -94,8 +96,8 @@ class Analyzer implements AnalyzerInterface
 
             //process common files
             foreach ($commonFiles as $fileName) {
-                $nodesAfter  = $nodesAfter[$moduleName][$fileName];
-                $nodesBefore = $nodesBefore[$moduleName][$fileName];
+                $nodesAfter  = $nodesAfter[$moduleName][$fileName] ?: [];
+                $nodesBefore = $nodesBefore[$moduleName][$fileName] ?: [];
 
                 //compute differences
                 $addedNodes = array_diff_key($nodesAfter, $nodesBefore);

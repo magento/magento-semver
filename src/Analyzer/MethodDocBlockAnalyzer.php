@@ -205,7 +205,8 @@ class MethodDocBlockAnalyzer
         foreach ($params as $param) {
             $paramType = $param->type;
             if (!empty($paramType) && is_object($paramType)) {
-                $formattedParams['$' . $param->name] = end($paramType->parts);
+                $paramParts = property_exists($paramType, 'parts') ? $paramType->parts : [];
+                $formattedParams['$' . $param->name] = end($paramParts);
             } elseif (!empty($paramType)) {
                 $formattedParams['$' . $param->name] = $paramType;
             }
