@@ -8,6 +8,9 @@ declare(strict_types=1);
 
 namespace Magento\SemanticVersionChecker\ClassHierarchy;
 
+use PhpParser\Node\Stmt\ClassMethod;
+use PhpParser\Node\Stmt\Property;
+
 /**
  * Implements an entity that reflects a `class`, `interface` or `trait` and its dependencies.
  */
@@ -85,6 +88,16 @@ class Entity
      * @var Entity[]
      */
     private $usedBy = [];
+
+    /**
+     * @var ClassMethod[]
+     */
+    private $methodList = [];
+
+    /**
+     * @var Property[]
+     */
+    private $propertyList = [];
 
     /**
      * Constructor.
@@ -347,5 +360,37 @@ class Entity
     {
         $key                = $entity->getName();
         $this->usedBy[$key] = $entity;
+    }
+
+    /**
+     * @param ClassMethod[] $methodList
+     */
+    public function setMethodList(array $methodList): void
+    {
+        $this->methodList = $methodList;
+    }
+
+    /**
+     * @param Property[] $propertyList
+     */
+    public function setPropertyList(array $propertyList): void
+    {
+        $this->propertyList = $propertyList;
+    }
+
+    /**
+     * @return ClassMethod[]
+     */
+    public function getMethodList():array
+    {
+        return $this->methodList;
+    }
+
+    /**
+     * @return Property[]
+     */
+    public function getPropertyList():array
+    {
+        return $this->propertyList;
     }
 }

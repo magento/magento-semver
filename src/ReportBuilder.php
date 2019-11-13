@@ -109,10 +109,10 @@ class ReportBuilder
         );
 
 //        try {
-            $report = $this->buildReport();
+        $report = $this->buildReport();
 //        } finally {
-            // Restore original severity levels
-            LevelMapping::setOverrides($originalMapping);
+        // Restore original severity levels
+        LevelMapping::setOverrides($originalMapping);
 //        }
 
         return $report;
@@ -163,7 +163,7 @@ class ReportBuilder
          */
         foreach ($this->analyzerList as $reportType => $factory) {
             /** @var AnalyzerInterface $analyzer */
-            $analyzer = (new $factory())->create();
+            $analyzer = (new $factory())->create($dependencyMap);
             $tmpReport = $analyzer->analyze(
                 $beforeRegistryList[$reportType],
                 $afterRegistryList[$reportType]

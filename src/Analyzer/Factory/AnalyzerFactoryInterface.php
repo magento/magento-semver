@@ -8,6 +8,7 @@ declare(strict_types=1);
 namespace Magento\SemanticVersionChecker\Analyzer\Factory;
 
 use Magento\SemanticVersionChecker\Analyzer\AnalyzerInterface;
+use Magento\SemanticVersionChecker\ClassHierarchy\DependencyGraph;
 
 /**
  * Defines an interface for analyzer factory to build analyzer.
@@ -15,7 +16,8 @@ use Magento\SemanticVersionChecker\Analyzer\AnalyzerInterface;
 interface AnalyzerFactoryInterface
 {
     /**
+     * @param DependencyGraph|null $dependencyGraph
      * @return AnalyzerInterface
      */
-    public function create(): AnalyzerInterface;
+    public function create(DependencyGraph $dependencyGraph = null): AnalyzerInterface;
 }

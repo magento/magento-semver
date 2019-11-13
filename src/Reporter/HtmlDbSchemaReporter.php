@@ -54,6 +54,10 @@ class HtmlDbSchemaReporter extends DbSchemaReporter
             'interface',
             'trait',
             'database',
+            'di',
+            'system',
+            'xsd',
+            'less',
         ];
 
         foreach ($contexts as $context) {

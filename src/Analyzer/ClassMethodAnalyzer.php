@@ -15,16 +15,18 @@ use Magento\SemanticVersionChecker\Operation\ClassConstructorOptionalParameterAd
 use Magento\SemanticVersionChecker\Operation\ClassMethodLastParameterRemoved;
 use Magento\SemanticVersionChecker\Operation\ClassMethodMoved;
 use Magento\SemanticVersionChecker\Operation\ClassMethodOptionalParameterAdded;
+use Magento\SemanticVersionChecker\Operation\ClassMethodOverwriteAdded;
+use Magento\SemanticVersionChecker\Operation\ClassMethodOverwriteRemoved;
 use Magento\SemanticVersionChecker\Operation\ClassMethodParameterTypingChanged;
 use Magento\SemanticVersionChecker\Operation\ClassMethodReturnTypingChanged;
 use Magento\SemanticVersionChecker\Operation\ExtendableClassConstructorOptionalParameterAdded;
 use Magento\SemanticVersionChecker\Operation\Visibility\MethodDecreased as VisibilityMethodDecreased;
 use Magento\SemanticVersionChecker\Operation\Visibility\MethodIncreased as VisibilityMethodIncreased;
+use PhpParser\Node\NullableType;
 use PhpParser\Node\Stmt;
 use PhpParser\Node\Stmt\ClassLike;
 use PhpParser\Node\Stmt\ClassMethod;
 use PHPSemVerChecker\Comparator\Implementation;
-use PHPSemVerChecker\Comparator\Type;
 use PHPSemVerChecker\Operation\ClassMethodAdded;
 use PHPSemVerChecker\Operation\ClassMethodImplementationChanged;
 use PHPSemVerChecker\Operation\ClassMethodOperationUnary;
@@ -35,6 +37,12 @@ use PHPSemVerChecker\Operation\ClassMethodParameterTypingAdded;
 use PHPSemVerChecker\Operation\ClassMethodParameterTypingRemoved;
 use PHPSemVerChecker\Operation\ClassMethodRemoved;
 use PHPSemVerChecker\Report\Report;
+use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagNode;
+use PHPStan\PhpDocParser\Lexer\Lexer;
+use PHPStan\PhpDocParser\Parser\ConstExprParser;
+use PHPStan\PhpDocParser\Parser\PhpDocParser;
+use PHPStan\PhpDocParser\Parser\TokenIterator;
+use PHPStan\PhpDocParser\Parser\TypeParser;
 
 /**
  * Class method analyzer.
@@ -105,6 +113,27 @@ class ClassMethodAnalyzer extends AbstractCodeAnalyzer
      */
     protected function reportAddedNode($report, $fileAfter, $classAfter, $methodAfter)
     {
+        if ($this->dependencyGraph === null) {
+            $report->add($this->context, new ClassMethodAdded($this->context, $fileAfter, $classAfter, $methodAfter));
+            return;
+        }
+
+        $class = $this->dependencyGraph->findEntityByName((string) $classAfter->namespacedName);
+
+        if ($class !== null) {
+            foreach ($class->getExtends() as $entity) {
+                $methods = $entity->getMethodList();
+                // checks if the method is already exiting in parent class
+                if (isset($methods[$methodAfter->name])) {
+                    $report->add(
+                        $this->context,
+                        new ClassMethodOverwriteAdded($this->context, $fileAfter, $classAfter, $methodAfter)
+                    );
+                    return;
+                }
+            }
+        }
+
         $report->add($this->context, new ClassMethodAdded($this->context, $fileAfter, $classAfter, $methodAfter));
     }
 
@@ -331,12 +360,76 @@ class ClassMethodAnalyzer extends AbstractCodeAnalyzer
      */
     private function isReturnTypeChanged(ClassMethod $methodBefore, ClassMethod $methodAfter): bool
     {
-        $hasPHP7ReturnDeclarationChanged = !Type::isSame($methodBefore->returnType, $methodAfter->returnType);
+        return $this->isDocBlockAnnotationReturnTypeChanged($methodBefore, $methodAfter) || $this->isDeclarationReturnTypeChanged($methodBefore, $methodAfter);
+    }
 
-        $returnBefore = $this->methodDocBlockAnalyzer->getMethodDocDeclarationByTag($methodBefore, $this->methodDocBlockAnalyzer::DOC_RETURN_TAG);
-        $returnAfter = $this->methodDocBlockAnalyzer->getMethodDocDeclarationByTag($methodAfter, $this->methodDocBlockAnalyzer::DOC_RETURN_TAG);
+    /**
+     * @param ClassMethod $methodBefore
+     * @param ClassMethod $methodAfter
+     *
+     * @return bool
+     */
+    private function isDocBlockAnnotationReturnTypeChanged(ClassMethod $methodBefore, ClassMethod $methodAfter)
+    {
+        $returnBefore = $this->getDocReturnDeclaration($methodBefore);
+        $returnAfter  = $this->getDocReturnDeclaration($methodAfter);
 
-        return $hasPHP7ReturnDeclarationChanged || $returnBefore !== $returnAfter;
+        return $returnBefore !== $returnAfter;
+    }
+
+    /**
+     * @param ClassMethod $methodBefore
+     * @param ClassMethod $methodAfter
+     *
+     * @return bool
+     */
+    private function isDeclarationReturnTypeChanged(ClassMethod $methodBefore, ClassMethod $methodAfter)
+    {
+        if (!$this->isReturnsEqualByNullability($methodBefore, $methodAfter)) {
+            return true;
+        }
+        $beforeMethodReturnType = $methodBefore->returnType instanceof NullableType ? (string) $methodBefore->returnType->type : (string) $methodBefore->returnType;
+        $afterMethodReturnType = $methodAfter->returnType instanceof NullableType ? (string) $methodAfter->returnType->type : (string) $methodAfter->returnType;
+
+        return $beforeMethodReturnType !== $afterMethodReturnType;
+    }
+
+    /**
+     * checks if both return types has same nullable status
+     *
+     * @param ClassMethod $before
+     * @param ClassMethod $after
+     *
+     * @return bool
+     */
+    private function isReturnsEqualByNullability(ClassMethod $before, ClassMethod $after): bool
+    {
+        return ($before instanceof NullableType) === ($after instanceof NullableType);
+    }
+
+    /**
+     * Analyses the Method doc block and returns the return type declaration
+     *
+     * @param ClassMethod $method
+     *
+     * @return string
+     */
+    private function getDocReturnDeclaration(ClassMethod $method)
+    {
+        if ($method->getDocComment() !== null) {
+            $lexer           = new Lexer();
+            $typeParser      = new TypeParser();
+            $constExprParser = new ConstExprParser();
+            $phpDocParser    = new PhpDocParser($typeParser, $constExprParser);
+
+            $tokens        = $lexer->tokenize((string)$method->getDocComment());
+            $tokenIterator = new TokenIterator($tokens);
+            $phpDocNode    = $phpDocParser->parse($tokenIterator);
+            $tags          = $phpDocNode->getTagsByName('@return');
+            /** @var PhpDocTagNode $tag */
+            $tag = array_shift($tags);
+        }
+        return isset($tag) ? (string)$tag->value : ' ';
     }
 
     /**

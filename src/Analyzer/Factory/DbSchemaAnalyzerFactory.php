@@ -16,6 +16,7 @@ use Magento\SemanticVersionChecker\Analyzer\DBSchema\DbSchemaTableAnalyzer;
 use Magento\SemanticVersionChecker\Analyzer\DBSchema\DbSchemaColumnAnalyzer;
 use Magento\SemanticVersionChecker\Analyzer\DBSchema\DbSchemaWhitelistAnalyzer;
 use Magento\SemanticVersionChecker\Analyzer\DBSchema\DbSchemaWhitelistReductionOrRemovalAnalyzer;
+use Magento\SemanticVersionChecker\ClassHierarchy\DependencyGraph;
 use PHPSemVerChecker\Report\Report;
 
 /**
@@ -24,9 +25,10 @@ use PHPSemVerChecker\Report\Report;
 class DbSchemaAnalyzerFactory implements AnalyzerFactoryInterface
 {
     /**
+     * @param DependencyGraph|null $dependencyGraph
      * @return AnalyzerInterface
      */
-    public function create(): AnalyzerInterface
+    public function create(DependencyGraph $dependencyGraph = null): AnalyzerInterface
     {
         $report = new Report();
         $analyzers = [

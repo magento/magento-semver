@@ -10,7 +10,10 @@ namespace Magento\SemanticVersionChecker\ClassHierarchy;
 use Magento\SemanticVersionChecker\Helper\Node as NodeHelper;
 use PhpParser\Node;
 use PhpParser\Node\Stmt\Class_ as ClassNode;
+use PhpParser\Node\Stmt\ClassLike;
+use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\Node\Stmt\Interface_ as InterfaceNode;
+use PhpParser\Node\Stmt\Property;
 use PhpParser\Node\Stmt\Trait_ as TraitNode;
 use PhpParser\NodeVisitorAbstract;
 
@@ -76,6 +79,9 @@ class DependencyInspectionVisitor extends NodeVisitorAbstract
         $className = (string)$node->namespacedName;
         $class     = $this->dependencyGraph->findOrCreateClass($className);
 
+        [$methodList, $propertyList] = $this->fetchStmtsNodes($node);
+        $class->setMethodList($methodList);
+        $class->setPropertyList($propertyList);
         $class->setIsApi($this->nodeHelper->isApiNode($node));
 
         if ($node->extends) {
@@ -110,6 +116,8 @@ class DependencyInspectionVisitor extends NodeVisitorAbstract
         $interface     = $this->dependencyGraph->findOrCreateInterface($interfaceName);
 
         $interface->setIsApi($this->nodeHelper->isApiNode($node));
+        [$methodList] = $this->fetchStmtsNodes($node);
+        $interface->setMethodList($methodList);
 
         foreach ($node->extends as $extend) {
             $interfaceName   = (string)$extend;
@@ -128,6 +136,9 @@ class DependencyInspectionVisitor extends NodeVisitorAbstract
         $traitName = (string)$node->namespacedName;
         $trait     = $this->dependencyGraph->findOrCreateTrait($traitName);
 
+        [$methodList, $propertyList] = $this->fetchStmtsNodes($node);
+        $trait->setMethodList($methodList);
+        $trait->setPropertyList($propertyList);
         $trait->setIsApi($this->nodeHelper->isApiNode($node));
 
         foreach ($this->nodeHelper->getTraitUses($node) as $traitUse) {
@@ -139,5 +150,24 @@ class DependencyInspectionVisitor extends NodeVisitorAbstract
         }
 
         $this->dependencyGraph->addEntity($trait);
+    }
+
+    /**
+     * @param ClassLike $node
+     * @return array
+     */
+    private function fetchStmtsNodes(ClassLike $node): array
+    {
+        $methodList = [];
+        $propertyList = [];
+        foreach ($node->stmts as $stmt) {
+            if ($stmt instanceof ClassMethod) {
+                $methodList[$stmt->name] = $stmt;
+            } elseif ($stmt instanceof Property) {
+                $propertyList[$stmt->name] = $stmt;
+            }
+        }
+
+        return [$methodList, $propertyList];
     }
 }
