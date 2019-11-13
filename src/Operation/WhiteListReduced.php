@@ -3,21 +3,17 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-
 declare(strict_types=1);
 
 namespace Magento\SemanticVersionChecker\Operation;
 
+use PHPSemVerChecker\Operation\Operation;
 use PHPSemVerChecker\SemanticVersioning\Level;
 
 /**
- * Class WhiteListReduced.
- *
- * Generated when schema whitelist is reduced.
- *
- * @package Magento\SemanticVersionChecker\Operation
+ * Class WhiteListReduced generated when schema whitelist is reduced
  */
-class WhiteListReduced extends \PHPSemVerChecker\Operation\Operation
+class WhiteListReduced extends Operation
 {
     /**
      * Error code.
@@ -38,27 +34,27 @@ class WhiteListReduced extends \PHPSemVerChecker\Operation\Operation
      *
      * @var string
      */
-    protected $reason = 'Module db schema whitelist reduced.';
+    protected $reason = 'Module db schema whitelist reduced (%s).';
 
     /**
-     * File location.
+     * File location
      *
      * @var string
      */
     private $location;
 
     /**
-     * Operation constructor.
-     *
      * @param string $location
+     * @param $target
      */
-    public function __construct(string $location)
+    public function __construct($location, $target)
     {
         $this->location = $location;
+        $this->target = $target;
     }
 
     /**
-     * Returns file path before changes.
+     * Returns file path before changes
      *
      * @return string
      */
@@ -68,7 +64,15 @@ class WhiteListReduced extends \PHPSemVerChecker\Operation\Operation
     }
 
     /**
-     * Returns line position of existed property.
+     * @return string
+     */
+    public function getTarget()
+    {
+        return $this->target;
+    }
+
+    /**
+     * Returns line position of existed property
      *
      * @return int
      */
@@ -78,11 +82,19 @@ class WhiteListReduced extends \PHPSemVerChecker\Operation\Operation
     }
 
     /**
-     * Get level.
-     *
-     * @return mixed
+     * @return string
      */
-    public function getLevel()
+    public function getReason()
+    {
+        return sprintf($this->reason, $this->getTarget());
+    }
+
+    /**
+     * Get level
+     *
+     * @return int
+     */
+    public function getLevel(): int
     {
         return $this->level;
     }

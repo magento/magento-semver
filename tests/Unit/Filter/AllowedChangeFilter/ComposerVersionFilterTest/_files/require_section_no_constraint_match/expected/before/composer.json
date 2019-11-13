@@ -1,0 +1,8 @@
+{
+    "name": "require-section-no-constraint-match",
+    "description": "Test not ignoring require section constraints when the new constraint doesn't match the filter pattern",
+    "type": "package",
+    "require": {
+        "test/dep-1-name": "1.0.0"
+    }
+}

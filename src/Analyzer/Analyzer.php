@@ -3,6 +3,7 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+declare(strict_types=1);
 
 namespace Magento\SemanticVersionChecker\Analyzer;
 
@@ -12,6 +13,21 @@ use PHPSemVerChecker\Report\Report;
 
 class Analyzer implements AnalyzerInterface
 {
+
+    /**
+     * @var array|AnalyzerInterface[]
+     */
+    private $analyzers;
+
+    /**
+     * Analyzer constructor.
+     * @param AnalyzerInterface[] $analyzers
+     */
+    public function __construct(array $analyzers)
+    {
+        $this->analyzers = $analyzers;
+    }
+
     /**
      * Compare with a destination registry (what the new source code is like).
      *
@@ -24,15 +40,7 @@ class Analyzer implements AnalyzerInterface
         $finalReport = new DbSchemaReport();
 
         /** @var AnalyzerInterface[] */
-        $analyzers = [
-            new ClassAnalyzer(),
-            new InterfaceAnalyzer(),
-            new DbSchemaAnalyzer(),
-            new DbSchemaWhitelistAnalyzer(),
-            new DbSchemaWhitelistReductionAnalyzer()
-        ];
-
-        foreach ($analyzers as $analyzer) {
+        foreach ($this->analyzers as $analyzer) {
             $report = $analyzer->analyze($registryBefore, $registryAfter);
             $finalReport->merge($report);
         }

@@ -3,13 +3,14 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+declare(strict_types=1);
 
 namespace Magento\SemanticVersionChecker\Operation;
 
+use Magento\SemanticVersionChecker\Node\Statement\ClassConstant;
 use PhpParser\Node\Stmt;
 use PhpParser\Node\Stmt\ClassConst;
 use PHPSemVerChecker\SemanticVersioning\Level;
-use Magento\SemanticVersionChecker\Node\Statement\ClassConstant;
 
 class ClassConstantMoved extends ClassConstantOperation
 {

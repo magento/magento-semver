@@ -1,0 +1,7 @@
+{
+    "other_table": {
+        "column": {
+            "id_column": true
+        }
+    }
+}

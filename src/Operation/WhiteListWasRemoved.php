@@ -3,32 +3,34 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+declare(strict_types=1);
 
 namespace Magento\SemanticVersionChecker\Operation;
 
+use PHPSemVerChecker\Operation\Operation;
 use PHPSemVerChecker\SemanticVersioning\Level;
 
 /**
  * When drop table
  */
-class WhiteListWasRemoved extends \PHPSemVerChecker\Operation\Operation
+class WhiteListWasRemoved extends Operation
 {
     /**
-     * Error codes.
+     * Error codes
      *
      * @var array
      */
     protected $code = 'M109';
 
     /**
-     * Change level.
+     * Change level
      *
      * @var int
      */
     protected $level = Level::MINOR;
 
     /**
-     * Operation message.
+     * Operation message
      *
      * @var string
      */
@@ -48,11 +50,11 @@ class WhiteListWasRemoved extends \PHPSemVerChecker\Operation\Operation
     }
 
     /**
-     * Returns file path before changes.
+     * Returns file path before changes
      *
      * @return string
      */
-    public function getLocation()
+    public function getLocation(): string
     {
         return $this->target;
     }
@@ -60,27 +62,27 @@ class WhiteListWasRemoved extends \PHPSemVerChecker\Operation\Operation
     /**
      * @return string
      */
-    public function getReason()
+    public function getReason(): string
     {
         return sprintf($this->reason, $this->target);
     }
 
     /**
-     * Returns line position of existed property.
+     * Returns line position of existed property
      *
      * @return int
      */
-    public function getLine()
+    public function getLine(): int
     {
         return 0;
     }
 
     /**
-     * Get level.
+     * Get level
      *
-     * @return mixed
+     * @return int
      */
-    public function getLevel()
+    public function getLevel(): int
     {
         return $this->level;
     }

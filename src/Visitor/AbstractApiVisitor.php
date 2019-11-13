@@ -6,7 +6,8 @@
 
 namespace Magento\SemanticVersionChecker\Visitor;
 
-use Magento\SemanticVersionChecker\SemanticVersionChecker;
+use Magento\SemanticVersionChecker\ClassHierarchy\DependencyGraph;
+use Magento\SemanticVersionChecker\Helper\Node as NodeHelper;
 use PhpParser\Node;
 use PhpParser\NodeVisitorAbstract;
 use PHPSemVerChecker\Registry\Registry;
@@ -19,12 +20,25 @@ abstract class AbstractApiVisitor extends NodeVisitorAbstract
     /** @var Registry */
     protected $registry;
 
+    /** @var DependencyGraph */
+    private $dependencyGraph;
+
+    /** @var NodeHelper */
+    private $nodeHelper;
+
     /**
      * @param Registry $registry
+     * @param NodeHelper $nodeHelper
+     * @param DependencyGraph|null $dependencyGraph
      */
-    public function __construct(Registry $registry)
-    {
-        $this->registry = $registry;
+    public function __construct(
+        Registry $registry,
+        NodeHelper $nodeHelper,
+        DependencyGraph $dependencyGraph = null
+    ) {
+        $this->dependencyGraph = $dependencyGraph;
+        $this->nodeHelper      = $nodeHelper;
+        $this->registry        = $registry;
     }
 
     /**
@@ -49,10 +63,20 @@ abstract class AbstractApiVisitor extends NodeVisitorAbstract
      */
     public function pruneNonApiNodes(Node $classNode)
     {
-        if (!$this->isApiNode($classNode)) {
+        $entity = $this->dependencyGraph
+            ? $this->dependencyGraph->findEntityByName((string)$classNode->namespacedName)
+            : null;
+
+        if ($entity) {
+            $isApi = $entity->isApi() || $entity->hasApiDescendant();
+        } else {
+            $isApi = $this->nodeHelper->isApiNode($classNode);
+        }
+
+        if (!$isApi) {
             $apiNodes = [];
             foreach ($classNode->stmts as $classSubNode) {
-                if ($this->isApiNode($classSubNode)) {
+                if ($this->nodeHelper->isApiNode($classSubNode)) {
                     $apiNodes[] = $classSubNode;
                 }
             }
@@ -63,17 +87,6 @@ abstract class AbstractApiVisitor extends NodeVisitorAbstract
             }
         }
         return $classNode;
-    }
-
-    /**
-     * @param Node $node
-     * @return bool
-     */
-    private function isApiNode(Node $node)
-    {
-        return ($comment = $node->getAttribute('comments'))
-        && isset($comment[0])
-        && strpos($comment[0]->getText(), SemanticVersionChecker::ANNOTATION_API) !== false;
     }
 
     /**

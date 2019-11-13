@@ -1,0 +1,6 @@
+{
+    "name": "test/removed_composer_file",
+    "description": "Test that removed composer.json files are not filtered out",
+    "type": "package",
+    "version": "1.0.0"
+}

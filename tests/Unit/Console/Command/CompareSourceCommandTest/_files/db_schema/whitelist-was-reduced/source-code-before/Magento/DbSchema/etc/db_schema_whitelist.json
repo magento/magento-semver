@@ -1,0 +1,24 @@
+{
+    "unit_test_table": {
+        "column": {
+            "id_column": true,
+            "severity": true,
+            "title": true,
+            "time_occurred": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "unit_test_table3": {
+        "column": {
+            "id_column": true,
+            "severity": true,
+            "title": true,
+            "time_occurred": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    }
+}

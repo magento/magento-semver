@@ -3,13 +3,10 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+declare(strict_types=1);
 
 namespace Magento\SemanticVersionChecker\Operation;
 
-use PhpParser\Node\Stmt;
-use PhpParser\Node\Stmt\Property;
-use PHPSemVerChecker\Node\Statement\Property as PProperty;
-use PHPSemVerChecker\Operation\PropertyOperation;
 use PHPSemVerChecker\SemanticVersioning\Level;
 
 /**
@@ -43,7 +40,7 @@ class TableDropped extends \PHPSemVerChecker\Operation\Operation
      *
      * @var string
      */
-    protected $fileBefore;
+    protected $location;
 
     /**
      * Property context before changes.
@@ -60,12 +57,12 @@ class TableDropped extends \PHPSemVerChecker\Operation\Operation
     protected $propertyBefore;
 
     /**
-     * @param string $fileBefore
+     * @param string $location
      * @param string $target
      */
-    public function __construct($fileBefore, $target)
+    public function __construct($location, $target)
     {
-        $this->fileBefore = $fileBefore;
+        $this->location = $location;
         $this->target = $target;
     }
 
@@ -76,7 +73,7 @@ class TableDropped extends \PHPSemVerChecker\Operation\Operation
      */
     public function getLocation()
     {
-        return $this->fileBefore;
+        return $this->location;
     }
 
     /**

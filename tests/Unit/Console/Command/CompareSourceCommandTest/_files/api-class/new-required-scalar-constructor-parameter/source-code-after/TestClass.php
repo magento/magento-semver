@@ -1,9 +1,9 @@
 <?php
 /**
+ *
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-
 namespace Test\Vcs;
 
 /**
@@ -11,7 +11,7 @@ namespace Test\Vcs;
  */
 class TestClass
 {
-    public function __construct(\Test\Vcs\TestClass $a, $b)
+    public function __construct(\Test\Vcs\TestInterface $a, $b)
     {
     }
 }

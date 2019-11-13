@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="magento_testmodule">
+            <group id="general">
+                <field id="existing_field">
+                    <label>Field already exists</label>
+                </field>
+            </group>
+            <group id="removed_group">
+                <label>Group will be removed</label>
+            </group>
+        </section>
+    </system>
+</config>

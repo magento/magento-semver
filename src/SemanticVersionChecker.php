@@ -6,8 +6,6 @@
 
 namespace Magento\SemanticVersionChecker;
 
-use Magento\SemanticVersionChecker\ReportBuilder;
-use PHPSemVerChecker\Configuration\LevelMapping;
 use PHPSemVerChecker\Report\Report;
 use PHPSemVerChecker\SemanticVersioning\Level;
 
@@ -34,7 +32,7 @@ class SemanticVersionChecker
     /** @var Report */
     private $versionReport;
 
-    /** @var string[] */
+    /** @var string[]|null */
     private $changedFiles;
 
     /**
@@ -49,6 +47,7 @@ class SemanticVersionChecker
     ) {
         $this->reportBuilder = $reportBuilder;
         $this->fileChangeDetector = $fileChangeDetector;
+        $this->changedFiles = null;
     }
 
     /**
@@ -63,23 +62,27 @@ class SemanticVersionChecker
     }
 
     /**
+     * Finds all files that exist both before and after but have changed contents
+     *
      * @return array|\string[]
      */
     public function loadChangedFiles()
     {
-        if (!$this->changedFiles) {
+        // Check null (unloaded) specifically as an empty array of changed files is valid
+        if ($this->changedFiles === null) {
             $this->changedFiles = $this->fileChangeDetector->getChangedFiles();
         }
         return $this->changedFiles;
     }
 
     /**
+     * Gets the required version increase level when going from the before source to the after source
+     *
      * @return mixed
      */
     public function getVersionIncrease()
     {
         $versionReport = $this->loadVersionReport();
-        $filesChanged = $this->loadChangedFiles();
         $increaseLevels = [Level::NONE];
         foreach ($versionReport as $reportItem) {
             foreach ($reportItem as $level => $changes) {
@@ -90,8 +93,11 @@ class SemanticVersionChecker
         }
 
         $result = max($increaseLevels);
-        if ($filesChanged and $result === Level::NONE) {
-            $result = Level::PATCH;
+        if ($result === Level::NONE) {
+            $filesChanged = $this->loadChangedFiles();
+            if ($filesChanged) {
+                $result = Level::PATCH;
+            }
         }
 
         return $result;

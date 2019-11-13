@@ -8,10 +8,11 @@
     ],
     "bin": ["bin/svc"],
     "require": {
-        "php": "~7.1.3||~7.2.0",
+        "php": "~7.1.3||~7.2.0||~7.3.0",
         "tomzx/php-semver-checker": "^0.13.0",
         "symfony/console": "~4.1.0",
-        "nikic/php-parser": "^3.1.0"
+        "phpstan/phpdoc-parser": "^0.3.5",
+        "wikimedia/less.php": "~1.8.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^6.5.0",
@@ -20,7 +21,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Magento\\SemanticVersionChecker\\": "src/"
+            "Magento\\SemanticVersionChecker\\": "src/",
+            "Magento\\SemanticVersionChecker\\Test\\": "tests/"
         }
     }
 }

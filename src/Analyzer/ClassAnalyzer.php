@@ -3,6 +3,7 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+declare(strict_types=1);
 
 namespace Magento\SemanticVersionChecker\Analyzer;
 
@@ -122,6 +123,10 @@ class ClassAnalyzer extends AbstractCodeAnalyzer
                     new ClassMethodAnalyzer(static::CONTEXT, $fileBefore, $fileAfter),
                     new PropertyAnalyzer(static::CONTEXT, $fileBefore, $fileAfter),
                     new ClassConstantAnalyzer(static::CONTEXT, $fileBefore, $fileAfter),
+                    new ClassMethodExceptionAnalyzer(static::CONTEXT, $fileBefore, $fileAfter),
+                    new ClassImplementsAnalyzer(static::CONTEXT, $fileBefore, $fileAfter),
+                    new ClassExtendsAnalyzer(static::CONTEXT, $fileBefore, $fileAfter),
+                    new ClassTraitAnalyzer(static::CONTEXT, $fileBefore, $fileAfter),
                 ];
 
                 foreach ($analyzers as $analyzer) {

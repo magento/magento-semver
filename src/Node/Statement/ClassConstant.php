@@ -4,6 +4,8 @@
  * See COPYING.txt for license details.
  */
 
+declare(strict_types=1);
+
 namespace Magento\SemanticVersionChecker\Node\Statement;
 
 use PhpParser\Node\Stmt;
@@ -24,6 +26,7 @@ class ClassConstant extends BaseClassConstant
         if ($context->namespacedName) {
             $fqcn = $context->namespacedName->toString();
         }
-        return $fqcn . '::' . $constant->consts[0]->name;
+
+        return $fqcn.'::'.$constant->consts[0]->name;
     }
 }
