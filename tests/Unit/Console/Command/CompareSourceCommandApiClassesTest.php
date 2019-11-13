@@ -3,9 +3,9 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Magento\SemanticVersionChecker\Test\Unit\Console\Command;
+namespace Magento\Tools\SemanticVersionChecker\Test\Unit\Console\Command;
 
-use Magento\SemanticVersionChecker\Test\Unit\Console\Command\CompareSourceCommandTest\AbstractTestCase;
+use Magento\Tools\SemanticVersionChecker\Test\Unit\Console\Command\CompareSourceCommandTest\AbstractTestCase;
 
 /**
  * Test semantic version checker CLI command dealing with API classes.
@@ -249,11 +249,15 @@ class CompareSourceCommandApiClassesTest extends AbstractTestCase
                     'Test\Vcs\TestClass::annotationChangedPrivate       | [private] Method return typing changed.   | M122 ',
                     'Test\Vcs\TestClass::declarationRemovedPrivate      | [private] Method return typing changed.   | M122 ',
                     'Test\Vcs\TestClass::annotationRemovedPrivate       | [private] Method return typing changed.   | M122 ',
+                    'Test\Vcs\TestClass::toBeChangedClassReturnTypeInlineDeclaration         | [public] Method return typing changed.    | M120',
+                    'Test\Vcs\TestClass::nullableToBeChangedClassReturnTypeInlineDeclaration | [public] Method return typing changed.    | M120'
                 ],
                 'Major change is detected.',
                 [
                     'Test\Vcs\TestClass::declarationFcqnNotChangedPublic         | [public] Method return typing changed.    | M120 ',
                     'Test\Vcs\TestClass::declarationSelfNotChangedProtected      | [protected] Method return typing changed. | M121 ',
+                    'Test\Vcs\TestClass::classReturnTypeInlineDeclaration         | [public] Method return typing changed.    | M120 ',
+                    'Test\Vcs\TestClass::nullableClassReturnTypeInlineDeclaration | [public] Method return typing changed.    | M120 '
                 ]
             ],
             'api-class-new-method-parameter-type' => [
@@ -445,6 +449,15 @@ class CompareSourceCommandApiClassesTest extends AbstractTestCase
                     'Test\Vcs\TestClass::movedNativeTypePrivate   | [private] Method variable typehint was moved from in-line to doc block annotation.   | M174',
                 ],
                 'Major change is detected.'
+            ],
+            'api-class-added-method-subclass-overwrite' => [
+                $pathToFixtures . '/added-method-subclass-overwrite/source-code-before',
+                $pathToFixtures . '/added-method-subclass-overwrite/source-code-after',
+                [
+                    'Class (PATCH)',
+                    'Test\Vcs\ApiClass::testFunction | [public] Method overwrite has been added. | V028'
+                ],
+                'Patch change is detected.'
             ]
         ];
     }

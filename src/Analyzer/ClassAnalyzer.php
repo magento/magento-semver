@@ -7,6 +7,7 @@ declare(strict_types=1);
 
 namespace Magento\SemanticVersionChecker\Analyzer;
 
+use Magento\SemanticVersionChecker\ClassHierarchy\DependencyGraph;
 use PhpParser\Node\Stmt\Class_;
 use PHPSemVerChecker\Operation\ClassAdded;
 use PHPSemVerChecker\Operation\ClassRemoved;
@@ -43,18 +44,6 @@ class ClassAnalyzer extends AbstractCodeAnalyzer
     protected function getNodeClass()
     {
         return Class_::class;
-    }
-
-
-    /**
-     * Get the class node registry
-     *
-     * @param Registry $registry
-     * @return Class_[]
-     */
-    protected function getNodeNameMap($registry)
-    {
-        return $registry->data[static::CONTEXT];
     }
 
     /**
@@ -120,7 +109,7 @@ class ClassAnalyzer extends AbstractCodeAnalyzer
             if ($classBefore !== $classAfter) {
                 /** @var AnalyzerInterface[] $analyzers */
                 $analyzers = [
-                    new ClassMethodAnalyzer(static::CONTEXT, $fileBefore, $fileAfter),
+                    new ClassMethodAnalyzer(static::CONTEXT, $fileBefore, $fileAfter, $this->dependencyGraph),
                     new PropertyAnalyzer(static::CONTEXT, $fileBefore, $fileAfter),
                     new ClassConstantAnalyzer(static::CONTEXT, $fileBefore, $fileAfter),
                     new ClassMethodExceptionAnalyzer(static::CONTEXT, $fileBefore, $fileAfter),
@@ -135,5 +124,16 @@ class ClassAnalyzer extends AbstractCodeAnalyzer
                 }
             }
         }
+    }
+
+    /**
+     * Get the class node registry
+     *
+     * @param Registry $registry
+     * @return Class_[]
+     */
+    protected function getNodeNameMap($registry)
+    {
+        return $registry->data[static::CONTEXT];
     }
 }

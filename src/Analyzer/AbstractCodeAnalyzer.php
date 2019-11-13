@@ -7,6 +7,7 @@ declare(strict_types=1);
 
 namespace Magento\SemanticVersionChecker\Analyzer;
 
+use Magento\SemanticVersionChecker\ClassHierarchy\DependencyGraph;
 use Magento\SemanticVersionChecker\Helper\ClassParser;
 use PhpParser\Node;
 use PhpParser\Node\Stmt\Class_;
@@ -22,59 +23,59 @@ abstract class AbstractCodeAnalyzer implements AnalyzerInterface
      * @var null|string
      */
     protected $context;
-
     /**
      * File path before changes.
      *
      * @var null|string
      */
     protected $fileBefore;
-
     /**
      * File path after changes.
      *
      * @var null|string
      */
     protected $fileAfter;
-
+    /**
+     * @var null|DependencyGraph
+     */
+    protected $dependencyGraph;
     /**
      * @param string $context
      * @param string $fileBefore
      * @param string $fileAfter
+     * @param DependencyGraph|null $dependencyGraph
      */
-    public function __construct($context = null, $fileBefore = null, $fileAfter = null)
-    {
+    public function __construct(
+        $context = null,
+        $fileBefore = null,
+        $fileAfter = null,
+        DependencyGraph $dependencyGraph = null
+    ) {
         $this->context = $context;
         $this->fileBefore = $fileBefore;
         $this->fileAfter = $fileAfter;
+        $this->dependencyGraph = $dependencyGraph;
     }
-
     public function analyze($registryBefore, $registryAfter)
     {
         $report = new Report();
-
         $beforeNameMap = $this->getNodeNameMap($registryBefore);
         $afterNameMap = $this->getNodeNameMap($registryAfter);
-
         $namesBefore = array_keys($beforeNameMap);
         $namesAfter = array_keys($afterNameMap);
         $added = array_diff($namesAfter, $namesBefore);
         $removed = array_diff($namesBefore, $namesAfter);
         $toVerify = array_intersect($namesBefore, $namesAfter);
-
         $this->reportAdded($report, $registryAfter, $added);
         $this->reportMovedOrRemoved($report, $registryBefore, $registryAfter, $removed);
-
         $this->reportChanged(
             $report,
             $registryBefore,
             $registryAfter,
             $toVerify
         );
-
         return $report;
     }
-
     /**
      * Gets the appropriate nodes from the context and maps them to their names
      *
@@ -90,7 +91,6 @@ abstract class AbstractCodeAnalyzer implements AnalyzerInterface
         }
         return $keyed;
     }
-
     /**
      * Has the node been moved to parent class.
      *
@@ -101,13 +101,11 @@ abstract class AbstractCodeAnalyzer implements AnalyzerInterface
     protected function isMovedToParent($parsedClass, $removedNode)
     {
         $parentClass = $parsedClass->getParentClass();
-
         if ($removedNode instanceof ClassLike ||
             $parentClass === null ||
             (property_exists($removedNode, 'flags') && in_array($removedNode->flags, [Class_::MODIFIER_PRIVATE]))) {
             return false;
         }
-
         $parentNodes = $parentClass->getNodesOfType($this->getNodeClass());
         foreach ($parentNodes as $parentNode) {
             $parentNodeName = $this->getNodeName($parentNode);
@@ -117,10 +115,8 @@ abstract class AbstractCodeAnalyzer implements AnalyzerInterface
                 return true;
             }
         }
-
         return $this->isMovedToParent($parentClass, $removedNode);
     }
-
     /**
      * Get the name for a given node of the type analyzed
      *
@@ -128,14 +124,12 @@ abstract class AbstractCodeAnalyzer implements AnalyzerInterface
      * @return string
      */
     abstract protected function getNodeName($node);
-
     /**
      * The class of the nodes to analyze
      *
      * @return string
      */
     abstract protected function getNodeClass();
-
     /**
      * Create and report a NodeAdded operation
      *
@@ -146,7 +140,6 @@ abstract class AbstractCodeAnalyzer implements AnalyzerInterface
      * @return void
      */
     abstract protected function reportAddedNode($report, $fileAfter, $contextAfter, $nodeAfter);
-
     /**
      * Create and report a NodeRemoved operation
      *
@@ -157,7 +150,6 @@ abstract class AbstractCodeAnalyzer implements AnalyzerInterface
      * @return void
      */
     abstract protected function reportRemovedNode($report, $fileBefore, $contextBefore, $nodeBefore);
-
     /**
      * Create and report a NodeMoved operation
      *
@@ -171,7 +163,6 @@ abstract class AbstractCodeAnalyzer implements AnalyzerInterface
     {
         // ClassLike nodes do not have Moved operations, so do not enforce implementing this method
     }
-
     /**
      * Report the list of added nodes
      *
@@ -190,7 +181,6 @@ abstract class AbstractCodeAnalyzer implements AnalyzerInterface
             $this->reportAddedNode($report, $fileAfter, $contextAfter, $node);
         }
     }
-
     /**
      * Report moved or removed nodes
      *
@@ -214,7 +204,6 @@ abstract class AbstractCodeAnalyzer implements AnalyzerInterface
             }
         }
     }
-
     /**
      * Find changes to nodes that exist in both before and after states and add them to the report
      *
@@ -228,7 +217,6 @@ abstract class AbstractCodeAnalyzer implements AnalyzerInterface
     {
         // Not all types have changes beyond add/remove
     }
-
     /**
      * Get the filename to use in the report.
      *

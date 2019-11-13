@@ -10,6 +10,7 @@ namespace Magento\SemanticVersionChecker\Analyzer\Factory;
 use Magento\SemanticVersionChecker\Analyzer\Analyzer;
 use Magento\SemanticVersionChecker\Analyzer\AnalyzerInterface;
 use Magento\SemanticVersionChecker\Analyzer\SystemXml\Analyzer as SystemXmlAnalyzer;
+use Magento\SemanticVersionChecker\ClassHierarchy\DependencyGraph;
 use Magento\SemanticVersionChecker\DbSchemaReport;
 
 /**
@@ -19,9 +20,10 @@ class SystemXmlAnalyzerFactory implements AnalyzerFactoryInterface
 {
 
     /**
+     * @param DependencyGraph|null $dependencyGraph
      * @return AnalyzerInterface
      */
-    public function create(): AnalyzerInterface
+    public function create(DependencyGraph $dependencyGraph = null): AnalyzerInterface
     {
         $report = new DbSchemaReport();
         $analyzers = [

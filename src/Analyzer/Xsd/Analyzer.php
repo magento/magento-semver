@@ -78,8 +78,8 @@ class Analyzer implements AnalyzerInterface
 
         //process common modules
         foreach ($commonModules as $moduleName) {
-            $nodesBeforeByModule = $nodesBefore[$moduleName] ?: [];
-            $nodesAfterByModule = $nodesAfter[$moduleName] ?: [];
+            $nodesBeforeByModule = array_key_exists($moduleName, $nodesBefore) ? $nodesBefore[$moduleName]: [];
+            $nodesAfterByModule = array_key_exists($moduleName, $nodesAfter) ? $nodesAfter[$moduleName] : [];
             $filesBefore  = array_keys($nodesBeforeByModule);
             $filesAfter   = array_keys($nodesAfterByModule);
 

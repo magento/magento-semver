@@ -13,7 +13,7 @@ namespace Magento\SemanticVersionChecker\Filter;
 class SourceFilter
 {
     /**
-     * Filters not changed files
+     * Filters unchanged files
      *
      * @param array $filesBefore
      * @param array $filesAfter
