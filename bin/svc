@@ -8,7 +8,6 @@
 require __DIR__ . '/../vendor/autoload.php';
 
 use Symfony\Component\Console\Application;
-use Magento\SemanticVersionChecker\Console\Command\BackwardIncompatibleChangesCommand;
 use Magento\SemanticVersionChecker\Console\Command\CompareSourceCommand;
 
 if (PHP_SAPI !== 'cli') {
@@ -18,7 +17,6 @@ if (PHP_SAPI !== 'cli') {
 
 try {
     $application = new Application();
-    $application->add(new BackwardIncompatibleChangesCommand());
     $application->add(new CompareSourceCommand());
     $application->run();
 } catch (\Exception $e) {
