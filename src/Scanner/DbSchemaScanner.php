@@ -32,6 +32,9 @@ class DbSchemaScanner implements ScannerInterface
         'json'
     ];
 
+    const DB_SCHEMA_XML =  'db_schema.xml';
+    const DB_SCHEMA_WHITELIST_JSON =  'db_schema_whitelist.json';
+
     /**
      * @var XmlRegistry
      */
@@ -68,11 +71,13 @@ class DbSchemaScanner implements ScannerInterface
         if (!$this->isAllowedToPars($file)) {
             return;
         }
-        if ($this->isXml($file)) {
+        if ($this->isXml($file) && !$this->isXmlAlreadyScanned($file)) {
             $this->scanXml($file);
+            $this->associateJsonWithProvidedXmlPath($file);
         }
-        if ($this->isJson($file)) {
+        if ($this->isJson($file) && !$this->isJsonAlreadyScanned($file)) {
             $this->scanJson($file);
+            $this->associateXmlWithProvidedJsonPath($file);
         }
     }
 
@@ -106,6 +111,59 @@ class DbSchemaScanner implements ScannerInterface
         $moduleName = $this->getModuleNameByPath->resolveByEtcDirFilePath($this->registry->getCurrentFile());
         foreach ($tables as $tableName => $tableData) {
             $this->getRegistry()->data['whitelist_json'][$moduleName][$tableName] = $tableData;
+        }
+    }
+
+    /**
+     * Checks if xml file has already been scanned.
+     *
+     * @param string $xmlFilePath
+     * @return bool
+     */
+    private function isXmlAlreadyScanned(string $xmlFilePath): bool
+    {
+        $moduleName = $this->getModuleNameByPath->resolveByEtcDirFilePath($xmlFilePath);
+        return isset($this->getRegistry()->data['table'][$moduleName]);
+    }
+    /**
+     * Checks if json file has already been scanned
+     *
+     * @param string $jsonFilePath
+     * @return bool
+     */
+    private function isJsonAlreadyScanned(string $jsonFilePath): bool
+    {
+        $moduleName = $this->getModuleNameByPath->resolveByEtcDirFilePath($jsonFilePath);
+        return isset($this->getRegistry()->data['whitelist_json'][$moduleName]);
+    }
+    /**
+     * Detects and scans db_schema_whitelist.json when scanning db_schema.xml
+     *
+     * @param string $xmlFilePath
+     */
+    private function associateJsonWithProvidedXmlPath(string $xmlFilePath): void
+    {
+        $basedir = dirname($xmlFilePath);
+        $jsonFilePath = $basedir . "/" . self::DB_SCHEMA_WHITELIST_JSON;
+        if (file_exists($jsonFilePath) && !$this->isJsonAlreadyScanned($jsonFilePath)) {
+            $this->registry->setCurrentFile($jsonFilePath);
+            $this->scanJson($jsonFilePath);
+            $this->registry->setCurrentFile($xmlFilePath);
+        }
+    }
+    /**
+     * Detects and scans db_schema.xml when scanning db_schema_whitelist.json
+     *
+     * @param string $jsonFilePath
+     */
+    private function associateXmlWithProvidedJsonPath(string $jsonFilePath): void
+    {
+        $basedir = dirname($jsonFilePath);
+        $xmlFilePath = $basedir . "/" . self::DB_SCHEMA_XML;
+        if (file_exists($xmlFilePath) && !$this->isXmlAlreadyScanned($xmlFilePath)) {
+            $this->registry->setCurrentFile($xmlFilePath);
+            $this->scanXml($xmlFilePath);
+            $this->registry->setCurrentFile($jsonFilePath);
         }
     }
 
