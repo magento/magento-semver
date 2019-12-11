@@ -118,6 +118,15 @@ class CompareSourceCommand extends Command
         $versionReport = $semanticVersionChecker->loadVersionReport();
         $changedFiles = $semanticVersionChecker->loadChangedFiles();
 
+        foreach ($changedFiles as &$file) {
+            if (substr($file, 0, strlen($sourceBeforeDir)) == $sourceBeforeDir) {
+                $file = substr($file, strlen($sourceBeforeDir));
+            } elseif (substr($file, 0, strlen($sourceAfterDir)) == $sourceAfterDir) {
+                $file = substr($file, strlen($sourceAfterDir));
+            }
+        }
+        $changedFiles = array_unique($changedFiles);
+
         // Log report output
         $logOutputStream = new StreamOutput(fopen($logOutputPath, 'w+'));
 
