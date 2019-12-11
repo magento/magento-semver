@@ -151,11 +151,6 @@ class CompareSourceCommand extends Command
                     '<td><button class="btn-danger collapsible">Details</button><div class="content"><ul>'
                 );
                 foreach ($changedFiles as $file) {
-                    if (substr($file, 0, strlen($sourceBeforeDir)) == $sourceBeforeDir) {
-                        $file = substr($file, strlen($sourceBeforeDir));
-                    } elseif (substr($file, 0, strlen($sourceAfterDir)) == $sourceAfterDir) {
-                        $file = substr($file, strlen($sourceAfterDir));
-                    }
                     $logOutputStream->writeln('<li>' . $file . '</li>');
                 }
                 $logOutputStream->writeln('</ul></div></td></tr>');
