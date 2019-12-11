@@ -27,7 +27,7 @@ abstract class AbstractTestCase extends \PHPUnit\Framework\TestCase
     protected function setUp()
     {
         $this->command = new CompareSourceCommand();
-        $this->svcLogPath = TESTS_TEMP_DIR . '/svc-' . time() . '.log';
+        $this->svcLogPath = 'TESTS_TEMP_DIR' . '/svc-' . time() . '.log';
     }
 
     protected function tearDown()
