@@ -20,7 +20,7 @@ use Magento\SemanticVersionChecker\Analyzer\Factory\XsdAnalyzerFactory;
 use Magento\SemanticVersionChecker\ClassHierarchy\StaticAnalyzerFactory;
 use Magento\SemanticVersionChecker\Analyzer\Factory\LessAnalyzerFactory;
 use Magento\SemanticVersionChecker\Filter\FilePatternFilter;
-use Magento\SemanticVersionChecker\Filter\SourceFilter;
+use Magento\SemanticVersionChecker\Filter\SourceWithJsonFilter;
 use Magento\SemanticVersionChecker\Finder\FinderDecoratorFactory;
 use Magento\SemanticVersionChecker\Scanner\ScannerRegistryFactory;
 use PHPSemVerChecker\Configuration\LevelMapping;
@@ -131,11 +131,6 @@ class ReportBuilder
         $sourceBeforeFiles      = $fileIterator->findFromString($this->sourceBeforeDir, '', '');
         $sourceAfterFiles       = $fileIterator->findFromString($this->sourceAfterDir, '', '');
 
-        foreach ($this->getFilters($this->sourceBeforeDir, $this->sourceAfterDir) as $filter) {
-            // filters modify arrays by reference
-            $filter->filter($sourceBeforeFiles, $sourceAfterFiles);
-        }
-
         //let static analyzer build a complete dependency graph
         $staticAnalyzer = (new StaticAnalyzerFactory())->create();
         $staticAnalyzer->analyse($sourceBeforeFiles);
@@ -145,6 +140,11 @@ class ReportBuilder
         $scannerRegistryFactory = new ScannerRegistryFactory();
         $scannerBefore          = new ScannerRegistry($scannerRegistryFactory->create($dependencyMap));
         $scannerAfter           = new ScannerRegistry($scannerRegistryFactory->create($dependencyMap));
+
+        foreach ($this->getFilters($this->sourceBeforeDir, $this->sourceAfterDir) as $filter) {
+            // filters modify arrays by reference
+            $filter->filter($sourceBeforeFiles, $sourceAfterFiles);
+        }
 
         foreach ($sourceBeforeFiles as $file) {
             $scannerBefore->scanFile($file);
@@ -190,8 +190,8 @@ class ReportBuilder
     protected function getFilters($sourceBeforeDir, $sourceAfterDir): array
     {
         $filters = [
-            // always filter out files that are identical before and after
-            new SourceFilter(),
+            // always filter out files that are identical before and after except for JSON :facepalm:
+            new SourceWithJsonFilter(),
             // process the include and exclude patterns
             new FilePatternFilter(
                 $this->includePatternsPath,

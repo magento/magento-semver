@@ -333,7 +333,7 @@ class ClassParser
     private function retrieveFilePath($namespace)
     {
         // Concession to SVC unit testing; test classes do not exist in the normal source paths
-        $testDirPath = 'SemanticVersionChecker' . DIRECTORY_SEPARATOR . 'Test' . DIRECTORY_SEPARATOR;
+        $testDirPath = 'tests' . DIRECTORY_SEPARATOR . 'Unit' . DIRECTORY_SEPARATOR;
         if (strpos($this->filePath, $testDirPath) !== false) {
             $testSourceDir = substr($this->filePath, 0, strrpos($this->filePath, DIRECTORY_SEPARATOR));
             $fileName = substr($namespace, strrpos($namespace, '\\') ?: 0) . '.php';
