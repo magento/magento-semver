@@ -131,6 +131,11 @@ class ReportBuilder
         $sourceBeforeFiles      = $fileIterator->findFromString($this->sourceBeforeDir, '', '');
         $sourceAfterFiles       = $fileIterator->findFromString($this->sourceAfterDir, '', '');
 
+        foreach ($this->getFilters($this->sourceBeforeDir, $this->sourceAfterDir) as $filter) {
+            // filters modify arrays by reference
+            $filter->filter($sourceBeforeFiles, $sourceAfterFiles);
+        }
+
         //let static analyzer build a complete dependency graph
         $staticAnalyzer = (new StaticAnalyzerFactory())->create();
         $staticAnalyzer->analyse($sourceBeforeFiles);
@@ -140,11 +145,6 @@ class ReportBuilder
         $scannerRegistryFactory = new ScannerRegistryFactory();
         $scannerBefore          = new ScannerRegistry($scannerRegistryFactory->create($dependencyMap));
         $scannerAfter           = new ScannerRegistry($scannerRegistryFactory->create($dependencyMap));
-
-        foreach ($this->getFilters($this->sourceBeforeDir, $this->sourceAfterDir) as $filter) {
-            // filters modify arrays by reference
-            $filter->filter($sourceBeforeFiles, $sourceAfterFiles);
-        }
 
         foreach ($sourceBeforeFiles as $file) {
             $scannerBefore->scanFile($file);
