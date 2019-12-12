@@ -54,6 +54,7 @@ class HtmlDbSchemaReporter extends DbSchemaReporter
             'interface',
             'trait',
             'database',
+            'layout',
             'di',
             'system',
             'xsd',

@@ -23,42 +23,20 @@ class SourceFilter
     public function filter(array &$filesBefore, array &$filesAfter): int
     {
         $hashedBefore = [];
-        $jsonHashedBefore = [];
         foreach ($filesBefore as $fileBefore) {
-            if ($this->isJson($fileBefore)) {
-                $jsonHashedBefore[] = $fileBefore;
-            } else {
-                $hashedBefore[$this->getHash($fileBefore)] = $fileBefore;
-            }
+            $hashedBefore[$this->getHash($fileBefore)] = $fileBefore;
         }
 
         $hashedAfter = [];
-        $jsonHashedAfter = [];
         foreach ($filesAfter as $fileAfter) {
-            if ($this->isJson($fileAfter)) {
-                $jsonHashedAfter[] = $fileAfter;
-            } else {
-                $hashedAfter[$this->getHash($fileAfter)] = $fileAfter;
-            }
+            $hashedAfter[$this->getHash($fileAfter)] = $fileAfter;
         }
 
         $intersection = array_intersect_key($hashedBefore, $hashedAfter);
-        $filesBefore = array_merge(array_values(array_diff_key($hashedBefore, $intersection)), $jsonHashedBefore);
-        $filesAfter = array_merge(array_values(array_diff_key($hashedAfter, $intersection)), $jsonHashedAfter);
+        $filesBefore = array_values(array_diff_key($hashedBefore, $intersection));
+        $filesAfter = array_values(array_diff_key($hashedAfter, $intersection));
 
         return count($intersection);
-    }
-
-    /**
-     * Checks if file has JSON extension
-     *
-     * @param string $file
-     *
-     * @return bool
-     */
-    private function isJson(string $file): bool
-    {
-        return (bool)preg_match('/^.*.json/', $file);
     }
 
     /**
