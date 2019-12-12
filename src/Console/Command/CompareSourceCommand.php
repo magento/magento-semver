@@ -212,7 +212,7 @@ class CompareSourceCommand extends Command
      */
     private function getHtmlHeader()
     {
-        $css = file_get_contents(__DIR__ . '/../../src/bootstrap.min.css');
+        $css = file_get_contents(__DIR__ . '/css/bootstrap.min.css');
 
         return <<<HEADER
 <!DOCTYPE html>
