@@ -3,7 +3,7 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Magento\Tools\SemanticVersionChecker\Test\Unit\Console\Command;
+namespace Magento\SemanticVersionChecker\Test\Unit\Console\Command;
 
 use Magento\SemanticVersionChecker\Test\Unit\Console\Command\CompareSourceCommandTest\AbstractTestCase;
 
