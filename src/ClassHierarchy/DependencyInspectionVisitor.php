@@ -164,7 +164,9 @@ class DependencyInspectionVisitor extends NodeVisitorAbstract
             if ($stmt instanceof ClassMethod) {
                 $methodList[$stmt->name] = $stmt;
             } elseif ($stmt instanceof Property) {
-                $propertyList[$stmt->name] = $stmt;
+                foreach ($stmt->props as $prop) {
+                    $propertyList[$prop->name] = $prop;
+                }
             }
         }
 

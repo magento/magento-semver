@@ -25,6 +25,7 @@ class DbSchemaReporter extends TableReporter
 
         // custom report types
         $this->outputReport($output, $this->report, 'database');
+        $this->outputReport($output, $this->report, 'layout');
         $this->outputReport($output, $this->report, 'di');
         $this->outputReport($output, $this->report, 'system');
         $this->outputReport($output, $this->report, 'xsd');
