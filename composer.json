@@ -1,7 +1,7 @@
 {
     "name": "magento/magento-semver",
     "description": "Magento semantic version checker",
-    "version": "1.0.3",
+    "version": "2.0.0",
     "license": [
         "OSL-3.0",
         "AFL-3.0"
