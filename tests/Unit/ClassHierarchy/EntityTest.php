@@ -1,8 +1,10 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
 declare(strict_types=1);
 
 namespace Magento\SemanticVersionChecker\Test\Unit\ClassHierarchy;
@@ -19,7 +21,7 @@ class EntityTest extends TestCase
      * Tests
      */
 
-    public function testAddExtends_ClassExtendsClass_AppliesReverseLink()
+    public function testAddExtendsClassExtendsClassAppliesReverseLink()
     {
         $entities = $this->createEntities(
             [
@@ -36,7 +38,7 @@ class EntityTest extends TestCase
         $this->assertSame($entities['ChildClass'], $parentExtendedBy['ChildClass']);
     }
 
-    public function testAddExtends_InterfaceExtendsInterface_AppliesReverseLink()
+    public function testAddExtendsInterfaceExtendsInterfaceAppliesReverseLink()
     {
         $entities = $this->createEntities(
             [
@@ -53,7 +55,7 @@ class EntityTest extends TestCase
         $this->assertSame($entities['ChildInterface'], $parentExtendedBy['ChildInterface']);
     }
 
-    public function testAddImplements_ClassImplementsInterface_AppliesReverseLink()
+    public function testAddImplementsClassImplementsInterfaceAppliesReverseLink()
     {
         $entities = $this->createEntities(
             [
@@ -70,7 +72,7 @@ class EntityTest extends TestCase
         $this->assertSame($entities['MyClass'], $interfaceImplementedBy['MyClass']);
     }
 
-    public function testAddUses_ClassUsesTrait_AppliesReverseLink()
+    public function testAddUsesClassUsesTraitAppliesReverseLink()
     {
         $entities = $this->createEntities(
             [
@@ -87,7 +89,7 @@ class EntityTest extends TestCase
         $this->assertSame($entities['MyClass'], $traitUsedBy['MyClass']);
     }
 
-    public function testAddUses_TraitUsesTrait_AppliesReverseLink()
+    public function testAddUsesTraitUsesTraitAppliesReverseLink()
     {
         $entities = $this->createEntities(
             [
@@ -104,7 +106,7 @@ class EntityTest extends TestCase
         $this->assertSame($entities['ChildTrait'], $parentTraitUsedBy['ChildTrait']);
     }
 
-    public function testHasApiAncestor_NoApiAncestor_ReturnsFalse()
+    public function testHasApiAncestorNoApiAncestorReturnsFalse()
     {
         $entities = $this->createEntities(
             [
@@ -124,7 +126,7 @@ class EntityTest extends TestCase
         $this->assertFalse($entities['ChildClass']->hasApiAncestor());
     }
 
-    public function testHasApiAncestor_ParentClassIsApi_ReturnsTrue()
+    public function testHasApiAncestorParentClassIsApiReturnsTrue()
     {
         $entities = $this->createEntities(
             [
@@ -144,7 +146,7 @@ class EntityTest extends TestCase
         $this->assertTrue($entities['ChildClass']->hasApiAncestor());
     }
 
-    public function testHasApiAncestor_ParentClassHasApiAncestor_ReturnsTrue()
+    public function testHasApiAncestorParentClassHasApiAncestorReturnsTrue()
     {
         $entities = $this->createEntities(
             [
@@ -166,7 +168,7 @@ class EntityTest extends TestCase
         $this->assertTrue($entities['ChildClass']->hasApiAncestor());
     }
 
-    public function testHasApiAncestor_ImplementedInterfaceIsApi_ReturnsTrue()
+    public function testHasApiAncestorImplementedInterfaceIsApiReturnsTrue()
     {
         $entities = $this->createEntities(
             [
@@ -186,7 +188,7 @@ class EntityTest extends TestCase
         $this->assertTrue($entities['ChildClass']->hasApiAncestor());
     }
 
-    public function testHasApiAncestor_ImplementedInterfaceHasApiAncestor_ReturnsTrue()
+    public function testHasApiAncestorImplementedInterfaceHasApiAncestorReturnsTrue()
     {
         $entities = $this->createEntities(
             [
@@ -208,7 +210,7 @@ class EntityTest extends TestCase
         $this->assertTrue($entities['ChildClass']->hasApiAncestor());
     }
 
-    public function testHasApiAncestor_UsedTraitIsApi_ReturnsTrue()
+    public function testHasApiAncestorUsedTraitIsApiReturnsTrue()
     {
         $entities = $this->createEntities(
             [
@@ -228,7 +230,7 @@ class EntityTest extends TestCase
         $this->assertTrue($entities['ChildClass']->hasApiAncestor());
     }
 
-    public function testHasApiAncestor_UsedTraitHasApiAncestor_ReturnsTrue()
+    public function testHasApiAncestorUsedTraitHasApiAncestorReturnsTrue()
     {
         $entities = $this->createEntities(
             [
@@ -250,7 +252,7 @@ class EntityTest extends TestCase
         $this->assertTrue($entities['ChildClass']->hasApiAncestor());
     }
 
-    public function testHasApiDescendant_NoApiDescendant_ReturnsFalse()
+    public function testHasApiDescendantNoApiDescendantReturnsFalse()
     {
         $entities = $this->createEntities(
             [
@@ -270,7 +272,7 @@ class EntityTest extends TestCase
         $this->assertFalse($entities['ParentClass']->hasApiDescendant());
     }
 
-    public function testHasApiDescendant_ChildClassIsApi_ReturnsTrue()
+    public function testHasApiDescendantChildClassIsApiReturnsTrue()
     {
         $entities = $this->createEntities(
             [
@@ -290,7 +292,7 @@ class EntityTest extends TestCase
         $this->assertTrue($entities['ParentClass']->hasApiDescendant());
     }
 
-    public function testHasApiDescendant_ChildClassHasApiDescendant_ReturnsTrue()
+    public function testHasApiDescendantChildClassHasApiDescendantReturnsTrue()
     {
         $entities = $this->createEntities(
             [
@@ -312,7 +314,7 @@ class EntityTest extends TestCase
         $this->assertTrue($entities['ParentClass']->hasApiDescendant());
     }
 
-    public function testHasApiDescendant_ChildInterfaceIsApi_ReturnsTrue()
+    public function testHasApiDescendantChildInterfaceIsApiReturnsTrue()
     {
         $entities = $this->createEntities(
             [
@@ -328,9 +330,8 @@ class EntityTest extends TestCase
         $this->assertTrue($entities['MyInterface']->hasApiDescendant());
     }
 
-    public function testHasApiDescendant_ChildInterfaceHasApiDescendant_ReturnsTrue()
+    public function testHasApiDescendantChildInterfaceHasApiDescendantReturnsTrue()
     {
-
         $entities = $this->createEntities(
             [
                 ['MyInterface', Entity::TYPE_INTERFACE, false],
@@ -347,7 +348,7 @@ class EntityTest extends TestCase
         $this->assertTrue($entities['MyInterface']->hasApiDescendant());
     }
 
-    public function testHasApiDescendant_InterfaceIsImplementedByApiClass_ReturnsTrue()
+    public function testHasApiDescendantInterfaceIsImplementedByApiClassReturnsTrue()
     {
         $entities = $this->createEntities(
             [
@@ -363,7 +364,7 @@ class EntityTest extends TestCase
         $this->assertTrue($entities['MyInterface']->hasApiDescendant());
     }
 
-    public function testHasApiDescendant_InterfaceIsImplementedByClassWithApiDescendant_ReturnsTrue()
+    public function testHasApiDescendantInterfaceIsImplementedByClassWithApiDescendantReturnsTrue()
     {
         $entities = $this->createEntities(
             [
@@ -381,7 +382,7 @@ class EntityTest extends TestCase
         $this->assertTrue($entities['MyInterface']->hasApiDescendant());
     }
 
-    public function testHasApiDescendant_ChildTraitIsApi_ReturnsTrue()
+    public function testHasApiDescendantChildTraitIsApiReturnsTrue()
     {
         $entities = $this->createEntities(
             [
@@ -397,7 +398,7 @@ class EntityTest extends TestCase
         $this->assertTrue($entities['MyTrait']->hasApiDescendant());
     }
 
-    public function testHasApiDescendant_ChildTraitHasApiDescendant_ReturnsTrue()
+    public function testHasApiDescendantChildTraitHasApiDescendantReturnsTrue()
     {
         $entities = $this->createEntities(
             [
@@ -415,7 +416,7 @@ class EntityTest extends TestCase
         $this->assertTrue($entities['MyTrait']->hasApiDescendant());
     }
 
-    public function testHasApiDescendant_TraitIsUsedByClassWithApiDescendant_ReturnsTrue()
+    public function testHasApiDescendantTraitIsUsedByClassWithApiDescendantReturnsTrue()
     {
         $entities = $this->createEntities(
             [

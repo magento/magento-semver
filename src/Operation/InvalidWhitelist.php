@@ -1,18 +1,21 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
 declare(strict_types=1);
 
 namespace Magento\SemanticVersionChecker\Operation;
 
+use PHPSemVerChecker\Operation\Operation;
 use PHPSemVerChecker\SemanticVersioning\Level;
 
 /**
  * When db_schema_whitelist.json is invalid: do not have tables declared in schema
  */
-class InvalidWhitelist extends \PHPSemVerChecker\Operation\Operation
+class InvalidWhitelist extends Operation
 {
     /**
      * Error codes.

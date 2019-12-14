@@ -1,18 +1,21 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
 declare(strict_types=1);
 
 namespace Magento\SemanticVersionChecker\Operation;
 
+use PHPSemVerChecker\Operation\Operation;
 use PHPSemVerChecker\SemanticVersioning\Level;
 
 /**
  * When drop table
  */
-class DropKey extends \PHPSemVerChecker\Operation\Operation
+class DropKey extends Operation
 {
     /**
      * Error codes.

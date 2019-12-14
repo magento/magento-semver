@@ -8,5 +8,4 @@ namespace Test\Vcs;
 
 interface TestInterfaceBase
 {
-
 }

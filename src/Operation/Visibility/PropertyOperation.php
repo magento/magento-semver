@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
@@ -22,5 +23,4 @@ class PropertyOperation extends VisibilityOperation
     {
         return $member->props[0]->name ?? '';
     }
-
 }

@@ -1,8 +1,10 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
 declare(strict_types=1);
 
 namespace Magento\SemanticVersionChecker\Scanner;
@@ -204,7 +206,7 @@ class DbSchemaScanner implements ScannerInterface
             $typeInfo['referenceTable'] = $typeData['@attributes']['referenceTable'];
             $typeInfo['referenceColumn'] = $typeData['@attributes']['referenceColumn'];
             $typeInfo['onDelete'] = $typeData['@attributes']['onDelete'];
-        } elseif ($type === 'index' ) {
+        } elseif ($type === 'index') {
             $typeInfo = [];
             $type = 'index';
             $typeInfo['indexType'] = isset($typeData['@attributes']['indexType']) ?? null;
@@ -233,8 +235,8 @@ class DbSchemaScanner implements ScannerInterface
      */
     private function getIndexColumns(array $typeData): array
     {
-        $columnsArray= [];
-        if (!isset($typeData['column'])){
+        $columnsArray = [];
+        if (!isset($typeData['column'])) {
             return  $columnsArray;
         }
         if (isset($typeData['column']['@attributes'])) {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
@@ -43,8 +44,16 @@ class DbSchemaWhitelistAnalyzer implements AnalyzerInterface
                 //We will replace module_name in file_path in order to get
                 //correct module
                 $dbFile = $registryAfter->getCurrentFile();
-                $dbWhiteListFile = preg_replace('/(.*Magento\/)\w+(\/.*)/', '$1' . explode("_", $moduleName)[1] . '$2', $dbFile);
-                $dbWhiteListFile = str_replace('db_schema.xml', 'db_schema_whitelist.json', $dbWhiteListFile);
+                $dbWhiteListFile = preg_replace(
+                    '/(.*Magento\/)\w+(\/.*)/',
+                    '$1' . explode("_", $moduleName)[1] . '$2',
+                    $dbFile
+                );
+                $dbWhiteListFile = str_replace(
+                    'db_schema.xml',
+                    'db_schema_whitelist.json',
+                    $dbWhiteListFile
+                );
                 if (!file_exists($dbWhiteListFile)) {
                     $operation = new WhiteListWasRemoved($moduleName);
                     $report->add('database', $operation);

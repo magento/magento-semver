@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
@@ -52,7 +53,7 @@ class ScannerRegistry
         $relevantScanner = [];
         foreach ($this->scanners as $scanner) {
             foreach ($scanner['pattern'] as $pattern) {
-                $match = preg_match('/'.FilenameMatch::translate($pattern).'/S', $filePath);
+                $match = preg_match('/' . FilenameMatch::translate($pattern) . '/S', $filePath);
                 if ($match !== false && $match !== 0) {
                     $relevantScanner[] = $scanner['scanner'];
                 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
@@ -8,10 +9,10 @@ namespace Magento\SemanticVersionChecker\Filter\AllowedChangeFilter;
 
 class PhpWhitespaceFilter implements ChangedFileFilterInterface
 {
-    const TRIM_BLANK_LINES = 1;
-    const TRIM_LEADING_WHITESPACE = 2;
-    const TRIM_TRAILING_WHITESPACE = 4;
-    const TRIM_ALL = 7;
+    public const TRIM_BLANK_LINES = 1;
+    public const TRIM_LEADING_WHITESPACE = 2;
+    public const TRIM_TRAILING_WHITESPACE = 4;
+    public const TRIM_ALL = 7;
 
     /** @var int */
     private $flags;
@@ -37,7 +38,9 @@ class PhpWhitespaceFilter implements ChangedFileFilterInterface
     {
         $toCompare = array_filter(
             array_intersect(array_keys($beforeFileContents), array_keys($afterFileContents)),
-            function ($path) { return pathinfo($path, PATHINFO_EXTENSION) == 'php'; }
+            function ($path) {
+                return pathinfo($path, PATHINFO_EXTENSION) == 'php';
+            }
         );
 
         foreach ($toCompare as $path) {

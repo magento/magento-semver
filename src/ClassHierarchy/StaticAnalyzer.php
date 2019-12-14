@@ -1,8 +1,10 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
 declare(strict_types=1);
 
 namespace Magento\SemanticVersionChecker\ClassHierarchy;
@@ -10,6 +12,7 @@ namespace Magento\SemanticVersionChecker\ClassHierarchy;
 use PhpParser\Error;
 use PhpParser\NodeTraverser;
 use PhpParser\Parser;
+use RuntimeException;
 
 /**
  * Implements an analyzer that builds a dependency graph of classes, interfaces and traits.
@@ -53,7 +56,7 @@ class StaticAnalyzer
     /**
      * @param array $fileIterator
      * @return DependencyGraph
-     * @throws \RuntimeException
+     * @throws RuntimeException
      */
     public function analyse(array $fileIterator): DependencyGraph
     {
@@ -67,7 +70,7 @@ class StaticAnalyzer
                     $this->parser->parse($code)
                 );
             } catch (Error $e) {
-                throw new \RuntimeException($e->getMessage() . ' ' . $file);
+                throw new RuntimeException($e->getMessage() . ' ' . $file);
             }
         }
 

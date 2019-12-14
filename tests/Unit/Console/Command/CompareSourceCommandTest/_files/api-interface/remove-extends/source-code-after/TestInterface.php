@@ -11,5 +11,4 @@ namespace Test\Vcs;
  */
 interface TestInterface
 {
-
 }

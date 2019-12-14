@@ -1,8 +1,10 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
 declare(strict_types=1);
 
 namespace Magento\SemanticVersionChecker\Test\Unit\Console\Command;
@@ -144,8 +146,8 @@ class CompareSourceCommandNonApiTraitsTest extends AbstractTestCase
                 'Patch change is detected.'
             ],
             'non-api-trait-changed-method-return-type' => [
-                $pathToFixtures.'/changed-method-return-type/source-code-before',
-                $pathToFixtures.'/changed-method-return-type/source-code-after',
+                $pathToFixtures . '/changed-method-return-type/source-code-before',
+                $pathToFixtures . '/changed-method-return-type/source-code-after',
                 [
                     'Trait (PATCH)',
                     'Test\Vcs\TestTrait::declarationAddedPublic         | [public] Method return typing changed.    | M124',

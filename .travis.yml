@@ -1,8 +1,6 @@
 language: php
 
 php:
-  - '7.1'
-  - '7.2'
   - '7.3'
 
 matrix:
@@ -11,4 +9,12 @@ matrix:
 before_install:
   - composer install --prefer-source --no-interaction --dev
 
-script: php vendor/phpunit/phpunit/phpunit --configuration tests/Unit/phpunit.xml.dist
+jobs:
+  include:
+    - name: "Unit tests"
+      script: php vendor/bin/phpunit --configuration tests/Unit/phpunit.xml.dist
+    - name: "Code style"
+      script: php vendor/bin/phpcs --standard=psr12 src/ --ignore=*.min.css
+    - name: "Tests code style"
+      script: php vendor/bin/phpcs --standard=psr12 tests/ --ignore=/_files/ -n
+

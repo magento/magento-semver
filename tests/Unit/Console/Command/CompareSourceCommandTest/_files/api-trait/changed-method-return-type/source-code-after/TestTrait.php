@@ -14,7 +14,7 @@ trait TestTrait
     /**
      * @param int $int
      */
-    public function declarationAddedPublic( $int): ?int
+    public function declarationAddedPublic($int): ?int
     {
         return $int;
     }
@@ -23,7 +23,7 @@ trait TestTrait
      * @param int $int
      * @return int|null
      */
-    public function annotationAddedPublic( $int)
+    public function annotationAddedPublic($int)
     {
         return $int;
     }
@@ -31,24 +31,7 @@ trait TestTrait
     /**
      * @param int $int
      */
-    protected function declarationAddedProtected( $int): ?int
-    {
-        return $int;
-    }
-
-    /**
-     * @param int $int
-     * @return int|null
-     */
-    protected function annotationAddedProtected( $int)
-    {
-        return $int;
-    }
-
-    /**
-     * @param int $int
-     */
-    private function declarationAddedPrivate( $int): ?int
+    protected function declarationAddedProtected($int): ?int
     {
         return $int;
     }
@@ -57,7 +40,7 @@ trait TestTrait
      * @param int $int
      * @return int|null
      */
-    private function annotationAddedPrivate( $int)
+    protected function annotationAddedProtected($int)
     {
         return $int;
     }
@@ -65,23 +48,7 @@ trait TestTrait
     /**
      * @param int $int
      */
-    public function declarationChangedPublic( $int): ?int
-    {
-        return $int;
-    }
-
-    /**
-     * @param int $int
-     * @return int|null
-     */
-    public function annotationChangedPublic( $int)
-    {
-        return $int;
-    }
-    /**
-     * @param int $int
-     */
-    protected function declarationChangedProtected( $int): ?int
+    private function declarationAddedPrivate($int): ?int
     {
         return $int;
     }
@@ -90,14 +57,15 @@ trait TestTrait
      * @param int $int
      * @return int|null
      */
-    protected function annotationChangedProtected( $int)
+    private function annotationAddedPrivate($int)
     {
         return $int;
     }
+
     /**
      * @param int $int
      */
-    private function declarationChangedPrivate( $int): ?int
+    public function declarationChangedPublic($int): ?int
     {
         return $int;
     }
@@ -106,7 +74,39 @@ trait TestTrait
      * @param int $int
      * @return int|null
      */
-    private function annotationChangedPrivate( $int)
+    public function annotationChangedPublic($int)
+    {
+        return $int;
+    }
+    /**
+     * @param int $int
+     */
+    protected function declarationChangedProtected($int): ?int
+    {
+        return $int;
+    }
+
+    /**
+     * @param int $int
+     * @return int|null
+     */
+    protected function annotationChangedProtected($int)
+    {
+        return $int;
+    }
+    /**
+     * @param int $int
+     */
+    private function declarationChangedPrivate($int): ?int
+    {
+        return $int;
+    }
+
+    /**
+     * @param int $int
+     * @return int|null
+     */
+    private function annotationChangedPrivate($int)
     {
         return $int;
     }
@@ -114,7 +114,7 @@ trait TestTrait
     /**
      * @param int $int
      */
-    public function declarationRemovedPublic( $int)
+    public function declarationRemovedPublic($int)
     {
         return $int;
     }
@@ -122,7 +122,7 @@ trait TestTrait
     /**
      * @param int $int
      */
-    public function annotationRemovedPublic( $int)
+    public function annotationRemovedPublic($int)
     {
         return $int;
     }
@@ -130,7 +130,7 @@ trait TestTrait
     /**
      * @param int $int
      */
-    protected function declarationRemovedProtected( $int)
+    protected function declarationRemovedProtected($int)
     {
         return $int;
     }
@@ -138,7 +138,7 @@ trait TestTrait
     /**
      * @param int $int
      */
-    protected function annotationRemovedProtected( $int)
+    protected function annotationRemovedProtected($int)
     {
         return $int;
     }
@@ -146,7 +146,7 @@ trait TestTrait
     /**
      * @param int $int
      */
-    private function declarationRemovedPrivate( $int)
+    private function declarationRemovedPrivate($int)
     {
         return $int;
     }
@@ -154,7 +154,7 @@ trait TestTrait
     /**
      * @param int $int
      */
-    private function annotationRemovedPrivate( $int)
+    private function annotationRemovedPrivate($int)
     {
         return $int;
     }

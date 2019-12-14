@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
@@ -14,7 +15,7 @@ interface ScannerInterface
     /**
      * @param string $file
      */
-    public function scan(string $file) : void;
+    public function scan(string $file): void;
 
     /**
      * @return Registry

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
@@ -19,7 +20,9 @@ class PhpCommentFormattingFilter implements ChangedFileFilterInterface
     {
         $toCompare = array_filter(
             array_intersect(array_keys($beforeFileContents), array_keys($afterFileContents)),
-            function ($path) { return pathinfo($path, PATHINFO_EXTENSION) == 'php'; }
+            function ($path) {
+                return pathinfo($path, PATHINFO_EXTENSION) == 'php';
+            }
         );
 
         foreach ($toCompare as $path) {
@@ -61,7 +64,7 @@ class PhpCommentFormattingFilter implements ChangedFileFilterInterface
                 if (!$inBlockComment) {
                     if ($line == '*/') {
                         $inBlockComment = true;
-                    } elseif (preg_match('#^\/\/#', $line) || preg_match('#^\/\*\*.*\*\/$#', $line)) {
+                    } elseif (preg_match('#^//#', $line) || preg_match('#^/\*\*.*\*/$#', $line)) {
                         $normalized[] = $indentation . $line;
                     } else {
                         // Non-comment line
@@ -96,14 +99,14 @@ class PhpCommentFormattingFilter implements ChangedFileFilterInterface
      */
     private function trimCommentTags($line)
     {
-        if (preg_match('#^\s*\/\/\s*(.*)#', $line, $matches)) {
+        if (preg_match('#^\s*//\s*(.*)#', $line, $matches)) {
             $line = '//' . ($matches[1] ? ' ' . $matches[1] : '');
         } else {
-            if (preg_match("#^\s*\/\*\*\s*(.*)#", $line, $matches)) {
+            if (preg_match("#^\s*/\*\*\s*(.*)#", $line, $matches)) {
                 $line = '/**' . ($matches[1] ? ' ' . $matches[1] : '');
             }
 
-            if (preg_match("#^(.*?)\s*\*\/\s*$#", $line, $matches)) {
+            if (preg_match("#^(.*?)\s*\*/\s*$#", $line, $matches)) {
                 $line = ($matches[1] ? $matches[1] . ' ' : '') . '*/';
             }
         }
@@ -124,7 +127,9 @@ class PhpCommentFormattingFilter implements ChangedFileFilterInterface
     private function formatBlock($commentLines, $indentation)
     {
         $commentLines = array_values(array_filter($commentLines));
-        if (!$commentLines) return [];
+        if (!$commentLines) {
+            return [];
+        }
 
         $formatted = [];
         if (count($commentLines) == 1) {

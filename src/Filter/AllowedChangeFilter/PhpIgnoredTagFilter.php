@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
@@ -58,7 +59,9 @@ class PhpIgnoredTagFilter implements ChangedFileFilterInterface
 
         $toCompare = array_filter(
             array_intersect(array_keys($beforeFileContents), array_keys($afterFileContents)),
-            function ($path) { return pathinfo($path, PATHINFO_EXTENSION) == 'php'; }
+            function ($path) {
+                return pathinfo($path, PATHINFO_EXTENSION) == 'php';
+            }
         );
 
         foreach ($toCompare as $path) {
@@ -93,7 +96,10 @@ class PhpIgnoredTagFilter implements ChangedFileFilterInterface
             } elseif (preg_match($this->ignoredValInlineMatcher, $line, $matches)) {
                 $newLine = $matches[1] . '/** @' . $matches[2] . ' */';
                 $newLines[] = $this->caseSensitive ? $newLine : strtolower($newLine);
-            } elseif (preg_match($this->ignoredTagBlockMatcher, $line) !== 1 && preg_match($this->ignoredTagInlineMatcher, $line) !== 1) {
+            } elseif (
+                preg_match($this->ignoredTagBlockMatcher, $line) !== 1
+                && preg_match($this->ignoredTagInlineMatcher, $line) !== 1
+            ) {
                 $newLines[] = $line;
             }
         }

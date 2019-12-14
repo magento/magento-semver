@@ -1,8 +1,10 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
 declare(strict_types=1);
 
 namespace Magento\SemanticVersionChecker\Scanner;
@@ -75,7 +77,6 @@ class XsdScanner implements ScannerInterface
     private function registerAttributeNodes(DOMNodeList $attributeNodes)
     {
         foreach ($attributeNodes as $attributeNode) {
-
             $isRequired = $attributeNode->hasAttribute('use') && $attributeNode->getAttribute('use') === 'required';
             $attribute  = new AttributeNode(
                 $attributeNode->getAttribute('name'),

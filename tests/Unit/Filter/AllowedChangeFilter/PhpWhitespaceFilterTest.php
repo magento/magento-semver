@@ -1,16 +1,19 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
 namespace Magento\SemanticVersionChecker\Test\Unit\Filter\AllowedChangeFilter;
 
 use Magento\SemanticVersionChecker\Filter\AllowedChangeFilter\PhpWhitespaceFilter;
+use PHPUnit\Framework\TestCase;
 
-class PhpWhitespaceFilterTest extends \PHPUnit\Framework\TestCase
+class PhpWhitespaceFilterTest extends TestCase
 {
-    const INPUT_DATA = 'input';
-    const EXPECTED_DATA = 'expected';
+    public const INPUT_DATA = 'input';
+    public const EXPECTED_DATA = 'expected';
 
     /**
      * Test PhpWhitespaceFilter file change filter
@@ -78,7 +81,9 @@ class PhpWhitespaceFilterTest extends \PHPUnit\Framework\TestCase
         $result = [];
         foreach (["before", "after"] as $sourceType) {
             $dataDir = "$testDir/$dataType/$sourceType";
-            $testFiles = array_map(function ($file) use ($dataDir) { return "$dataDir/$file"; }, scandir($dataDir));
+            $testFiles = array_map(function ($file) use ($dataDir) {
+                return "$dataDir/$file";
+            }, scandir($dataDir));
             $fileContents = [];
             foreach ($testFiles as $filePath) {
                 $fileName = pathinfo($filePath, PATHINFO_BASENAME);

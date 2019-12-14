@@ -28,7 +28,7 @@ class FinderDecorator
     private $excludes;
 
 
-    public function __construct(array $additionalFileNameList,  array $excludes)
+    public function __construct(array $additionalFileNameList, array $excludes)
     {
         $this->basicFinder = new \PHPSemVerChecker\Finder\Finder();
         $this->relevantFileTypes = $additionalFileNameList;

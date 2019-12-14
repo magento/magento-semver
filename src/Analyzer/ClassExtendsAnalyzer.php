@@ -1,8 +1,10 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
 declare(strict_types=1);
 
 namespace Magento\SemanticVersionChecker\Analyzer;
@@ -55,7 +57,6 @@ class ClassExtendsAnalyzer extends AbstractCodeAnalyzer
      */
     protected function reportRemovedNode($report, $fileBefore, $contextBefore, $nodeBefore)
     {
-
     }
 
     /**
@@ -76,9 +77,7 @@ class ClassExtendsAnalyzer extends AbstractCodeAnalyzer
         if ($contextBefore->extends !== null && $contextAfter->extends === null) {
             $operation = new ClassExtendsRemove($contextAfter, $this->fileAfter);
             $report->add($this->context, $operation);
-        }
-
-        else{
+        } else {
             return $report;
         }
     }

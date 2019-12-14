@@ -1,8 +1,10 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
 declare(strict_types=1);
 
 namespace Magento\SemanticVersionChecker\Operation;
@@ -164,5 +166,5 @@ abstract class VisibilityOperation extends Operation
      *
      * @return string
      */
-    protected abstract function getMemberName($member);
+    abstract protected function getMemberName($member);
 }

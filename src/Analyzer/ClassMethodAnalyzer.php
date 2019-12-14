@@ -1,8 +1,10 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
 declare(strict_types=1);
 
 namespace Magento\SemanticVersionChecker\Analyzer;
@@ -16,7 +18,6 @@ use Magento\SemanticVersionChecker\Operation\ClassMethodLastParameterRemoved;
 use Magento\SemanticVersionChecker\Operation\ClassMethodMoved;
 use Magento\SemanticVersionChecker\Operation\ClassMethodOptionalParameterAdded;
 use Magento\SemanticVersionChecker\Operation\ClassMethodOverwriteAdded;
-use Magento\SemanticVersionChecker\Operation\ClassMethodOverwriteRemoved;
 use Magento\SemanticVersionChecker\Operation\ClassMethodParameterTypingChanged;
 use Magento\SemanticVersionChecker\Operation\ClassMethodReturnTypingChanged;
 use Magento\SemanticVersionChecker\Operation\ExtendableClassConstructorOptionalParameterAdded;
@@ -360,7 +361,8 @@ class ClassMethodAnalyzer extends AbstractCodeAnalyzer
      */
     private function isReturnTypeChanged(ClassMethod $methodBefore, ClassMethod $methodAfter): bool
     {
-        return $this->isDocBlockAnnotationReturnTypeChanged($methodBefore, $methodAfter) || $this->isDeclarationReturnTypeChanged($methodBefore, $methodAfter);
+        return $this->isDocBlockAnnotationReturnTypeChanged($methodBefore, $methodAfter)
+            || $this->isDeclarationReturnTypeChanged($methodBefore, $methodAfter);
     }
 
     /**
@@ -388,8 +390,12 @@ class ClassMethodAnalyzer extends AbstractCodeAnalyzer
         if (!$this->isReturnsEqualByNullability($methodBefore, $methodAfter)) {
             return true;
         }
-        $beforeMethodReturnType = $methodBefore->returnType instanceof NullableType ? (string) $methodBefore->returnType->type : (string) $methodBefore->returnType;
-        $afterMethodReturnType = $methodAfter->returnType instanceof NullableType ? (string) $methodAfter->returnType->type : (string) $methodAfter->returnType;
+        $beforeMethodReturnType = $methodBefore->returnType instanceof NullableType
+            ? (string) $methodBefore->returnType->type
+            : (string) $methodBefore->returnType;
+        $afterMethodReturnType = $methodAfter->returnType instanceof NullableType
+            ? (string) $methodAfter->returnType->type
+            : (string) $methodAfter->returnType;
 
         return $beforeMethodReturnType !== $afterMethodReturnType;
     }

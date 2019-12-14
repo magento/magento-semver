@@ -9,5 +9,4 @@ use Exception;
 
 class TestParentException extends Exception
 {
-
 }

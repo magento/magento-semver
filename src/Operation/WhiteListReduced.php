@@ -1,8 +1,10 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
 declare(strict_types=1);
 
 namespace Magento\SemanticVersionChecker\Operation;
@@ -58,7 +60,7 @@ class WhiteListReduced extends Operation
      *
      * @return string
      */
-    public function getLocation() : string
+    public function getLocation(): string
     {
         return $this->location;
     }
@@ -76,7 +78,7 @@ class WhiteListReduced extends Operation
      *
      * @return int
      */
-    public function getLine() : int
+    public function getLine(): int
     {
         return 0;
     }

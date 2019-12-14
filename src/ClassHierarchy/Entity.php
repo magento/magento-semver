@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
@@ -381,7 +382,7 @@ class Entity
     /**
      * @return ClassMethod[]
      */
-    public function getMethodList():array
+    public function getMethodList(): array
     {
         return $this->methodList;
     }
@@ -389,7 +390,7 @@ class Entity
     /**
      * @return Property[]
      */
-    public function getPropertyList():array
+    public function getPropertyList(): array
     {
         return $this->propertyList;
     }

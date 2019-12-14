@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
@@ -11,7 +12,7 @@ use PHPSemVerChecker\SemanticVersioning\Level;
 
 class SemanticVersionChecker
 {
-    const ANNOTATION_API = '@api';
+    public const ANNOTATION_API = '@api';
 
     /**
      * @var array

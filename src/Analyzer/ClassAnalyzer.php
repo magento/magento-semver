@@ -1,13 +1,14 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
 declare(strict_types=1);
 
 namespace Magento\SemanticVersionChecker\Analyzer;
 
-use Magento\SemanticVersionChecker\ClassHierarchy\DependencyGraph;
 use PhpParser\Node\Stmt\Class_;
 use PHPSemVerChecker\Operation\ClassAdded;
 use PHPSemVerChecker\Operation\ClassRemoved;
@@ -23,7 +24,7 @@ use PHPSemVerChecker\Report\Report;
  */
 class ClassAnalyzer extends AbstractCodeAnalyzer
 {
-    const CONTEXT = 'class';
+    public const CONTEXT = 'class';
 
     /**
      * Get the name of a Class_ node
@@ -49,9 +50,9 @@ class ClassAnalyzer extends AbstractCodeAnalyzer
     /**
      * Get the filename from the registry
      *
-     * @param Registry $registry
-     * @param string $className
-     * @param null $isBefore
+     * @param  Registry $registry
+     * @param  string   $className
+     * @param  null     $isBefore
      * @return string|null
      */
     protected function getFileName($registry, $className, $isBefore = null)
@@ -62,10 +63,10 @@ class ClassAnalyzer extends AbstractCodeAnalyzer
     /**
      * Create and report a ClassAdded operation
      *
-     * @param Report $report
-     * @param string $fileAfter
-     * @param Registry $registryAfter
-     * @param Class_ $classAfter
+     * @param  Report   $report
+     * @param  string   $fileAfter
+     * @param  Registry $registryAfter
+     * @param  Class_   $classAfter
      * @return void
      */
     protected function reportAddedNode($report, $fileAfter, $registryAfter, $classAfter)
@@ -76,10 +77,10 @@ class ClassAnalyzer extends AbstractCodeAnalyzer
     /**
      * Create and report a ClassRemoved operation
      *
-     * @param Report $report
-     * @param string $fileBefore
-     * @param Registry $registryBefore
-     * @param Class_ $classBefore
+     * @param  Report   $report
+     * @param  string   $fileBefore
+     * @param  Registry $registryBefore
+     * @param  Class_   $classBefore
      * @return void
      */
     protected function reportRemovedNode($report, $fileBefore, $registryBefore, $classBefore)
@@ -90,10 +91,10 @@ class ClassAnalyzer extends AbstractCodeAnalyzer
     /**
      * Find and report changes to existing classes using the constant, method, and property analyzers
      *
-     * @param Report $report
-     * @param Registry $registryBefore
-     * @param Registry $registryAfter
-     * @param string[] $toVerify
+     * @param  Report   $report
+     * @param  Registry $registryBefore
+     * @param  Registry $registryAfter
+     * @param  string[] $toVerify
      * @return void
      */
     protected function reportChanged($report, $registryBefore, $registryAfter, $toVerify)
@@ -107,7 +108,9 @@ class ClassAnalyzer extends AbstractCodeAnalyzer
             $classAfter = $afterNameMap[$key];
 
             if ($classBefore !== $classAfter) {
-                /** @var AnalyzerInterface[] $analyzers */
+                /**
+ * @var AnalyzerInterface[] $analyzers
+*/
                 $analyzers = [
                     new ClassMethodAnalyzer(static::CONTEXT, $fileBefore, $fileAfter, $this->dependencyGraph),
                     new PropertyAnalyzer(static::CONTEXT, $fileBefore, $fileAfter),
@@ -129,7 +132,7 @@ class ClassAnalyzer extends AbstractCodeAnalyzer
     /**
      * Get the class node registry
      *
-     * @param Registry $registry
+     * @param  Registry $registry
      * @return Class_[]
      */
     protected function getNodeNameMap($registry)

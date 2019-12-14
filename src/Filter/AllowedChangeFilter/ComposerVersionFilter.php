@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
@@ -40,7 +41,9 @@ class ComposerVersionFilter implements ChangedFileFilterInterface
     {
         $toCompare = array_filter(
             array_intersect(array_keys($beforeFileContents), array_keys($afterFileContents)),
-            function ($path) { return pathinfo($path, PATHINFO_BASENAME) == 'composer.json'; }
+            function ($path) {
+                return pathinfo($path, PATHINFO_BASENAME) == 'composer.json';
+            }
         );
 
         foreach ($toCompare as $path) {
@@ -59,8 +62,10 @@ class ComposerVersionFilter implements ChangedFileFilterInterface
                 unset($afterFileContents[$path]);
             } else {
                 // re-encode the updated Json with ignored constraints reset to the before state for the next filter
-                $afterFileContents[$path] = explode(PHP_EOL,
-                    json_encode($after, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+                $afterFileContents[$path] = explode(
+                    PHP_EOL,
+                    json_encode($after, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES)
+                );
             }
         }
     }
@@ -99,7 +104,7 @@ class ComposerVersionFilter implements ChangedFileFilterInterface
      */
     private function resetIgnoredConstraints($before, $after)
     {
-        $toIgnore = array_filter($after, function($constraint, $pkg) {
+        $toIgnore = array_filter($after, function ($constraint, $pkg) {
             return $this->shouldIgnore($pkg, $constraint);
         }, ARRAY_FILTER_USE_BOTH);
 
