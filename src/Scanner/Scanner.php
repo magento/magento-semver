@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
@@ -6,7 +7,6 @@
 
 namespace Magento\SemanticVersionChecker\Scanner;
 
-use Magento\SemanticVersionChecker\Registry\RegistryInterface;
 use PhpParser\Error;
 use PhpParser\NodeTraverser;
 use PhpParser\Parser\Php7 as Parser;
@@ -60,7 +60,7 @@ class Scanner implements ScannerInterface
             $statements = $this->parser->parse($code);
             $this->traverser->traverse($statements);
         } catch (Error $e) {
-            throw new RuntimeException('Parse Error: '.$e->getMessage().' in '.$file);
+            throw new RuntimeException('Parse Error: ' . $e->getMessage() . ' in ' . $file);
         }
     }
 

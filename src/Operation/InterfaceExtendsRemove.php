@@ -1,8 +1,10 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
 declare(strict_types=1);
 
 namespace Magento\SemanticVersionChecker\Operation;
@@ -39,7 +41,7 @@ class InterfaceExtendsRemove extends Operation
     private $interface;
 
     /**
-     * @param BaseClass $contextValue
+     * @param Stmt\Interface_ $interface
      * @param string $target
      */
     public function __construct(Stmt\Interface_ $interface, $target)

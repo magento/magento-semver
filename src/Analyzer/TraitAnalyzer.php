@@ -1,8 +1,10 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
 declare(strict_types=1);
 
 namespace Magento\SemanticVersionChecker\Analyzer;
@@ -17,7 +19,7 @@ use PHPSemVerChecker\Report\Report;
  */
 class TraitAnalyzer extends AbstractCodeAnalyzer
 {
-    const CONTEXT = 'trait';
+    public const CONTEXT = 'trait';
 
     /**
      * Get the name of a Trait_ node

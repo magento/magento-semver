@@ -1,8 +1,10 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
 declare(strict_types=1);
 
 namespace Magento\SemanticVersionChecker\Comparator;
@@ -17,7 +19,8 @@ class Signature extends \PHPSemVerChecker\Comparator\Signature
      * @param array $params Array of PhpParser\Node\Param objects
      * @return bool
      */
-    public static function isRequiredParams(array $params) {
+    public static function isRequiredParams(array $params)
+    {
         foreach ($params as $param) {
             if ($param->default !== null) {
                 return false;
@@ -32,7 +35,8 @@ class Signature extends \PHPSemVerChecker\Comparator\Signature
      * @param array $params Array of PhpParser\Node\Param objects
      * @return bool
      */
-    public static function isOptionalParams(array $params) {
+    public static function isOptionalParams(array $params)
+    {
         foreach ($params as $param) {
             if ($param->default === null) {
                 return false;
@@ -48,7 +52,8 @@ class Signature extends \PHPSemVerChecker\Comparator\Signature
      * @param array $params Array of PhpParser\Node\Param objects
      * @return bool
      */
-    public static function isObjectParams(array $params) {
+    public static function isObjectParams(array $params)
+    {
         foreach ($params as $param) {
             if (is_object($param->type)) {
                 return true;

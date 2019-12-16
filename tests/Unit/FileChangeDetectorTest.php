@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
@@ -8,8 +9,9 @@ namespace Magento\SemanticVersionChecker\Test\Unit;
 
 use Magento\SemanticVersionChecker\FileChangeDetector;
 use Magento\SemanticVersionChecker\Filter\AllowedChangeFilter\ChangedFileFilterInterface;
+use PHPUnit\Framework\TestCase;
 
-class FileChangeDetectorTest extends \PHPUnit\Framework\TestCase
+class FileChangeDetectorTest extends TestCase
 {
     /**
      * Verify that only differing files (added, removed, or changed) are returned and ignored files are ignored
@@ -72,8 +74,8 @@ class FileChangeDetectorTest extends \PHPUnit\Framework\TestCase
                 $afterFileContents = array_filter($afterFileContents, function ($key) {
                     return $key != 'changed_json_file.json';
                 }, ARRAY_FILTER_USE_KEY);
-            })
-        );
+            }
+        ));
 
         $txtFilter = $this->getMockBuilder(ChangedFileFilterInterface::class)->getMockForAbstractClass();
         $txtFilter->expects($this->once())->method('filter')->will($this->returnCallback(
@@ -100,8 +102,8 @@ class FileChangeDetectorTest extends \PHPUnit\Framework\TestCase
                 $afterFileContents = array_filter($afterFileContents, function ($key) {
                     return $key != 'changed_text_file.txt';
                 }, ARRAY_FILTER_USE_KEY);
-            })
-        );
+            }
+        ));
 
         $detector = new FileChangeDetector($beforeDir, $afterDir, [$jsonFilter, $txtFilter]);
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
@@ -38,58 +39,57 @@ class CompareSourceCommandDiXmlTest extends AbstractTestCase
             $expectedLogEntries,
             $expectedOutput,
             $unexpectedLogEntries
-
         );
     }
 
     public function changesDataProvider()
     {
-        $pathToFixtures = __DIR__.'/CompareSourceCommandTest/_files/di_xml';
+        $pathToFixtures = __DIR__ . '/CompareSourceCommandTest/_files/di_xml';
 
         return [
             'no-change' => [
-                $pathToFixtures.'/no-change/source-code-before',
-                $pathToFixtures.'/no-change/source-code-after',
+                $pathToFixtures . '/no-change/source-code-before',
+                $pathToFixtures . '/no-change/source-code-after',
                 [
 
                 ],
                 ''
             ],
             'moved-to-global' => [
-                $pathToFixtures.'/moved-to-global/source-code-before',
-                $pathToFixtures.'/moved-to-global/source-code-after',
+                $pathToFixtures . '/moved-to-global/source-code-before',
+                $pathToFixtures . '/moved-to-global/source-code-after',
                 [
                     'Suggested semantic versioning change: NONE',
                 ],
                 'Patch change is detected.',
             ],
             'moved-to-specific' => [
-                $pathToFixtures.'/moved-to-specific/source-code-before',
-                $pathToFixtures.'/moved-to-specific/source-code-after',
+                $pathToFixtures . '/moved-to-specific/source-code-before',
+                $pathToFixtures . '/moved-to-specific/source-code-after',
                 [
                     'Suggested semantic versioning change: MAJOR',
                 ],
                 'Major change is detected.',
             ],
             'remove-type' => [
-                $pathToFixtures.'/remove-type/source-code-before',
-                $pathToFixtures.'/remove-type/source-code-after',
+                $pathToFixtures . '/remove-type/source-code-before',
+                $pathToFixtures . '/remove-type/source-code-after',
                 [
                     'Suggested semantic versioning change: MAJOR',
                 ],
                 'Major change is detected.',
             ],
             'change-type' => [
-                $pathToFixtures.'/change-type/source-code-before',
-                $pathToFixtures.'/change-type/source-code-after',
+                $pathToFixtures . '/change-type/source-code-before',
+                $pathToFixtures . '/change-type/source-code-after',
                 [
                     'Suggested semantic versioning change: MAJOR',
                 ],
                 'Major change is detected.',
             ],
             'change-name' => [
-                $pathToFixtures.'/change-type/source-code-before',
-                $pathToFixtures.'/change-type/source-code-after',
+                $pathToFixtures . '/change-type/source-code-before',
+                $pathToFixtures . '/change-type/source-code-after',
                 [
                     'Suggested semantic versioning change: MAJOR',
                 ],

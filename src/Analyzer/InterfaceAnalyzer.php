@@ -1,8 +1,10 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
 declare(strict_types=1);
 
 namespace Magento\SemanticVersionChecker\Analyzer;
@@ -22,7 +24,7 @@ use PHPSemVerChecker\Report\Report;
  */
 class InterfaceAnalyzer extends AbstractCodeAnalyzer
 {
-    const CONTEXT = 'interface';
+    public const CONTEXT = 'interface';
 
     /**
      * Get the name of an Interface_ node

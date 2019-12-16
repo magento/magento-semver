@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
@@ -6,16 +7,13 @@
 
 namespace Magento\SemanticVersionChecker\Operation;
 
-use PhpParser\Node\Stmt;
-use PhpParser\Node\Stmt\Property;
-use PHPSemVerChecker\Node\Statement\Property as PProperty;
-use PHPSemVerChecker\Operation\PropertyOperation;
+use PHPSemVerChecker\Operation\Operation;
 use PHPSemVerChecker\SemanticVersioning\Level;
 
 /**
  * When drop table
  */
-class DropForeignKey extends \PHPSemVerChecker\Operation\Operation
+class DropForeignKey extends Operation
 {
     /**
      * Error codes.

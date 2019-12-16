@@ -1,18 +1,21 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
 namespace Magento\SemanticVersionChecker\Test\Unit\Console\Command\CompareSourceCommandTest;
 
 use Magento\SemanticVersionChecker\Console\Command\CompareSourceCommand;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Tester\CommandTester;
 
 /**
  * Defines an abstract base class for testing
  * {@link \Magento\SemanticVersionChecker\Console\Command\CompareSourceCommand}.
  */
-abstract class AbstractTestCase extends \PHPUnit\Framework\TestCase
+abstract class AbstractTestCase extends TestCase
 {
     /**
      * @var CompareSourceCommand
@@ -58,7 +61,6 @@ abstract class AbstractTestCase extends \PHPUnit\Framework\TestCase
         $expectedOutput,
         $unexpectedLogEntries
     ): void {
-
         $commandTester        = $this->executeCommand($pathToSourceCodeBefore, $pathToSourceCodeAfter);
         $actualSvcLogContents = $this->getActualSvcLogContents();
         $preparedSvcLogContents = preg_replace('/\s+/', '', $actualSvcLogContents);
@@ -67,19 +69,18 @@ abstract class AbstractTestCase extends \PHPUnit\Framework\TestCase
             $this->assertContains(
                 preg_replace('/\s+/', '', $expectedLogEntry),
                 $preparedSvcLogContents,
-                'Failed asserting that "' . $actualSvcLogContents . '" contains "' . $expectedLogEntry .'"'
+                'Failed asserting that "' . $actualSvcLogContents . '" contains "' . $expectedLogEntry . '"'
             );
         }
         foreach ($unexpectedLogEntries as $unexpectedLogEntry) {
             $this->assertNotContains(
                 preg_replace('/\s+/', '', $unexpectedLogEntry),
                 $preparedSvcLogContents,
-                'Failed asserting that "' . $actualSvcLogContents . '" doesn\'t contain "' . $unexpectedLogEntry .'"'
+                'Failed asserting that "' . $actualSvcLogContents . '" doesn\'t contain "' . $unexpectedLogEntry . '"'
             );
         }
         $this->assertContains($expectedOutput, $commandTester->getDisplay());
         $this->assertEquals(0, $commandTester->getStatusCode());
-
     }
 
     /**

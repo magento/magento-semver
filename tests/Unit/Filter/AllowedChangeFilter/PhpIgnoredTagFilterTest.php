@@ -1,13 +1,16 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
 namespace Magento\SemanticVersionChecker\Test\Unit\Filter\AllowedChangeFilter;
 
 use Magento\SemanticVersionChecker\Filter\AllowedChangeFilter\PhpIgnoredTagFilter;
+use PHPUnit\Framework\TestCase;
 
-class PhpIgnoredTagFilterTest extends \PHPUnit\Framework\TestCase
+class PhpIgnoredTagFilterTest extends TestCase
 {
     const INPUT_DATA = 'input';
     const EXPECTED_DATA = 'expected';
@@ -96,7 +99,9 @@ class PhpIgnoredTagFilterTest extends \PHPUnit\Framework\TestCase
         $result = [];
         foreach (["before", "after"] as $sourceType) {
             $dataDir = "$testDir/$dataType/$sourceType";
-            $testFiles = array_map(function ($file) use ($dataDir) { return "$dataDir/$file"; }, scandir($dataDir));
+            $testFiles = array_map(function ($file) use ($dataDir) {
+                return "$dataDir/$file";
+            }, scandir($dataDir));
             $fileContents = [];
             foreach ($testFiles as $filePath) {
                 $fileName = pathinfo($filePath, PATHINFO_BASENAME);

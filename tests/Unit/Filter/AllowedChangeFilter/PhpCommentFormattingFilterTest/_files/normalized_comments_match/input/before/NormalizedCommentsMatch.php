@@ -8,7 +8,7 @@ namespace Magento\SemanticVersionChecker\Test\Unit\Filter\AllowedChangeFilter\Ph
 
 class NormalizedCommentsMatch
 {
-//  This class has changes to comment formatting
+    //  This class has changes to comment formatting
     /**
      * but not changes to the content
      *

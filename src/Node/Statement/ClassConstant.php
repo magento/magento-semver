@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
@@ -27,6 +28,6 @@ class ClassConstant extends BaseClassConstant
             $fqcn = $context->namespacedName->toString();
         }
 
-        return $fqcn.'::'.$constant->consts[0]->name;
+        return $fqcn . '::' . $constant->consts[0]->name;
     }
 }

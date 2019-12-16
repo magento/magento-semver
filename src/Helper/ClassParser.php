@@ -1,12 +1,15 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
 declare(strict_types=1);
 
 namespace Magento\SemanticVersionChecker\Helper;
 
+use Exception;
 use PhpParser\Lexer\Emulative;
 use PhpParser\Node;
 use PhpParser\Node\Stmt\Class_;
@@ -69,6 +72,7 @@ class ClassParser
      * Returns parent full class name.
      *
      * @return null|string
+     * @throws Exception
      */
     public function getParentFullClassName()
     {
@@ -143,6 +147,7 @@ class ClassParser
      *
      * @param string $nodeClass
      * @return Node[]
+     * @throws Exception
      */
     public function getNodesOfType($nodeClass)
     {
@@ -192,6 +197,8 @@ class ClassParser
      *
      * @param string $className
      * @return array The ancestors of <var>$className</var> if it could be found, empty array otherwise
+     *
+     * @throws Exception
      */
     public function getAncestors(string $className): array
     {
@@ -219,6 +226,7 @@ class ClassParser
      * Returns properties of current parsed class.
      *
      * @return array
+     * @throws Exception
      */
     public function getProperties()
     {
@@ -229,6 +237,7 @@ class ClassParser
      * Returns constants of current parsed class or interface.
      *
      * @return array
+     * @throws Exception
      */
     public function getConstants()
     {
@@ -239,6 +248,7 @@ class ClassParser
      * Returns array of full names which implemented at current class.
      *
      * @return array
+     * @throws Exception
      */
     public function getImplementedInterfacesNames()
     {
@@ -298,7 +308,8 @@ class ClassParser
 
             foreach ($nodeTree->stmts as $stmt) {
                 //is the class, interface, trait defined in the very same file?
-                if ($stmt instanceof ClassLike
+                if (
+                    $stmt instanceof ClassLike
                     && $stmt->name === $alias
                 ) {
                     return $nodeTree->name->toString() . '\\' . $stmt->name;
@@ -315,13 +326,12 @@ class ClassParser
                     }
                 }
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             //NOP We simply return an empty string
         }
 
         //we could not find the alias, thus we return an empty string
         return '';
-
     }
 
     /**
@@ -372,7 +382,7 @@ class ClassParser
      * Get the main namespace node from class/interface file
      *
      * @return Namespace_
-     * @throws \Exception
+     * @throws Exception
      */
     private function getNamespaceNode()
     {
@@ -382,6 +392,6 @@ class ClassParser
                 return $node;
             }
         }
-        throw new \Exception('No namespace definition found in ' . $this->filePath);
+        throw new Exception('No namespace definition found in ' . $this->filePath);
     }
 }

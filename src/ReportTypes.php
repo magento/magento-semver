@@ -1,8 +1,10 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
 declare(strict_types=1);
 
 namespace Magento\SemanticVersionChecker;
@@ -12,12 +14,12 @@ namespace Magento\SemanticVersionChecker;
  */
 class ReportTypes
 {
-    const ALL        = 'all';
-    const API        = 'api';
-    const DB_SCHEMA  = 'dbSchema';
-    const DI_XML     = 'diXml';
-    const LAYOUT_XML = 'layout';
-    const SYSTEM_XML = 'systemXml';
-    const XSD        = 'xsd';
-    const LESS       = 'less';
+    public const ALL        = 'all';
+    public const API        = 'api';
+    public const DB_SCHEMA  = 'dbSchema';
+    public const DI_XML     = 'diXml';
+    public const LAYOUT_XML = 'layout';
+    public const SYSTEM_XML = 'systemXml';
+    public const XSD        = 'xsd';
+    public const LESS       = 'less';
 }

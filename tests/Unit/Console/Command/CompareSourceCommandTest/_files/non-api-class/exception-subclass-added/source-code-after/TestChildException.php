@@ -7,5 +7,4 @@ namespace Test\Vcs\Exceptions;
 
 class TestChildException extends TestParentException
 {
-
 }

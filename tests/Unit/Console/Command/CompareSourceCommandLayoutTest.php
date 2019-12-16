@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
@@ -43,28 +44,28 @@ class CompareSourceCommandLayoutTest extends AbstractTestCase
 
     public function changesDataProvider()
     {
-        $pathToFixtures = __DIR__.'/CompareSourceCommandTest/_files/layout_xml';
+        $pathToFixtures = __DIR__ . '/CompareSourceCommandTest/_files/layout_xml';
 
         return [
             'block_remove' => [
-                $pathToFixtures.'/block_remove/source-code-before',
-                $pathToFixtures.'/block_remove/source-code-after',
+                $pathToFixtures . '/block_remove/source-code-before',
+                $pathToFixtures . '/block_remove/source-code-after',
                 [
                     'Suggested semantic versioning change: MAJOR',
                 ],
                 'Major change is detected.',
             ],
             'container_remove' => [
-                $pathToFixtures.'/container_remove/source-code-before',
-                $pathToFixtures.'/container_remove/source-code-after',
+                $pathToFixtures . '/container_remove/source-code-before',
+                $pathToFixtures . '/container_remove/source-code-after',
                 [
                     'Suggested semantic versioning change: MAJOR',
                 ],
                 'Major change is detected.',
             ],
             'update_remove' => [
-                $pathToFixtures.'/update_remove/source-code-before',
-                $pathToFixtures.'/update_remove/source-code-after',
+                $pathToFixtures . '/update_remove/source-code-before',
+                $pathToFixtures . '/update_remove/source-code-after',
                 [
                     'Suggested semantic versioning change: MAJOR',
                 ],

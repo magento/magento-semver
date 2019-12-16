@@ -3,13 +3,16 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
 if (!defined('TESTS_TEMP_DIR')) {
     define('TESTS_TEMP_DIR', dirname(__DIR__) . '/Unit/tmp');
 }
 require_once __DIR__ . '/../../vendor/autoload.php';
+
 setCustomErrorHandler();
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
+
 /**
  * Set custom error handler
  */

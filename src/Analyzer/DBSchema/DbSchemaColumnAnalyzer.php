@@ -1,8 +1,10 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
 declare(strict_types=1);
 
 namespace Magento\SemanticVersionChecker\Analyzer\DBSchema;
@@ -50,7 +52,6 @@ class DbSchemaColumnAnalyzer implements AnalyzerInterface
      * @return Report
      */
     public function analyze($registryBefore, $registryAfter)
-
     {
         $registryTablesBefore = $registryBefore->data['table'] ?? [];
         $registryTablesAfter = $registryAfter->data['table'] ?? [];
@@ -59,7 +60,10 @@ class DbSchemaColumnAnalyzer implements AnalyzerInterface
             foreach ($moduleTables as $tableName => $tableData) {
                 $columns = $tableData['column'] ?? [];
                 foreach ($columns as $column) {
-                    if (isset($registryTablesAfter[$moduleName][$tableName]) && !isset($registryTablesAfter[$moduleName][$tableName]['column'][$column])) {
+                    if (
+                        isset($registryTablesAfter[$moduleName][$tableName])
+                        && !isset($registryTablesAfter[$moduleName][$tableName]['column'][$column])
+                    ) {
                         $operation = new ColumnRemove($moduleName, $tableName . '/' . $column);
                         $this->getReport()->add($this->context, $operation);
                     }
@@ -70,7 +74,10 @@ class DbSchemaColumnAnalyzer implements AnalyzerInterface
             foreach ($moduleTables as $tableName => $tableData) {
                 $columns = $tableData['column'] ?? [];
                 foreach ($columns as $column) {
-                    if (isset($registryTablesBefore[$moduleName][$tableName]) && !isset($registryTablesBefore[$moduleName][$tableName]['column'][$column])) {
+                    if (
+                        isset($registryTablesBefore[$moduleName][$tableName])
+                        && !isset($registryTablesBefore[$moduleName][$tableName]['column'][$column])
+                    ) {
                         $operation = new ColumnAdd($moduleName, $tableName . '/' . $column);
                         $this->getReport()->add($this->context, $operation);
                     }

@@ -6,8 +6,6 @@
  */
 namespace Test\Vcs;
 
-
 class TestClassBase
 {
-
 }

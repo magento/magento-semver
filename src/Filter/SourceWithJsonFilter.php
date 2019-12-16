@@ -1,8 +1,10 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
 declare(strict_types=1);
 
 namespace Magento\SemanticVersionChecker\Filter;
@@ -72,7 +74,7 @@ class SourceWithJsonFilter
         // for xml we need to cache also the parts of dirname if move a xml than it should be also marked as change.
         if (preg_match('/^.*.xml$/', $fileName)) {
             $path = basename(pathinfo($fileName, PATHINFO_DIRNAME));
-            return sha1(file_get_contents($fileName).$path);
+            return sha1(file_get_contents($fileName) . $path);
         }
 
         return sha1_file($fileName);

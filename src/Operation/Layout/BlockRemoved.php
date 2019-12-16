@@ -1,18 +1,21 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
 declare(strict_types=1);
 
 namespace Magento\SemanticVersionChecker\Operation\Layout;
 
+use PHPSemVerChecker\Operation\Operation;
 use PHPSemVerChecker\SemanticVersioning\Level;
 
 /**
  * When a `<block>` is removed.
  */
-class BlockRemoved extends \PHPSemVerChecker\Operation\Operation
+class BlockRemoved extends Operation
 {
     /**
      * Error codes.

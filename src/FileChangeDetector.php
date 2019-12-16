@@ -58,10 +58,10 @@ class FileChangeDetector
                 foreach ($this->changedFileFilters as $filter) {
                     $filter->filter($beforeFiltered, $afterFiltered);
                 }
-                $beforeFiles = array_filter($beforeFiles, function($file) use ($beforeDir, $beforeFiltered) {
+                $beforeFiles = array_filter($beforeFiles, function ($file) use ($beforeDir, $beforeFiltered) {
                     return key_exists($this->getRelativePath($file, $beforeDir), $beforeFiltered);
                 });
-                $afterFiles = array_filter($afterFiles, function($file) use ($afterDir, $afterFiltered) {
+                $afterFiles = array_filter($afterFiles, function ($file) use ($afterDir, $afterFiltered) {
                     return key_exists($this->getRelativePath($file, $afterDir), $afterFiltered);
                 });
             }

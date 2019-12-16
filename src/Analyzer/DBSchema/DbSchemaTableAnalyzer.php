@@ -1,8 +1,10 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
 declare(strict_types=1);
 
 namespace Magento\SemanticVersionChecker\Analyzer\DBSchema;
@@ -72,7 +74,8 @@ class DbSchemaTableAnalyzer implements AnalyzerInterface
         }
         foreach ($registryTablesAfter as $moduleName => $moduleTables) {
             foreach ($moduleTables as $tableName => $tableData) {
-                if (!isset($registryTablesBefore[$moduleName][$tableName])
+                if (
+                    !isset($registryTablesBefore[$moduleName][$tableName])
                     && !$this->isModificationTableDeclaration($registryTablesAfter, $moduleName, $tableName)
                 ) {
                     $operation = new TableAdded($moduleName, $tableName);

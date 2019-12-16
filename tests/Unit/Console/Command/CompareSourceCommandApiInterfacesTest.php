@@ -1,8 +1,10 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
 namespace Magento\SemanticVersionChecker\Test\Unit\Console\Command;
 
 use Magento\SemanticVersionChecker\Test\Unit\Console\Command\CompareSourceCommandTest\AbstractTestCase;
@@ -117,8 +119,8 @@ class CompareSourceCommandApiInterfacesTest extends AbstractTestCase
                 'Major change is detected.'
             ],
             'api-interface-remove-extends' => [
-                $pathToFixtures.'/remove-extends/source-code-before',
-                $pathToFixtures.'/remove-extends/source-code-after',
+                $pathToFixtures . '/remove-extends/source-code-before',
+                $pathToFixtures . '/remove-extends/source-code-after',
                 [
                     'Interface (MAJOR)',
                     'Test\Vcs\TestInterface | Extends has been removed. | M0122'

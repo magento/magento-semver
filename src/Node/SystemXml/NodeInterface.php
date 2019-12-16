@@ -1,8 +1,10 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
 declare(strict_types=1);
 
 namespace Magento\SemanticVersionChecker\Node\SystemXml;
@@ -15,7 +17,7 @@ interface NodeInterface
     /**
      * Defines the path separator that is used to build the nodes path.
      */
-    const PATH_SEPARATOR = '/';
+    public const PATH_SEPARATOR = '/';
 
     /**
      * Returns the parent of current element if it has one.

@@ -1,8 +1,10 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
 declare(strict_types=1);
 
 namespace Magento\SemanticVersionChecker\Analyzer\Less;
@@ -30,7 +32,7 @@ use Less_Tree_Import;
  */
 class Analyzer implements AnalyzerInterface
 {
-    const CONTEXT = 'less';
+    public const CONTEXT = 'less';
 
     /**
      * @var Report
@@ -195,8 +197,10 @@ class Analyzer implements AnalyzerInterface
      * @param Less_Tree_Mixin_Definition $nodeAfter
      * @return string
      */
-    private function getAddedMixinParams(Less_Tree_Mixin_Definition $nodeBefore, Less_Tree_Mixin_Definition $nodeAfter): string
-    {
+    private function getAddedMixinParams(
+        Less_Tree_Mixin_Definition $nodeBefore,
+        Less_Tree_Mixin_Definition $nodeAfter
+    ): string {
         $paramsBefore = $nodeBefore->params ?? [];
         $paramsAfter = $nodeAfter->params ?? [];
         $paramsAdded = [];

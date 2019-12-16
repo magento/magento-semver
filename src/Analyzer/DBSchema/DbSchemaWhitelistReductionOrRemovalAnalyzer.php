@@ -1,8 +1,10 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
 declare(strict_types=1);
 
 namespace Magento\SemanticVersionChecker\Analyzer\DBSchema;
@@ -90,9 +92,9 @@ class DbSchemaWhitelistReductionOrRemovalAnalyzer implements AnalyzerInterface
      *
      * @return bool
      */
-    public function isArrayExistsAndHasSameSize(array $after, array $beforeArray, string $name) : bool
+    public function isArrayExistsAndHasSameSize(array $after, array $beforeArray, string $name): bool
     {
-        if (isset($after[$name])){
+        if (isset($after[$name])) {
             return count($beforeArray) <= count($after[$name]);
         }
 

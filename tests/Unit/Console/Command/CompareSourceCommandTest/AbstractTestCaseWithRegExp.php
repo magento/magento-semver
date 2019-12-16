@@ -1,18 +1,22 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
 namespace Magento\SemanticVersionChecker\Test\Unit\Console\Command\CompareSourceCommandTest;
 
+use Exception;
 use Magento\SemanticVersionChecker\Console\Command\CompareSourceCommand;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Tester\CommandTester;
 
 /**
  * Defines an abstract base class for testing
  * {@link \Magento\SemanticVersionChecker\Console\Command\CompareSourceCommand}.
  */
-abstract class AbstractTestCaseWithRegExp extends \PHPUnit\Framework\TestCase
+abstract class AbstractTestCaseWithRegExp extends TestCase
 {
     /**
      * @var CompareSourceCommand
@@ -49,7 +53,7 @@ abstract class AbstractTestCaseWithRegExp extends \PHPUnit\Framework\TestCase
      * @param string[] $expectedLogEntries
      * @param string $expectedOutput
      * @param bool $shouldSkipTest
-     * @throws \Exception
+     * @throws Exception
      */
     protected function doTestExecute(
         $pathToSourceCodeBefore,
@@ -67,7 +71,7 @@ abstract class AbstractTestCaseWithRegExp extends \PHPUnit\Framework\TestCase
             }
             $this->assertContains($expectedOutput, $commandTester->getDisplay());
             $this->assertEquals(0, $commandTester->getStatusCode());
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             if ($shouldSkipTest) {
                 $this->markTestSkipped($e->getMessage());
             } else {

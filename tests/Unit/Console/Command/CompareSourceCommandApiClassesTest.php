@@ -1,8 +1,10 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
 namespace Magento\SemanticVersionChecker\Test\Unit\Console\Command;
 
 use Magento\SemanticVersionChecker\Test\Unit\Console\Command\CompareSourceCommandTest\AbstractTestCase;
@@ -229,8 +231,8 @@ class CompareSourceCommandApiClassesTest extends AbstractTestCase
                 'Major change is detected.'
             ],
             'api-class-changed-method-return-type' => [
-                $pathToFixtures.'/changed-method-return-type/source-code-before',
-                $pathToFixtures.'/changed-method-return-type/source-code-after',
+                $pathToFixtures . '/changed-method-return-type/source-code-before',
+                $pathToFixtures . '/changed-method-return-type/source-code-after',
                 [
                     'Class (MAJOR)',
                     'Test\Vcs\TestClass::declarationAddedPublic         | [public] Method return typing changed.    | M120 ',

@@ -11,5 +11,4 @@ namespace Test\Vcs;
  */
 class ApiClass extends BaseApiClass
 {
-
 }

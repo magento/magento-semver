@@ -1,8 +1,10 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
 declare(strict_types=1);
 
 namespace Magento\SemanticVersionChecker\Analyzer;
@@ -101,17 +103,21 @@ abstract class AbstractCodeAnalyzer implements AnalyzerInterface
     protected function isMovedToParent($parsedClass, $removedNode)
     {
         $parentClass = $parsedClass->getParentClass();
-        if ($removedNode instanceof ClassLike ||
+        if (
+            $removedNode instanceof ClassLike ||
             $parentClass === null ||
-            (property_exists($removedNode, 'flags') && in_array($removedNode->flags, [Class_::MODIFIER_PRIVATE]))) {
+            (property_exists($removedNode, 'flags') && in_array($removedNode->flags, [Class_::MODIFIER_PRIVATE]))
+        ) {
             return false;
         }
         $parentNodes = $parentClass->getNodesOfType($this->getNodeClass());
         foreach ($parentNodes as $parentNode) {
             $parentNodeName = $this->getNodeName($parentNode);
             $removedNodeName = $this->getNodeName($removedNode);
-            if ($parentNodeName === $removedNodeName &&
-                (!property_exists($parentNode, 'flags') || $parentNode->flags === $removedNode->flags)) {
+            if (
+                $parentNodeName === $removedNodeName &&
+                (!property_exists($parentNode, 'flags') || $parentNode->flags === $removedNode->flags)
+            ) {
                 return true;
             }
         }

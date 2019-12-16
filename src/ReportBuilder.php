@@ -203,5 +203,4 @@ class ReportBuilder
 
         return $filters;
     }
-
 }

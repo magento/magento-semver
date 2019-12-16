@@ -1,8 +1,10 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
 declare(strict_types=1);
 
 namespace Magento\SemanticVersionChecker\Analyzer\DBSchema;
@@ -66,7 +68,8 @@ class DbSchemaPrimaryKeyAnalyzer implements AnalyzerInterface
                     }
                     foreach ($key['columns'] as $beforeIndex => $beforeColumn) {
                         $matchedColumnFlag = false;
-                        foreach ($registryTablesAfter[$moduleName][$tableName]['primary'][$name]['columns'] as $afterIndex => $afterColumn) {
+                        $columns = $registryTablesAfter[$moduleName][$tableName]['primary'][$name]['columns'];
+                        foreach ($columns as $afterIndex => $afterColumn) {
                             if ($beforeColumn === $afterColumn) {
                                 $matchedColumnFlag = true;
                                 break;
@@ -97,7 +100,8 @@ class DbSchemaPrimaryKeyAnalyzer implements AnalyzerInterface
 
                     foreach ($key['columns'] as $beforeIndex => $beforeColumn) {
                         $matchedColumnFlag = false;
-                        foreach ($registryTablesBefore[$moduleName][$tableName]['primary'][$name]['columns'] as $afterIndex => $afterColumn) {
+                        $columns = $registryTablesBefore[$moduleName][$tableName]['primary'][$name]['columns'];
+                        foreach ($columns as $afterIndex => $afterColumn) {
                             if ($beforeColumn === $afterColumn) {
                                 $matchedColumnFlag = true;
                                 break;

@@ -1,8 +1,10 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
 declare(strict_types=1);
 
 namespace Magento\SemanticVersionChecker\Analyzer\DBSchema;
@@ -46,7 +48,8 @@ class DbSchemaWhitelistAnalyzer implements AnalyzerInterface
      *
      * @return Report
      */
-    public function analyze($registryBefore, $registryAfter){
+    public function analyze($registryBefore, $registryAfter)
+    {
         $registryTablesAfter = $registryAfter->data['table'] ?? [];
         $dbWhiteListContent = $registryAfter->data['whitelist_json'] ?? [];
 

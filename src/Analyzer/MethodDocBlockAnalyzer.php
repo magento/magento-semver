@@ -1,8 +1,10 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
 declare(strict_types=1);
 
 namespace Magento\SemanticVersionChecker\Analyzer;
@@ -34,9 +36,9 @@ use PHPStan\PhpDocParser\Parser\TypeParser;
  */
 class MethodDocBlockAnalyzer
 {
-    const DOC_RETURN_TAG = '@return';
-    const DOC_PARAM_TAG = '@param';
-    const DOC_VAR_TAG = '@var';
+    public const DOC_RETURN_TAG = '@return';
+    public const DOC_PARAM_TAG = '@param';
+    public const DOC_VAR_TAG = '@var';
 
     /**
      * Analyses the Method doc block and returns the return type declaration.
@@ -127,15 +129,17 @@ class MethodDocBlockAnalyzer
         if (is_object($inlineReturnTypeAfter[0]) && property_exists($inlineReturnTypeAfter[0], 'parts')) {
             $inlineReturnTypeAfter[0] = end($inlineReturnTypeAfter[0]->parts);
         } elseif (is_object($inlineReturnTypeAfter[0]) && property_exists($inlineReturnTypeAfter[0], 'type')) {
-                $inlineReturnTypeAfter[0] = $inlineReturnTypeAfter[0]->type;
+            $inlineReturnTypeAfter[0] = $inlineReturnTypeAfter[0]->type;
         }
         $docReturnTypeBefore = $this->getMethodDocDeclarationByTag($methodBefore, self::DOC_RETURN_TAG) ?? [''];
         $docReturnTypeAfter = $this->getMethodDocDeclarationByTag($methodAfter, self::DOC_RETURN_TAG) ?? [''];
         $returnTypeMovedFromInlineToDoc = false;
         $returnTypeMovedFromDocToInline = false;
         if ($inlineReturnTypeBefore  !== $inlineReturnTypeAfter && $docReturnTypeBefore !== $docReturnTypeAfter) {
-            $returnTypeMovedFromInlineToDoc = $inlineReturnTypeBefore[0] !== '' && $inlineReturnTypeBefore === $docReturnTypeAfter;
-            $returnTypeMovedFromDocToInline = $inlineReturnTypeAfter[0] !== '' && $inlineReturnTypeAfter === $docReturnTypeBefore;
+            $returnTypeMovedFromInlineToDoc = $inlineReturnTypeBefore[0] !== ''
+                && $inlineReturnTypeBefore === $docReturnTypeAfter;
+            $returnTypeMovedFromDocToInline = $inlineReturnTypeAfter[0] !== ''
+                && $inlineReturnTypeAfter === $docReturnTypeBefore;
         }
 
         //check variables

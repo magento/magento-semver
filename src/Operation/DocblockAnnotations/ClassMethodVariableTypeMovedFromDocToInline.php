@@ -1,13 +1,14 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
 declare(strict_types=1);
 
 namespace Magento\SemanticVersionChecker\Operation\DocblockAnnotations;
 
-use PhpParser\Node\Stmt\Class_;
 use PHPSemVerChecker\Operation\ClassMethodOperationUnary;
 use PHPSemVerChecker\SemanticVersioning\Level;
 
@@ -45,7 +46,7 @@ class ClassMethodVariableTypeMovedFromDocToInline extends ClassMethodOperationUn
      *
      * @return int
      */
-    public function getLevel() : int
+    public function getLevel(): int
     {
         return $this->mapping[$this->getCode()];
     }

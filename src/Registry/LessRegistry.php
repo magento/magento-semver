@@ -1,8 +1,10 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
 declare(strict_types=1);
 
 namespace Magento\SemanticVersionChecker\Registry;
@@ -17,7 +19,7 @@ class LessRegistry extends Registry
     /**
      * Defines the key for nodes in the data array.
      */
-    const NODES_KEY = 'nodes';
+    public const NODES_KEY = 'nodes';
 
     /**
      * Add a new less node to the list.
