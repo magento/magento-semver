@@ -131,8 +131,14 @@ class ReportBuilder
         $sourceBeforeFiles      = $fileIterator->findFromString($this->sourceBeforeDir, '', '');
         $sourceAfterFiles       = $fileIterator->findFromString($this->sourceAfterDir, '', '');
 
-        //let static analyzer build a complete dependency graph
+
         $staticAnalyzer = (new StaticAnalyzerFactory())->create();
+
+        /**
+         * Run dependency analysis over entire codebase. Necessary as we should parse parents and siblings of unchanged
+         * files.
+         */
+        //TODO:: Dependency graph get overwritten twice here. Fix
         $staticAnalyzer->analyse($sourceBeforeFiles);
         $dependencyMap = $staticAnalyzer->analyse($sourceAfterFiles);
 
@@ -141,6 +147,9 @@ class ReportBuilder
         $scannerBefore          = new ScannerRegistry($scannerRegistryFactory->create($dependencyMap));
         $scannerAfter           = new ScannerRegistry($scannerRegistryFactory->create($dependencyMap));
 
+        /**
+         * Filter unchanged files. (All json files will remain because of filter)
+         */
         foreach ($this->getFilters($this->sourceBeforeDir, $this->sourceAfterDir) as $filter) {
             // filters modify arrays by reference
             $filter->filter($sourceBeforeFiles, $sourceAfterFiles);

@@ -15,8 +15,8 @@ use PhpParser\Node\Stmt\Class_ as ClassNode;
 use PhpParser\Node\Stmt\ClassLike;
 use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\Node\Stmt\Interface_ as InterfaceNode;
-use PhpParser\Node\Stmt\Property;
 use PhpParser\Node\Stmt\Trait_ as TraitNode;
+use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitorAbstract;
 
 /**
@@ -24,11 +24,20 @@ use PhpParser\NodeVisitorAbstract;
  */
 class DependencyInspectionVisitor extends NodeVisitorAbstract
 {
+
     /** @var DependencyGraph */
     private $dependencyGraph;
 
     /** @var NodeHelper */
     private $nodeHelper;
+
+    /**
+     * @var Entity
+     * Holds current Entity. Stores so we can populate this entity in our dependency graph upon walking relevant child
+     * nodes.
+     */
+    private $currentClassLike = null;
+
 
     /**
      * Constructor.
@@ -43,18 +52,92 @@ class DependencyInspectionVisitor extends NodeVisitorAbstract
     }
 
     /**
-     * @inheritDoc
+     * Logic to process current node. We aggressively halt walking the AST since this may contain many nodes
+     * If we are visiting a Classlike node, set currentClassLike so we can populate this entity in our dependency graph
+     * upon walking relevant child nodes like PropertyProperty and ClassMethod.
      *
-     * Inspect nodes after all visitors have run since we need the fully qualified names of nodes.
+     * @inheritdoc
+     *
+     * @param Node $node
+     * @return int
+     */
+    public function enterNode(Node $node)
+    {
+
+        if ($node instanceof Node\Stmt\Namespace_) {
+            return null;
+        }
+
+        if ($node instanceof ClassLike) {
+
+            /**
+             * @var \PhpParser\Node\Name $namespacedName
+             * This is set in the NamespaceResolver visitor
+             */
+            $namespacedName = $node->namespacedName;
+
+            if ($node instanceof ClassNode) {
+                if ($node->isAnonymous()) {
+                    return NodeTraverser::STOP_TRAVERSAL;
+                }
+                $this->currentClassLike = $this->dependencyGraph->findOrCreateClass((string)$namespacedName);
+                if ($node->extends) {
+                    $parentClassName = (string)$node->extends;
+                    $parentClassEntity = $this->dependencyGraph->findOrCreateClass($parentClassName);
+                    $this->currentClassLike->addExtends($parentClassEntity);
+                }
+                foreach ($node->implements as $implement) {
+                    $interfaceName = (string)$implement;
+                    $interfaceEntity = $this->dependencyGraph->findOrCreateInterface($interfaceName);
+                    $this->currentClassLike->addImplements($interfaceEntity);
+                }
+            }
+            elseif ($node instanceof InterfaceNode) {
+                $this->currentClassLike = $this->dependencyGraph->findOrCreateInterface((string)$namespacedName);
+                foreach ($node->extends as $extend) {
+                    $interfaceName   = (string)$extend;
+                    $interfaceEntity = $this->dependencyGraph->findOrCreateInterface($interfaceName);
+                    $this->currentClassLike->addExtends($interfaceEntity);
+                }
+            }
+            elseif ($node instanceof TraitNode) {
+                $this->currentClassLike = $this->dependencyGraph->findOrCreateTrait((string)$namespacedName);
+            }
+
+            $this->currentClassLike->setIsApi($this->nodeHelper->isApiNode($node));
+
+            return null;
+        }
+
+        if ($node instanceof Node\Stmt\TraitUse) {
+            foreach ($node->traits as $trait) {
+                $traitName   = (string)$trait;
+                $traitEntity = $this->dependencyGraph->findOrCreateTrait($traitName);
+                $this->currentClassLike->addUses($traitEntity);
+            }
+            return NodeTraverser::DONT_TRAVERSE_CHILDREN;
+        }
+
+        if ($node instanceof Node\Stmt\PropertyProperty) {
+            $this->currentClassLike->addProperty($node);
+            return NodeTraverser::DONT_TRAVERSE_CHILDREN;
+        }
+
+        if ($node instanceof ClassMethod) {
+            $this->currentClassLike->addMethod($node);
+            return NodeTraverser::DONT_TRAVERSE_CHILDREN;
+        }
+
+        return NodeTraverser::DONT_TRAVERSE_CHILDREN;
+    }
+
+    /**
+     * @inheritDoc
      */
     public function leaveNode(Node $node)
     {
-        if ($node instanceof ClassNode) {
-            $this->addClassNode($node);
-        } elseif ($node instanceof InterfaceNode) {
-            $this->addInterfaceNode($node);
-        } elseif ($node instanceof TraitNode) {
-            $this->addTraitNode($node);
+        if ($node instanceof ClassLike) {
+            $this->currentClassLike = null;
         }
     }
 
@@ -66,112 +149,5 @@ class DependencyInspectionVisitor extends NodeVisitorAbstract
     public function getDependencyGraph(): DependencyGraph
     {
         return $this->dependencyGraph;
-    }
-
-    /**
-     * @param ClassNode $node
-     */
-    private function addClassNode(ClassNode $node)
-    {
-        // name is not set for anonymous classes, therefore they cannot be part of the dependency graph
-        if ($node->isAnonymous()) {
-            return;
-        }
-
-        $className = (string)$node->namespacedName;
-        $class     = $this->dependencyGraph->findOrCreateClass($className);
-
-        [$methodList, $propertyList] = $this->fetchStmtsNodes($node);
-        $class->setMethodList($methodList);
-        $class->setPropertyList($propertyList);
-        $class->setIsApi($this->nodeHelper->isApiNode($node));
-
-        if ($node->extends) {
-            $parentClassName   = (string)$node->extends;
-            $parentClassEntity = $this->dependencyGraph->findOrCreateClass($parentClassName);
-            $class->addExtends($parentClassEntity);
-        }
-
-        foreach ($node->implements as $implement) {
-            $interfaceName   = (string)$implement;
-            $interfaceEntity = $this->dependencyGraph->findOrCreateInterface($interfaceName);
-            $class->addImplements($interfaceEntity);
-        }
-
-        foreach ($this->nodeHelper->getTraitUses($node) as $traitUse) {
-            foreach ($traitUse->traits as $trait) {
-                $traitName   = (string)$trait;
-                $traitEntity = $this->dependencyGraph->findOrCreateTrait($traitName);
-                $class->addUses($traitEntity);
-            }
-        }
-
-        $this->dependencyGraph->addEntity($class);
-    }
-
-    /**
-     * @param InterfaceNode $node
-     */
-    private function addInterfaceNode(InterfaceNode $node)
-    {
-        $interfaceName = (string)$node->namespacedName;
-        $interface     = $this->dependencyGraph->findOrCreateInterface($interfaceName);
-
-        $interface->setIsApi($this->nodeHelper->isApiNode($node));
-        [$methodList] = $this->fetchStmtsNodes($node);
-        $interface->setMethodList($methodList);
-
-        foreach ($node->extends as $extend) {
-            $interfaceName   = (string)$extend;
-            $interfaceEntity = $this->dependencyGraph->findOrCreateInterface($interfaceName);
-            $interface->addExtends($interfaceEntity);
-        }
-
-        $this->dependencyGraph->addEntity($interface);
-    }
-
-    /**
-     * @param TraitNode $node
-     */
-    private function addTraitNode(TraitNode $node)
-    {
-        $traitName = (string)$node->namespacedName;
-        $trait     = $this->dependencyGraph->findOrCreateTrait($traitName);
-
-        [$methodList, $propertyList] = $this->fetchStmtsNodes($node);
-        $trait->setMethodList($methodList);
-        $trait->setPropertyList($propertyList);
-        $trait->setIsApi($this->nodeHelper->isApiNode($node));
-
-        foreach ($this->nodeHelper->getTraitUses($node) as $traitUse) {
-            foreach ($traitUse->traits as $parentTrait) {
-                $parentTraitName   = (string)$parentTrait;
-                $parentTraitEntity = $this->dependencyGraph->findOrCreateTrait($parentTraitName);
-                $trait->addUses($parentTraitEntity);
-            }
-        }
-
-        $this->dependencyGraph->addEntity($trait);
-    }
-
-    /**
-     * @param ClassLike $node
-     * @return array
-     */
-    private function fetchStmtsNodes(ClassLike $node): array
-    {
-        $methodList = [];
-        $propertyList = [];
-        foreach ($node->stmts as $stmt) {
-            if ($stmt instanceof ClassMethod) {
-                $methodList[$stmt->name] = $stmt;
-            } elseif ($stmt instanceof Property) {
-                foreach ($stmt->props as $prop) {
-                    $propertyList[$prop->name] = $prop;
-                }
-            }
-        }
-
-        return [$methodList, $propertyList];
     }
 }

@@ -32,28 +32,4 @@ class Node
                && strpos($comment[0]->getText(), SemanticVersionChecker::ANNOTATION_API) !== false;
     }
 
-    /**
-     * Workaround for different versions of `nikic/php-parser`.
-     *
-     * Later versions of the package `nikic/php-parser` add the convenience method `ClassLike::getTraitUses()`. If we
-     * happen to have such a version, that method is called and its result is returned, otherwise we extract the
-     * {@link \PhpParser\Node\Stmt\TraitUse} and return them.
-     *
-     * @param PhpNode $node
-     * @return TraitUse[]
-     */
-    public function getTraitUses(PhpNode $node): array
-    {
-        if (method_exists($node, 'getTraitUses')) {
-            return $node->getTraitUses();
-        }
-
-        $traitUses = [];
-        foreach ($node->stmts as $stmt) {
-            if ($stmt instanceof TraitUse) {
-                $traitUses[] = $stmt;
-            }
-        }
-        return $traitUses;
-    }
 }
