@@ -11,6 +11,7 @@ namespace Magento\SemanticVersionChecker\ClassHierarchy;
 
 use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\Node\Stmt\Property;
+use PhpParser\Node\Stmt\PropertyProperty;
 
 /**
  * Implements an entity that reflects a `class`, `interface` or `trait` and its dependencies.
@@ -368,7 +369,29 @@ class Entity
      */
     public function setMethodList(array $methodList): void
     {
-        $this->methodList = $methodList;
+        $this->methodList = [];
+        foreach ($methodList as $method) {
+            $this->addMethod($method);
+        }
+    }
+
+    /**
+     * Also cleans method to prevent memory leaks.
+     * @param ClassMethod $method
+     */
+    public function addMethod(ClassMethod $method): void
+    {
+        //remove stmts from Method
+        $method->stmts = [];
+        $this->methodList[$method->name] = $method;
+    }
+
+    /**
+     * @param PropertyProperty $property
+     */
+    public function addProperty(PropertyProperty $property): void
+    {
+        $this->propertyList[$property->name] = $property;
     }
 
     /**
@@ -376,7 +399,10 @@ class Entity
      */
     public function setPropertyList(array $propertyList): void
     {
-        $this->propertyList = $propertyList;
+        $this->propertyList = [];
+        foreach ($propertyList as $property) {
+            $this->addProperty($property);
+        }
     }
 
     /**
