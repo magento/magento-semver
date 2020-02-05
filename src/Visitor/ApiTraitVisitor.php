@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Magento\SemanticVersionChecker\Visitor;
 
+use Magento\SemanticVersionChecker\Registry\ClassLikeNodeMetadata;
 use PhpParser\Node;
 use PhpParser\Node\Stmt\Trait_;
 
@@ -26,8 +27,8 @@ class ApiTraitVisitor extends AbstractApiVisitor
      *
      * @param Node|Trait_ $trait
      */
-    public function add(Node $trait)
+    public function add(Node $trait, ClassLikeNodeMetadata $nodeMetadata)
     {
-        $this->registry->addTrait($trait);
+        $this->registry->addTraitWithMetadata($trait, $nodeMetadata);
     }
 }

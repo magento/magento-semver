@@ -142,11 +142,6 @@ class ReportBuilder
         $staticAnalyzer->analyse($sourceBeforeFiles);
         $dependencyMap = $staticAnalyzer->analyse($sourceAfterFiles);
 
-        //scan files
-        $scannerRegistryFactory = new ScannerRegistryFactory();
-        $scannerBefore          = new ScannerRegistry($scannerRegistryFactory->create($dependencyMap));
-        $scannerAfter           = new ScannerRegistry($scannerRegistryFactory->create($dependencyMap));
-
         /**
          * Filter unchanged files. (All json files will remain because of filter)
          */
@@ -154,6 +149,12 @@ class ReportBuilder
             // filters modify arrays by reference
             $filter->filter($sourceBeforeFiles, $sourceAfterFiles);
         }
+
+        //scan files
+        $scannerRegistryFactory = new ScannerRegistryFactory();
+        $scannerBefore          = new ScannerRegistry($scannerRegistryFactory->create($dependencyMap));
+        $scannerAfter           = new ScannerRegistry($scannerRegistryFactory->create($dependencyMap));
+
 
         foreach ($sourceBeforeFiles as $file) {
             $scannerBefore->scanFile($file);

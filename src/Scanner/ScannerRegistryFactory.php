@@ -11,6 +11,7 @@ use Magento\SemanticVersionChecker\ClassHierarchy\DependencyGraph;
 use Magento\SemanticVersionChecker\Helper\Node as NodeHelper;
 use Magento\SemanticVersionChecker\Parser\LessParser;
 use Magento\SemanticVersionChecker\Registry\LessRegistry;
+use Magento\SemanticVersionChecker\Registry\PhpRegistry;
 use Magento\SemanticVersionChecker\Registry\XmlRegistry;
 use Magento\SemanticVersionChecker\ReportTypes;
 use Magento\SemanticVersionChecker\Visitor\ApiClassVisitor;
@@ -53,7 +54,7 @@ class ScannerRegistryFactory
      */
     private function buildApiScanner(DependencyGraph $dependencyGraph = null)
     {
-        $registry    = new Registry();
+        $registry    = new PhpRegistry();
         $parser      = new Parser(new Emulative());
         $traverser   = new NodeTraverser();
         $nodeHelper  = new NodeHelper();
