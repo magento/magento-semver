@@ -237,4 +237,17 @@ abstract class AbstractCodeAnalyzer implements AnalyzerInterface
     {
         return $isBefore ? $this->fileBefore : $this->fileAfter;
     }
+
+    /**
+     * Gets the AbstractCodeAnalyzers for content analysis (ex: method analyzer for classes)
+     *
+     * @param string $context
+     * @param string $fileBefore
+     * @param string $fileAfter
+     * @return array
+     */
+    protected function getContentAnalyzers($context, $fileBefore, $fileAfter)
+    {
+        return [];
+    }
 }

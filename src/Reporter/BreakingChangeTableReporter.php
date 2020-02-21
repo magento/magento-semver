@@ -7,6 +7,7 @@
 // @codingStandardsIgnoreFile
 namespace Magento\SemanticVersionChecker\Reporter;
 
+use Magento\SemanticVersionChecker\DbSchemaReport;
 use PHPSemVerChecker\Report\Report;
 use PHPSemVerChecker\SemanticVersioning\Level;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -51,13 +52,7 @@ class BreakingChangeTableReporter extends TableReporter
      */
     public function output(OutputInterface $output)
     {
-        $contexts = [
-            'class',
-            'function',
-            'interface',
-            'trait',
-            'database',
-        ];
+        $contexts = DbSchemaReport::$contexts;
 
         foreach ($contexts as $context) {
             $header = static::formatSectionHeader($this->targetFile, $context, 'breaking-change');

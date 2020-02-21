@@ -119,12 +119,7 @@ class InterfaceAnalyzer extends AbstractCodeAnalyzer
 
             if ($interfaceBefore !== $interfaceAfter) {
                 /** @var AnalyzerInterface[] $analyzers */
-                $analyzers = [
-                    new ClassMethodAnalyzer(static::CONTEXT, $fileBefore, $fileAfter),
-                    new ClassConstantAnalyzer(static::CONTEXT, $fileBefore, $fileAfter),
-                    new ClassMethodExceptionAnalyzer(static::CONTEXT, $fileBefore, $fileAfter),
-                    new InterfaceExtendsAnalyzer(static::CONTEXT, $fileBefore, $fileAfter)
-                ];
+                $analyzers = $this->getContentAnalyzers(static::CONTEXT, $fileBefore, $fileAfter);
 
                 foreach ($analyzers as $analyzer) {
                     $internalReport = $analyzer->analyze($interfaceBefore, $interfaceAfter);
@@ -133,4 +128,24 @@ class InterfaceAnalyzer extends AbstractCodeAnalyzer
             }
         }
     }
+
+    /**
+     * Get the list of content analyzers
+     *
+     * @param string $context
+     * @param string $fileBefore
+     * @param string $fileAfter
+     * @return array
+     */
+    protected function getContentAnalyzers($context, $fileBefore, $fileAfter)
+    {
+        return [
+            new ClassMethodAnalyzer($context, $fileBefore, $fileAfter),
+            new ClassConstantAnalyzer($context, $fileBefore, $fileAfter),
+            new ClassMethodExceptionAnalyzer($context, $fileBefore, $fileAfter),
+            new InterfaceExtendsAnalyzer($context, $fileBefore, $fileAfter)
+        ];
+    }
+
+
 }

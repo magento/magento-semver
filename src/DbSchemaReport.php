@@ -11,6 +11,19 @@ use PHPSemVerChecker\SemanticVersioning\Level;
 
 class DbSchemaReport extends ReportAlias
 {
+    public static $contexts = [
+        'class',
+        'function',
+        'interface',
+        'trait',
+        'database',
+        'di',
+        'layout',
+        'system',
+        'xsd',
+        'less'
+    ];
+
     /**
      * Report constructor.
      */
@@ -18,11 +31,8 @@ class DbSchemaReport extends ReportAlias
     {
         $levels = array_fill_keys(Level::asList(), []);
         parent::__construct();
-        $this->differences['database'] = $levels;
-        $this->differences['di'] = $levels;
-        $this->differences['layout'] = $levels;
-        $this->differences['system'] = $levels;
-        $this->differences['xsd'] = $levels;
-        $this->differences['less'] = $levels;
+        foreach (static::$contexts as $context) {
+            $this->differences[$context] = $levels;
+        }
     }
 }

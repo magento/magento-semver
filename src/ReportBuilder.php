@@ -119,6 +119,16 @@ class ReportBuilder
     }
 
     /**
+     * Get the mapping of report type -> analyzer factory
+     *
+     * @return array
+     */
+    protected function getAnalyzerFactories()
+    {
+        return $this->analyzerList;
+    }
+
+    /**
      * Create a report based on type
      *
      * @return Report
@@ -161,7 +171,7 @@ class ReportBuilder
         /**
          * @var AnalyzerFactoryInterface $factory
          */
-        foreach ($this->analyzerList as $reportType => $factory) {
+        foreach ($this->getAnalyzerFactories() as $reportType => $factory) {
             /** @var AnalyzerInterface $analyzer */
             $analyzer = (new $factory())->create($dependencyMap);
             $tmpReport = $analyzer->analyze(
