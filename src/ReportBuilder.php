@@ -44,9 +44,9 @@ class ReportBuilder
 
     /**
      * Define analyzer factory list for the different report types.
-     * @var array
+     * @var string[]
      */
-    private $analyzerList = [
+    private $analyzerFactoryClasses = [
         ReportTypes::API        => AnalyzerFactory::class,
         ReportTypes::ALL        => NonApiAnalyzerFactory::class,
         ReportTypes::DB_SCHEMA  => DbSchemaAnalyzerFactory::class,
@@ -121,11 +121,11 @@ class ReportBuilder
     /**
      * Get the mapping of report type -> analyzer factory
      *
-     * @return array
+     * @return string[]
      */
-    protected function getAnalyzerFactories()
+    protected function getAnalyzerFactoryClasses()
     {
-        return $this->analyzerList;
+        return $this->analyzerFactoryClasses;
     }
 
     /**
@@ -171,7 +171,7 @@ class ReportBuilder
         /**
          * @var AnalyzerFactoryInterface $factory
          */
-        foreach ($this->getAnalyzerFactories() as $reportType => $factory) {
+        foreach ($this->getAnalyzerFactoryClasses() as $reportType => $factory) {
             /** @var AnalyzerInterface $analyzer */
             $analyzer = (new $factory())->create($dependencyMap);
             $tmpReport = $analyzer->analyze(

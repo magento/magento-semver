@@ -118,7 +118,6 @@ class InterfaceAnalyzer extends AbstractCodeAnalyzer
             $interfaceAfter = $afterNameMap[$key];
 
             if ($interfaceBefore !== $interfaceAfter) {
-                /** @var AnalyzerInterface[] $analyzers */
                 $analyzers = $this->getContentAnalyzers(static::CONTEXT, $fileBefore, $fileAfter);
 
                 foreach ($analyzers as $analyzer) {
@@ -135,7 +134,7 @@ class InterfaceAnalyzer extends AbstractCodeAnalyzer
      * @param string $context
      * @param string $fileBefore
      * @param string $fileAfter
-     * @return array
+     * @return AbstractCodeAnalyzer[]
      */
     protected function getContentAnalyzers($context, $fileBefore, $fileAfter)
     {
@@ -146,6 +145,4 @@ class InterfaceAnalyzer extends AbstractCodeAnalyzer
             new InterfaceExtendsAnalyzer($context, $fileBefore, $fileAfter)
         ];
     }
-
-
 }

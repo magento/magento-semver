@@ -108,7 +108,6 @@ class ClassAnalyzer extends AbstractCodeAnalyzer
             $classAfter = $afterNameMap[$key];
 
             if ($classBefore !== $classAfter) {
-                /** @var AnalyzerInterface[] $analyzers */
                 $analyzers = $this->getContentAnalyzers(static::CONTEXT, $fileBefore, $fileAfter);
 
                 foreach ($analyzers as $analyzer) {
@@ -125,7 +124,7 @@ class ClassAnalyzer extends AbstractCodeAnalyzer
      * @param string $context
      * @param string $fileBefore
      * @param string $fileAfter
-     * @return array
+     * @return AbstractCodeAnalyzer[]
      */
     protected function getContentAnalyzers($context, $fileBefore, $fileAfter)
     {
@@ -139,7 +138,6 @@ class ClassAnalyzer extends AbstractCodeAnalyzer
             new ClassTraitAnalyzer($context, $fileBefore, $fileAfter),
         ];
     }
-
 
     /**
      * Get the class node registry

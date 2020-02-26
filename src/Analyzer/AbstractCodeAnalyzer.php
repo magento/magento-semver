@@ -244,7 +244,7 @@ abstract class AbstractCodeAnalyzer implements AnalyzerInterface
      * @param string $context
      * @param string $fileBefore
      * @param string $fileAfter
-     * @return array
+     * @return AbstractCodeAnalyzer[]
      */
     protected function getContentAnalyzers($context, $fileBefore, $fileAfter)
     {
