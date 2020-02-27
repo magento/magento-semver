@@ -5,7 +5,12 @@
  * See COPYING.txt for license details.
  */
 
-require __DIR__ . '/../vendor/autoload.php';
+foreach ([__DIR__ . '/../../../autoload.php', __DIR__ . '/../vendor/autoload.php'] as $file) {
+    if (file_exists($file)) {
+        require $file;
+        break;
+    }
+}
 
 use Symfony\Component\Console\Application;
 use Magento\SemanticVersionChecker\Console\Command\CompareSourceCommand;

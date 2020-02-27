@@ -115,11 +115,7 @@ class TraitAnalyzer extends AbstractCodeAnalyzer
             if ($traitBefore !== $traitAfter) {
                 $fileBefore  = $this->getFileName($registryBefore, $traitName);
                 $fileAfter   = $this->getFileName($registryAfter, $traitName);
-
-                /** @var AbstractCodeAnalyzer[] $analyzers */
-                $analyzers = [
-                    new ClassMethodAnalyzer(static::CONTEXT, $fileBefore, $fileAfter),
-                ];
+                $analyzers = $this->getContentAnalyzers(static::CONTEXT, $fileBefore, $fileAfter);
 
                 foreach ($analyzers as $analyzer) {
                     $internalReport = $analyzer->analyze($traitBefore, $traitAfter);
@@ -127,5 +123,18 @@ class TraitAnalyzer extends AbstractCodeAnalyzer
                 }
             }
         }
+    }
+
+    /**
+     * Get the list of content analyzers
+     *
+     * @param string $context
+     * @param string $fileBefore
+     * @param string $fileAfter
+     * @return AbstractCodeAnalyzer[]
+     */
+    protected function getContentAnalyzers($context, $fileBefore, $fileAfter)
+    {
+        return [new ClassMethodAnalyzer($context, $fileBefore, $fileAfter)];
     }
 }

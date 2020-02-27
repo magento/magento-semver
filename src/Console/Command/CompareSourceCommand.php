@@ -93,7 +93,6 @@ class CompareSourceCommand extends Command
         $sourceAfterDirArg = $input->getArgument('source-after');
         $sourceAfterDir = realpath($sourceAfterDirArg);
         $allowedChangeLevel = $input->getArgument('allowed-change-level');
-
         $includePatternsPath = $input->getOption('include-patterns');
         $excludePatternsPath = $input->getOption('exclude-patterns');
         $logOutputPath = $input->getOption('log-output-location');

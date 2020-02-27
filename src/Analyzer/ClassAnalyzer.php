@@ -108,18 +108,7 @@ class ClassAnalyzer extends AbstractCodeAnalyzer
             $classAfter = $afterNameMap[$key];
 
             if ($classBefore !== $classAfter) {
-                /**
- * @var AnalyzerInterface[] $analyzers
-*/
-                $analyzers = [
-                    new ClassMethodAnalyzer(static::CONTEXT, $fileBefore, $fileAfter, $this->dependencyGraph),
-                    new PropertyAnalyzer(static::CONTEXT, $fileBefore, $fileAfter),
-                    new ClassConstantAnalyzer(static::CONTEXT, $fileBefore, $fileAfter),
-                    new ClassMethodExceptionAnalyzer(static::CONTEXT, $fileBefore, $fileAfter),
-                    new ClassImplementsAnalyzer(static::CONTEXT, $fileBefore, $fileAfter),
-                    new ClassExtendsAnalyzer(static::CONTEXT, $fileBefore, $fileAfter),
-                    new ClassTraitAnalyzer(static::CONTEXT, $fileBefore, $fileAfter),
-                ];
+                $analyzers = $this->getContentAnalyzers(static::CONTEXT, $fileBefore, $fileAfter);
 
                 foreach ($analyzers as $analyzer) {
                     $internalReport = $analyzer->analyze($classBefore, $classAfter);
@@ -127,6 +116,27 @@ class ClassAnalyzer extends AbstractCodeAnalyzer
                 }
             }
         }
+    }
+
+    /**
+     * Get the list of content analyzers
+     *
+     * @param string $context
+     * @param string $fileBefore
+     * @param string $fileAfter
+     * @return AbstractCodeAnalyzer[]
+     */
+    protected function getContentAnalyzers($context, $fileBefore, $fileAfter)
+    {
+        return [
+            new ClassMethodAnalyzer($context, $fileBefore, $fileAfter, $this->dependencyGraph),
+            new PropertyAnalyzer($context, $fileBefore, $fileAfter),
+            new ClassConstantAnalyzer($context, $fileBefore, $fileAfter),
+            new ClassMethodExceptionAnalyzer($context, $fileBefore, $fileAfter),
+            new ClassImplementsAnalyzer($context, $fileBefore, $fileAfter),
+            new ClassExtendsAnalyzer($context, $fileBefore, $fileAfter),
+            new ClassTraitAnalyzer($context, $fileBefore, $fileAfter),
+        ];
     }
 
     /**
