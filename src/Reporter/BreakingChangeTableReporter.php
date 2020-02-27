@@ -51,20 +51,15 @@ class BreakingChangeTableReporter extends TableReporter
      */
     public function output(OutputInterface $output)
     {
-        $contexts = [
-            'class',
-            'function',
-            'interface',
-            'trait',
-            'database',
-        ];
+        $reportContexts = array_keys($this->report->getDifferences());
+        $membershipContexts = array_keys($this->membershipReport->getDifferences());
 
-        foreach ($contexts as $context) {
+        foreach ($reportContexts as $context) {
             $header = static::formatSectionHeader($this->targetFile, $context, 'breaking-change');
             $this->outputChangeReport($output, $this->report, $context, $header);
         }
 
-        foreach ($contexts as $context) {
+        foreach ($membershipContexts as $context) {
             $header = static::formatSectionHeader($this->targetFile, $context, 'api-membership');
             $this->outputChangeReport($output, $this->membershipReport, $context, $header);
         }
