@@ -310,9 +310,9 @@ class ClassParser
                 //is the class, interface, trait defined in the very same file?
                 if (
                     $stmt instanceof ClassLike
-                    && $stmt->name === $alias
+                    && $stmt->name->toString() === $alias
                 ) {
-                    return $nodeTree->name->toString() . '\\' . $stmt->name;
+                    return $nodeTree->name->toString() . '\\' . $stmt->name->toString();
                 }
 
                 //is the class being imported?
@@ -320,7 +320,7 @@ class ClassParser
                     foreach ($stmt->uses as $useUseStmnt) {
                         $fullyQualifiedName = $useUseStmnt->name->toString();
 
-                        if ($useUseStmnt->alias === $alias || $fullyQualifiedName === $alias) {
+                        if ($useUseStmnt->getAlias()->toString() === $alias || $fullyQualifiedName === $alias) {
                             return $fullyQualifiedName;
                         }
                     }
