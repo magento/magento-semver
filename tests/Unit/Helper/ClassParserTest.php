@@ -7,7 +7,6 @@
 
 namespace Magento\SemanticVersionChecker\Test\Unit\Helper;
 
-
 use PHPUnit\Framework\TestCase;
 use Magento\SemanticVersionChecker\Helper\ClassParser;
 
