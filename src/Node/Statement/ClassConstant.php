@@ -23,11 +23,11 @@ class ClassConstant extends BaseClassConstant
      */
     public static function getFullyQualifiedName(Stmt $context, BaseClassConstant $constant)
     {
-        $fqcn = $context->name;
+        $fqcn = $context->name->toString();
         if ($context->namespacedName) {
             $fqcn = $context->namespacedName->toString();
         }
 
-        return $fqcn . '::' . $constant->consts[0]->name;
+        return $fqcn . '::' . $constant->consts[0]->name->toString();
     }
 }
