@@ -96,7 +96,7 @@ class ClassParser
         }
 
         foreach ($nodeTree->stmts as $stmt) {
-            if ($stmt instanceof Use_ && $stmt->uses[0]->alias === $extendedClass) {
+            if ($stmt instanceof Use_ && $stmt->uses[0]->getAlias()->toString() === $extendedClass) {
                 return implode("\\", $stmt->uses[0]->name->parts);
             }
         }
@@ -262,7 +262,7 @@ class ClassParser
         $namespace = $nodeTree->name->toString();
         foreach ($nodeTree->stmts as $stmt) {
             if ($stmt instanceof Use_) {
-                $uses[$stmt->uses[0]->alias] = $stmt->uses[0];
+                $uses[$stmt->uses[0]->getAlias()->toString()] = $stmt->uses[0];
             }
         }
 
