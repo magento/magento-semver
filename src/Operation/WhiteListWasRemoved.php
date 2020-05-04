@@ -29,7 +29,7 @@ class WhiteListWasRemoved extends Operation
      *
      * @var int
      */
-    protected $level = Level::MINOR;
+    protected $level = Level::MAJOR;
 
     /**
      * Operation message

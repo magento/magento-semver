@@ -215,10 +215,10 @@ class CompareSourceCommandDatabaseSchemasTest extends AbstractTestCaseWithRegExp
                 $pathToFixtures . '/whitelist-was-removed/source-code-before',
                 $pathToFixtures . '/whitelist-was-removed/source-code-after',
                 [
-                    '/Database \(MINOR\)/',
+                    '/Database \(MAJOR\)/',
                     '/Magento_DbSchema\s*\|\s*Db Whitelist from module Magento_DbSchema was removed\s*\|\s*M109/'
                 ],
-                'Minor change is detected.'
+                'Major change is detected.'
             ]
         ];
     }
