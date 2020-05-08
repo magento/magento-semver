@@ -90,7 +90,7 @@ class ClassMethodAnalyzer extends AbstractCodeAnalyzer
      */
     protected function getNodeName($method)
     {
-        return $method->name->toString();
+        return $method->name;
     }
 
     /**
@@ -125,7 +125,7 @@ class ClassMethodAnalyzer extends AbstractCodeAnalyzer
             foreach ($class->getExtends() as $entity) {
                 $methods = $entity->getMethodList();
                 // checks if the method is already exiting in parent class
-                if (isset($methods[$methodAfter->name->toString()])) {
+                if (isset($methods[$methodAfter->name])) {
                     $report->add(
                         $this->context,
                         new ClassMethodOverwriteAdded($this->context, $fileAfter, $classAfter, $methodAfter)
@@ -252,7 +252,7 @@ class ClassMethodAnalyzer extends AbstractCodeAnalyzer
                 if (!$signatureChanged && $beforeCount > $afterCount) {
                     $remainingBefore = array_slice($paramsBefore, $minCount);
                     if ($sameVarNames) {
-                        if (strtolower($methodBefore->name->toString()) === "__construct") {
+                        if (strtolower($methodBefore->name) === "__construct") {
                             $data = new ClassConstructorLastParameterRemoved(
                                 $this->context,
                                 $this->fileAfter,
@@ -283,7 +283,7 @@ class ClassMethodAnalyzer extends AbstractCodeAnalyzer
 
                 if (!$signatureChanged && $beforeCount < $afterCount) {
                     $remainingAfter = array_slice($paramsAfter, $minCount);
-                    if (strtolower($methodBefore->name->toString()) === '__construct') {
+                    if (strtolower($methodBefore->name) === '__construct') {
                         $data = $this->analyzeRemainingConstructorParams($contextAfter, $methodAfter, $remainingAfter);
                     } else {
                         $data = $this->analyzeRemainingMethodParams($contextAfter, $methodAfter, $remainingAfter);
