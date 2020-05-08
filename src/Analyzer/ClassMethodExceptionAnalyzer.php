@@ -48,7 +48,7 @@ class ClassMethodExceptionAnalyzer extends AbstractCodeAnalyzer
      */
     protected function getNodeName($node)
     {
-        return $node->name;
+        return $node->name->toString();
     }
 
     /**

@@ -383,7 +383,7 @@ class Entity
     {
         //remove stmts from Method
         $method->stmts = [];
-        $this->methodList[$method->name] = $method;
+        $this->methodList[$method->name->toString()] = $method;
     }
 
     /**
