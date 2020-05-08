@@ -38,7 +38,7 @@ class PropertyAnalyzer extends AbstractCodeAnalyzer
      */
     protected function getNodeName($property)
     {
-        return $property->props[0]->name->toString();
+        return $property->props[0]->name;
     }
 
     /**

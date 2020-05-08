@@ -55,7 +55,7 @@ class Signature extends \PHPSemVerChecker\Comparator\Signature
     public static function isObjectParams(array $params)
     {
         foreach ($params as $param) {
-            if ($param->type instanceof \PhpParser\Node\Name\FullyQualified) {
+            if (is_object($param->type)) {
                 return true;
             }
         }

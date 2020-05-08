@@ -32,7 +32,7 @@ class ClassTraitAnalyzer extends AbstractCodeAnalyzer
      */
     protected function getNodeName($node)
     {
-        return $node->name->toString();
+        return $node->name;
     }
 
     /**
