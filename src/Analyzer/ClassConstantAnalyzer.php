@@ -39,7 +39,7 @@ class ClassConstantAnalyzer extends AbstractCodeAnalyzer
      */
     protected function getNodeName($constant)
     {
-        return $constant->consts[0]->name;
+        return $constant->consts[0]->name->toString();
     }
 
     /**

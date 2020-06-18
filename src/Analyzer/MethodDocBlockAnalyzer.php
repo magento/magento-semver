@@ -15,6 +15,8 @@ use Magento\SemanticVersionChecker\Operation\DocblockAnnotations\ClassMethodRetu
 use Magento\SemanticVersionChecker\Operation\DocblockAnnotations\ClassMethodReturnTypeMovedFromInlineToDoc;
 use Magento\SemanticVersionChecker\Operation\DocblockAnnotations\ClassMethodVariableTypeMovedFromDocToInline;
 use Magento\SemanticVersionChecker\Operation\DocblockAnnotations\ClassMethodVariableTypeMovedFromInlineToDoc;
+use PhpParser\Node\Identifier;
+use PhpParser\Node\Name\FullyQualified;
 use PhpParser\Node\Stmt\ClassLike;
 use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\Node\Param;
@@ -119,18 +121,8 @@ class MethodDocBlockAnalyzer
         $docParamTypesRemoved = array_diff($docParamTypesBefore, $docParamTypesAfter) ?? [''];
 
         //check return type
-        $inlineReturnTypeBefore[] = $methodBefore->returnType ?? '';
-        if (is_object($inlineReturnTypeBefore[0]) && property_exists($inlineReturnTypeBefore[0], 'parts')) {
-            $inlineReturnTypeBefore[0] = end($inlineReturnTypeBefore[0]->parts);
-        } elseif (is_object($inlineReturnTypeBefore[0]) && property_exists($inlineReturnTypeBefore[0], 'type')) {
-            $inlineReturnTypeBefore[0] = $inlineReturnTypeBefore[0]->type;
-        }
-        $inlineReturnTypeAfter[] = $methodAfter->returnType ?? '';
-        if (is_object($inlineReturnTypeAfter[0]) && property_exists($inlineReturnTypeAfter[0], 'parts')) {
-            $inlineReturnTypeAfter[0] = end($inlineReturnTypeAfter[0]->parts);
-        } elseif (is_object($inlineReturnTypeAfter[0]) && property_exists($inlineReturnTypeAfter[0], 'type')) {
-            $inlineReturnTypeAfter[0] = $inlineReturnTypeAfter[0]->type;
-        }
+        $inlineReturnTypeBefore[] = $this->getTypeName($methodBefore->returnType);
+        $inlineReturnTypeAfter[] = $this->getTypeName($methodAfter->returnType);
         $docReturnTypeBefore = $this->getMethodDocDeclarationByTag($methodBefore, self::DOC_RETURN_TAG) ?? [''];
         $docReturnTypeAfter = $this->getMethodDocDeclarationByTag($methodAfter, self::DOC_RETURN_TAG) ?? [''];
         $returnTypeMovedFromInlineToDoc = false;
@@ -207,15 +199,35 @@ class MethodDocBlockAnalyzer
         $formattedParams = [];
         /** @var Param $param */
         foreach ($params as $param) {
-            $paramType = $param->type;
-            if (!empty($paramType) && is_object($paramType)) {
-                $paramParts = property_exists($paramType, 'parts') ? $paramType->parts : [];
-                $formattedParams['$' . $param->name] = end($paramParts);
-            } elseif (!empty($paramType)) {
-                $formattedParams['$' . $param->name] = $paramType;
+            $paramType = $this->getTypeName($param->type);
+            if (!empty($paramType)) {
+                $formattedParams['$' . $param->var->name] = $paramType;
             }
         }
 
         return $formattedParams ?? [''];
+    }
+
+    /**
+     * Resolve given type to name
+     *
+     * @param FullyQualified|Identifier|null $type
+     *
+     * @return string
+     */
+    private function getTypeName($type)
+    {
+        $typeClass = (is_null($type)) ? '' : get_class($type);
+        switch ($typeClass) {
+            case FullyQualified::class:
+                $returnType = $type->getLast();
+                break;
+            case Identifier::class:
+                $returnType = $type->toString();
+                break;
+            default:
+                $returnType = '';
+        }
+        return $returnType;
     }
 }
