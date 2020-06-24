@@ -78,6 +78,12 @@ class CompareSourceCommand extends Command
                     'Full path to report of changed files',
                     'changed-files.log'
                 ),
+                new InputOption(
+                    'mftf',
+                    '',
+                    InputOption::VALUE_NONE,
+                    'Only compare mftf entity xml files'
+                ),
             ]);
     }
 
@@ -96,6 +102,7 @@ class CompareSourceCommand extends Command
         $includePatternsPath = $input->getOption('include-patterns');
         $excludePatternsPath = $input->getOption('exclude-patterns');
         $logOutputPath = $input->getOption('log-output-location');
+        $mftf = $input->getOption('mftf');
 
         // Derive log format from specified output location.  Default to text.
         $logFormat = self::REPORT_FORMAT_TEXT;
@@ -109,7 +116,13 @@ class CompareSourceCommand extends Command
         $this->validateAllowedLevel($allowedChangeLevel);
 
         // Generate separate reports for API-annotated code and all code
-        $reportBuilder = new ReportBuilder($includePatternsPath, $excludePatternsPath, $sourceBeforeDir, $sourceAfterDir);
+        $reportBuilder = new ReportBuilder(
+            $includePatternsPath,
+            $excludePatternsPath,
+            $sourceBeforeDir,
+            $sourceAfterDir,
+            $mftf
+        );
         $fileChangeDetector = new FileChangeDetector($sourceBeforeDir, $sourceAfterDir);
         $semanticVersionChecker = new SemanticVersionChecker($reportBuilder, $fileChangeDetector);
         $versionIncrease = $semanticVersionChecker->getVersionIncrease();

@@ -17,15 +17,18 @@ use Magento\SemanticVersionChecker\Analyzer\Factory\LayoutAnalyzerFactory;
 use Magento\SemanticVersionChecker\Analyzer\Factory\NonApiAnalyzerFactory;
 use Magento\SemanticVersionChecker\Analyzer\Factory\SystemXmlAnalyzerFactory;
 use Magento\SemanticVersionChecker\Analyzer\Factory\XsdAnalyzerFactory;
+use Magento\SemanticVersionChecker\ClassHierarchy\DependencyGraph;
 use Magento\SemanticVersionChecker\ClassHierarchy\StaticAnalyzerFactory;
 use Magento\SemanticVersionChecker\Analyzer\Factory\LessAnalyzerFactory;
 use Magento\SemanticVersionChecker\Filter\FilePatternFilter;
 use Magento\SemanticVersionChecker\Filter\SourceWithJsonFilter;
 use Magento\SemanticVersionChecker\Finder\FinderDecoratorFactory;
 use Magento\SemanticVersionChecker\Scanner\ScannerRegistryFactory;
+use Magento\SemanticVersionChecker\Analyzer\Factory\MFTFAnalyzerFactory;
 use PHPSemVerChecker\Configuration\LevelMapping;
 use PHPSemVerChecker\Report\Report;
 use PHPSemVerChecker\SemanticVersioning\Level;
+use Magento\SemanticVersionChecker\Finder\MftfFilesFinder;
 
 class ReportBuilder
 {
@@ -41,6 +44,9 @@ class ReportBuilder
 
     /** @var string */
     protected $sourceAfterDir;
+
+    /** @var boolean */
+    protected $mftf;
 
     /**
      * Define analyzer factory list for the different report types.
@@ -64,13 +70,26 @@ class ReportBuilder
      * @param string $excludePatternsPath
      * @param string $sourceBeforeDir
      * @param string $sourceAfterDir
+     * @param boolean $mftf
      */
-    public function __construct($includePatternsPath, $excludePatternsPath, $sourceBeforeDir, $sourceAfterDir)
-    {
+    public function __construct(
+        $includePatternsPath,
+        $excludePatternsPath,
+        $sourceBeforeDir,
+        $sourceAfterDir,
+        $mftf = false
+    ) {
         $this->includePatternsPath = $includePatternsPath;
         $this->excludePatternsPath = $excludePatternsPath;
         $this->sourceBeforeDir = $sourceBeforeDir;
         $this->sourceAfterDir = $sourceAfterDir;
+        $this->mftf = $mftf;
+
+        if ($this->mftf) {
+            $this->analyzerFactoryClasses = [
+                ReportTypes::MFTF => MFTFAnalyzerFactory::class,
+            ];
+        }
     }
 
     /**
@@ -129,6 +148,16 @@ class ReportBuilder
     }
 
     /**
+     * Check if it's to build MFTF report
+     *
+     * @return boolean
+     */
+    protected function isMftfReport()
+    {
+        return $this->mftf;
+    }
+
+    /**
      * Create a report based on type
      *
      * @return Report
@@ -136,33 +165,45 @@ class ReportBuilder
      */
     protected function buildReport()
     {
-        $finderDecoratorFactory = new FinderDecoratorFactory();
-        $fileIterator           = $finderDecoratorFactory->create();
-        $sourceBeforeFiles      = $fileIterator->findFromString($this->sourceBeforeDir, '', '');
-        $sourceAfterFiles       = $fileIterator->findFromString($this->sourceAfterDir, '', '');
+        /** @var DependencyGraph $dependencyMap */
+        $dependencyMap = null;
+        if (!$this->isMftfReport()) {
+            $finderDecoratorFactory = new FinderDecoratorFactory();
+            $fileIterator = $finderDecoratorFactory->create();
+            $sourceBeforeFiles = $fileIterator->findFromString($this->sourceBeforeDir, '', '');
+            $sourceAfterFiles = $fileIterator->findFromString($this->sourceAfterDir, '', '');
 
+            $staticAnalyzer = (new StaticAnalyzerFactory())->create();
 
-        $staticAnalyzer = (new StaticAnalyzerFactory())->create();
+            /**
+             * Run dependency analysis over entire codebase. Necessary as we should parse parents and siblings of unchanged
+             * files.
+             */
+            //MC-31705: Dependency graph get overwritten twice here. Document or fix this
+            $staticAnalyzer->analyse($sourceBeforeFiles);
+            $dependencyMap = $staticAnalyzer->analyse($sourceAfterFiles);
 
-        /**
-         * Run dependency analysis over entire codebase. Necessary as we should parse parents and siblings of unchanged
-         * files.
-         */
-        //MC-31705: Dependency graph get overwritten twice here. Document or fix this
-        $staticAnalyzer->analyse($sourceBeforeFiles);
-        $dependencyMap = $staticAnalyzer->analyse($sourceAfterFiles);
+            //scan files
+            $scannerRegistryFactory = new ScannerRegistryFactory();
+            $scannerBefore          = new ScannerRegistry($scannerRegistryFactory->create($dependencyMap));
+            $scannerAfter           = new ScannerRegistry($scannerRegistryFactory->create($dependencyMap));
 
-        //scan files
-        $scannerRegistryFactory = new ScannerRegistryFactory();
-        $scannerBefore          = new ScannerRegistry($scannerRegistryFactory->create($dependencyMap));
-        $scannerAfter           = new ScannerRegistry($scannerRegistryFactory->create($dependencyMap));
+            /**
+             * Filter unchanged files. (All json files will remain because of filter)
+             */
+            foreach ($this->getFilters($this->sourceBeforeDir, $this->sourceAfterDir) as $filter) {
+                // filters modify arrays by reference
+                $filter->filter($sourceBeforeFiles, $sourceAfterFiles);
+            }
+        } else {
+            $fileIterator = new MftfFilesFinder();
+            $sourceBeforeFiles = $fileIterator->findFromString($this->sourceBeforeDir, '', '');
+            $sourceAfterFiles = $fileIterator->findFromString($this->sourceAfterDir, '', '');
 
-        /**
-         * Filter unchanged files. (All json files will remain because of filter)
-         */
-        foreach ($this->getFilters($this->sourceBeforeDir, $this->sourceAfterDir) as $filter) {
-            // filters modify arrays by reference
-            $filter->filter($sourceBeforeFiles, $sourceAfterFiles);
+            //scan files
+            $scannerRegistryFactory = new ScannerRegistryFactory();
+            $scannerBefore          = new ScannerRegistry($scannerRegistryFactory->create(null, true));
+            $scannerAfter           = new ScannerRegistry($scannerRegistryFactory->create(null, true));
         }
 
         foreach ($sourceBeforeFiles as $file) {
