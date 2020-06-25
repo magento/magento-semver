@@ -60,17 +60,12 @@ class PageAnalyzer extends AbstractEntityAnalyzer
                 $beforeSectionElements = [];
                 $afterSectionElements = [];
 
-                // Continue when page does not have sections
-                if (!isset($beforeEntity['value'])) {
-                    continue;
-                }
-
-                foreach ($beforeEntity['value'] as $beforeChild) {
+                foreach ($beforeEntity['value'] ?? [] as $beforeChild) {
                     if ($beforeChild['name'] == self::MFTF_SECTION_ELEMENT) {
                         $beforeSectionElements[] = $beforeChild;
                     }
                 }
-                foreach ($afterEntities[$module][$entityName]['value'] as $afterChild) {
+                foreach ($afterEntities[$module][$entityName]['value'] ?? [] as $afterChild) {
                     if ($afterChild['name'] == self::MFTF_SECTION_ELEMENT) {
                         $afterSectionElements[] = $afterChild;
                     }

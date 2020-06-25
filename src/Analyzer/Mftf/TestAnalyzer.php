@@ -172,6 +172,9 @@ class TestAnalyzer extends AbstractEntityAnalyzer
         $operationTarget
     ) {
         foreach ($beforeTestActions as $testAction) {
+            if (!isset($testAction['attributes']['stepKey'])) {
+                continue;
+            }
             $beforeFieldKey = $testAction['attributes']['stepKey'];
             $matchingElement = $this->findMatchingElement($testAction, $afterTestActions,'stepKey');
             if ($matchingElement === null) {

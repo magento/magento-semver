@@ -60,12 +60,12 @@ class SectionAnalyzer extends AbstractEntityAnalyzer
                 $beforeElements = [];
                 $afterElements = [];
 
-                foreach ($beforeEntity['value'] as $beforeChild) {
+                foreach ($beforeEntity['value'] ?? [] as $beforeChild) {
                     if ($beforeChild['name'] == self::MFTF_ELEMENT_ELEMENT) {
                         $beforeElements[] = $beforeChild;
                     }
                 }
-                foreach ($afterEntities[$module][$entityName]['value'] as $afterChild) {
+                foreach ($afterEntities[$module][$entityName]['value'] ?? [] as $afterChild) {
                     if ($afterChild['name'] == self::MFTF_ELEMENT_ELEMENT) {
                         $afterElements[] = $afterChild;
                     }

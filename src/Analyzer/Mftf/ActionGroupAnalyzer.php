@@ -67,14 +67,15 @@ class ActionGroupAnalyzer extends AbstractEntityAnalyzer
                 $afterArguments = [];
                 $afterActions = [];
 
-                foreach ($beforeEntity['value'] as $beforeChild) {
+                foreach ($beforeEntity['value'] ?? [] as $beforeChild) {
                     if ($beforeChild['name'] == self::MFTF_ARGUMENTS_ELEMENT) {
                         $beforeArguments = $beforeChild['value'];
                     } else {
                         $beforeActions[] = $beforeChild;
                     }
                 }
-                foreach ($afterEntities[$module][$entityName]['value'] as $afterChild) {
+
+                foreach ($afterEntities[$module][$entityName]['value'] ?? [] as $afterChild) {
                     if ($afterChild['name'] == self::MFTF_ARGUMENTS_ELEMENT) {
                         $afterArguments = $afterChild['value'];
                     } else {
@@ -84,7 +85,6 @@ class ActionGroupAnalyzer extends AbstractEntityAnalyzer
 
                 // Validate <actions>
                 foreach ($beforeActions as $testAction) {
-                    // Action group annotations, continue
                     if (!isset($testAction['attributes']['stepKey'])) {
                         continue;
                     }

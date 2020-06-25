@@ -77,7 +77,7 @@ class DataAnalyzer extends AbstractEntityAnalyzer
                 $afterReqFields = [];
                 $afterArrayFields = [];
 
-                foreach ($beforeEntity['value'] as $beforeChild) {
+                foreach ($beforeEntity['value'] ?? [] as $beforeChild) {
                     if ($beforeChild['name'] == self::MFTF_DATA_FIELD_ELEMENT) {
                         $beforeDataFields[] = $beforeChild;
                     } elseif ($beforeChild['name'] == self::MFTF_VAR_ELEMENT) {
@@ -89,7 +89,7 @@ class DataAnalyzer extends AbstractEntityAnalyzer
                     }
                 }
 
-                foreach ($afterEntities[$module][$entityName]['value'] as $afterChild) {
+                foreach ($afterEntities[$module][$entityName]['value'] ?? [] as $afterChild) {
                     if ($afterChild['name'] == self::MFTF_DATA_FIELD_ELEMENT) {
                         $afterDataFields[] = $afterChild;
                     } elseif ($afterChild['name'] == self::MFTF_VAR_ELEMENT) {
