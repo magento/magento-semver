@@ -7,18 +7,22 @@
 namespace Magento\SemanticVersionChecker\Analyzer\Mftf;
 
 use Magento\SemanticVersionChecker\MftfReport;
+use Magento\SemanticVersionChecker\Operation\Mftf\ActionGroup\ActionGroupActionChanged;
 use Magento\SemanticVersionChecker\Operation\Mftf\Test\TestActionAdded;
 use Magento\SemanticVersionChecker\Operation\Mftf\Test\TestActionChanged;
-use Magento\SemanticVersionChecker\Operation\Mftf\Test\TestActionRemove;
+use Magento\SemanticVersionChecker\Operation\Mftf\Test\TestActionGroupRefChanged;
+use Magento\SemanticVersionChecker\Operation\Mftf\Test\TestActionRemoved;
 use Magento\SemanticVersionChecker\Operation\Mftf\Test\TestActionTypeChanged;
 use Magento\SemanticVersionChecker\Operation\Mftf\Test\TestAdded;
 use Magento\SemanticVersionChecker\Operation\Mftf\Test\TestAnnotationAdded;
 use Magento\SemanticVersionChecker\Operation\Mftf\Test\TestAnnotationChanged;
-use Magento\SemanticVersionChecker\Operation\Mftf\Test\TestGroupRemove;
-use Magento\SemanticVersionChecker\Operation\Mftf\Test\TestRemove;
+use Magento\SemanticVersionChecker\Operation\Mftf\Test\TestGroupRemoved;
+use Magento\SemanticVersionChecker\Operation\Mftf\Test\TestRemoved;
 use Magento\SemanticVersionChecker\Scanner\MftfScanner;
 use PHPSemVerChecker\Registry\Registry;
 use PHPSemVerChecker\Report\Report;
+use Magento\SemanticVersionChecker\Operation\Mftf\Test\TestRemoveActionRemoved;
+use Magento\SemanticVersionChecker\Operation\Mftf\Test\TestRemoveActionAdded;
 
 class TestAnalyzer extends AbstractEntityAnalyzer
 {
@@ -28,6 +32,22 @@ class TestAnalyzer extends AbstractEntityAnalyzer
     const MFTF_GROUP_ELEMENT = "{}group";
     const MFTF_DATA_TYPE = 'test';
     const MFTF_DATA_DIRECTORY = '/Mftf/Test/';
+
+    /**
+     * operations array
+     *
+     * @var string[][]
+     */
+    private static $operations = [
+        'stepKey' => [
+            'add' => TestActionAdded::class,
+            'remove' => TestActionRemoved::class,
+        ],
+        'keyForRemoval' => [
+            'add' => TestRemoveActionAdded::class,
+            'remove' => TestRemoveActionRemoved::class,
+        ],
+    ];
 
     /**
      * MFTF test.xml analyzer
@@ -59,7 +79,7 @@ class TestAnalyzer extends AbstractEntityAnalyzer
 
                 // Validate test still exists
                 if (!isset($afterEntities[$module][$entityName])) {
-                    $operation = new TestRemove($filenames, $operationTarget);
+                    $operation = new TestRemoved($filenames, $operationTarget);
                     $this->getReport()->add(MftfReport::MFTF_REPORT_CONTEXT, $operation);
                     continue;
                 }
@@ -111,7 +131,7 @@ class TestAnalyzer extends AbstractEntityAnalyzer
                         'value'
                     );
                     if ($annotation['name'] == self::MFTF_GROUP_ELEMENT && $matchingElement === null) {
-                        $operation = new TestGroupRemove(
+                        $operation = new TestGroupRemoved(
                             $filenames,
                             "$operationTarget/annotations/$beforeFieldName($beforeFieldKey)"
                         );
@@ -172,13 +192,21 @@ class TestAnalyzer extends AbstractEntityAnalyzer
         $operationTarget
     ) {
         foreach ($beforeTestActions as $testAction) {
-            if (!isset($testAction['attributes']['stepKey'])) {
+            if (isset($testAction['attributes']['stepKey'])) {
+                $elementIdentifier = 'stepKey';
+            } elseif (isset($testAction['attributes']['keyForRemoval'])) {
+                $elementIdentifier = 'keyForRemoval';
+            } else {
                 continue;
             }
-            $beforeFieldKey = $testAction['attributes']['stepKey'];
-            $matchingElement = $this->findMatchingElement($testAction, $afterTestActions,'stepKey');
+
+            $beforeFieldKey = $testAction['attributes'][$elementIdentifier];
+            $matchingElement = $this->findMatchingElement($testAction, $afterTestActions, $elementIdentifier);
             if ($matchingElement === null) {
-                $operation = new TestActionRemove($filenames, "$operationTarget/$beforeFieldKey");
+                $operation = new self::$operations[$elementIdentifier]['remove'](
+                    $filenames,
+                    "$operationTarget/$beforeFieldKey"
+                );
                 $report->add(MftfReport::MFTF_REPORT_CONTEXT, $operation);
             } else {
                 $this->matchAndValidateAttributes(
@@ -186,7 +214,10 @@ class TestAnalyzer extends AbstractEntityAnalyzer
                     $matchingElement['attributes'],
                     $report,
                     $filenames,
-                    TestActionChanged::class,
+                    [
+                        AbstractEntityAnalyzer::DEFAULT_OPERATION_KEY => TestActionChanged::class,
+                        'ref' => TestActionGroupRefChanged::class,
+                    ],
                     "$operationTarget/$beforeFieldKey"
                 );
                 $this->matchAndValidateElementType(
@@ -199,14 +230,17 @@ class TestAnalyzer extends AbstractEntityAnalyzer
                 );
             }
         }
-        $this->findAddedElementsInArray(
-            $beforeTestActions,
-            $afterTestActions,
-            'stepKey',
-            $report,
-            $filenames,
-            TestActionAdded::class,
-            $operationTarget
-        );
+
+        foreach (self::$operations as $identifier => $operations) {
+            $this->findAddedElementsInArray(
+                $beforeTestActions,
+                $afterTestActions,
+                $identifier,
+                $report,
+                $filenames,
+                $operations['add'],
+                $operationTarget
+            );
+        }
     }
 }

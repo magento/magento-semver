@@ -28,5 +28,5 @@ class DataEntityAdded extends MftfOperation
      *
      * @var string
      */
-    protected $reason = '<entity> was added to Module';
+    protected $reason = '<entity> was added';
 }

@@ -28,5 +28,5 @@ class PageAdded extends MftfOperation
      *
      * @var string
      */
-    protected $reason = '<page> was added to Module';
+    protected $reason = '<page> was added';
 }

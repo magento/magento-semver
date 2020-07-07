@@ -32,5 +32,5 @@ class ActionGroupAdded extends MftfOperation
      *
      * @var string
      */
-    protected $reason = '<actionGroup> was added to Module';
+    protected $reason = '<actionGroup> was added';
 }

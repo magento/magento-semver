@@ -10,8 +10,8 @@ use Magento\SemanticVersionChecker\MftfReport;
 use Magento\SemanticVersionChecker\Operation\Mftf\Section\SectionAdded;
 use Magento\SemanticVersionChecker\Operation\Mftf\Section\SectionElementAdded;
 use Magento\SemanticVersionChecker\Operation\Mftf\Section\SectionElementChanged;
-use Magento\SemanticVersionChecker\Operation\Mftf\Section\SectionElementRemove;
-use Magento\SemanticVersionChecker\Operation\Mftf\Section\SectionRemove;
+use Magento\SemanticVersionChecker\Operation\Mftf\Section\SectionElementRemoved;
+use Magento\SemanticVersionChecker\Operation\Mftf\Section\SectionRemoved;
 use Magento\SemanticVersionChecker\Scanner\MftfScanner;
 use PHPSemVerChecker\Registry\Registry;
 use PHPSemVerChecker\Report\Report;
@@ -52,7 +52,7 @@ class SectionAnalyzer extends AbstractEntityAnalyzer
 
                 // Validate section still exists
                 if (!isset($afterEntities[$module][$entityName])) {
-                    $operation = new SectionRemove($filenames, $operationTarget);
+                    $operation = new SectionRemoved($filenames, $operationTarget);
                     $this->getReport()->add(MftfReport::MFTF_REPORT_CONTEXT, $operation);
                     continue;
                 }
@@ -80,7 +80,7 @@ class SectionAnalyzer extends AbstractEntityAnalyzer
                         'name'
                     );
                     if ($matchingElement === null) {
-                        $operation = new SectionElementRemove(
+                        $operation = new SectionElementRemoved(
                             $filenames,
                             $operationTarget . '/' . $beforeFieldKey
                         );
@@ -91,7 +91,7 @@ class SectionAnalyzer extends AbstractEntityAnalyzer
                             $matchingElement['attributes'],
                             $this->getReport(),
                             $filenames,
-                            SectionElementChanged::class,
+                            [AbstractEntityAnalyzer::DEFAULT_OPERATION_KEY => SectionElementChanged::class],
                             "$operationTarget/$beforeFieldKey"
                         );
                     }

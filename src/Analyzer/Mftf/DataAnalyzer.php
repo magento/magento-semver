@@ -9,15 +9,15 @@ namespace Magento\SemanticVersionChecker\Analyzer\Mftf;
 use Magento\SemanticVersionChecker\MftfReport;
 use Magento\SemanticVersionChecker\Operation\Mftf\Data\DataEntityAdded;
 use Magento\SemanticVersionChecker\Operation\Mftf\Data\DataEntityArrayAdded;
-use Magento\SemanticVersionChecker\Operation\Mftf\Data\DataEntityArrayRemove;
-use Magento\SemanticVersionChecker\Operation\Mftf\Data\DataEntityArrayItemRemove;
+use Magento\SemanticVersionChecker\Operation\Mftf\Data\DataEntityArrayRemoved;
+use Magento\SemanticVersionChecker\Operation\Mftf\Data\DataEntityArrayItemRemoved;
 use Magento\SemanticVersionChecker\Operation\Mftf\Data\DataEntityFieldAdded;
-use Magento\SemanticVersionChecker\Operation\Mftf\Data\DataEntityFieldRemove;
-use Magento\SemanticVersionChecker\Operation\Mftf\Data\DataEntityRemove;
+use Magento\SemanticVersionChecker\Operation\Mftf\Data\DataEntityFieldRemoved;
+use Magento\SemanticVersionChecker\Operation\Mftf\Data\DataEntityRemoved;
 use Magento\SemanticVersionChecker\Operation\Mftf\Data\DataEntityReqEntityAdded;
-use Magento\SemanticVersionChecker\Operation\Mftf\Data\DataEntityReqEntityRemove;
+use Magento\SemanticVersionChecker\Operation\Mftf\Data\DataEntityReqEntityRemoved;
 use Magento\SemanticVersionChecker\Operation\Mftf\Data\DataEntityVarAdded;
-use Magento\SemanticVersionChecker\Operation\Mftf\Data\DataEntityVarRemove;
+use Magento\SemanticVersionChecker\Operation\Mftf\Data\DataEntityVarRemoved;
 use Magento\SemanticVersionChecker\Scanner\MftfScanner;
 use PHPSemVerChecker\Registry\Registry;
 use PHPSemVerChecker\Report\Report;
@@ -61,7 +61,7 @@ class DataAnalyzer extends AbstractEntityAnalyzer
 
                 // Validate data entity still exists
                 if (!isset($afterEntities[$module][$entityName])) {
-                    $operation = new DataEntityRemove($filenames, $operationTarget);
+                    $operation = new DataEntityRemoved($filenames, $operationTarget);
                     $this->getReport()->add(MftfReport::MFTF_REPORT_CONTEXT, $operation);
                     continue;
                 }                
@@ -110,7 +110,7 @@ class DataAnalyzer extends AbstractEntityAnalyzer
                         'key'
                     );
                     if ($matchingElement === null) {
-                        $operation = new DataEntityFieldRemove(
+                        $operation = new DataEntityFieldRemoved(
                             $filenames,
                             $operationTarget . '/' . $beforeFieldKey
                         );
@@ -131,7 +131,7 @@ class DataAnalyzer extends AbstractEntityAnalyzer
                     $beforeFieldKey = $beforeField['attributes']['key'];
                     $matchingElement = $this->findMatchingElement($beforeField, $afterVarFields,'key');
                     if ($matchingElement === null) {
-                        $operation = new DataEntityVarRemove(
+                        $operation = new DataEntityVarRemoved(
                             $filenames,
                             $operationTarget . '/' . $beforeFieldKey
                         );
@@ -156,7 +156,7 @@ class DataAnalyzer extends AbstractEntityAnalyzer
                         'type'
                     );
                     if ($matchingElement === null) {
-                        $operation = new DataEntityReqEntityRemove(
+                        $operation = new DataEntityReqEntityRemoved(
                             $filenames,
                             $operationTarget . '/' . $beforeFieldValue
                         );
@@ -181,7 +181,7 @@ class DataAnalyzer extends AbstractEntityAnalyzer
                         'key'
                     );
                     if ($matchingElement === null) {
-                        $operation = new DataEntityArrayRemove(
+                        $operation = new DataEntityArrayRemoved(
                             $filenames,
                             $operationTarget . '/' . $beforeFieldKey
                         );
@@ -197,7 +197,7 @@ class DataAnalyzer extends AbstractEntityAnalyzer
                             }
                         }
                         if (count($itemValues) !== 0) {
-                            $operation = new DataEntityArrayItemRemove(
+                            $operation = new DataEntityArrayItemRemoved(
                                 $filenames,
                                 $operationTarget . '/' . $beforeFieldKey . '/(' . implode(", ", $itemValues) . ")"
                             );

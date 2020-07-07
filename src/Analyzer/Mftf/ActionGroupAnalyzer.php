@@ -9,22 +9,40 @@ namespace Magento\SemanticVersionChecker\Analyzer\Mftf;
 use Magento\SemanticVersionChecker\MftfReport;
 use Magento\SemanticVersionChecker\Operation\Mftf\ActionGroup\ActionGroupActionAdded;
 use Magento\SemanticVersionChecker\Operation\Mftf\ActionGroup\ActionGroupActionChanged;
-use Magento\SemanticVersionChecker\Operation\Mftf\ActionGroup\ActionGroupActionRemove;
+use Magento\SemanticVersionChecker\Operation\Mftf\ActionGroup\ActionGroupActionRemoved;
 use Magento\SemanticVersionChecker\Operation\Mftf\ActionGroup\ActionGroupActionTypeChanged;
 use Magento\SemanticVersionChecker\Operation\Mftf\ActionGroup\ActionGroupAdded;
 use Magento\SemanticVersionChecker\Operation\Mftf\ActionGroup\ActionGroupArgumentAdded;
 use Magento\SemanticVersionChecker\Operation\Mftf\ActionGroup\ActionGroupArgumentChanged;
-use Magento\SemanticVersionChecker\Operation\Mftf\ActionGroup\ActionGroupArgumentRemove;
-use Magento\SemanticVersionChecker\Operation\Mftf\ActionGroup\ActionGroupRemove;
+use Magento\SemanticVersionChecker\Operation\Mftf\ActionGroup\ActionGroupArgumentRemoved;
+use Magento\SemanticVersionChecker\Operation\Mftf\ActionGroup\ActionGroupRemoved;
 use Magento\SemanticVersionChecker\Scanner\MftfScanner;
 use PHPSemVerChecker\Registry\Registry;
 use PHPSemVerChecker\Report\Report;
+use Magento\SemanticVersionChecker\Operation\Mftf\ActionGroup\ActionGroupRemoveActionRemoved;
+use Magento\SemanticVersionChecker\Operation\Mftf\ActionGroup\ActionGroupRemoveActionAdded;
 
 class ActionGroupAnalyzer extends AbstractEntityAnalyzer
 {
     const MFTF_ARGUMENTS_ELEMENT = "{}arguments";
     const MFTF_DATA_TYPE = 'actionGroup';
     const MFTF_DATA_DIRECTORY = '/Mftf/ActionGroup/';
+
+    /**
+     * operations array
+     *
+     * @var string[][]
+     */
+    private static $operations = [
+        'stepKey' => [
+            'add' => ActionGroupActionAdded::class,
+            'remove' => ActionGroupActionRemoved::class,
+        ],
+        'keyForRemoval' => [
+            'add' => ActionGroupRemoveActionAdded::class,
+            'remove' => ActionGroupRemoveActionRemoved::class,
+        ],
+    ];
 
     /**
      * MFTF actionGroup.xml analyzer
@@ -56,7 +74,7 @@ class ActionGroupAnalyzer extends AbstractEntityAnalyzer
 
                 // Validate section still exists
                 if (!isset($afterEntities[$module][$entityName])) {
-                    $operation = new ActionGroupRemove($filenames, $operationTarget);
+                    $operation = new ActionGroupRemoved($filenames, $operationTarget);
                     $this->getReport()->add(MftfReport::MFTF_REPORT_CONTEXT, $operation);
                     continue;
                 }
@@ -85,17 +103,25 @@ class ActionGroupAnalyzer extends AbstractEntityAnalyzer
 
                 // Validate <actions>
                 foreach ($beforeActions as $testAction) {
-                    if (!isset($testAction['attributes']['stepKey'])) {
+                    if (isset($testAction['attributes']['stepKey'])) {
+                        $elementIdentifier = 'stepKey';
+                    } elseif (isset($testAction['attributes']['keyForRemoval'])) {
+                        $elementIdentifier = 'keyForRemoval';
+                    } else {
                         continue;
                     }
-                    $beforeFieldKey = $testAction['attributes']['stepKey'];
+
+                    $beforeFieldKey = $testAction['attributes'][$elementIdentifier];
                     $matchingElement = $this->findMatchingElement(
                         $testAction,
                         $afterActions,
-                        'stepKey'
+                        $elementIdentifier
                     );
                     if ($matchingElement === null) {
-                        $operation = new ActionGroupActionRemove($filenames, $operationTarget . '/' . $beforeFieldKey);
+                        $operation = new self::$operations[$elementIdentifier]['remove'](
+                            $filenames,
+                            $operationTarget . '/' . $beforeFieldKey
+                        );
                         $this->getReport()->add(MftfReport::MFTF_REPORT_CONTEXT, $operation);
                     } else {
                         $this->matchAndValidateAttributes(
@@ -103,7 +129,7 @@ class ActionGroupAnalyzer extends AbstractEntityAnalyzer
                             $matchingElement['attributes'],
                             $this->getReport(),
                             $filenames,
-                            ActionGroupActionChanged::class,
+                            [AbstractEntityAnalyzer::DEFAULT_OPERATION_KEY => ActionGroupActionChanged::class],
                             "$operationTarget/$beforeFieldKey"
                         );
                         $this->matchAndValidateElementType(
@@ -116,22 +142,24 @@ class ActionGroupAnalyzer extends AbstractEntityAnalyzer
                         );
                     }
                 }
-                $this->findAddedElementsInArray(
-                    $beforeActions,
-                    $afterActions,
-                    'stepKey',
-                    $this->getReport(),
-                    $filenames,
-                    ActionGroupActionAdded::class,
-                    $operationTarget
-                );
+                foreach (self::$operations as $identifier => $operations) {
+                    $this->findAddedElementsInArray(
+                        $beforeActions,
+                        $afterActions,
+                        $identifier,
+                        $this->getReport(),
+                        $filenames,
+                        $operations['add'],
+                        $operationTarget
+                    );
+                }
 
                 // Validate <arguments>
                 foreach ($beforeArguments as $argument) {
                     $beforeFieldKey = $argument['attributes']['name'];
                     $matchingElement = $this->findMatchingElement($argument, $afterArguments,'name');
                     if ($matchingElement === null) {
-                        $operation = new ActionGroupArgumentRemove(
+                        $operation = new ActionGroupArgumentRemoved(
                             $filenames,
                             $operationTarget . '/Arguments/' . $beforeFieldKey
                         );
@@ -142,7 +170,7 @@ class ActionGroupAnalyzer extends AbstractEntityAnalyzer
                             $matchingElement['attributes'],
                             $this->getReport(),
                             $filenames,
-                            ActionGroupArgumentChanged::class,
+                            [AbstractEntityAnalyzer::DEFAULT_OPERATION_KEY => ActionGroupArgumentChanged::class],
                             "$operationTarget/$beforeFieldKey"
                         );
 

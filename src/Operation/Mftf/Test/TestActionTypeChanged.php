@@ -28,5 +28,5 @@ class TestActionTypeChanged extends MftfOperation
      *
      * @var string
      */
-    protected $reason = '<test> <action> type was modified';
+    protected $reason = '<test> <action> type was changed';
 }

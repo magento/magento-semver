@@ -14,6 +14,8 @@ use PHPSemVerChecker\Report\Report;
  */
 abstract class AbstractEntityAnalyzer
 {
+    const DEFAULT_OPERATION_KEY = '*';
+
     /**
      * @var Report
      */
@@ -76,13 +78,13 @@ abstract class AbstractEntityAnalyzer
     }
 
     /**
-     * Matches and validates all attributes of two given xml elements, adding operations according to class passed in
+     * Matches and validates all attributes of two given xml elements, adding operations given
      *
      * @param array $beforeAttributes
      * @param array $afterAttributes
      * @param Report $report
      * @param string $filenames
-     * @param string $operationClass
+     * @param array $operations
      * @param string $fullOperationTarget
      * @return void
      */
@@ -91,12 +93,17 @@ abstract class AbstractEntityAnalyzer
         $afterAttributes,
         $report,
         $filenames,
-        $operationClass,
+        $operations,
         $fullOperationTarget
     ) {
         foreach ($beforeAttributes as $key => $beforeAttribute) {
             $matchingAttribute = $afterAttributes[$key] ?? null;
             if ($beforeAttribute !== $matchingAttribute) {
+                if (isset($operations[$key])) {
+                    $operationClass = $operations[$key];
+                } else {
+                    $operationClass = $operations[self::DEFAULT_OPERATION_KEY];
+                }
                 $operation = new $operationClass($filenames, "$fullOperationTarget/$key");
                 $report->add(MftfReport::MFTF_REPORT_CONTEXT, $operation);
             }

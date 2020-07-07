@@ -28,5 +28,5 @@ class SectionElementChanged extends MftfOperation
      *
      * @var string
      */
-    protected $reason = '<section> <element> was modified';
+    protected $reason = '<section> <element> was changed';
 }

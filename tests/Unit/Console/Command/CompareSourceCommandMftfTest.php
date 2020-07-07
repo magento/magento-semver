@@ -87,7 +87,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/actionGroup-removed/source-code-after',
                 [
                     'Mftf (MAJOR)',
-                    'ActionGroup/ActionGroup1 | <actionGroup> was removed from Module | M200'
+                    'ActionGroup/ActionGroup1 | <actionGroup> was removed | M200'
                 ],
                 'Major change is detected.'
             ],
@@ -96,7 +96,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/actionGroup-added/source-code-after',
                 [
                     'Mftf (MINOR)',
-                    'ActionGroup/ActionGroup2 | <actionGroup> was added to Module | M225'
+                    'ActionGroup/ActionGroup2 | <actionGroup> was added | M225'
                 ],
                 'Minor change is detected.'
             ],
@@ -105,7 +105,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/actionGroup-argument-changed/source-code-after',
                 [
                     'Mftf (MAJOR)',
-                    'ActionGroup/ActionGroup1/arg1/type | <actionGroup> <argument> was modified | M203'
+                    'ActionGroup/ActionGroup1/arg1/type | <actionGroup> <argument> was changed | M203'
                 ],
                 'Major change is detected.'
             ],
@@ -114,7 +114,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/actionGroup-argument-removed/source-code-after',
                 [
                     'Mftf (MAJOR)',
-                    'ActionGroup/ActionGroup1/Arguments/arg1 | <actionGroup> <argument> was removed from Module | M201'
+                    'ActionGroup/ActionGroup1/Arguments/arg1 | <actionGroup> <argument> was removed | M201'
                 ],
                 'Major change is detected.'
             ],
@@ -123,7 +123,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/actionGroup-argument-added/source-code-after',
                 [
                     'Mftf (MAJOR)',
-                    'ActionGroup/ActionGroup1/arg2 | <actionGroup> <argument> was modified | M227'
+                    'ActionGroup/ActionGroup1/arg2 | <actionGroup> <argument> was added | M227'
                 ],
                 'Major change is detected.'
             ],
@@ -132,7 +132,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/actionGroup-action-changed/source-code-after',
                 [
                     'Mftf (PATCH)',
-                    'ActionGroup/ActionGroup1/action1/userInput | <actionGroup> <action> was modified | M204'
+                    'ActionGroup/ActionGroup1/action1/userInput | <actionGroup> <action> was changed | M204'
                 ],
                 'Patch change is detected.'
             ],
@@ -141,7 +141,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/actionGroup-action-type-changed/source-code-after',
                 [
                     'Mftf (PATCH)',
-                    'ActionGroup/ActionGroup1/action1 | <actionGroup> <action> type was modified | M223'
+                    'ActionGroup/ActionGroup1/action1 | <actionGroup> <action> type was changed | M223'
                 ],
                 'Patch change is detected.'
             ],
@@ -150,7 +150,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/actionGroup-action-removed/source-code-after',
                 [
                     'Mftf (MAJOR)',
-                    'ActionGroup/ActionGroup1/action2 | <actionGroup> <action> was removed from Module | M202'
+                    'ActionGroup/ActionGroup1/action2 | <actionGroup> <action> was removed | M202'
                 ],
                 'Major change is detected.'
             ],
@@ -168,7 +168,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/data-removed/source-code-after',
                 [
                     'Mftf (MAJOR)',
-                    'Data/DataEntity1 | Entity was removed from Module | M205'
+                    'Data/DataEntity1 | Entity was removed | M205'
                 ],
                 'Major change is detected.'
             ],
@@ -177,7 +177,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/data-added/source-code-after',
                 [
                     'Mftf (MINOR)',
-                    'Data/DataEntity2 | <entity> was added to Module | M228'
+                    'Data/DataEntity2 | <entity> was added | M228'
                 ],
                 'Minor change is detected.'
             ],
@@ -267,7 +267,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/metadata-removed/source-code-after',
                 [
                     'Mftf (MAJOR)',
-                    'Metadata/createEntity | <operation> was removed from Module | M211'
+                    'Metadata/createEntity | <operation> was removed | M211'
                 ],
                 'Major change is detected.'
             ],
@@ -303,7 +303,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/page-removed/source-code-after',
                 [
                     'Mftf (MAJOR)',
-                    'Page/SamplePage | <page> was removed from Module | M213'
+                    'Page/SamplePage | <page> was removed | M213'
                 ],
                 'Major change is detected.'
             ],
@@ -312,7 +312,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/page-added/source-code-after',
                 [
                     'Mftf (MINOR)',
-                    'Page/SamplePageNew | <page> was added to Module | M233'
+                    'Page/SamplePageNew | <page> was added | M233'
                 ],
                 'Minor change is detected.'
             ],
@@ -339,7 +339,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/section-removed/source-code-after',
                 [
                     'Mftf (MAJOR)',
-                    'Section/SampleSection | <section> was removed from Module | M215'
+                    'Section/SampleSection | <section> was removed | M215'
                 ],
                 'Major change is detected.'
             ],
@@ -366,7 +366,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/section-element-changed/source-code-after',
                 [
                     'Mftf (PATCH)',
-                    'Section/SampleSection/element1/selector | <section> <element> was modified | M217'
+                    'Section/SampleSection/element1/selector | <section> <element> was changed | M217'
                 ],
                 'Patch change is detected.'
             ],
@@ -384,7 +384,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/test-removed/source-code-after',
                 [
                     'Mftf (MAJOR)',
-                    'Test/SampleTest | <test> was removed from Module | M218'
+                    'Test/SampleTest | <test> was removed | M218'
                 ],
                 'Major change is detected.'
             ],
@@ -402,7 +402,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/test-action-changed/source-code-after',
                 [
                     'Mftf (PATCH)',
-                    'Test/SampleTest/key1/userInput | <test> <action> was modified | M222'
+                    'Test/SampleTest/key1/userInput | <test> <action> was changed | M222'
                 ],
                 'Patch change is detected.'
             ],
@@ -411,7 +411,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/test-action-type-changed/source-code-after',
                 [
                     'Mftf (PATCH)',
-                    'Test/SampleTest/action1 | <test> <action> type was modified | M224'
+                    'Test/SampleTest/action1 | <test> <action> type was changed | M224'
                 ],
                 'Patch change is detected.'
             ],
@@ -420,7 +420,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/test-action-removed/source-code-after',
                 [
                     'Mftf (MAJOR)',
-                    'Test/SampleTest/key2 | <test> <action> was removed from Module | M219'
+                    'Test/SampleTest/key2 | <test> <action> was removed | M219'
                 ],
                 'Major change is detected.'
             ],
@@ -438,7 +438,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/test-before-action-removed/source-code-after',
                 [
                     'Mftf (MAJOR)',
-                    'Test/SampleTest/before/key1 | <test> <action> was removed from Module | M219'
+                    'Test/SampleTest/before/key1 | <test> <action> was removed | M219'
                 ],
                 'Major change is detected.'
             ],
@@ -456,7 +456,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/test-after-action-removed/source-code-after',
                 [
                     'Mftf (MAJOR)',
-                    'Test/SampleTest/after/key1 | <test> <action> was removed from Module | M219'
+                    'Test/SampleTest/after/key1 | <test> <action> was removed | M219'
                 ],
                 'Major change is detected.'
             ],
@@ -483,7 +483,34 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/test-group-removed/source-code-after',
                 [
                     'Mftf (MAJOR)',
-                    'Test/SampleTest/annotations/{}group(sampleGroup) | <test> <annotation> <group> was removed from Module | M220'
+                    'Test/SampleTest/annotations/{}group(sampleGroup) | <test> <annotation> <group> was removed | M220'
+                ],
+                'Major change is detected.'
+            ],
+            'test-remove-action-added' => [
+                $pathToFixtures . '/test-remove-action-added/source-code-before',
+                $pathToFixtures . '/test-remove-action-added/source-code-after',
+                [
+                    'Mftf (MAJOR)',
+                    'Test/SampleTest/newRemoveAction | <test> <remove action> was added | M401'
+                ],
+                'Major change is detected.'
+            ],
+            'test-remove-action-removed' => [
+                $pathToFixtures . '/test-remove-action-removed/source-code-before',
+                $pathToFixtures . '/test-remove-action-removed/source-code-after',
+                [
+                    'Mftf (MINOR)',
+                    'Test/SampleTest/key2 | <test> <remove action> was removed | M402'
+                ],
+                'Minor change is detected.'
+            ],
+            'test-action-group-ref-changed' => [
+                $pathToFixtures . '/test-action-group-ref-changed/source-code-before',
+                $pathToFixtures . '/test-action-group-ref-changed/source-code-after',
+                [
+                    'Mftf (MAJOR)',
+                    'Test/SampleTest/key2/ref | <test> <actionGroup> ref was changed | M241'
                 ],
                 'Major change is detected.'
             ],

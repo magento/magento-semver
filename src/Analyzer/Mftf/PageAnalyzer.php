@@ -8,9 +8,9 @@ namespace Magento\SemanticVersionChecker\Analyzer\Mftf;
 
 use Magento\SemanticVersionChecker\MftfReport;
 use Magento\SemanticVersionChecker\Operation\Mftf\Page\PageAdded;
-use Magento\SemanticVersionChecker\Operation\Mftf\Page\PageRemove;
+use Magento\SemanticVersionChecker\Operation\Mftf\Page\PageRemoved;
 use Magento\SemanticVersionChecker\Operation\Mftf\Page\PageSectionAdded;
-use Magento\SemanticVersionChecker\Operation\Mftf\Page\PageSectionRemove;
+use Magento\SemanticVersionChecker\Operation\Mftf\Page\PageSectionRemoved;
 use Magento\SemanticVersionChecker\Scanner\MftfScanner;
 use PHPSemVerChecker\Registry\Registry;
 use PHPSemVerChecker\Report\Report;
@@ -51,7 +51,7 @@ class PageAnalyzer extends AbstractEntityAnalyzer
 
                 // Validate page still exists
                 if (!isset($afterEntities[$module][$entityName])) {
-                    $operation = new PageRemove($filenames, $operationTarget);
+                    $operation = new PageRemoved($filenames, $operationTarget);
                     $this->getReport()->add(MftfReport::MFTF_REPORT_CONTEXT, $operation);
                     continue;
                 }
@@ -80,7 +80,7 @@ class PageAnalyzer extends AbstractEntityAnalyzer
                         'name'
                     );
                     if ($matchingElement === null) {
-                        $operation = new PageSectionRemove($filenames, $operationTarget . '/' . $beforeFieldKey);
+                        $operation = new PageSectionRemoved($filenames, $operationTarget . '/' . $beforeFieldKey);
                         $this->getReport()->add(MftfReport::MFTF_REPORT_CONTEXT, $operation);
                     }
                 }

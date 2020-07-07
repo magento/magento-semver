@@ -8,8 +8,8 @@ namespace Magento\SemanticVersionChecker\Analyzer\Mftf;
 
 use Magento\SemanticVersionChecker\MftfReport;
 use Magento\SemanticVersionChecker\Operation\Mftf\Metadata\MetadataAdded;
-use Magento\SemanticVersionChecker\Operation\Mftf\Metadata\MetadataChildRemove;
-use Magento\SemanticVersionChecker\Operation\Mftf\Metadata\MetadataRemove;
+use Magento\SemanticVersionChecker\Operation\Mftf\Metadata\MetadataChildRemoved;
+use Magento\SemanticVersionChecker\Operation\Mftf\Metadata\MetadataRemoved;
 use Magento\SemanticVersionChecker\Scanner\MftfScanner;
 use PHPSemVerChecker\Registry\Registry;
 use PHPSemVerChecker\Report\Report;
@@ -49,7 +49,7 @@ class MetadataAnalyzer extends AbstractEntityAnalyzer
 
                 // Validate section still exists
                 if (!isset($afterEntities[$module][$entityName])) {
-                    $operation = new MetadataRemove($filenames, $operationTarget);
+                    $operation = new MetadataRemoved($filenames, $operationTarget);
                     $this->getReport()->add(MftfReport::MFTF_REPORT_CONTEXT, $operation);
                     continue;
                 }
@@ -99,7 +99,7 @@ class MetadataAnalyzer extends AbstractEntityAnalyzer
                 }
             }
             if ($afterFound === null) {
-                $operation = new MetadataChildRemove($filenames, $operationTarget . '/' . $beforeFieldKey);
+                $operation = new MetadataChildRemoved($filenames, $operationTarget . '/' . $beforeFieldKey);
                 $report->add(MftfReport::MFTF_REPORT_CONTEXT, $operation);
             } else {
                 $this->recursiveCompare(

@@ -32,5 +32,5 @@ class ActionGroupActionChanged extends MftfOperation
      *
      * @var string
      */
-    protected $reason = '<actionGroup> <action> was modified';
+    protected $reason = '<actionGroup> <action> was changed';
 }
