@@ -135,6 +135,36 @@ abstract class AbstractEntityAnalyzer
         }
     }
 
+
+    /**
+     * Matches and validates actions sequence in a test block
+     *
+     * @param array $beforeTestActions
+     * @param array $afterTestActions
+     * @param Report $report
+     * @param string $filenames
+     * @param string $operationClass
+     * @param string $fullOperationTarget
+     * @return void
+     */
+    public function matchAndValidateActionsSequence(
+        $beforeTestActions,
+        $afterTestActions,
+        $report,
+        $filenames,
+        $operationClass,
+        $fullOperationTarget
+    ) {
+        if ($beforeTestActions != $afterTestActions) {
+            sort($beforeTestActions);
+            sort($afterTestActions);
+            if ($beforeTestActions == $afterTestActions) {
+                $operation = new $operationClass($filenames, $fullOperationTarget);
+                $report->add(MftfReport::MFTF_REPORT_CONTEXT, $operation);
+            }
+        }
+    }
+
     /**
      * Finds all added child elements in afterArray, compared to beforeArray
      *
@@ -155,19 +185,20 @@ abstract class AbstractEntityAnalyzer
         $operationClass,
         $fullOperationTarget
     ) {
-        foreach ($afterArray as $newChild) {
-            if (!isset($newChild['attributes'][$elementIdentifier])) {
-                continue;
+            if (is_array($afterArray) || is_object($afterArray)) {
+                foreach ($afterArray as $newChild) {
+                    if (!isset($newChild['attributes'][$elementIdentifier])) {
+                        continue;
+                    }
+                    $beforeFieldKey = $newChild['attributes'][$elementIdentifier];
+                    $matchingElement = $this->findMatchingElement($newChild, $beforeArray, $elementIdentifier);
+                    if ($matchingElement === null) {
+                        $operation = new $operationClass($filenames, $fullOperationTarget . '/' . $beforeFieldKey);
+                        $report->add(MftfReport::MFTF_REPORT_CONTEXT, $operation);
+                    }
+                }
             }
-            $beforeFieldKey = $newChild['attributes'][$elementIdentifier];
-            $matchingElement = $this->findMatchingElement($newChild, $beforeArray, $elementIdentifier);
-            if ($matchingElement === null) {
-                $operation = new $operationClass($filenames, $fullOperationTarget . '/' . $beforeFieldKey);
-                $report->add(MftfReport::MFTF_REPORT_CONTEXT, $operation);
-            }
-        }
     }
-
     /**
      * Finds all added child elements in afterArray, compared to beforeArray, using both key and value for matching
      *
