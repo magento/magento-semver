@@ -361,14 +361,32 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 ],
                 'Major change is detected.'
             ],
-            'section-element-changed' => [
-                $pathToFixtures . '/section-element-changed/source-code-before',
-                $pathToFixtures . '/section-element-changed/source-code-after',
+            'section-element-selector-changed' => [
+                $pathToFixtures . '/section-element-selector-changed/source-code-before',
+                $pathToFixtures . '/section-element-selector-changed/source-code-after',
                 [
                     'Mftf (PATCH)',
-                    'Section/SampleSection/element1/selector | <section> <element> was changed | M217'
+                    'Section/SampleSection/element1/selector | <section> <element> selector was changed | M219'
                 ],
                 'Patch change is detected.'
+            ],
+            'section-element-type-changed' => [
+                $pathToFixtures . '/section-element-type-changed/source-code-before',
+                $pathToFixtures . '/section-element-type-changed/source-code-after',
+                [
+                    'Mftf (PATCH)',
+                    'Section/SampleSection/element1/type | <section> <element> type was changed | M218'
+                ],
+                'Patch change is detected.'
+            ],
+            'section-element-parameterized-changed' => [
+                $pathToFixtures . '/section-element-parameterized-changed/source-code-before',
+                $pathToFixtures . '/section-element-parameterized-changed/source-code-after',
+                [
+                    'Mftf (MAJOR)',
+                    'Section/SampleSection/element1/parameterized | <section> <element> parameterized was changed | M250'
+                ],
+                'Major change is detected.'
             ],
             'section-element-added' => [
                 $pathToFixtures . '/section-element-added/source-code-before',
