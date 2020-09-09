@@ -280,6 +280,51 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 ],
                 'Minor change is detected.'
             ],
+            'metadata-datatype-changed' => [
+                $pathToFixtures . '/metadata-datatype-changed/source-code-before',
+                $pathToFixtures . '/metadata-datatype-changed/source-code-after',
+                [
+                    'Mftf (MINOR)',
+                    'Metadata/createEntity/dataType | <operation> was changed | M241'
+                ],
+                'Minor change is detected.'
+            ],
+            'metadata-type-changed' => [
+                $pathToFixtures . '/metadata-type-changed/source-code-before',
+                $pathToFixtures . '/metadata-type-changed/source-code-after',
+                [
+                    'Mftf (MINOR)',
+                    'Metadata/createEntity/type | <operation> was changed | M241'
+                ],
+                'Minor change is detected.'
+            ],
+            'metadata-auth-changed' => [
+                $pathToFixtures . '/metadata-auth-changed/source-code-before',
+                $pathToFixtures . '/metadata-auth-changed/source-code-after',
+                [
+                    'Mftf (MINOR)',
+                    'Metadata/createEntity/auth | <operation> was changed | M241'
+                ],
+                'Minor change is detected.'
+            ],
+            'metadata-url-changed' => [
+                $pathToFixtures . '/metadata-url-changed/source-code-before',
+                $pathToFixtures . '/metadata-url-changed/source-code-after',
+                [
+                    'Mftf (MINOR)',
+                    'Metadata/createEntity/url | <operation> was changed | M241'
+                ],
+                'Minor change is detected.'
+            ],
+            'metadata-method-changed' => [
+                $pathToFixtures . '/metadata-method-changed/source-code-before',
+                $pathToFixtures . '/metadata-method-changed/source-code-after',
+                [
+                    'Mftf (MINOR)',
+                    'Metadata/createEntity/method | <operation> was changed | M241'
+                ],
+                'Minor change is detected.'
+            ],
             'metadata-top-level-child-removed' => [
                 $pathToFixtures . '/metadata-top-level-child-removed/source-code-before',
                 $pathToFixtures . '/metadata-top-level-child-removed/source-code-after',
@@ -289,6 +334,15 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 ],
                 'Major change is detected.'
             ],
+            'metadata-top-level-child-added' => [
+                $pathToFixtures . '/metadata-top-level-child-added/source-code-before',
+                $pathToFixtures . '/metadata-top-level-child-added/source-code-after',
+                [
+                    'Mftf (MINOR)',
+                    'Metadata/createEntity/toplevelField | <operation> child element was added | M242'
+                ],
+                'Minor change is detected.'
+            ],
             'metadata-bottom-level-child-removed' => [
                 $pathToFixtures . '/metadata-bottom-level-child-removed/source-code-before',
                 $pathToFixtures . '/metadata-bottom-level-child-removed/source-code-after',
@@ -297,6 +351,15 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                     'Metadata/createEntity/toplevelObj/childField | <operation> child element was removed | M212'
                 ],
                 'Major change is detected.'
+            ],
+            'metadata-bottom-level-child-added' => [
+                $pathToFixtures . '/metadata-bottom-level-child-added/source-code-before',
+                $pathToFixtures . '/metadata-bottom-level-child-added/source-code-after',
+                [
+                    'Mftf (MINOR)',
+                    'Metadata/createEntity/toplevelObj/childField | <operation> child element was added | M242'
+                ],
+                'Minor change is detected.'
             ],
             'page-removed' => [
                 $pathToFixtures . '/page-removed/source-code-before',
