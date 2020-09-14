@@ -155,25 +155,26 @@ class ActionGroupAnalyzer extends AbstractEntityAnalyzer
                 }
 
                 // Validate <arguments>
-                foreach ($beforeArguments as $argument) {
-                    $beforeFieldKey = $argument['attributes']['name'];
-                    $matchingElement = $this->findMatchingElement($argument, $afterArguments,'name');
-                    if ($matchingElement === null) {
-                        $operation = new ActionGroupArgumentRemoved(
-                            $filenames,
-                            $operationTarget . '/Arguments/' . $beforeFieldKey
-                        );
-                        $this->getReport()->add(MftfReport::MFTF_REPORT_CONTEXT, $operation);
-                    } else {
-                        $this->matchAndValidateAttributes(
-                            $argument['attributes'],
-                            $matchingElement['attributes'],
-                            $this->getReport(),
-                            $filenames,
-                            [AbstractEntityAnalyzer::DEFAULT_OPERATION_KEY => ActionGroupArgumentChanged::class],
-                            "$operationTarget/$beforeFieldKey"
-                        );
-
+                if (is_array($beforeArguments) || is_object($beforeArguments)) {
+                    foreach ($beforeArguments as $argument) {
+                        $beforeFieldKey = $argument['attributes']['name'];
+                        $matchingElement = $this->findMatchingElement($argument, $afterArguments, 'name');
+                        if ($matchingElement === null) {
+                            $operation = new ActionGroupArgumentRemoved(
+                                $filenames,
+                                $operationTarget . '/Arguments/' . $beforeFieldKey
+                            );
+                            $this->getReport()->add(MftfReport::MFTF_REPORT_CONTEXT, $operation);
+                        } else {
+                            $this->matchAndValidateAttributes(
+                                $argument['attributes'],
+                                $matchingElement['attributes'],
+                                $this->getReport(),
+                                $filenames,
+                                [AbstractEntityAnalyzer::DEFAULT_OPERATION_KEY => ActionGroupArgumentChanged::class],
+                                "$operationTarget/$beforeFieldKey"
+                            );
+                        }
                     }
                 }
 

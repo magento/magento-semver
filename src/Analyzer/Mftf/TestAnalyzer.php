@@ -12,6 +12,7 @@ use Magento\SemanticVersionChecker\Operation\Mftf\Test\TestActionAdded;
 use Magento\SemanticVersionChecker\Operation\Mftf\Test\TestActionChanged;
 use Magento\SemanticVersionChecker\Operation\Mftf\Test\TestActionGroupRefChanged;
 use Magento\SemanticVersionChecker\Operation\Mftf\Test\TestActionRemoved;
+use Magento\SemanticVersionChecker\Operation\Mftf\Test\TestActionSequenceChanged;
 use Magento\SemanticVersionChecker\Operation\Mftf\Test\TestActionTypeChanged;
 use Magento\SemanticVersionChecker\Operation\Mftf\Test\TestAdded;
 use Magento\SemanticVersionChecker\Operation\Mftf\Test\TestAnnotationAdded;
@@ -191,6 +192,15 @@ class TestAnalyzer extends AbstractEntityAnalyzer
         $filenames,
         $operationTarget
     ) {
+        $this->matchAndValidateActionsSequence(
+            $beforeTestActions,
+            $afterTestActions,
+            $report,
+            $filenames,
+            TestActionSequenceChanged::class,
+            $operationTarget
+        );
+
         foreach ($beforeTestActions as $testAction) {
             if (isset($testAction['attributes']['stepKey'])) {
                 $elementIdentifier = 'stepKey';

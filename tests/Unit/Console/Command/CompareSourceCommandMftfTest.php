@@ -406,6 +406,15 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 ],
                 'Patch change is detected.'
             ],
+            'test-action-sequence-changed' => [
+                $pathToFixtures . '/test-action-sequence-changed/source-code-before',
+                $pathToFixtures . '/test-action-sequence-changed/source-code-after',
+                [
+                    'Mftf (MAJOR)',
+                    'Test/SampleTest | <test> <action> sequence was changed | M223'
+                ],
+                'Major change is detected.'
+            ],
             'test-action-type-changed' => [
                 $pathToFixtures . '/test-action-type-changed/source-code-before',
                 $pathToFixtures . '/test-action-type-changed/source-code-after',
@@ -451,6 +460,15 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 ],
                 'Minor change is detected.'
             ],
+            'test-before-action-sequence-changed' => [
+                $pathToFixtures . '/test-before-action-sequence-changed/source-code-before',
+                $pathToFixtures . '/test-before-action-sequence-changed/source-code-after',
+                [
+                    'Mftf (MAJOR)',
+                    'Test/SampleTest/before | <test> <action> sequence was changed | M223'
+                ],
+                'Major change is detected.'
+            ],
             'test-after-action-removed' => [
                 $pathToFixtures . '/test-after-action-removed/source-code-before',
                 $pathToFixtures . '/test-after-action-removed/source-code-after',
@@ -468,6 +486,15 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                     'Test/SampleTest/after/newAction | <test> <action> was added | M238'
                 ],
                 'Minor change is detected.'
+            ],
+            'test-after-action-sequence-changed' => [
+                $pathToFixtures . '/test-after-action-sequence-changed/source-code-before',
+                $pathToFixtures . '/test-after-action-sequence-changed/source-code-after',
+                [
+                    'Mftf (MAJOR)',
+                    'Test/SampleTest/after | <test> <action> sequence was changed | M223'
+                ],
+                'Major change is detected.'
             ],
             'test-annotation-changed' => [
                 $pathToFixtures . '/test-annotation-changed/source-code-before',
