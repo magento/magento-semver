@@ -422,20 +422,15 @@ class ClassMethodAnalyzer extends AbstractCodeAnalyzer
      */
     private function getDocReturnDeclaration(ClassMethod $method)
     {
-        if ($method->getDocComment() !== null) {
-            $lexer           = new Lexer();
-            $typeParser      = new TypeParser();
-            $constExprParser = new ConstExprParser();
-            $phpDocParser    = new PhpDocParser($typeParser, $constExprParser);
+        if (($parsedComment = $method->getAttribute('docCommentParsed'))
+            && isset($parsedComment['return'])
+        ) {
+            $result = implode('|', $parsedComment['return']);
 
-            $tokens        = $lexer->tokenize((string)$method->getDocComment());
-            $tokenIterator = new TokenIterator($tokens);
-            $phpDocNode    = $phpDocParser->parse($tokenIterator);
-            $tags          = $phpDocNode->getTagsByName('@return');
-            /** @var PhpDocTagNode $tag */
-            $tag = array_shift($tags);
+            return $result;
+        } else {
+            return ' ';
         }
-        return isset($tag) ? (string)$tag->value : ' ';
     }
 
     /**

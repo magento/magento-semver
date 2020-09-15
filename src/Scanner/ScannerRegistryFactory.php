@@ -18,7 +18,7 @@ use Magento\SemanticVersionChecker\Visitor\ApiInterfaceVisitor;
 use Magento\SemanticVersionChecker\Visitor\ApiTraitVisitor;
 use PhpParser\Lexer\Emulative;
 use PhpParser\NodeTraverser;
-use PhpParser\NodeVisitor\NameResolver;
+use Magento\SemanticVersionChecker\Visitor\NameResolver;
 use PhpParser\Parser\Php7 as Parser;
 use PHPSemVerChecker\Registry\Registry;
 use PHPSemVerChecker\Visitor\ClassVisitor;
