@@ -59,7 +59,7 @@ class MetadataAnalyzer extends AbstractEntityAnalyzer
                // Validate metadata attribute changes
                $this->matchAndValidateAttributes(
                    $beforeEntity['attributes'],
-                   $afterEntities[$module][$entityName],
+                   $afterEntities[$module][$entityName]['attributes'],
                    $this->getReport(),
                    $filenames,
                    [AbstractEntityAnalyzer::DEFAULT_OPERATION_KEY => MetadataChanged::class],
