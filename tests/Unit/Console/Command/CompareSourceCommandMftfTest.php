@@ -442,9 +442,18 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 ],
                 'Patch change is detected.'
             ],
-            'section-element-parameterized-changed' => [
-                $pathToFixtures . '/section-element-parameterized-changed/source-code-before',
-                $pathToFixtures . '/section-element-parameterized-changed/source-code-after',
+            'section-element-parameterized-added' => [
+                $pathToFixtures . '/section-element-parameterized-added/source-code-before',
+                $pathToFixtures . '/section-element-parameterized-added/source-code-after',
+                [
+                    'Mftf (MAJOR)',
+                    'Section/SampleSection/element1/parameterized | <section> <element> parameterized was changed | M250'
+                ],
+                'Major change is detected.'
+            ],
+            'section-element-parameterized-removed' => [
+                $pathToFixtures . '/section-element-parameterized-removed/source-code-before',
+                $pathToFixtures . '/section-element-parameterized-removed/source-code-after',
                 [
                     'Mftf (MAJOR)',
                     'Section/SampleSection/element1/parameterized | <section> <element> parameterized was changed | M250'

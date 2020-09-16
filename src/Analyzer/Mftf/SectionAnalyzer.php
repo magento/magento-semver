@@ -24,6 +24,7 @@ class SectionAnalyzer extends AbstractEntityAnalyzer
     const MFTF_ELEMENT_ELEMENT = "{}element";
     const MFTF_DATA_TYPE = 'section';
     const MFTF_DATA_DIRECTORY = '/Mftf/Section/';
+    const MFTF_ELEMENT_PARAM = 'parameterized';
 
     /**
      * operations array
@@ -34,7 +35,7 @@ class SectionAnalyzer extends AbstractEntityAnalyzer
         AbstractEntityAnalyzer::DEFAULT_OPERATION_KEY => SectionElementChanged::class,
         'selector' => SectionElementSelectorChanged::class,
         'type' => SectionElementTypeChanged::class,
-        'parameterized' => SectionElementParameterizedChanged::class
+        self::MFTF_ELEMENT_PARAM => SectionElementParameterizedChanged::class
     ];
 
     /**
@@ -109,6 +110,20 @@ class SectionAnalyzer extends AbstractEntityAnalyzer
                             self::$operations,
                             "$operationTarget/$beforeFieldKey"
                         );
+
+                        // validate parameterized added
+                        $beforeAttributes = $beforeField['attributes'];
+                        $afterAttributes =  $matchingElement['attributes'];
+
+                        if (isset($afterAttributes[self::MFTF_ELEMENT_PARAM])) {
+                            if (!isset($beforeAttributes[self::MFTF_ELEMENT_PARAM])) {
+                                $operation = new SectionElementParameterizedChanged(
+                                    $filenames,
+                                    "$operationTarget/$beforeFieldKey/". self::MFTF_ELEMENT_PARAM
+                                );
+                                $this->getReport()->add(MftfReport::MFTF_REPORT_CONTEXT, $operation);
+                            }
+                        }
                     }
                 }
                 $this->findAddedElementsInArray(
