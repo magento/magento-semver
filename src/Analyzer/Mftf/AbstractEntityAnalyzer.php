@@ -190,10 +190,10 @@ abstract class AbstractEntityAnalyzer
                     if (!isset($newChild['attributes'][$elementIdentifier])) {
                         continue;
                     }
-                    $beforeFieldKey = $newChild['attributes'][$elementIdentifier];
+                    $afterFieldKey = $newChild['attributes'][$elementIdentifier];
                     $matchingElement = $this->findMatchingElement($newChild, $beforeArray, $elementIdentifier);
                     if ($matchingElement === null) {
-                        $operation = new $operationClass($filenames, $fullOperationTarget . '/' . $beforeFieldKey);
+                        $operation = new $operationClass($filenames, $fullOperationTarget . '/' . $afterFieldKey);
                         $report->add(MftfReport::MFTF_REPORT_CONTEXT, $operation);
                     }
                 }
@@ -252,11 +252,11 @@ abstract class AbstractEntityAnalyzer
             if (!isset($newChild['type']) || $newChild['type'] !== $entityType) {
                 continue;
             }
-            $beforeFieldKey = $newChild['attributes']['name'];
+            $afterFieldKey = $newChild['attributes']['name'];
             $matchingElement = $this->findMatchingElement($newChild, $beforeArray, 'name');
             if ($matchingElement === null) {
                 $filenames = implode(', ', $newChild['filePaths']);
-                $operation = new $operationClass($filenames, $fullOperationTarget . '/' . $beforeFieldKey);
+                $operation = new $operationClass($filenames, $fullOperationTarget . '/' . $afterFieldKey);
                 $report->add(MftfReport::MFTF_REPORT_CONTEXT, $operation);
             }
         }

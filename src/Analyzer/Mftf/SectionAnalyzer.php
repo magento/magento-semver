@@ -10,7 +10,10 @@ use Magento\SemanticVersionChecker\MftfReport;
 use Magento\SemanticVersionChecker\Operation\Mftf\Section\SectionAdded;
 use Magento\SemanticVersionChecker\Operation\Mftf\Section\SectionElementAdded;
 use Magento\SemanticVersionChecker\Operation\Mftf\Section\SectionElementChanged;
+use Magento\SemanticVersionChecker\Operation\Mftf\Section\SectionElementParameterizedChanged;
 use Magento\SemanticVersionChecker\Operation\Mftf\Section\SectionElementRemoved;
+use Magento\SemanticVersionChecker\Operation\Mftf\Section\SectionElementSelectorChanged;
+use Magento\SemanticVersionChecker\Operation\Mftf\Section\SectionElementTypeChanged;
 use Magento\SemanticVersionChecker\Operation\Mftf\Section\SectionRemoved;
 use Magento\SemanticVersionChecker\Scanner\MftfScanner;
 use PHPSemVerChecker\Registry\Registry;
@@ -21,6 +24,19 @@ class SectionAnalyzer extends AbstractEntityAnalyzer
     const MFTF_ELEMENT_ELEMENT = "{}element";
     const MFTF_DATA_TYPE = 'section';
     const MFTF_DATA_DIRECTORY = '/Mftf/Section/';
+    const MFTF_ELEMENT_PARAM = 'parameterized';
+
+    /**
+     * operations array
+     *
+     * @var string[]
+     */
+    private static $operations = [
+        AbstractEntityAnalyzer::DEFAULT_OPERATION_KEY => SectionElementChanged::class,
+        'selector' => SectionElementSelectorChanged::class,
+        'type' => SectionElementTypeChanged::class,
+        self::MFTF_ELEMENT_PARAM => SectionElementParameterizedChanged::class
+    ];
 
     /**
      * MFTF section.xml analyzer
@@ -91,9 +107,23 @@ class SectionAnalyzer extends AbstractEntityAnalyzer
                             $matchingElement['attributes'],
                             $this->getReport(),
                             $filenames,
-                            [AbstractEntityAnalyzer::DEFAULT_OPERATION_KEY => SectionElementChanged::class],
+                            self::$operations,
                             "$operationTarget/$beforeFieldKey"
                         );
+
+                        // validate parameterized added
+                        $beforeAttributes = $beforeField['attributes'];
+                        $afterAttributes =  $matchingElement['attributes'];
+
+                        if (isset($afterAttributes[self::MFTF_ELEMENT_PARAM])) {
+                            if (!isset($beforeAttributes[self::MFTF_ELEMENT_PARAM])) {
+                                $operation = new SectionElementParameterizedChanged(
+                                    $filenames,
+                                    "$operationTarget/$beforeFieldKey/". self::MFTF_ELEMENT_PARAM
+                                );
+                                $this->getReport()->add(MftfReport::MFTF_REPORT_CONTEXT, $operation);
+                            }
+                        }
                     }
                 }
                 $this->findAddedElementsInArray(

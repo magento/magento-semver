@@ -8,6 +8,8 @@ namespace Magento\SemanticVersionChecker\Analyzer\Mftf;
 
 use Magento\SemanticVersionChecker\MftfReport;
 use Magento\SemanticVersionChecker\Operation\Mftf\Metadata\MetadataAdded;
+use Magento\SemanticVersionChecker\Operation\Mftf\Metadata\MetadataChanged;
+use Magento\SemanticVersionChecker\Operation\Mftf\Metadata\MetadataChildAdded;
 use Magento\SemanticVersionChecker\Operation\Mftf\Metadata\MetadataChildRemoved;
 use Magento\SemanticVersionChecker\Operation\Mftf\Metadata\MetadataRemoved;
 use Magento\SemanticVersionChecker\Scanner\MftfScanner;
@@ -54,10 +56,31 @@ class MetadataAnalyzer extends AbstractEntityAnalyzer
                     continue;
                 }
 
-                // Build simple metadata tree for comparison
+               // Validate metadata attribute changes
+               $this->matchAndValidateAttributes(
+                   $beforeEntity['attributes'],
+                   $afterEntities[$module][$entityName]['attributes'],
+                   $this->getReport(),
+                   $filenames,
+                   [AbstractEntityAnalyzer::DEFAULT_OPERATION_KEY => MetadataChanged::class],
+                   $operationTarget
+               );
+
+                // Validate child elements removed
                 $this->recursiveCompare(
                     $beforeEntity,
                     $afterEntities[$module][$entityName],
+                    MetadataChildRemoved::class,
+                    $operationTarget,
+                    $filenames,
+                    $this->getReport()
+                );
+
+                // Validate child elements added
+                $this->recursiveCompare(
+                    $afterEntities[$module][$entityName],
+                    $beforeEntity,
+                    MetadataChildAdded::class,
                     $operationTarget,
                     $filenames,
                     $this->getReport()
@@ -72,14 +95,16 @@ class MetadataAnalyzer extends AbstractEntityAnalyzer
      *
      * @param array $beforeEntity
      * @param array $afterEntity
+     * @param string $operationClass
      * @param string $operationTarget
      * @param string $filenames
      * @param Report $report
      * @return void
      */
-    public function recursiveCompare($beforeEntity, $afterEntity, $operationTarget, $filenames, $report)
+    public function recursiveCompare($beforeEntity, $afterEntity, $operationClass, $operationTarget, $filenames, $report)
     {
         $beforeChildren = $beforeEntity['value'] ?? [];
+        $afterChildren = $afterEntity['value'] ?? [];
         if (!is_array($beforeChildren)) {
             return;
         }
@@ -87,7 +112,6 @@ class MetadataAnalyzer extends AbstractEntityAnalyzer
             $beforeType = $beforeChild['name'];
             $beforeFieldKey = $beforeChild['attributes']['key'] ?? null;
             $afterFound = null;
-            $afterChildren = $afterEntity['value'] ?? [];
             foreach ($afterChildren as $afterChild) {
                 if ($afterChild['name'] !== $beforeType) {
                     continue;
@@ -99,12 +123,13 @@ class MetadataAnalyzer extends AbstractEntityAnalyzer
                 }
             }
             if ($afterFound === null) {
-                $operation = new MetadataChildRemoved($filenames, $operationTarget . '/' . $beforeFieldKey);
+                $operation = new $operationClass($filenames, $operationTarget . '/' . $beforeFieldKey);
                 $report->add(MftfReport::MFTF_REPORT_CONTEXT, $operation);
             } else {
                 $this->recursiveCompare(
                     $beforeChild,
                     $afterFound,
+                    $operationClass,
                     $operationTarget . '/' . $beforeFieldKey,
                     $filenames,
                     $report
