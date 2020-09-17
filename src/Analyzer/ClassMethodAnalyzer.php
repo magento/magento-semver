@@ -422,7 +422,8 @@ class ClassMethodAnalyzer extends AbstractCodeAnalyzer
      */
     private function getDocReturnDeclaration(ClassMethod $method)
     {
-        if (($parsedComment = $method->getAttribute('docCommentParsed'))
+        if (
+            ($parsedComment = $method->getAttribute('docCommentParsed'))
             && isset($parsedComment['return'])
         ) {
             $result = implode('|', $parsedComment['return']);

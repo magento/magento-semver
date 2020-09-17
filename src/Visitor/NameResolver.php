@@ -54,7 +54,7 @@ class NameResolver extends ParserNameResolver
             /** @var PhpDocTagNode[] $paramTags */
             $paramTags = $docNode->getTagsByName('@param');
             /** @var PhpDocTagNode $paramTag */
-            foreach($paramTags as $paramTag) {
+            foreach ($paramTags as $paramTag) {
                 $paramNode = [
                     'name' => $paramTag->value->parameterName ?? '',
                     'type' => $this->parseType($paramTag->value->type),
@@ -110,7 +110,8 @@ class NameResolver extends ParserNameResolver
      * @param $node
      * @return Name|Node\NullableType|Node\UnionType
      */
-    private function resolveType($node) {
+    private function resolveType($node)
+    {
         if ($node instanceof Name) {
             return $this->resolveClassName($node);
         }
