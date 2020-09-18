@@ -12,8 +12,9 @@ use PhpParser\Node\Name;
 use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\NodeVisitor\NameResolver as ParserNameResolver;
 use PhpParser\BuilderHelpers;
+use PHPStan\PhpDocParser\Ast\PhpDoc\ParamTagValueNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocNode;
-use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagNode;
+use PHPStan\PhpDocParser\Ast\PhpDoc\ReturnTagValueNode;
 use PHPStan\PhpDocParser\Ast\Type\TypeNode;
 use PHPStan\PhpDocParser\Ast\Type\UnionTypeNode;
 use PHPStan\PhpDocParser\Lexer\Lexer;
@@ -51,23 +52,23 @@ class NameResolver extends ParserNameResolver
         $docNode = $this->getParsedDocNode($node);
         if ($docNode) {
             $result = [];
-            /** @var PhpDocTagNode[] $paramTags */
-            $paramTags = $docNode->getTagsByName('@param');
-            /** @var PhpDocTagNode $paramTag */
+            /** @var ParamTagValueNode[] $paramTags */
+            $paramTags = $docNode->getParamTagValues();
+            /** @var ParamTagValueNode $paramTag */
             foreach ($paramTags as $paramTag) {
                 $paramNode = [
-                    'name' => $paramTag->value->parameterName ?? '',
-                    'type' => $this->parseType($paramTag->value->type),
+                    'name' => $paramTag->parameterName ?? '',
+                    'type' => $this->parseType($paramTag->type),
                 ];
                 $result['params'][] = $paramNode;
             }
 
-            /** @var PhpDocTagNode[] $returnTags */
-            $returnTags = $docNode->getTagsByName('@return');
-            /** @var PhpDocTagNode $returnTag */
+            /** @var ReturnTagValueNode[] $returnTags */
+            $returnTags = $docNode->getReturnTagValues();
+            /** @var ReturnTagValueNode $returnTag */
             $returnTag = array_shift($returnTags);
             if ($returnTag) {
-                $result['return'] = $this->parseType($returnTag->value->type);
+                $result['return'] = $this->parseType($returnTag->type);
             }
             $node->setAttribute('docCommentParsed', $result);
         }
