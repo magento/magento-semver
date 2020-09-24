@@ -17,6 +17,7 @@ use Magento\SemanticVersionChecker\Analyzer\Mftf\MetadataAnalyzer;
 use Magento\SemanticVersionChecker\Analyzer\Mftf\PageAnalyzer;
 use Magento\SemanticVersionChecker\Analyzer\Mftf\SectionAnalyzer;
 use Magento\SemanticVersionChecker\Analyzer\Mftf\TestAnalyzer;
+use Magento\SemanticVersionChecker\Analyzer\Mftf\SuiteAnalyzer;
 use Magento\SemanticVersionChecker\ClassHierarchy\DependencyGraph;
 use Magento\SemanticVersionChecker\MftfReport;
 
@@ -38,7 +39,8 @@ class MFTFAnalyzerFactory implements AnalyzerFactoryInterface
             new PageAnalyzer($report),
             new SectionAnalyzer($report),
             new TestAnalyzer($report),
-            new ActionGroupAnalyzer($report)
+            new ActionGroupAnalyzer($report),
+            new SuiteAnalyzer($report)
         ];
 
         return new Analyzer($analyzers);

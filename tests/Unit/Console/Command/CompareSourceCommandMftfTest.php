@@ -631,6 +631,226 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 ],
                 'Major change is detected.'
             ],
+            'suite-added' => [
+                $pathToFixtures . '/suite-added/source-code-before',
+                $pathToFixtures . '/suite-added/source-code-after',
+                [
+                    'Mftf (MINOR)',
+                    'Suite/Sample2Suite | <suite> was added | M407'
+                ],
+                'Minor change is detected.'
+            ],
+            'suite-removed' => [
+                $pathToFixtures . '/suite-removed/source-code-before',
+                $pathToFixtures . '/suite-removed/source-code-after',
+                [
+                    'Mftf (MAJOR)',
+                    'Suite/Sample2Suite | <suite> was removed | M408'
+                ],
+                'Major change is detected.'
+            ],
+            'suite-after-action-added' => [
+                $pathToFixtures . '/suite-after-action-added/source-code-before',
+                $pathToFixtures . '/suite-after-action-added/source-code-after',
+                [
+                    'Mftf (MINOR)',
+                    'Suite/SampleSuite/after/y | <suite> <before/after> <action> was added | M415'
+                ],
+                'Minor change is detected.'
+            ],
+            'suite-after-action-changed' => [
+                $pathToFixtures . '/suite-after-action-changed/source-code-before',
+                $pathToFixtures . '/suite-after-action-changed/source-code-after',
+                [
+                    'Mftf (PATCH)',
+                    'Suite/SampleSuite/after/x/url | <suite> <before/after> <action> was changed | M416'
+                ],
+                'Patch change is detected.'
+            ],
+            'suite-after-action-removed' => [
+                $pathToFixtures . '/suite-after-action-removed/source-code-before',
+                $pathToFixtures . '/suite-after-action-removed/source-code-after',
+                [
+                    'Mftf (MAJOR)',
+                    'Suite/SampleSuite/after/y | <suite> <before/after> <action> was removed | M412'
+                ],
+                'Major change is detected.'
+            ],
+            'suite-after-action-group-ref-changed' => [
+                $pathToFixtures . '/suite-after-action-group-ref-changed/source-code-before',
+                $pathToFixtures . '/suite-after-action-group-ref-changed/source-code-after',
+                [
+                    'Mftf (MAJOR)',
+                    'Suite/SampleSuite/after/z/ref | <suite> <before/after> <actionGroup> ref was changed | M417'
+                ],
+                'Major change is detected.'
+            ],
+            'suite-after-action-sequence-changed' => [
+                $pathToFixtures . '/suite-after-action-sequence-changed/source-code-before',
+                $pathToFixtures . '/suite-after-action-sequence-changed/source-code-after',
+                [
+                    'Mftf (MAJOR)',
+                    'Suite/SampleSuite/after | <suite> <before/after> <action> sequence was changed | M418'
+                ],
+                'Major change is detected.'
+            ],
+            'suite-after-action-type-changed' => [
+                $pathToFixtures . '/suite-after-action-type-changed/source-code-before',
+                $pathToFixtures . '/suite-after-action-type-changed/source-code-after',
+                [
+                    'Mftf (PATCH)',
+                    'Suite/SampleSuite/after/y | <suite> <before/after> <action> type was changed | M419'
+                ],
+                'Patch change is detected.'
+            ],
+            'suite-before-action-added' => [
+                $pathToFixtures . '/suite-before-action-added/source-code-before',
+                $pathToFixtures . '/suite-before-action-added/source-code-after',
+                [
+                    'Mftf (MINOR)',
+                    'Suite/SampleSuite/before/b | <suite> <before/after> <action> was added | M415'
+                ],
+                'Minor change is detected.'
+            ],
+            'suite-before-action-changed' => [
+                $pathToFixtures . '/suite-before-action-changed/source-code-before',
+                $pathToFixtures . '/suite-before-action-changed/source-code-after',
+                [
+                    'Mftf (PATCH)',
+                    'Suite/SampleSuite/before/b/userInput | <suite> <before/after> <action> was changed | M416'
+                ],
+                'Patch change is detected.'
+            ],
+            'suite-before-action-removed' => [
+                $pathToFixtures . '/suite-before-action-removed/source-code-before',
+                $pathToFixtures . '/suite-before-action-removed/source-code-after',
+                [
+                    'Mftf (MAJOR)',
+                    'Suite/SampleSuite/before/b | <suite> <before/after> <action> was removed | M412'
+                ],
+                'Major change is detected.'
+            ],
+            'suite-before-action-group-ref-changed' => [
+                $pathToFixtures . '/suite-before-action-group-ref-changed/source-code-before',
+                $pathToFixtures . '/suite-before-action-group-ref-changed/source-code-after',
+                [
+                    'Mftf (MAJOR)',
+                    'Suite/SampleSuite/before/c/ref | <suite> <before/after> <actionGroup> ref was changed | M417'
+                ],
+                'Major change is detected.'
+            ],
+            'suite-before-action-sequence-changed' => [
+                $pathToFixtures . '/suite-before-action-sequence-changed/source-code-before',
+                $pathToFixtures . '/suite-before-action-sequence-changed/source-code-after',
+                [
+                    'Mftf (MAJOR)',
+                    'Suite/SampleSuite/before | <suite> <before/after> <action> sequence was changed | M418'
+                ],
+                'Major change is detected.'
+            ],
+            'suite-before-action-type-changed' => [
+                $pathToFixtures . '/suite-before-action-type-changed/source-code-before',
+                $pathToFixtures . '/suite-before-action-type-changed/source-code-after',
+                [
+                    'Mftf (PATCH)',
+                    'Suite/SampleSuite/before/b | <suite> <before/after> <action> type was changed | M419'
+                ],
+                'Patch change is detected.'
+            ],
+            'suite-exclude-added' => [
+                $pathToFixtures . '/suite-exclude-added/source-code-before',
+                $pathToFixtures . '/suite-exclude-added/source-code-after',
+                [
+                    'Mftf (PATCH)',
+                    'Suite/SampleSuite/exclude/module1 | <suite> <include/exclude> <group/test/module> was added | M409',
+                    'Suite/SampleSuite/exclude/test1 | <suite> <include/exclude> <group/test/module> was added | M409',
+                ],
+                'Patch change is detected.'
+            ],
+            'suite-exclude-removed' => [
+                $pathToFixtures . '/suite-exclude-removed/source-code-before',
+                $pathToFixtures . '/suite-exclude-removed/source-code-after',
+                [
+                    'Mftf (PATCH)',
+                    'Suite/SampleSuite/exclude/module1 | <suite> <include/exclude> <group/test/module> was removed | M410'
+                ],
+                'Patch change is detected.'
+            ],
+            'suite-include-added' => [
+                $pathToFixtures . '/suite-include-added/source-code-before',
+                $pathToFixtures . '/suite-include-added/source-code-after',
+                [
+                    'Mftf (PATCH)',
+                    'Suite/SampleSuite/include/module1 | <suite> <include/exclude> <group/test/module> was added | M409',
+                    'Suite/SampleSuite/include/test1 | <suite> <include/exclude> <group/test/module> was added | M409',
+                ],
+                'Patch change is detected.'
+            ],
+            'suite-include-removed' => [
+                $pathToFixtures . '/suite-include-removed/source-code-before',
+                $pathToFixtures . '/suite-include-removed/source-code-after',
+                [
+                    'Mftf (PATCH)',
+                    'Suite/SampleSuite/include/module1 | <suite> <include/exclude> <group/test/module> was removed | M410'
+                ],
+                'Patch change is detected.'
+            ],
+            'suite-include-changed' => [
+                $pathToFixtures . '/suite-include-changed/source-code-before',
+                $pathToFixtures . '/suite-include-changed/source-code-after',
+                [
+                    'Mftf (PATCH)',
+                    'Suite/SampleSuite/include/group1 | <suite> <include/exclude> <group/test/module> was removed | M410',
+                    'Suite/SampleSuite/include/group2 | <suite> <include/exclude> <group/test/module> was added | M409',
+                ],
+                'Patch change is detected.'
+            ],
+            'suite-exclude-changed' => [
+                $pathToFixtures . '/suite-exclude-changed/source-code-before',
+                $pathToFixtures . '/suite-exclude-changed/source-code-after',
+                [
+                    'Mftf (PATCH)',
+                    'Suite/SampleSuite/exclude/group1 | <suite> <include/exclude> <group/test/module> was removed | M410',
+                    'Suite/SampleSuite/exclude/group2 | <suite> <include/exclude> <group/test/module> was added | M409',
+                ],
+                'Patch change is detected.'
+            ],
+            'suite-after-remove-action-added' => [
+                $pathToFixtures . '/suite-after-remove-action-added/source-code-before',
+                $pathToFixtures . '/suite-after-remove-action-added/source-code-after',
+                [
+                    'Mftf (MAJOR)',
+                    'Suite/SampleSuite/after/x | <suite> <before/after> <remove> <action> was added | M420'
+                ],
+                'Major change is detected.'
+            ],
+            'suite-after-remove-action-removed' => [
+                $pathToFixtures . '/suite-after-remove-action-removed/source-code-before',
+                $pathToFixtures . '/suite-after-remove-action-removed/source-code-after',
+                [
+                    'Mftf (MINOR)',
+                    'Suite/SampleSuite/after/x | <suite> <before/after> <remove> <action> was removed | M421'
+                ],
+                'Minor change is detected.'
+            ],
+            'suite-before-remove-action-added' => [
+                $pathToFixtures . '/suite-before-remove-action-added/source-code-before',
+                $pathToFixtures . '/suite-before-remove-action-added/source-code-after',
+                [
+                    'Mftf (MAJOR)',
+                    'Suite/SampleSuite/before/x | <suite> <before/after> <remove> <action> was added | M420'
+                ],
+                'Major change is detected.'
+            ],
+            'suite-before-remove-action-removed' => [
+                $pathToFixtures . '/suite-before-remove-action-removed/source-code-before',
+                $pathToFixtures . '/suite-before-remove-action-removed/source-code-after',
+                [
+                    'Mftf (MINOR)',
+                    'Suite/SampleSuite/before/x | <suite> <before/after> <remove> <action> was removed | M421'
+                ],
+                'Minor change is detected.'
+            ],
         ];
     }
 }
