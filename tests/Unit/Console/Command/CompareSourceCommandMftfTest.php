@@ -617,10 +617,10 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/test-remove-action-removed/source-code-before',
                 $pathToFixtures . '/test-remove-action-removed/source-code-after',
                 [
-                    'Mftf (MINOR)',
+                    'Mftf (MAJOR)',
                     'Test/SampleTest/key2 | <test> <remove action> was removed | M402'
                 ],
-                'Minor change is detected.'
+                'Major change is detected.'
             ],
             'test-action-group-ref-changed' => [
                 $pathToFixtures . '/test-action-group-ref-changed/source-code-before',
@@ -828,10 +828,10 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/suite-after-remove-action-removed/source-code-before',
                 $pathToFixtures . '/suite-after-remove-action-removed/source-code-after',
                 [
-                    'Mftf (MINOR)',
+                    'Mftf (MAJOR)',
                     'Suite/SampleSuite/after/x | <suite> <before/after> <remove> <action> was removed | M421'
                 ],
-                'Minor change is detected.'
+                'Major change is detected.'
             ],
             'suite-before-remove-action-added' => [
                 $pathToFixtures . '/suite-before-remove-action-added/source-code-before',
@@ -846,10 +846,50 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/suite-before-remove-action-removed/source-code-before',
                 $pathToFixtures . '/suite-before-remove-action-removed/source-code-after',
                 [
-                    'Mftf (MINOR)',
+                    'Mftf (MAJOR)',
                     'Suite/SampleSuite/before/x | <suite> <before/after> <remove> <action> was removed | M421'
                 ],
-                'Minor change is detected.'
+                'Major change is detected.'
+            ],
+            'actionGroup-remove-action-key-changed' => [
+                $pathToFixtures . '/actionGroup-remove-action-key-changed/source-code-before',
+                $pathToFixtures . '/actionGroup-remove-action-key-changed/source-code-after',
+                [
+                    'Mftf (MAJOR)',
+                    'ActionGroup/ActionGroup1/action2 | <actionGroup> <remove action> was removed | M406',
+                    'ActionGroup/ActionGroup1/action1 | <actionGroup> <remove action> was added | M404',
+                ],
+                'Major change is detected.'
+            ],
+            'suite-before-remove-action-key-changed' => [
+                $pathToFixtures . '/suite-before-remove-action-key-changed/source-code-before',
+                $pathToFixtures . '/suite-before-remove-action-key-changed/source-code-after',
+                [
+                    'Mftf (MAJOR)',
+                    'Suite/SampleSuite/before/a | <suite> <before/after> <remove> <action> was removed | M421',
+                    'Suite/SampleSuite/before/b | <suite> <before/after> <remove> <action> was added | M420',
+                ],
+                'Major change is detected.'
+            ],
+            'suite-after-remove-action-key-changed' => [
+                $pathToFixtures . '/suite-after-remove-action-key-changed/source-code-before',
+                $pathToFixtures . '/suite-after-remove-action-key-changed/source-code-after',
+                [
+                    'Mftf (MAJOR)',
+                    'Suite/SampleSuite/after/a | <suite> <before/after> <remove> <action> was removed | M421',
+                    'Suite/SampleSuite/after/b | <suite> <before/after> <remove> <action> was added | M420',
+                ],
+                'Major change is detected.'
+            ],
+            'test-remove-action-key-changed' => [
+                $pathToFixtures . '/test-remove-action-key-changed/source-code-before',
+                $pathToFixtures . '/test-remove-action-key-changed/source-code-after',
+                [
+                    'Mftf (MAJOR)',
+                    'Test/SampleTest/key2 | <test> <remove action> was removed | M402',
+                    'Test/SampleTest/key1 | <test> <remove action> was added | M401',
+                ],
+                'Major change is detected.'
             ],
         ];
     }
