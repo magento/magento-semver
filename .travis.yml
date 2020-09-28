@@ -7,7 +7,7 @@ matrix:
   fast_finish: true
 
 before_install:
-  - composer install --prefer-source --no-interaction --dev
+  - composer install --prefer-dist --no-interaction --dev
 
 jobs:
   include:
