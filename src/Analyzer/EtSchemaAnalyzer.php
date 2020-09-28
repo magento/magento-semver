@@ -66,14 +66,38 @@ class EtSchemaAnalyzer implements AnalyzerInterface
         $this->report = $report;
     }
 
-    private function reportAddedModuleConfig(array $moduleConfig): array
+    /**
+     * Process a new configuration file
+     *
+     * @param array $moduleConfig
+     * @return array
+     */
+    private function addedModuleConfig(array $moduleConfig): array
     {
-        return [];
+        $changes = [];
+        foreach ($moduleConfig as $moduleName => $records) {
+            foreach ($records as $record) {
+                $changes[] = $this->addedRecord($moduleName, $record['name']);
+            }
+        }
+        return $changes;
     }
 
+    /**
+     * Process removed configuration file
+     *
+     * @param array $moduleConfig
+     * @return array
+     */
     private function removedModuleConfig(array $moduleConfig): array
     {
-        return [];
+        $changes = [];
+        foreach ($moduleConfig as $moduleName => $records) {
+            foreach ($records as $record) {
+                $changes[] = $this->removedRecord($moduleName, $record['name']);
+            }
+        }
+        return $changes;
     }
 
     /**
@@ -113,6 +137,8 @@ class EtSchemaAnalyzer implements AnalyzerInterface
     }
 
     /**
+     * Register removed field
+     *
      * @param string $moduleName
      * @param string $recordName
      * @param string $fieldName
@@ -135,6 +161,8 @@ class EtSchemaAnalyzer implements AnalyzerInterface
     }
 
     /**
+     * Register a new field
+     *
      * @param string $moduleName
      * @param string $recordName
      * @param string $fieldName
@@ -157,6 +185,8 @@ class EtSchemaAnalyzer implements AnalyzerInterface
     }
 
     /**
+     * Register field change
+     *
      * @param string $moduleName
      * @param string $recordName
      * @param string $fieldName
@@ -197,7 +227,7 @@ class EtSchemaAnalyzer implements AnalyzerInterface
             if ($beforeRecord['field'][$fieldName]['type'] != $afterRecord['field'][$fieldName]['type']
                 || $beforeRecord['field'][$fieldName]['repeated'] != $afterRecord['field'][$fieldName]['repeated']
             ) {
-                $this->changedField($moduleName, $beforeRecord['name'], $fieldName);
+                $changes[] = $this->changedField($moduleName, $beforeRecord['name'], $fieldName);
             }
         }
         $diff = array_merge(
@@ -236,10 +266,13 @@ class EtSchemaAnalyzer implements AnalyzerInterface
             array_keys($afterModuleConfig)
         );
         foreach ($commonRecords as $recordName) {
-            $changes += $this->analyzeRecord(
-                $moduleName,
-                $beforeModuleConfig[$recordName],
-                $afterModuleConfig[$recordName]
+            $changes = array_merge(
+                $changes,
+                $this->analyzeRecord(
+                    $moduleName,
+                    $beforeModuleConfig[$recordName],
+                    $afterModuleConfig[$recordName]
+                )
             );
         }
         $diff = array_merge(
@@ -298,12 +331,47 @@ class EtSchemaAnalyzer implements AnalyzerInterface
             array_keys($registryAfter->data['etSchema'])
         );
         foreach ($commonModules as $moduleName) {
-            $changes += $this->analyzeModuleConfig(
-                $moduleName,
-                $registryBefore->data['etSchema'][$moduleName],
-                $registryAfter->data['etSchema'][$moduleName]
+            $changes = array_merge(
+                $changes,
+                $this->analyzeModuleConfig(
+                    $moduleName,
+                    $registryBefore->data['etSchema'][$moduleName],
+                    $registryAfter->data['etSchema'][$moduleName]
+                )
             );
         }
+
+        $changes = array_merge(
+            $changes,
+            $this->removedModuleConfig(
+                array_intersect_key(
+                    $registryBefore->data['etSchema'],
+                    array_flip(
+                        array_diff(
+                            array_keys($registryBefore->data['etSchema']),
+                            array_keys($registryAfter->data['etSchema'])
+                        )
+                    )
+                )
+            )
+        );
+
+        $changes = array_merge(
+            $changes,
+            $this->addedModuleConfig(
+                array_intersect_key(
+                    $registryAfter->data['etSchema'],
+                    array_flip(
+                        array_diff(
+                            array_keys($registryAfter->data['etSchema']),
+                            array_keys($registryBefore->data['etSchema'])
+                        )
+                    )
+                )
+            )
+        );
+
+
         $this->reportChanges($changes);
         return $this->report;
     }
