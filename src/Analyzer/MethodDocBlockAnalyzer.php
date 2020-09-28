@@ -35,6 +35,11 @@ use PHPStan\PhpDocParser\Parser\TypeParser;
  * - method param typehint moved from in-line to doc block
  * - method return typehint moved from doc block to in-line
  * - method return typehint moved from in-line to doc block
+ *
+ * TODO: this class should be rewritten using new possibility added by
+ * Magento\SemanticVersionChecker\Visitor\NameResolver
+ * Now all information (and resolved typed) about DocBlock params and return type exists in
+ * method node 'docCommentParsed' attribute
  */
 class MethodDocBlockAnalyzer
 {

@@ -24,7 +24,8 @@ use Magento\SemanticVersionChecker\Operation\ExtendableClassConstructorOptionalP
 use Magento\SemanticVersionChecker\Operation\Visibility\MethodDecreased as VisibilityMethodDecreased;
 use Magento\SemanticVersionChecker\Operation\Visibility\MethodIncreased as VisibilityMethodIncreased;
 use PhpParser\Node\NullableType;
-use PhpParser\Node\Stmt;
+use PhpParser\Node\Name;
+use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\ClassLike;
 use PhpParser\Node\Stmt\ClassMethod;
 use PHPSemVerChecker\Comparator\Implementation;
@@ -38,12 +39,6 @@ use PHPSemVerChecker\Operation\ClassMethodParameterTypingAdded;
 use PHPSemVerChecker\Operation\ClassMethodParameterTypingRemoved;
 use PHPSemVerChecker\Operation\ClassMethodRemoved;
 use PHPSemVerChecker\Report\Report;
-use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagNode;
-use PHPStan\PhpDocParser\Lexer\Lexer;
-use PHPStan\PhpDocParser\Parser\ConstExprParser;
-use PHPStan\PhpDocParser\Parser\PhpDocParser;
-use PHPStan\PhpDocParser\Parser\TokenIterator;
-use PHPStan\PhpDocParser\Parser\TypeParser;
 
 /**
  * Class method analyzer.
@@ -429,9 +424,35 @@ class ClassMethodAnalyzer extends AbstractCodeAnalyzer
             $result = implode('|', $parsedComment['return']);
 
             return $result;
-        } else {
-            return ' ';
+        } elseif ($this->dependencyGraph !== null) {
+            /** @var Class_ $methodClass */
+            $methodClass = $method->getAttribute('parent');
+            if ($methodClass) {
+                $ancestors = [];
+                if (!empty($methodClass->extends)) {
+                    $ancestors[] = $methodClass->extends;
+                }
+                if (!empty($methodClass->implements)) {
+                    $ancestors = array_merge($ancestors, $methodClass->implements);
+                }
+                /** @var Name $ancestor */
+                foreach ($ancestors as $ancestor) {
+                    $ancestorClass = $this->dependencyGraph->findEntityByName($ancestor->toString());
+                    if ($ancestorClass) {
+                        foreach ($ancestorClass->getMethodList() as $methodItem) {
+                            if ($method->name->toString() == $methodItem->name->toString()) {
+                                $result = $this->getDocReturnDeclaration($methodItem);
+                                if (!empty(trim($result))) {
+                                    return $result;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
+
+        return ' ';
     }
 
     /**
