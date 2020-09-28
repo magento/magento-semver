@@ -27,6 +27,7 @@ class FinderDecoratorFactory
                 '/etc/adminhtml/system.xml',
                 '/etc/*.xsd',
                 '/view/*/*/*/*.less',
+                'et_schema.xml'
             ],
             [
                 'ui_component',

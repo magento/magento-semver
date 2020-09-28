@@ -96,6 +96,12 @@ class ScannerRegistryFactory
                 ],
                 'scanner' => new DbSchemaScanner(new XmlRegistry(), $moduleNameResolver),
             ],
+            ReportTypes::ET_SCHEMA => [
+                'pattern' => [
+                    'et_schema.xml'
+                ],
+                'scanner' => new EtSchemaScanner(new XmlRegistry(), $moduleNameResolver, new EtSchema\XmlConverter()),
+            ],
             ReportTypes::DI_XML => [
                 'pattern' => [
                     'di.xml'

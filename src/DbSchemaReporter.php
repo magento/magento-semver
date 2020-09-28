@@ -30,5 +30,6 @@ class DbSchemaReporter extends TableReporter
         $this->outputReport($output, $this->report, 'system');
         $this->outputReport($output, $this->report, 'xsd');
         $this->outputReport($output, $this->report, 'less');
+        $this->outputReport($output, $this->report, 'etSchema');
     }
 }

@@ -61,6 +61,7 @@ class HtmlDbSchemaReporter extends DbSchemaReporter
             'system',
             'xsd',
             'less',
+            'etSchema'
         ];
 
         foreach ($contexts as $context) {
