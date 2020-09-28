@@ -14,7 +14,7 @@ use PHPSemVerChecker\Report\Report;
 use PHPSemVerChecker\SemanticVersioning\Level;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-
+use Magento\SemanticVersionChecker\Analyzer\EtSchemaAnalyzer;
 /**
  * @package Magento\SemanticVersionChecker
  */
@@ -61,7 +61,7 @@ class HtmlDbSchemaReporter extends DbSchemaReporter
             'system',
             'xsd',
             'less',
-            'etSchema'
+            EtSchemaAnalyzer::CONTEXT
         ];
 
         foreach ($contexts as $context) {

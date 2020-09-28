@@ -10,6 +10,7 @@ namespace Magento\SemanticVersionChecker\Scanner;
 use Magento\SemanticVersionChecker\Registry\XmlRegistry;
 use Magento\SemanticVersionChecker\Scanner\EtSchema\XmlConverter;
 use PHPSemVerChecker\Registry\Registry;
+use Magento\SemanticVersionChecker\Analyzer\EtSchemaAnalyzer;
 
 /**
  * Class EtSchemaScanner
@@ -57,7 +58,7 @@ class EtSchemaScanner
         $doc->loadXML(file_get_contents($file));
         $moduleName = $this->getModuleNameByPath->resolveByEtcDirFilePath($file);
         $data = $this->converter->convert($doc);
-        $this->getRegistry()->data['etSchema'][$moduleName] = $data;
+        $this->getRegistry()->data[EtSchemaAnalyzer::CONTEXT][$moduleName] = $data;
     }
 
     /**

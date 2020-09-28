@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Magento\SemanticVersionChecker;
 
+use Magento\SemanticVersionChecker\Analyzer\EtSchemaAnalyzer;
 /**
  * Holds the different report type keys.
  */
@@ -22,5 +23,5 @@ class ReportTypes
     public const SYSTEM_XML = 'systemXml';
     public const XSD        = 'xsd';
     public const LESS       = 'less';
-    public const ET_SCHEMA  = 'etSchema';
+    public const ET_SCHEMA  = EtSchemaAnalyzer::CONTEXT;
 }

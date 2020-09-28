@@ -18,6 +18,15 @@ use Magento\SemanticVersionChecker\Operation\EtSchema\EtSchemaOperation;
  */
 class EtSchemaAnalyzer implements AnalyzerInterface
 {
+
+    /**
+     * Analyser context
+     */
+    const CONTEXT = 'etSchema';
+
+    /**
+     * @var array of actions
+     */
     private static $actions = [
         'addedRecord' => [
             'level' => Level::MINOR,
@@ -45,11 +54,6 @@ class EtSchemaAnalyzer implements AnalyzerInterface
             'message' => 'Changed field %s declaration in type %s.'
         ]
     ];
-
-    /**
-     * @var string
-     */
-    private $context = 'etSchema';
 
     /**
      * @var Report
@@ -304,7 +308,7 @@ class EtSchemaAnalyzer implements AnalyzerInterface
     {
         foreach ($changes as $change) {
             $this->report->add(
-                $this->context,
+                self::CONTEXT,
                 new EtSchemaOperation(
                 $change['location'],
                 $change['code'],
@@ -327,16 +331,16 @@ class EtSchemaAnalyzer implements AnalyzerInterface
     {
         $changes = [];
         $commonModules = array_intersect(
-            array_keys($registryBefore->data['etSchema']),
-            array_keys($registryAfter->data['etSchema'])
+            array_keys($registryBefore->data[self::CONTEXT]),
+            array_keys($registryAfter->data[self::CONTEXT])
         );
         foreach ($commonModules as $moduleName) {
             $changes = array_merge(
                 $changes,
                 $this->analyzeModuleConfig(
                     $moduleName,
-                    $registryBefore->data['etSchema'][$moduleName],
-                    $registryAfter->data['etSchema'][$moduleName]
+                    $registryBefore->data[self::CONTEXT][$moduleName],
+                    $registryAfter->data[self::CONTEXT][$moduleName]
                 )
             );
         }
@@ -345,11 +349,11 @@ class EtSchemaAnalyzer implements AnalyzerInterface
             $changes,
             $this->removedModuleConfig(
                 array_intersect_key(
-                    $registryBefore->data['etSchema'],
+                    $registryBefore->data[self::CONTEXT],
                     array_flip(
                         array_diff(
-                            array_keys($registryBefore->data['etSchema']),
-                            array_keys($registryAfter->data['etSchema'])
+                            array_keys($registryBefore->data[self::CONTEXT]),
+                            array_keys($registryAfter->data[self::CONTEXT])
                         )
                     )
                 )
@@ -360,11 +364,11 @@ class EtSchemaAnalyzer implements AnalyzerInterface
             $changes,
             $this->addedModuleConfig(
                 array_intersect_key(
-                    $registryAfter->data['etSchema'],
+                    $registryAfter->data[self::CONTEXT],
                     array_flip(
                         array_diff(
-                            array_keys($registryAfter->data['etSchema']),
-                            array_keys($registryBefore->data['etSchema'])
+                            array_keys($registryAfter->data[self::CONTEXT]),
+                            array_keys($registryBefore->data[self::CONTEXT])
                         )
                     )
                 )
