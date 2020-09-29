@@ -329,18 +329,18 @@ class EtSchemaAnalyzer implements AnalyzerInterface
      */
     public function analyze($registryBefore, $registryAfter)
     {
+
+        $before = isset($registryBefore->data[self::CONTEXT]) ? $registryBefore->data[self::CONTEXT] : [];
+        $after = isset($registryAfter->data[self::CONTEXT]) ? $registryAfter->data[self::CONTEXT] : [];
         $changes = [];
-        $commonModules = array_intersect(
-            array_keys($registryBefore->data[self::CONTEXT]),
-            array_keys($registryAfter->data[self::CONTEXT])
-        );
+        $commonModules = array_intersect(array_keys($before), array_keys($after));
         foreach ($commonModules as $moduleName) {
             $changes = array_merge(
                 $changes,
                 $this->analyzeModuleConfig(
                     $moduleName,
-                    $registryBefore->data[self::CONTEXT][$moduleName],
-                    $registryAfter->data[self::CONTEXT][$moduleName]
+                    $before[$moduleName],
+                    $after[$moduleName]
                 )
             );
         }
@@ -348,33 +348,16 @@ class EtSchemaAnalyzer implements AnalyzerInterface
         $changes = array_merge(
             $changes,
             $this->removedModuleConfig(
-                array_intersect_key(
-                    $registryBefore->data[self::CONTEXT],
-                    array_flip(
-                        array_diff(
-                            array_keys($registryBefore->data[self::CONTEXT]),
-                            array_keys($registryAfter->data[self::CONTEXT])
-                        )
-                    )
-                )
+                array_intersect_key($before, array_flip(array_diff(array_keys($before), array_keys($after))))
             )
         );
 
         $changes = array_merge(
             $changes,
             $this->addedModuleConfig(
-                array_intersect_key(
-                    $registryAfter->data[self::CONTEXT],
-                    array_flip(
-                        array_diff(
-                            array_keys($registryAfter->data[self::CONTEXT]),
-                            array_keys($registryBefore->data[self::CONTEXT])
-                        )
-                    )
-                )
+                array_intersect_key($after, array_flip(array_diff(array_keys($after), array_keys($before))))
             )
         );
-
 
         $this->reportChanges($changes);
         return $this->report;
