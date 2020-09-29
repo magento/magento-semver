@@ -10,9 +10,9 @@ declare(strict_types=1);
 namespace Magento\SemanticVersionChecker\ClassHierarchy;
 
 use Magento\SemanticVersionChecker\Helper\Node as NodeHelper;
-use Magento\SemanticVersionChecker\Visitor\ParentConnector;
 use PhpParser\NodeTraverser;
 use Magento\SemanticVersionChecker\Visitor\NameResolver;
+use PhpParser\NodeVisitor\ParentConnectingVisitor;
 use PhpParser\ParserFactory;
 
 /**
@@ -32,7 +32,7 @@ class StaticAnalyzerFactory
         );
         $nodeTraverser               = new NodeTraverser();
 
-        $nodeTraverser->addVisitor(new ParentConnector());
+        $nodeTraverser->addVisitor(new ParentConnectingVisitor());
         $nodeTraverser->addVisitor(new NameResolver());
 
         return new StaticAnalyzer($parser, $dependencyInspectionVisitor, $nodeTraverser);
