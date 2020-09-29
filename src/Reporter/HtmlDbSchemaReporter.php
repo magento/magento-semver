@@ -15,6 +15,7 @@ use PHPSemVerChecker\SemanticVersioning\Level;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Magento\SemanticVersionChecker\Analyzer\EtSchemaAnalyzer;
+
 /**
  * @package Magento\SemanticVersionChecker
  */

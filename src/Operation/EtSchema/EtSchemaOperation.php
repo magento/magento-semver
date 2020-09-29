@@ -1,13 +1,15 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
 declare(strict_types=1);
 
 namespace Magento\SemanticVersionChecker\Operation\EtSchema;
 
-use \PHPSemVerChecker\Operation\Operation;
+use PHPSemVerChecker\Operation\Operation;
 
 /**
  * Class EtSchemaOperation
@@ -37,7 +39,7 @@ class EtSchemaOperation extends Operation
         string $target,
         string $reason,
         int $level
-    ){
+    ) {
         $this->location = $location;
         $this->target = $target;
         $this->code = $code;

@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Magento\SemanticVersionChecker;
 
 use Magento\SemanticVersionChecker\Analyzer\EtSchemaAnalyzer;
+
 /**
  * Holds the different report type keys.
  */

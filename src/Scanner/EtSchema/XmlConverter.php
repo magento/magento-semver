@@ -1,8 +1,10 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
 declare(strict_types=1);
 
 namespace Magento\SemanticVersionChecker\Scanner\EtSchema;
@@ -89,10 +91,9 @@ class XmlConverter
      * @param \DOMDocument $source
      * @return array
      */
-    public function convert(\DOMNode $source) : array
+    public function convert(\DOMNode $source): array
     {
         $configData = $this->convertNode($source);
         return $this->structureRecords($configData);
-
     }
 }

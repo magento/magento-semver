@@ -1,8 +1,10 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
 declare(strict_types=1);
 
 namespace Magento\SemanticVersionChecker\Analyzer;
@@ -22,7 +24,7 @@ class EtSchemaAnalyzer implements AnalyzerInterface
     /**
      * Analyser context
      */
-    const CONTEXT = 'etSchema';
+    public const CONTEXT = 'etSchema';
 
     /**
      * @var array of actions
@@ -228,7 +230,8 @@ class EtSchemaAnalyzer implements AnalyzerInterface
             array_keys($afterRecord['field'])
         );
         foreach ($commonFields as $fieldName) {
-            if ($beforeRecord['field'][$fieldName]['type'] != $afterRecord['field'][$fieldName]['type']
+            if (
+                $beforeRecord['field'][$fieldName]['type'] != $afterRecord['field'][$fieldName]['type']
                 || $beforeRecord['field'][$fieldName]['repeated'] != $afterRecord['field'][$fieldName]['repeated']
             ) {
                 $changes[] = $this->changedField($moduleName, $beforeRecord['name'], $fieldName);
@@ -310,11 +313,11 @@ class EtSchemaAnalyzer implements AnalyzerInterface
             $this->report->add(
                 self::CONTEXT,
                 new EtSchemaOperation(
-                $change['location'],
-                $change['code'],
-                $change['target'],
-                $change['reason'],
-                $change['level']
+                    $change['location'],
+                    $change['code'],
+                    $change['target'],
+                    $change['reason'],
+                    $change['level']
                 )
             );
         }
@@ -329,7 +332,6 @@ class EtSchemaAnalyzer implements AnalyzerInterface
      */
     public function analyze($registryBefore, $registryAfter)
     {
-
         $before = isset($registryBefore->data[self::CONTEXT]) ? $registryBefore->data[self::CONTEXT] : [];
         $after = isset($registryAfter->data[self::CONTEXT]) ? $registryAfter->data[self::CONTEXT] : [];
         $changes = [];
