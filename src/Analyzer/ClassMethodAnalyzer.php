@@ -430,10 +430,10 @@ class ClassMethodAnalyzer extends AbstractCodeAnalyzer
             if ($methodClass) {
                 $ancestors = [];
                 if (!empty($methodClass->extends)) {
-                    $ancestors[] = $methodClass->extends;
+                    $ancestors = $this->addAncestorsToArray($ancestors, $methodClass->extends);
                 }
                 if (!empty($methodClass->implements)) {
-                    $ancestors = array_merge($ancestors, $methodClass->implements);
+                    $ancestors = $this->addAncestorsToArray($ancestors, $methodClass->implements);
                 }
                 /** @var Name $ancestor */
                 foreach ($ancestors as $ancestor) {
@@ -453,6 +453,26 @@ class ClassMethodAnalyzer extends AbstractCodeAnalyzer
         }
 
         return ' ';
+    }
+
+    /**
+     * Add ancestors to array
+     *
+     * @param array $ancestors
+     * @param array|Name $toAdd
+     * @return array
+     */
+    private function addAncestorsToArray(array $ancestors, $toAdd)
+    {
+        if (!empty($toAdd)) {
+            if (is_array($toAdd)) {
+                $ancestors = array_merge($ancestors, $toAdd);
+            } else {
+                $ancestors[] = $toAdd;
+            }
+        }
+
+        return $ancestors;
     }
 
     /**
