@@ -12,6 +12,8 @@ use PhpParser\Node;
 
 /**
  * Create parent reference for nodes. Parent reference can be found in 'parent' node attribute.
+ * TODO: Replace this class with lib/PhpParser/NodeVisitor/ParentConnectingVisitor.php
+ * after updating nikic/PHP-Parser to v4.7.0
  */
 class ParentConnector extends NodeVisitorAbstract
 {
