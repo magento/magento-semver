@@ -10,6 +10,7 @@ namespace Magento\SemanticVersionChecker\Visitor;
 use PhpParser\Node;
 use PhpParser\Node\Name;
 use PhpParser\Node\Stmt\ClassMethod;
+use PhpParser\NodeAbstract;
 use PhpParser\NodeVisitor\NameResolver as ParserNameResolver;
 use PhpParser\BuilderHelpers;
 use PHPStan\PhpDocParser\Ast\PhpDoc\ParamTagValueNode;
@@ -24,10 +25,29 @@ use PHPStan\PhpDocParser\Parser\TokenIterator;
 use PHPStan\PhpDocParser\Parser\TypeParser;
 
 /**
- * Extended Name Resolver that parse and resolve also docblock hintings
+ * Extended Name Resolver that parse and resolve also docblock params and return type hinting.
  */
 class NameResolver extends ParserNameResolver
 {
+    /**
+     * Internal types that should not be resolved for docblock
+     *
+     * @var string[]
+     */
+    private $internalTypes = [
+        'string',
+        'integer',
+        'float',
+        'double',
+        'boolean',
+        'bool',
+        'array',
+        'object',
+        'null',
+        'resource',
+        '$this',
+    ];
+
     /**
      * @inheritDoc
      */
@@ -85,14 +105,10 @@ class NameResolver extends ParserNameResolver
         $result = [];
         if ($type instanceof UnionTypeNode) {
             foreach ($type->types as $typeNode) {
-                $normalizedType = BuilderHelpers::normalizeType((string)$typeNode);
-                $resolvedType = $this->resolveType($normalizedType);
-                $result[] = $resolvedType;
+                $result[] = $this->normalizeAndResolve($typeNode);
             }
         } else {
-            $normalizedType = BuilderHelpers::normalizeType((string)$type);
-            $resolvedType = $this->resolveType($normalizedType);
-            $result[] = $resolvedType;
+            $result[] = $this->normalizeAndResolve($type);
         }
 
         uasort(
@@ -106,10 +122,27 @@ class NameResolver extends ParserNameResolver
     }
 
     /**
+     * @param TypeNode $type
+     * @return NodeAbstract
+     */
+    private function normalizeAndResolve($type)
+    {
+        $normalizedType = BuilderHelpers::normalizeType((string)$type);
+
+        if (in_array(strtolower((string)$type), $this->internalTypes)) {
+            $resolvedType = $normalizedType;
+        } else {
+            $resolvedType = $this->resolveType($normalizedType);
+        }
+
+        return $resolvedType;
+    }
+
+    /**
      * Resolve type from Relative to FQCN
      *
      * @param $node
-     * @return Name|Node\NullableType|Node\UnionType
+     * @return NodeAbstract
      */
     private function resolveType($node)
     {

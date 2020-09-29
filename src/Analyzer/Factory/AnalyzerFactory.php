@@ -30,7 +30,7 @@ class AnalyzerFactory implements AnalyzerFactoryInterface
     {
         $analyzers = [
             new ClassAnalyzer(null, null, null, $dependencyGraph),
-            new InterfaceAnalyzer(),
+            new InterfaceAnalyzer(null, null, null, $dependencyGraph),
             new TraitAnalyzer(),
         ];
 
