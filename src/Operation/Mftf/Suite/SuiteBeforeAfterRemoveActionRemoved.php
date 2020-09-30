@@ -21,7 +21,7 @@ class SuiteBeforeAfterRemoveActionRemoved extends MftfOperation
      * Operation Severity
      * @var int
      */
-    protected $level = Level::MINOR;
+    protected $level = Level::MAJOR;
 
     /**
      * Operation message.
