@@ -54,8 +54,10 @@ class ScannerRegistryFactory
      * @param DependencyGraph|null $dependencyGraphCompare
      * @return Scanner
      */
-    private function buildApiScanner(DependencyGraph $dependencyGraph = null, DependencyGraph $dependencyGraphCompare = null)
-    {
+    private function buildApiScanner(
+        DependencyGraph $dependencyGraph = null,
+        DependencyGraph $dependencyGraphCompare = null
+    ) {
         $registry    = new Registry();
         $parser      = new Parser(new Emulative());
         $traverser   = new NodeTraverser();
