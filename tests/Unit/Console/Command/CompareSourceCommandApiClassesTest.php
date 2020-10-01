@@ -460,7 +460,25 @@ class CompareSourceCommandApiClassesTest extends AbstractTestCase
                     'Test\Vcs\ApiClass::testFunction | [public] Method overwrite has been added. | V028'
                 ],
                 'Patch change is detected.'
-            ]
+            ],
+            'api-annotation-added-to-class' => [
+                $pathToFixtures . '/annotation-added/source-code-before',
+                $pathToFixtures . '/annotation-added/source-code-after',
+                [
+                    'Class (MINOR)',
+                    'Test\Vcs\TestClass | @api annotation has been added. | M0141',
+                ],
+                'Minor change is detected.',
+            ],
+            'api-annotation-removed-from-class' => [
+                $pathToFixtures . '/annotation-removed/source-code-before',
+                $pathToFixtures . '/annotation-removed/source-code-after',
+                [
+                    'Class (MINOR)',
+                    'Test\Vcs\TestClass | @api annotation has been removed. | M0142',
+                ],
+                'Minor change is detected.',
+            ],
         ];
     }
 }

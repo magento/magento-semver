@@ -142,20 +142,20 @@ class ReportBuilder
         $sourceAfterFiles       = $fileIterator->findFromString($this->sourceAfterDir, '', '');
 
 
-        $staticAnalyzer = (new StaticAnalyzerFactory())->create();
+        $staticAnalyzerBefore = (new StaticAnalyzerFactory())->create();
+        $staticAnalyzerAfter = (new StaticAnalyzerFactory())->create();
 
         /**
          * Run dependency analysis over entire codebase. Necessary as we should parse parents and siblings of unchanged
          * files.
          */
-        //MC-31705: Dependency graph get overwritten twice here. Document or fix this
-        $staticAnalyzer->analyse($sourceBeforeFiles);
-        $dependencyMap = $staticAnalyzer->analyse($sourceAfterFiles);
+        $dependencyMapBefore = $staticAnalyzerBefore->analyse($sourceBeforeFiles);
+        $dependencyMapAfter = $staticAnalyzerAfter->analyse($sourceAfterFiles);
 
         //scan files
         $scannerRegistryFactory = new ScannerRegistryFactory();
-        $scannerBefore          = new ScannerRegistry($scannerRegistryFactory->create($dependencyMap));
-        $scannerAfter           = new ScannerRegistry($scannerRegistryFactory->create($dependencyMap));
+        $scannerBefore          = new ScannerRegistry($scannerRegistryFactory->create($dependencyMapBefore, $dependencyMapAfter));
+        $scannerAfter           = new ScannerRegistry($scannerRegistryFactory->create($dependencyMapAfter, $dependencyMapBefore));
 
         /**
          * Filter unchanged files. (All json files will remain because of filter)
@@ -182,7 +182,7 @@ class ReportBuilder
          */
         foreach ($this->getAnalyzerFactoryClasses() as $reportType => $factory) {
             /** @var AnalyzerInterface $analyzer */
-            $analyzer = (new $factory())->create($dependencyMap);
+            $analyzer = (new $factory())->create($dependencyMapAfter);
             $tmpReport = $analyzer->analyze(
                 $beforeRegistryList[$reportType],
                 $afterRegistryList[$reportType]
