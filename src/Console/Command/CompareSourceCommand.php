@@ -124,7 +124,7 @@ class CompareSourceCommand extends Command
             $mftf
         );
         $fileChangeDetector = new FileChangeDetector($sourceBeforeDir, $sourceAfterDir);
-        $semanticVersionChecker = new SemanticVersionChecker($reportBuilder, $fileChangeDetector);
+        $semanticVersionChecker = new SemanticVersionChecker($reportBuilder, $fileChangeDetector, $mftf);
         $versionIncrease = $semanticVersionChecker->getVersionIncrease();
         $versionIncWord = strtoupper($this->changeLevels[$versionIncrease]);
         $versionReport = $semanticVersionChecker->loadVersionReport();
