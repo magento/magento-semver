@@ -474,10 +474,10 @@ class CompareSourceCommandApiClassesTest extends AbstractTestCase
                 $pathToFixtures . '/annotation-removed/source-code-before',
                 $pathToFixtures . '/annotation-removed/source-code-after',
                 [
-                    'Class (MINOR)',
+                    'Class (MAJOR)',
                     'Test\Vcs\TestClass | @api annotation has been removed. | M0142',
                 ],
-                'Minor change is detected.',
+                'Major change is detected.',
             ],
         ];
     }

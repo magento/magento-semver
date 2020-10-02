@@ -9,11 +9,20 @@ declare(strict_types=1);
 
 namespace Magento\SemanticVersionChecker\Operation;
 
+use PHPSemVerChecker\SemanticVersioning\Level;
+
 /**
  * When @api annotation has been removed
  */
 class ClassLikeApiAnnotationRemoved extends ClassLikeApiAnnotationOperation
 {
+    /**
+     * Change level.
+     *
+     * @var int
+     */
+    protected $level = Level::MAJOR;
+
     /**
      * @var string
      */
