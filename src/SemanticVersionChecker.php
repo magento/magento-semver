@@ -36,19 +36,25 @@ class SemanticVersionChecker
     /** @var string[]|null */
     private $changedFiles;
 
+    /** @var boolean */
+    private $mftf;
+
     /**
      * Initialize dependencies.
      *
      * @param \Magento\SemanticVersionChecker\ReportBuilder $reportBuilder
      * @param FileChangeDetector $fileChangeDetector
+     * @param boolean $mftf
      */
     public function __construct(
         ReportBuilder $reportBuilder,
-        FileChangeDetector $fileChangeDetector
+        FileChangeDetector $fileChangeDetector,
+        $mftf = false
     ) {
         $this->reportBuilder = $reportBuilder;
         $this->fileChangeDetector = $fileChangeDetector;
         $this->changedFiles = null;
+        $this->mftf = $mftf;
     }
 
     /**
@@ -71,7 +77,7 @@ class SemanticVersionChecker
     {
         // Check null (unloaded) specifically as an empty array of changed files is valid
         if ($this->changedFiles === null) {
-            $this->changedFiles = $this->fileChangeDetector->getChangedFiles();
+            $this->changedFiles = $this->fileChangeDetector->getChangedFiles($this->mftf);
         }
         return $this->changedFiles;
     }
