@@ -222,7 +222,7 @@ class EtSchemaAnalyzer implements AnalyzerInterface
      * @param $afterRecord
      * @return array
      */
-    private function analyzeRecord(string $moduleName, $beforeRecord, $afterRecord): array
+    private function analyzeRecord(string $moduleName, array $beforeRecord, array $afterRecord): array
     {
         $changes = [];
         $commonFields = array_intersect(
@@ -231,8 +231,8 @@ class EtSchemaAnalyzer implements AnalyzerInterface
         );
         foreach ($commonFields as $fieldName) {
             if (
-                $beforeRecord['field'][$fieldName]['type'] != $afterRecord['field'][$fieldName]['type']
-                || $beforeRecord['field'][$fieldName]['repeated'] != $afterRecord['field'][$fieldName]['repeated']
+                $beforeRecord['field'][$fieldName]['type'] !== $afterRecord['field'][$fieldName]['type']
+                || $beforeRecord['field'][$fieldName]['repeated'] !== $afterRecord['field'][$fieldName]['repeated']
             ) {
                 $changes[] = $this->changedField($moduleName, $beforeRecord['name'], $fieldName);
             }
