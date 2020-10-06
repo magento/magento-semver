@@ -40,7 +40,7 @@ class MetadataAnalyzer extends AbstractEntityAnalyzer
                 self::MFTF_DATA_TYPE,
                 $this->getReport(),
                 MetadataAdded::class,
-                $module . '/ActionGroup'
+                $module . '/Metadata'
             );
             foreach ($entities as $entityName => $beforeEntity) {
                 if ($beforeEntity['type'] !== self::MFTF_DATA_TYPE) {
@@ -86,6 +86,19 @@ class MetadataAnalyzer extends AbstractEntityAnalyzer
                     $this->getReport()
                 );
             }
+        }
+
+        // check new modules
+        $newModuleEntities = array_diff_key($afterEntities, $beforeEntities);
+        foreach ($newModuleEntities as $module => $entities) {
+            $this->findAddedEntitiesInModule(
+                $beforeEntities[$module] ?? [],
+                $entities,
+                self::MFTF_DATA_TYPE,
+                $this->getReport(),
+                MetadataAdded::class,
+                $module . '/Metadata'
+            );
         }
         return $this->getReport();
     }
