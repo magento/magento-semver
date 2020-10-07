@@ -100,6 +100,15 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 ],
                 'Minor change is detected.'
             ],
+            'new-module-actionGroup-added' => [
+                $pathToFixtures . '/new-module-actionGroup-added/source-code-before',
+                $pathToFixtures . '/new-module-actionGroup-added/source-code-after',
+                [
+                    'Mftf (MINOR)',
+                    'ActionGroup/ActionGroup2 | <actionGroup> was added | M225'
+                ],
+                'Minor change is detected.'
+            ],
             'actionGroup-argument-changed' => [
                 $pathToFixtures . '/actionGroup-argument-changed/source-code-before',
                 $pathToFixtures . '/actionGroup-argument-changed/source-code-after',
@@ -175,6 +184,15 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
             'data-added' => [
                 $pathToFixtures . '/data-added/source-code-before',
                 $pathToFixtures . '/data-added/source-code-after',
+                [
+                    'Mftf (MINOR)',
+                    'Data/DataEntity2 | <entity> was added | M228'
+                ],
+                'Minor change is detected.'
+            ],
+            'new-module-data-added' => [
+                $pathToFixtures . '/new-module-data-added/source-code-before',
+                $pathToFixtures . '/new-module-data-added/source-code-after',
                 [
                     'Mftf (MINOR)',
                     'Data/DataEntity2 | <entity> was added | M228'
@@ -276,7 +294,16 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/metadata-added/source-code-after',
                 [
                     'Mftf (MINOR)',
-                    'ActionGroup/createEntity2 | <operation> was added | M240'
+                    'Metadata/createEntity2 | <operation> was added | M240'
+                ],
+                'Minor change is detected.'
+            ],
+            'new-module-metadata-added' => [
+                $pathToFixtures . '/new-module-metadata-added/source-code-before',
+                $pathToFixtures . '/new-module-metadata-added/source-code-after',
+                [
+                    'Mftf (MINOR)',
+                    'Metadata/createEntity2 | <operation> was added | M240'
                 ],
                 'Minor change is detected.'
             ],
@@ -379,6 +406,15 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 ],
                 'Minor change is detected.'
             ],
+            'new-module-page-added' => [
+                $pathToFixtures . '/new-module-page-added/source-code-before',
+                $pathToFixtures . '/new-module-page-added/source-code-after',
+                [
+                    'Mftf (MINOR)',
+                    'Page/SamplePageNew | <page> was added | M233'
+                ],
+                'Minor change is detected.'
+            ],
             'page-section-removed' => [
                 $pathToFixtures . '/page-section-removed/source-code-before',
                 $pathToFixtures . '/page-section-removed/source-code-after',
@@ -409,6 +445,15 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
             'section-added' => [
                 $pathToFixtures . '/section-added/source-code-before',
                 $pathToFixtures . '/section-added/source-code-after',
+                [
+                    'Mftf (MINOR)',
+                    'Section/NewSection | <section> was added | M235'
+                ],
+                'Minor change is detected.'
+            ],
+            'new-module-section-added' => [
+                $pathToFixtures . '/new-module-section-added/source-code-before',
+                $pathToFixtures . '/new-module-section-added/source-code-after',
                 [
                     'Mftf (MINOR)',
                     'Section/NewSection | <section> was added | M235'
@@ -481,6 +526,15 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
             'test-added' => [
                 $pathToFixtures . '/test-added/source-code-before',
                 $pathToFixtures . '/test-added/source-code-after',
+                [
+                    'Mftf (MINOR)',
+                    'Test/NewTest | <test> was added | M237'
+                ],
+                'Minor change is detected.'
+            ],
+            'new-module-test-added' => [
+                $pathToFixtures . '/new-module-test-added/source-code-before',
+                $pathToFixtures . '/new-module-test-added/source-code-after',
                 [
                     'Mftf (MINOR)',
                     'Test/NewTest | <test> was added | M237'
@@ -634,6 +688,15 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
             'suite-added' => [
                 $pathToFixtures . '/suite-added/source-code-before',
                 $pathToFixtures . '/suite-added/source-code-after',
+                [
+                    'Mftf (MINOR)',
+                    'Suite/Sample2Suite | <suite> was added | M407'
+                ],
+                'Minor change is detected.'
+            ],
+            'new-module-suite-added' => [
+                $pathToFixtures . '/new-module-suite-added/source-code-before',
+                $pathToFixtures . '/new-module-suite-added/source-code-after',
                 [
                     'Mftf (MINOR)',
                     'Suite/Sample2Suite | <suite> was added | M407'
