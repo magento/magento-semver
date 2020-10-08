@@ -16,7 +16,6 @@ use PHPSemVerChecker\Registry\Registry;
  */
 class MftfScanner implements ScannerInterface
 {
-    const TEST_MFTF_DIRECTORY = '/Test/Mftf/';
     const MFTF_ENTITY = 'mftfEntity';
 
     /**

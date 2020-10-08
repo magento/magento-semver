@@ -6,6 +6,7 @@
 
 namespace Magento\SemanticVersionChecker\Analyzer\Mftf;
 
+use Magento\SemanticVersionChecker\Analyzer\AnalyzerInterface;
 use Magento\SemanticVersionChecker\MftfReport;
 use Magento\SemanticVersionChecker\Operation\Mftf\Data\DataEntityAdded;
 use Magento\SemanticVersionChecker\Operation\Mftf\Data\DataEntityArrayAdded;
@@ -18,27 +19,29 @@ use Magento\SemanticVersionChecker\Operation\Mftf\Data\DataEntityReqEntityAdded;
 use Magento\SemanticVersionChecker\Operation\Mftf\Data\DataEntityReqEntityRemoved;
 use Magento\SemanticVersionChecker\Operation\Mftf\Data\DataEntityVarAdded;
 use Magento\SemanticVersionChecker\Operation\Mftf\Data\DataEntityVarRemoved;
+use Magento\SemanticVersionChecker\Registry\XmlRegistry;
 use Magento\SemanticVersionChecker\Scanner\MftfScanner;
-use PHPSemVerChecker\Registry\Registry;
 use PHPSemVerChecker\Report\Report;
 
-class DataAnalyzer extends AbstractEntityAnalyzer
+/**
+ * Mftf Data entities analyzer class.
+ */
+class DataAnalyzer extends AbstractEntityAnalyzer implements AnalyzerInterface
 {
     const MFTF_DATA_FIELD_ELEMENT = "{}data";
     const MFTF_VAR_ELEMENT = "{}var";
     const MFTF_REQ_ELEMENT = "{}requiredEntity";
     const MFTF_ARRAY_ELEMENT = "{}array";
     const MFTF_DATA_TYPE = 'entity';
-    const MFTF_DATA_DIRECTORY = '/Mftf/Data/';
 
     /**
      * MFTF data.xml analyzer
      *
-     * @param Registry $registryBefore
-     * @param Registry $registryAfter
+     * @param XmlRegistry $registryBefore
+     * @param XmlRegistry $registryAfter
      * @return Report
      */
-    public function analyze(Registry $registryBefore, Registry $registryAfter)
+    public function analyze($registryBefore, $registryAfter)
     {
         $beforeEntities = $registryBefore->data[MftfScanner::MFTF_ENTITY] ?? [];
         $afterEntities = $registryAfter->data[MftfScanner::MFTF_ENTITY] ?? [];

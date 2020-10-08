@@ -17,7 +17,6 @@ use Magento\SemanticVersionChecker\Analyzer\Factory\LayoutAnalyzerFactory;
 use Magento\SemanticVersionChecker\Analyzer\Factory\NonApiAnalyzerFactory;
 use Magento\SemanticVersionChecker\Analyzer\Factory\SystemXmlAnalyzerFactory;
 use Magento\SemanticVersionChecker\Analyzer\Factory\XsdAnalyzerFactory;
-use Magento\SemanticVersionChecker\ClassHierarchy\DependencyGraph;
 use Magento\SemanticVersionChecker\ClassHierarchy\StaticAnalyzerFactory;
 use Magento\SemanticVersionChecker\Analyzer\Factory\LessAnalyzerFactory;
 use Magento\SemanticVersionChecker\Filter\FilePatternFilter;
@@ -28,11 +27,9 @@ use Magento\SemanticVersionChecker\Analyzer\Factory\MFTFAnalyzerFactory;
 use PHPSemVerChecker\Configuration\LevelMapping;
 use PHPSemVerChecker\Report\Report;
 use PHPSemVerChecker\SemanticVersioning\Level;
-use Magento\SemanticVersionChecker\Finder\MftfFilesFinder;
 
 class ReportBuilder
 {
-
     /** @var string */
     protected $includePatternsPath;
 
@@ -45,8 +42,22 @@ class ReportBuilder
     /** @var string */
     protected $sourceAfterDir;
 
-    /** @var boolean */
-    protected $mftf;
+    /**
+     * Defines available analyzer factories list for the different report types.
+     *
+     * @var array
+     */
+    protected $availableAnalyzerFactoryClasses = [
+        ReportTypes::API        => AnalyzerFactory::class,
+        ReportTypes::ALL        => NonApiAnalyzerFactory::class,
+        ReportTypes::DB_SCHEMA  => DbSchemaAnalyzerFactory::class,
+        ReportTypes::DI_XML     => DiAnalyzerFactory::class,
+        ReportTypes::LAYOUT_XML => LayoutAnalyzerFactory::class,
+        ReportTypes::SYSTEM_XML => SystemXmlAnalyzerFactory::class,
+        ReportTypes::XSD        => XsdAnalyzerFactory::class,
+        ReportTypes::LESS       => LessAnalyzerFactory::class,
+        ReportTypes::MFTF       => MftfAnalyzerFactory::class,
+    ];
 
     /**
      * Define analyzer factory list for the different report types.
@@ -70,25 +81,26 @@ class ReportBuilder
      * @param string $excludePatternsPath
      * @param string $sourceBeforeDir
      * @param string $sourceAfterDir
-     * @param boolean $mftf
+     * @param array $reportType
      */
     public function __construct(
         $includePatternsPath,
         $excludePatternsPath,
         $sourceBeforeDir,
         $sourceAfterDir,
-        $mftf = false
+        array $reportType = []
     ) {
         $this->includePatternsPath = $includePatternsPath;
         $this->excludePatternsPath = $excludePatternsPath;
         $this->sourceBeforeDir = $sourceBeforeDir;
         $this->sourceAfterDir = $sourceAfterDir;
-        $this->mftf = $mftf;
 
-        if ($this->mftf) {
-            $this->analyzerFactoryClasses = [
-                ReportTypes::MFTF => MFTFAnalyzerFactory::class,
-            ];
+        // If report-type(s) provided as argument via compare command it will override analyzers to specified
+        if (!empty($reportType)) {
+            $this->analyzerFactoryClasses = array_intersect_key(
+                $this->availableAnalyzerFactoryClasses,
+                array_flip($reportType)
+            );
         }
     }
 
@@ -148,16 +160,6 @@ class ReportBuilder
     }
 
     /**
-     * Check if it's to build MFTF report
-     *
-     * @return boolean
-     */
-    protected function isMftfReport()
-    {
-        return $this->mftf;
-    }
-
-    /**
      * Create a report based on type
      *
      * @return Report
@@ -165,45 +167,32 @@ class ReportBuilder
      */
     protected function buildReport()
     {
-        /** @var DependencyGraph $dependencyMap */
-        $dependencyMap = null;
-        if (!$this->isMftfReport()) {
-            $finderDecoratorFactory = new FinderDecoratorFactory();
-            $fileIterator = $finderDecoratorFactory->create();
-            $sourceBeforeFiles = $fileIterator->findFromString($this->sourceBeforeDir, '', '');
-            $sourceAfterFiles = $fileIterator->findFromString($this->sourceAfterDir, '', '');
+        $finderDecoratorFactory = new FinderDecoratorFactory();
+        $fileIterator = $finderDecoratorFactory->create();
+        $sourceBeforeFiles = $fileIterator->findFromString($this->sourceBeforeDir, '', '');
+        $sourceAfterFiles = $fileIterator->findFromString($this->sourceAfterDir, '', '');
 
-            $staticAnalyzer = (new StaticAnalyzerFactory())->create();
+        $staticAnalyzer = (new StaticAnalyzerFactory())->create();
 
-            /**
-             * Run dependency analysis over entire codebase. Necessary as we should parse parents and siblings of unchanged
-             * files.
-             */
-            //MC-31705: Dependency graph get overwritten twice here. Document or fix this
-            $staticAnalyzer->analyse($sourceBeforeFiles);
-            $dependencyMap = $staticAnalyzer->analyse($sourceAfterFiles);
+        /**
+         * Run dependency analysis over entire codebase. Necessary as we should parse parents and siblings of unchanged
+         * files.
+         */
+        //MC-31705: Dependency graph get overwritten twice here. Document or fix this
+        $staticAnalyzer->analyse($sourceBeforeFiles);
+        $dependencyMap = $staticAnalyzer->analyse($sourceAfterFiles);
 
-            //scan files
-            $scannerRegistryFactory = new ScannerRegistryFactory();
-            $scannerBefore          = new ScannerRegistry($scannerRegistryFactory->create($dependencyMap));
-            $scannerAfter           = new ScannerRegistry($scannerRegistryFactory->create($dependencyMap));
+        //scan files
+        $scannerRegistryFactory = new ScannerRegistryFactory();
+        $scannerBefore          = new ScannerRegistry($scannerRegistryFactory->create($dependencyMap));
+        $scannerAfter           = new ScannerRegistry($scannerRegistryFactory->create($dependencyMap));
 
-            /**
-             * Filter unchanged files. (All json files will remain because of filter)
-             */
-            foreach ($this->getFilters($this->sourceBeforeDir, $this->sourceAfterDir) as $filter) {
-                // filters modify arrays by reference
-                $filter->filter($sourceBeforeFiles, $sourceAfterFiles);
-            }
-        } else {
-            $fileIterator = new MftfFilesFinder();
-            $sourceBeforeFiles = $fileIterator->findFromString($this->sourceBeforeDir, '', '');
-            $sourceAfterFiles = $fileIterator->findFromString($this->sourceAfterDir, '', '');
-
-            //scan files
-            $scannerRegistryFactory = new ScannerRegistryFactory();
-            $scannerBefore          = new ScannerRegistry($scannerRegistryFactory->create(null, true));
-            $scannerAfter           = new ScannerRegistry($scannerRegistryFactory->create(null, true));
+        /**
+         * Filter unchanged files. (All json files will remain because of filter)
+         */
+        foreach ($this->getFilters($this->sourceBeforeDir, $this->sourceAfterDir) as $filter) {
+            // filters modify arrays by reference
+            $filter->filter($sourceBeforeFiles, $sourceAfterFiles);
         }
 
         foreach ($sourceBeforeFiles as $file) {

@@ -6,8 +6,8 @@
 
 namespace Magento\SemanticVersionChecker\Analyzer\Mftf;
 
+use Magento\SemanticVersionChecker\Analyzer\AnalyzerInterface;
 use Magento\SemanticVersionChecker\MftfReport;
-use Magento\SemanticVersionChecker\Operation\Mftf\ActionGroup\ActionGroupActionChanged;
 use Magento\SemanticVersionChecker\Operation\Mftf\Test\TestActionAdded;
 use Magento\SemanticVersionChecker\Operation\Mftf\Test\TestActionChanged;
 use Magento\SemanticVersionChecker\Operation\Mftf\Test\TestActionGroupRefChanged;
@@ -15,24 +15,25 @@ use Magento\SemanticVersionChecker\Operation\Mftf\Test\TestActionRemoved;
 use Magento\SemanticVersionChecker\Operation\Mftf\Test\TestActionSequenceChanged;
 use Magento\SemanticVersionChecker\Operation\Mftf\Test\TestActionTypeChanged;
 use Magento\SemanticVersionChecker\Operation\Mftf\Test\TestAdded;
-use Magento\SemanticVersionChecker\Operation\Mftf\Test\TestAnnotationAdded;
 use Magento\SemanticVersionChecker\Operation\Mftf\Test\TestAnnotationChanged;
 use Magento\SemanticVersionChecker\Operation\Mftf\Test\TestGroupRemoved;
 use Magento\SemanticVersionChecker\Operation\Mftf\Test\TestRemoved;
+use Magento\SemanticVersionChecker\Registry\XmlRegistry;
 use Magento\SemanticVersionChecker\Scanner\MftfScanner;
-use PHPSemVerChecker\Registry\Registry;
 use PHPSemVerChecker\Report\Report;
 use Magento\SemanticVersionChecker\Operation\Mftf\Test\TestRemoveActionRemoved;
 use Magento\SemanticVersionChecker\Operation\Mftf\Test\TestRemoveActionAdded;
 
-class TestAnalyzer extends AbstractEntityAnalyzer
+/**
+ * Mftf Test analyzer class.
+ */
+class TestAnalyzer extends AbstractEntityAnalyzer implements AnalyzerInterface
 {
     const MFTF_ANOTATION_ELEMENT = "{}annotations";
     const MFTF_BEFORE_ELEMENT = "{}before";
     const MFTF_AFTER_ELEMENT = "{}after";
     const MFTF_GROUP_ELEMENT = "{}group";
     const MFTF_DATA_TYPE = 'test';
-    const MFTF_DATA_DIRECTORY = '/Mftf/Test/';
 
     /**
      * operations array
@@ -53,11 +54,11 @@ class TestAnalyzer extends AbstractEntityAnalyzer
     /**
      * MFTF test.xml analyzer
      *
-     * @param Registry $registryBefore
-     * @param Registry $registryAfter
+     * @param XmlRegistry $registryBefore
+     * @param XmlRegistry $registryAfter
      * @return Report
      */
-    public function analyze(Registry $registryBefore, Registry $registryAfter)
+    public function analyze($registryBefore, $registryAfter)
     {
         $beforeEntities = $registryBefore->data[MftfScanner::MFTF_ENTITY] ?? [];
         $afterEntities = $registryAfter->data[MftfScanner::MFTF_ENTITY] ?? [];

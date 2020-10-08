@@ -6,6 +6,7 @@
 
 namespace Magento\SemanticVersionChecker\Analyzer\Mftf;
 
+use Magento\SemanticVersionChecker\Analyzer\AnalyzerInterface;
 use Magento\SemanticVersionChecker\MftfReport;
 use Magento\SemanticVersionChecker\Operation\Mftf\Suite\SuiteIncludeExcludeAdded;
 use Magento\SemanticVersionChecker\Operation\Mftf\Suite\SuiteIncludeExcludeRemoved;
@@ -19,18 +20,20 @@ use Magento\SemanticVersionChecker\Operation\Mftf\Suite\SuiteBeforeAfterRemoveAc
 use Magento\SemanticVersionChecker\Operation\Mftf\Suite\SuiteBeforeAfterRemoveActionRemoved;
 use Magento\SemanticVersionChecker\Operation\Mftf\Suite\SuiteAdded;
 use Magento\SemanticVersionChecker\Operation\Mftf\Suite\SuiteRemoved;
+use Magento\SemanticVersionChecker\Registry\XmlRegistry;
 use Magento\SemanticVersionChecker\Scanner\MftfScanner;
-use PHPSemVerChecker\Registry\Registry;
 use PHPSemVerChecker\Report\Report;
 
-class SuiteAnalyzer extends AbstractEntityAnalyzer
+/**
+ * Mftf Suite analyzer class.
+ */
+class SuiteAnalyzer extends AbstractEntityAnalyzer implements AnalyzerInterface
 {
     const MFTF_SUITE_BEFORE_ELEMENT = "{}before";
     const MFTF_SUITE_AFTER_ELEMENT = "{}after";
     const MFTF_SUITE_INCLUDE_ELEMENT = "{}include";
     const MFTF_SUITE_EXCLUDE_ELEMENT = "{}exclude";
     const MFTF_DATA_TYPE = 'suite';
-    const MFTF_DATA_DIRECTORY = '/Mftf/Suite/';
 
     /**
      * Action operations array
@@ -51,11 +54,11 @@ class SuiteAnalyzer extends AbstractEntityAnalyzer
     /**
      * MFTF test.xml analyzer
      *
-     * @param Registry $registryBefore
-     * @param Registry $registryAfter
+     * @param XmlRegistry $registryBefore
+     * @param XmlRegistry $registryAfter
      * @return Report
      */
-    public function analyze(Registry $registryBefore, Registry $registryAfter)
+    public function analyze($registryBefore, $registryAfter)
     {
         $beforeEntities = $registryBefore->data[MftfScanner::MFTF_ENTITY] ?? [];
         $afterEntities = $registryAfter->data[MftfScanner::MFTF_ENTITY] ?? [];

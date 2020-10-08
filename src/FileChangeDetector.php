@@ -40,10 +40,9 @@ class FileChangeDetector
     /**
      * Get the set of files that were added, removed, or changed between before and after source
      *
-     * @param bool $mftf
      * @return string[]
      */
-    public function getChangedFiles($mftf = false)
+    public function getChangedFiles()
     {
         $beforeDir = $this->sourceBeforeDir;
         $afterDir = $this->sourceAfterDir;
@@ -67,14 +66,8 @@ class FileChangeDetector
                 });
             }
         }
-        $changedFiles = array_merge($afterFiles, $beforeFiles);
-        $mftfFiles = array_filter($changedFiles, function ($var) {
-            return (stripos($var, '/Test/Mftf/') !== false);
-        });
-        if ($mftf) {
-            return $mftfFiles;
-        }
-        return array_diff($changedFiles, $mftfFiles);
+
+        return array_merge($afterFiles, $beforeFiles);
     }
 
     /**

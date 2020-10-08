@@ -6,6 +6,7 @@
 
 namespace Magento\SemanticVersionChecker\Analyzer\Mftf;
 
+use Magento\SemanticVersionChecker\Analyzer\AnalyzerInterface;
 use Magento\SemanticVersionChecker\MftfReport;
 use Magento\SemanticVersionChecker\Operation\Mftf\Section\SectionAdded;
 use Magento\SemanticVersionChecker\Operation\Mftf\Section\SectionElementAdded;
@@ -15,15 +16,17 @@ use Magento\SemanticVersionChecker\Operation\Mftf\Section\SectionElementRemoved;
 use Magento\SemanticVersionChecker\Operation\Mftf\Section\SectionElementSelectorChanged;
 use Magento\SemanticVersionChecker\Operation\Mftf\Section\SectionElementTypeChanged;
 use Magento\SemanticVersionChecker\Operation\Mftf\Section\SectionRemoved;
+use Magento\SemanticVersionChecker\Registry\XmlRegistry;
 use Magento\SemanticVersionChecker\Scanner\MftfScanner;
-use PHPSemVerChecker\Registry\Registry;
 use PHPSemVerChecker\Report\Report;
 
-class SectionAnalyzer extends AbstractEntityAnalyzer
+/**
+ * Mftf Section analyzer class.
+ */
+class SectionAnalyzer extends AbstractEntityAnalyzer implements AnalyzerInterface
 {
     const MFTF_ELEMENT_ELEMENT = "{}element";
     const MFTF_DATA_TYPE = 'section';
-    const MFTF_DATA_DIRECTORY = '/Mftf/Section/';
     const MFTF_ELEMENT_PARAM = 'parameterized';
 
     /**
@@ -41,11 +44,11 @@ class SectionAnalyzer extends AbstractEntityAnalyzer
     /**
      * MFTF section.xml analyzer
      *
-     * @param Registry $registryBefore
-     * @param Registry $registryAfter
+     * @param XmlRegistry $registryBefore
+     * @param XmlRegistry $registryAfter
      * @return Report
      */
-    public function analyze(Registry $registryBefore, Registry $registryAfter)
+    public function analyze($registryBefore, $registryAfter)
     {
         $beforeEntities = $registryBefore->data[MftfScanner::MFTF_ENTITY] ?? [];
         $afterEntities = $registryAfter->data[MftfScanner::MFTF_ENTITY] ?? [];
