@@ -17,9 +17,7 @@ use PHPSemVerChecker\SemanticVersioning\Level;
 class ClassLikeApiAnnotationRemoved extends ClassLikeApiAnnotationOperation
 {
     /**
-     * Change level.
-     *
-     * @var int
+     * @inheritdoc
      */
     protected $level = Level::MAJOR;
 
