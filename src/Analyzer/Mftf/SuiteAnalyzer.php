@@ -157,6 +157,19 @@ class SuiteAnalyzer extends AbstractEntityAnalyzer implements AnalyzerInterface
                 );
             }
         }
+
+        // check new modules
+        $newModuleEntities = array_diff_key($afterEntities, $beforeEntities);
+        foreach ($newModuleEntities as $module => $entities) {
+            $this->findAddedEntitiesInModule(
+                $beforeEntities[$module] ?? [],
+                $entities,
+                self::MFTF_DATA_TYPE,
+                $this->getReport(),
+                SuiteAdded::class,
+                $module . '/Suite'
+            );
+        }
         return $this->getReport();
     }
 
