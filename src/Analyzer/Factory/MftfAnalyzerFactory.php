@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
@@ -22,9 +21,9 @@ use Magento\SemanticVersionChecker\ClassHierarchy\DependencyGraph;
 use Magento\SemanticVersionChecker\MftfReport;
 
 /**
- * Build Mftf analyzer
+ * Mftf analyzers factory
  */
-class MFTFAnalyzerFactory implements AnalyzerFactoryInterface
+class MftfAnalyzerFactory implements AnalyzerFactoryInterface
 {
     /**
      * @param DependencyGraph|null $dependencyGraph

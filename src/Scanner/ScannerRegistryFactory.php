@@ -73,12 +73,11 @@ class ScannerRegistryFactory
      * @param boolean              $mftf
      * @return array
      */
-    public function create(DependencyGraph $dependencyGraph = null, $mftf = false)
+    public function create(DependencyGraph $dependencyGraph = null)
     {
         $moduleNameResolver = new ModuleNamespaceResolver();
 
-        return !$mftf ?
-            [
+        return [
                 ReportTypes::ALL => [
                     'pattern' => [
                         '*.php',
@@ -128,11 +127,9 @@ class ScannerRegistryFactory
                     ],
                     'scanner' => new LessScanner(new LessRegistry(), new LessParser(), $moduleNameResolver),
                 ],
-            ] :
-            [
                 ReportTypes::MFTF => [
                     'pattern' => [
-                        '/Test/Mftf/*.xml'
+                        '/Test/Mftf/*/*.xml'
                     ],
                     'scanner' => new MftfScanner(new XmlRegistry(), $moduleNameResolver),
                 ]

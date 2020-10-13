@@ -48,8 +48,8 @@ class ModuleNamespaceResolver
      */
     public function resolveByTestMftfPath(string $filePath): string
     {
-        $matches = [];
-        preg_match('/([\w-]*)\/Test\/Mftf/', $filePath, $matches);
-        return sprintf('%s', $matches[1]);
+        $match = [];
+        preg_match('/(?<vendor>[\-\w]*?)(\/?)(?<module>[\w]*)\/Test\/Mftf/', $filePath, $match);
+        return empty($match['vendor']) ? $match['module'] : sprintf('%s_%s', $match['vendor'], $match['module']);
     }
 }

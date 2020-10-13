@@ -6,29 +6,32 @@
 
 namespace Magento\SemanticVersionChecker\Analyzer\Mftf;
 
+use Magento\SemanticVersionChecker\Analyzer\AnalyzerInterface;
 use Magento\SemanticVersionChecker\MftfReport;
 use Magento\SemanticVersionChecker\Operation\Mftf\Metadata\MetadataAdded;
 use Magento\SemanticVersionChecker\Operation\Mftf\Metadata\MetadataChanged;
 use Magento\SemanticVersionChecker\Operation\Mftf\Metadata\MetadataChildAdded;
 use Magento\SemanticVersionChecker\Operation\Mftf\Metadata\MetadataChildRemoved;
 use Magento\SemanticVersionChecker\Operation\Mftf\Metadata\MetadataRemoved;
+use Magento\SemanticVersionChecker\Registry\XmlRegistry;
 use Magento\SemanticVersionChecker\Scanner\MftfScanner;
-use PHPSemVerChecker\Registry\Registry;
 use PHPSemVerChecker\Report\Report;
 
-class MetadataAnalyzer extends AbstractEntityAnalyzer
+/**
+ * Mftf MetaData analyzer class.
+ */
+class MetadataAnalyzer extends AbstractEntityAnalyzer implements AnalyzerInterface
 {
     const MFTF_DATA_TYPE = 'operation';
-    const MFTF_DATA_DIRECTORY = '/Mftf/Test/';
 
     /**
      * MFTF test.xml analyzer
      *
-     * @param Registry $registryBefore
-     * @param Registry $registryAfter
+     * @param XmlRegistry $registryBefore
+     * @param XmlRegistry $registryAfter
      * @return Report
      */
-    public function analyze(Registry $registryBefore, Registry $registryAfter)
+    public function analyze($registryBefore, $registryAfter)
     {
         $beforeEntities = $registryBefore->data[MftfScanner::MFTF_ENTITY] ?? [];
         $afterEntities = $registryAfter->data[MftfScanner::MFTF_ENTITY] ?? [];

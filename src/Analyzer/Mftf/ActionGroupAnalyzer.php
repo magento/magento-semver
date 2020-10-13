@@ -6,6 +6,7 @@
 
 namespace Magento\SemanticVersionChecker\Analyzer\Mftf;
 
+use Magento\SemanticVersionChecker\Analyzer\AnalyzerInterface;
 use Magento\SemanticVersionChecker\MftfReport;
 use Magento\SemanticVersionChecker\Operation\Mftf\ActionGroup\ActionGroupActionAdded;
 use Magento\SemanticVersionChecker\Operation\Mftf\ActionGroup\ActionGroupActionChanged;
@@ -16,17 +17,19 @@ use Magento\SemanticVersionChecker\Operation\Mftf\ActionGroup\ActionGroupArgumen
 use Magento\SemanticVersionChecker\Operation\Mftf\ActionGroup\ActionGroupArgumentChanged;
 use Magento\SemanticVersionChecker\Operation\Mftf\ActionGroup\ActionGroupArgumentRemoved;
 use Magento\SemanticVersionChecker\Operation\Mftf\ActionGroup\ActionGroupRemoved;
+use Magento\SemanticVersionChecker\Registry\XmlRegistry;
 use Magento\SemanticVersionChecker\Scanner\MftfScanner;
-use PHPSemVerChecker\Registry\Registry;
 use PHPSemVerChecker\Report\Report;
 use Magento\SemanticVersionChecker\Operation\Mftf\ActionGroup\ActionGroupRemoveActionRemoved;
 use Magento\SemanticVersionChecker\Operation\Mftf\ActionGroup\ActionGroupRemoveActionAdded;
 
-class ActionGroupAnalyzer extends AbstractEntityAnalyzer
+/**
+ * Analyzer for Mftf Action Groups.
+ */
+class ActionGroupAnalyzer extends AbstractEntityAnalyzer implements AnalyzerInterface
 {
     const MFTF_ARGUMENTS_ELEMENT = "{}arguments";
     const MFTF_DATA_TYPE = 'actionGroup';
-    const MFTF_DATA_DIRECTORY = '/Mftf/ActionGroup/';
 
     /**
      * operations array
@@ -45,13 +48,13 @@ class ActionGroupAnalyzer extends AbstractEntityAnalyzer
     ];
 
     /**
-     * MFTF actionGroup.xml analyzer
+     * MFTF ActionGroup.xml analyzer.
      *
-     * @param Registry $registryBefore
-     * @param Registry $registryAfter
+     * @param XmlRegistry $registryBefore
+     * @param XmlRegistry $registryAfter
      * @return Report
      */
-    public function analyze(Registry $registryBefore, Registry $registryAfter)
+    public function analyze($registryBefore, $registryAfter)
     {
         $beforeEntities = $registryBefore->data[MftfScanner::MFTF_ENTITY] ?? [];
         $afterEntities = $registryAfter->data[MftfScanner::MFTF_ENTITY] ?? [];

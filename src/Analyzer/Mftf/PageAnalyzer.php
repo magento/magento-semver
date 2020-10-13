@@ -6,29 +6,32 @@
 
 namespace Magento\SemanticVersionChecker\Analyzer\Mftf;
 
+use Magento\SemanticVersionChecker\Analyzer\AnalyzerInterface;
 use Magento\SemanticVersionChecker\MftfReport;
 use Magento\SemanticVersionChecker\Operation\Mftf\Page\PageAdded;
 use Magento\SemanticVersionChecker\Operation\Mftf\Page\PageRemoved;
 use Magento\SemanticVersionChecker\Operation\Mftf\Page\PageSectionAdded;
 use Magento\SemanticVersionChecker\Operation\Mftf\Page\PageSectionRemoved;
+use Magento\SemanticVersionChecker\Registry\XmlRegistry;
 use Magento\SemanticVersionChecker\Scanner\MftfScanner;
-use PHPSemVerChecker\Registry\Registry;
 use PHPSemVerChecker\Report\Report;
 
-class PageAnalyzer extends AbstractEntityAnalyzer
+/**
+ * Mftf Page analyzer class.
+ */
+class PageAnalyzer extends AbstractEntityAnalyzer implements AnalyzerInterface
 {
     const MFTF_SECTION_ELEMENT = "{}section";
     const MFTF_DATA_TYPE = 'page';
-    const MFTF_DATA_DIRECTORY = '/Mftf/Page/';
 
     /**
      * MFTF page.xml analyzer
      *
-     * @param Registry $registryBefore
-     * @param Registry $registryAfter
+     * @param XmlRegistry $registryBefore
+     * @param XmlRegistry $registryAfter
      * @return Report
      */
-    public function analyze(Registry $registryBefore, Registry $registryAfter)
+    public function analyze($registryBefore, $registryAfter)
     {
         $beforeEntities = $registryBefore->data[MftfScanner::MFTF_ENTITY] ?? [];
         $afterEntities = $registryAfter->data[MftfScanner::MFTF_ENTITY] ?? [];
