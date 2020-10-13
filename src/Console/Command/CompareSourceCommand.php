@@ -85,7 +85,7 @@ class CompareSourceCommand extends Command
                     InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY,
                     'Specify report to be used from list: '
                     . implode(', ', $this->getAllReportTypes())
-                    . 'Example: --report-type=' . ReportTypes::MFTF . PHP_EOL,
+                    . '. Example: --report-type=' . ReportTypes::MFTF . PHP_EOL,
                     []
                 ),
             ]);
@@ -118,7 +118,9 @@ class CompareSourceCommand extends Command
 
         // validate input
         $this->validateAllowedLevel($allowedChangeLevel);
-        $this->validateAllowedReportType($reportType);
+        if (!empty($reportType)) {
+            $this->validateAllowedReportType($reportType);
+        }
 
         // Generate separate reports for API-annotated code and all code
         $reportBuilder = new ReportBuilder(
