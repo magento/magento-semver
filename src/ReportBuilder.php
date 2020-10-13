@@ -23,7 +23,7 @@ use Magento\SemanticVersionChecker\Filter\FilePatternFilter;
 use Magento\SemanticVersionChecker\Filter\SourceWithJsonFilter;
 use Magento\SemanticVersionChecker\Finder\FinderDecoratorFactory;
 use Magento\SemanticVersionChecker\Scanner\ScannerRegistryFactory;
-use Magento\SemanticVersionChecker\Analyzer\Factory\MFTFAnalyzerFactory;
+use Magento\SemanticVersionChecker\Analyzer\Factory\MftfAnalyzerFactory;
 use PHPSemVerChecker\Configuration\LevelMapping;
 use PHPSemVerChecker\Report\Report;
 use PHPSemVerChecker\SemanticVersioning\Level;
