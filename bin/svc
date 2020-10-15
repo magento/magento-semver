@@ -21,7 +21,12 @@ if (PHP_SAPI !== 'cli') {
 }
 
 try {
-    $application = new Application();
+    $composerContents = json_decode(file_get_contents(__DIR__ . '/../composer.json'), true);
+    $version = $composerContents['version'] ?? '';
+    $name = $composerContents['description'] ?? 'Magento Semantic Version Checker';
+    $application = new Symfony\Component\Console\Application();
+    $application->setName($name);
+    $application->setVersion($version);
     $application->add(new CompareSourceCommand());
     $application->run();
 } catch (\Exception $e) {
