@@ -23,13 +23,13 @@ use Magento\SemanticVersionChecker\Filter\FilePatternFilter;
 use Magento\SemanticVersionChecker\Filter\SourceWithJsonFilter;
 use Magento\SemanticVersionChecker\Finder\FinderDecoratorFactory;
 use Magento\SemanticVersionChecker\Scanner\ScannerRegistryFactory;
+use Magento\SemanticVersionChecker\Analyzer\Factory\MftfAnalyzerFactory;
 use PHPSemVerChecker\Configuration\LevelMapping;
 use PHPSemVerChecker\Report\Report;
 use PHPSemVerChecker\SemanticVersioning\Level;
 
 class ReportBuilder
 {
-
     /** @var string */
     protected $includePatternsPath;
 
@@ -41,6 +41,23 @@ class ReportBuilder
 
     /** @var string */
     protected $sourceAfterDir;
+
+    /**
+     * Defines available analyzer factories list for the different report types.
+     *
+     * @var array
+     */
+    protected $availableAnalyzerFactoryClasses = [
+        ReportTypes::API        => AnalyzerFactory::class,
+        ReportTypes::ALL        => NonApiAnalyzerFactory::class,
+        ReportTypes::DB_SCHEMA  => DbSchemaAnalyzerFactory::class,
+        ReportTypes::DI_XML     => DiAnalyzerFactory::class,
+        ReportTypes::LAYOUT_XML => LayoutAnalyzerFactory::class,
+        ReportTypes::SYSTEM_XML => SystemXmlAnalyzerFactory::class,
+        ReportTypes::XSD        => XsdAnalyzerFactory::class,
+        ReportTypes::LESS       => LessAnalyzerFactory::class,
+        ReportTypes::MFTF       => MftfAnalyzerFactory::class,
+    ];
 
     /**
      * Define analyzer factory list for the different report types.
@@ -64,13 +81,27 @@ class ReportBuilder
      * @param string $excludePatternsPath
      * @param string $sourceBeforeDir
      * @param string $sourceAfterDir
+     * @param array $reportType
      */
-    public function __construct($includePatternsPath, $excludePatternsPath, $sourceBeforeDir, $sourceAfterDir)
-    {
+    public function __construct(
+        $includePatternsPath,
+        $excludePatternsPath,
+        $sourceBeforeDir,
+        $sourceAfterDir,
+        array $reportType = []
+    ) {
         $this->includePatternsPath = $includePatternsPath;
         $this->excludePatternsPath = $excludePatternsPath;
         $this->sourceBeforeDir = $sourceBeforeDir;
         $this->sourceAfterDir = $sourceAfterDir;
+
+        // If report-type(s) provided as argument via compare command it will override analyzers to specified
+        if (!empty($reportType)) {
+            $this->analyzerFactoryClasses = array_intersect_key(
+                $this->availableAnalyzerFactoryClasses,
+                array_flip($reportType)
+            );
+        }
     }
 
     /**
@@ -137,10 +168,9 @@ class ReportBuilder
     protected function buildReport()
     {
         $finderDecoratorFactory = new FinderDecoratorFactory();
-        $fileIterator           = $finderDecoratorFactory->create();
-        $sourceBeforeFiles      = $fileIterator->findFromString($this->sourceBeforeDir, '', '');
-        $sourceAfterFiles       = $fileIterator->findFromString($this->sourceAfterDir, '', '');
-
+        $fileIterator = $finderDecoratorFactory->create();
+        $sourceBeforeFiles = $fileIterator->findFromString($this->sourceBeforeDir, '', '');
+        $sourceAfterFiles = $fileIterator->findFromString($this->sourceAfterDir, '', '');
 
         $staticAnalyzer = (new StaticAnalyzerFactory())->create();
 

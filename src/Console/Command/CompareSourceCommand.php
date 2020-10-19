@@ -12,6 +12,7 @@ use Magento\SemanticVersionChecker\DbSchemaReporter;
 use Magento\SemanticVersionChecker\FileChangeDetector;
 use Magento\SemanticVersionChecker\ReportBuilder;
 use Magento\SemanticVersionChecker\Reporter\HtmlDbSchemaReporter;
+use Magento\SemanticVersionChecker\ReportTypes;
 use Magento\SemanticVersionChecker\SemanticVersionChecker;
 use PHPSemVerChecker\SemanticVersioning\Level;
 use Symfony\Component\Console\Command\Command;
@@ -78,6 +79,15 @@ class CompareSourceCommand extends Command
                     'Full path to report of changed files',
                     'changed-files.log'
                 ),
+                new InputOption(
+                    'report-type',
+                    null,
+                    InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY,
+                    'Specify report to be used from list: '
+                    . implode(', ', $this->getAllReportTypes())
+                    . '. Example: --report-type=' . ReportTypes::MFTF . PHP_EOL,
+                    []
+                ),
             ]);
     }
 
@@ -96,6 +106,7 @@ class CompareSourceCommand extends Command
         $includePatternsPath = $input->getOption('include-patterns');
         $excludePatternsPath = $input->getOption('exclude-patterns');
         $logOutputPath = $input->getOption('log-output-location');
+        $reportType = $input->getOption('report-type');
 
         // Derive log format from specified output location.  Default to text.
         $logFormat = self::REPORT_FORMAT_TEXT;
@@ -107,9 +118,18 @@ class CompareSourceCommand extends Command
 
         // validate input
         $this->validateAllowedLevel($allowedChangeLevel);
+        if (!empty($reportType)) {
+            $this->validateAllowedReportType($reportType);
+        }
 
         // Generate separate reports for API-annotated code and all code
-        $reportBuilder = new ReportBuilder($includePatternsPath, $excludePatternsPath, $sourceBeforeDir, $sourceAfterDir);
+        $reportBuilder = new ReportBuilder(
+            $includePatternsPath,
+            $excludePatternsPath,
+            $sourceBeforeDir,
+            $sourceAfterDir,
+            $reportType
+        );
         $fileChangeDetector = new FileChangeDetector($sourceBeforeDir, $sourceAfterDir);
         $semanticVersionChecker = new SemanticVersionChecker($reportBuilder, $fileChangeDetector);
         $versionIncrease = $semanticVersionChecker->getVersionIncrease();
@@ -206,6 +226,27 @@ class CompareSourceCommand extends Command
         if (!in_array($input, $allowed)) {
             throw new \Exception("Invalid allowed-change-level argument \"$input\"");
         }
+    }
+
+    /**
+     * @param $input
+     * @throws \Exception
+     */
+    private function validateAllowedReportType($input)
+    {
+        $allowed = array_values($this->getAllReportTypes());
+        if (count(array_intersect($input, $allowed)) === 0) {
+            throw new \Exception('Invalid report-type argument "' . implode(', ', $input) . '"');
+        }
+    }
+
+    /**
+     * @return array
+     */
+    private function getAllReportTypes()
+    {
+        $typesClass = new \ReflectionClass(\Magento\SemanticVersionChecker\ReportTypes::class);
+        return $typesClass->getConstants();
     }
 
     /**

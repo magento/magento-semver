@@ -6,10 +6,9 @@
 // @codingStandardsIgnoreFile
 namespace Magento\SemanticVersionChecker;
 
-use PHPSemVerChecker\Report\Report as ReportAlias;
 use PHPSemVerChecker\SemanticVersioning\Level;
 
-class DbSchemaReport extends ReportAlias
+class DbSchemaReport extends MergedReport
 {
     /**
      * Report constructor.

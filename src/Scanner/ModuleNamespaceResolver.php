@@ -39,4 +39,17 @@ class ModuleNamespaceResolver
         preg_match('/([\w]*)\/([\w]*)\/view/', $filePath, $matches);
         return sprintf('%s_%s', $matches[1], $matches[2]);
     }
+
+    /**
+     * Returns the module name by given `/Test/Mftf` file path.
+     *
+     * @param string $filePath
+     * @return string
+     */
+    public function resolveByTestMftfPath(string $filePath): string
+    {
+        $match = [];
+        preg_match('/(?<vendor>[\-\w]*?)(\/?)(?<module>[\w]*)\/Test\/Mftf/', $filePath, $match);
+        return empty($match['vendor']) ? $match['module'] : sprintf('%s_%s', $match['vendor'], $match['module']);
+    }
 }

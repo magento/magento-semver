@@ -70,6 +70,7 @@ class ScannerRegistryFactory
 
     /**
      * @param DependencyGraph|null $dependencyGraph
+     * @param boolean              $mftf
      * @return array
      */
     public function create(DependencyGraph $dependencyGraph = null)
@@ -77,55 +78,61 @@ class ScannerRegistryFactory
         $moduleNameResolver = new ModuleNamespaceResolver();
 
         return [
-            ReportTypes::ALL => [
-                'pattern' => [
-                    '*.php',
+                ReportTypes::ALL => [
+                    'pattern' => [
+                        '*.php',
+                    ],
+                    'scanner' => $this->buildFullScanner(),
                 ],
-                'scanner' => $this->buildFullScanner(),
-            ],
-            ReportTypes::API => [
-                'pattern' => [
-                    '*.php',
+                ReportTypes::API => [
+                    'pattern' => [
+                        '*.php',
+                    ],
+                    'scanner' => $this->buildApiScanner($dependencyGraph),
                 ],
-                'scanner' => $this->buildApiScanner($dependencyGraph),
-            ],
-            ReportTypes::DB_SCHEMA => [
-                'pattern' => [
-                    'db_schema.xml',
-                    'db_schema_whitelist.json',
+                ReportTypes::DB_SCHEMA => [
+                    'pattern' => [
+                        'db_schema.xml',
+                        'db_schema_whitelist.json',
+                    ],
+                    'scanner' => new DbSchemaScanner(new XmlRegistry(), $moduleNameResolver),
                 ],
-                'scanner' => new DbSchemaScanner(new XmlRegistry(), $moduleNameResolver),
-            ],
-            ReportTypes::DI_XML => [
-                'pattern' => [
-                    'di.xml'
+                ReportTypes::DI_XML => [
+                    'pattern' => [
+                        'di.xml'
+                    ],
+                    'scanner' => new DiConfigScanner(new XmlRegistry(), $moduleNameResolver),
                 ],
-                'scanner' => new DiConfigScanner(new XmlRegistry(), $moduleNameResolver),
-            ],
-            ReportTypes::LAYOUT_XML => [
-                'pattern' => [
-                    '/view/*/*.xml'
+                ReportTypes::LAYOUT_XML => [
+                    'pattern' => [
+                        '/view/*/*.xml'
+                    ],
+                    'scanner' => new LayoutConfigScanner(new XmlRegistry(), $moduleNameResolver),
                 ],
-                'scanner' => new LayoutConfigScanner(new XmlRegistry(), $moduleNameResolver),
-            ],
-            ReportTypes::SYSTEM_XML => [
-                'pattern' => [
-                    'system.xml'
+                ReportTypes::SYSTEM_XML => [
+                    'pattern' => [
+                        'system.xml'
+                    ],
+                    'scanner' => new SystemXmlScanner(new XmlRegistry(), $moduleNameResolver),
                 ],
-                'scanner' => new SystemXmlScanner(new XmlRegistry(), $moduleNameResolver),
-            ],
-            ReportTypes::XSD => [
-                'pattern' => [
-                    '*.xsd'
+                ReportTypes::XSD => [
+                    'pattern' => [
+                        '*.xsd'
+                    ],
+                    'scanner' => new XsdScanner(new XmlRegistry(), $moduleNameResolver),
                 ],
-                'scanner' => new XsdScanner(new XmlRegistry(), $moduleNameResolver),
-            ],
-            ReportTypes::LESS => [
-                'pattern' => [
-                    '*.less'
+                ReportTypes::LESS => [
+                    'pattern' => [
+                        '*.less'
+                    ],
+                    'scanner' => new LessScanner(new LessRegistry(), new LessParser(), $moduleNameResolver),
                 ],
-                'scanner' => new LessScanner(new LessRegistry(), new LessParser(), $moduleNameResolver),
-            ]
-        ];
+                ReportTypes::MFTF => [
+                    'pattern' => [
+                        '/Test/Mftf/*/*.xml'
+                    ],
+                    'scanner' => new MftfScanner(new XmlRegistry(), $moduleNameResolver),
+                ]
+            ];
     }
 }
