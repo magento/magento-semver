@@ -72,7 +72,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 'source-after'          => $pathToSourceCodeAfter,
                 '--log-output-location' => $this->svcLogPath,
                 '--include-patterns'    => __DIR__ . '/CompareSourceCommandTest/_files/application_includes.txt',
-                '--mftf'                => true,
+                '--report-type'         => ['mftf'],
             ]
         );
         return $commandTester;
