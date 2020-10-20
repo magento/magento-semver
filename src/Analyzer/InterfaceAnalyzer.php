@@ -139,7 +139,7 @@ class InterfaceAnalyzer extends AbstractCodeAnalyzer
     protected function getContentAnalyzers($context, $fileBefore, $fileAfter)
     {
         return [
-            new ClassMethodAnalyzer($context, $fileBefore, $fileAfter),
+            new ClassMethodAnalyzer($context, $fileBefore, $fileAfter, $this->dependencyGraph),
             new ClassConstantAnalyzer($context, $fileBefore, $fileAfter),
             new ClassMethodExceptionAnalyzer($context, $fileBefore, $fileAfter),
             new InterfaceExtendsAnalyzer($context, $fileBefore, $fileAfter)

@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Magento\SemanticVersionChecker\Analyzer;
 
+use Magento\SemanticVersionChecker\ClassHierarchy\DependencyGraph;
 use PhpParser\Node\Stmt\Class_;
 use PHPSemVerChecker\Operation\ClassAdded;
 use PHPSemVerChecker\Operation\ClassRemoved;

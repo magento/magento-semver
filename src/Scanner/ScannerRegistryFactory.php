@@ -18,7 +18,8 @@ use Magento\SemanticVersionChecker\Visitor\ApiInterfaceVisitor;
 use Magento\SemanticVersionChecker\Visitor\ApiTraitVisitor;
 use PhpParser\Lexer\Emulative;
 use PhpParser\NodeTraverser;
-use PhpParser\NodeVisitor\NameResolver;
+use Magento\SemanticVersionChecker\Visitor\NameResolver;
+use PhpParser\NodeVisitor\ParentConnectingVisitor;
 use PhpParser\Parser\Php7 as Parser;
 use PHPSemVerChecker\Registry\Registry;
 use PHPSemVerChecker\Visitor\ClassVisitor;
@@ -38,6 +39,7 @@ class ScannerRegistryFactory
         $traverser   = new NodeTraverser();
         $apiVisitors = [
             new NameResolver(),
+            new ParentConnectingVisitor(),
             new ClassVisitor($registry),
             new InterfaceVisitor($registry),
             new FunctionVisitor($registry),
@@ -59,6 +61,7 @@ class ScannerRegistryFactory
         $nodeHelper  = new NodeHelper();
         $apiVisitors = [
             new NameResolver(),
+            new ParentConnectingVisitor(),
             new ApiClassVisitor($registry, $nodeHelper, $dependencyGraph),
             new ApiInterfaceVisitor($registry, $nodeHelper, $dependencyGraph),
             new ApiTraitVisitor($registry, $nodeHelper, $dependencyGraph),
