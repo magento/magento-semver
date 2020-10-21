@@ -15,7 +15,7 @@
         "tomzx/php-semver-checker": "^0.14.0",
         "wikimedia/less.php": "~1.8.0",
         "zendframework/zend-stdlib": "^3.2.1",
-        "nikic/php-parser": "^4.4",
+        "nikic/php-parser": "~4.4.0||~4.5.0||~4.6.0",
         "sabre/xml": "^2.1"
     },
     "require-dev": {
