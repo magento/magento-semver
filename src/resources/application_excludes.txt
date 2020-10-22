@@ -1,3 +1,7 @@
-app/code/*/*/Test
+app/code/*/*/Test/Unit
+app/code/*/*/Test/Integration
+app/code/*/*/Test/Api
+app/code/*/*/Test/GraphQL
+app/code/*/*/Test/_files
 lib/internal/Magento/*/Test
 lib/internal/Magento/*/*/Test

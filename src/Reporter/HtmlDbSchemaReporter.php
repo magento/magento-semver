@@ -62,6 +62,7 @@ class HtmlDbSchemaReporter extends DbSchemaReporter
             'system',
             'xsd',
             'less',
+            'mftf',
             EtSchemaAnalyzer::CONTEXT
         ];
 
@@ -140,7 +141,7 @@ class HtmlDbSchemaReporter extends DbSchemaReporter
                 $output->writeln(
                     '<tr class="text-' . ($level > $allowedChangeLevel  ? 'danger' : 'success') .
                     '"><td>' . $levelStr . '</td><td>' . $target . '<br/>' . $location . '</td><td>' . $code . ' ' .
-                    $reason . '</td></tr>'
+                    htmlspecialchars($reason) . '</td></tr>'
                 );
             }
         }

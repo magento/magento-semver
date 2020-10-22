@@ -21,7 +21,11 @@ if (PHP_SAPI !== 'cli') {
 }
 
 try {
-    $application = new Application();
+    $composerContents = json_decode(file_get_contents(__DIR__ . '/../composer.json'), true);
+    $application = new Symfony\Component\Console\Application(
+            $composerContents['description'],
+            $composerContents['version']
+    );
     $application->add(new CompareSourceCommand());
     $application->run();
 } catch (\Exception $e) {

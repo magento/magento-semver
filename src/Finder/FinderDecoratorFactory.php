@@ -27,6 +27,7 @@ class FinderDecoratorFactory
                 '/etc/adminhtml/system.xml',
                 '/etc/*.xsd',
                 '/view/*/*/*/*.less',
+                '/Test/Mftf/*/*.xml',
                 'et_schema.xml'
             ],
             [
