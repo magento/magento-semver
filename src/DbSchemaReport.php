@@ -7,6 +7,7 @@
 namespace Magento\SemanticVersionChecker;
 
 use PHPSemVerChecker\SemanticVersioning\Level;
+use Magento\SemanticVersionChecker\Analyzer\EtSchemaAnalyzer;
 
 class DbSchemaReport extends MergedReport
 {
@@ -23,5 +24,6 @@ class DbSchemaReport extends MergedReport
         $this->differences['system'] = $levels;
         $this->differences['xsd'] = $levels;
         $this->differences['less'] = $levels;
+        $this->differences[EtSchemaAnalyzer::CONTEXT] = $levels;
     }
 }

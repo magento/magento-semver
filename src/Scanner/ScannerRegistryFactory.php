@@ -132,7 +132,13 @@ class ScannerRegistryFactory
                         '/Test/Mftf/*/*.xml'
                     ],
                     'scanner' => new MftfScanner(new XmlRegistry(), $moduleNameResolver),
-                ]
+                ],
+                ReportTypes::ET_SCHEMA => [
+                    'pattern' => [
+                        'et_schema.xml'
+                    ],
+                    'scanner' => new EtSchemaScanner(new XmlRegistry(), $moduleNameResolver, new EtSchema\XmlConverter()),
+                ],
             ];
     }
 }

@@ -8,6 +8,7 @@ namespace Magento\SemanticVersionChecker;
 
 use Magento\SemanticVersionChecker\Reporter\TableReporter;
 use Symfony\Component\Console\Output\OutputInterface;
+use Magento\SemanticVersionChecker\Analyzer\EtSchemaAnalyzer;
 
 /**
  * Class DbSchemaReporter
@@ -30,6 +31,7 @@ class DbSchemaReporter extends TableReporter
         $this->outputReport($output, $this->report, 'system');
         $this->outputReport($output, $this->report, 'xsd');
         $this->outputReport($output, $this->report, 'less');
+        $this->outputReport($output, $this->report, EtSchemaAnalyzer::CONTEXT);
         $this->outputReport($output, $this->report, 'mftf');
     }
 }

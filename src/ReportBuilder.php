@@ -24,6 +24,7 @@ use Magento\SemanticVersionChecker\Filter\SourceWithJsonFilter;
 use Magento\SemanticVersionChecker\Finder\FinderDecoratorFactory;
 use Magento\SemanticVersionChecker\Scanner\ScannerRegistryFactory;
 use Magento\SemanticVersionChecker\Analyzer\Factory\MftfAnalyzerFactory;
+use Magento\SemanticVersionChecker\Analyzer\Factory\EtSchemaAnalyzerFactory;
 use PHPSemVerChecker\Configuration\LevelMapping;
 use PHPSemVerChecker\Report\Report;
 use PHPSemVerChecker\SemanticVersioning\Level;
@@ -57,6 +58,7 @@ class ReportBuilder
         ReportTypes::XSD        => XsdAnalyzerFactory::class,
         ReportTypes::LESS       => LessAnalyzerFactory::class,
         ReportTypes::MFTF       => MftfAnalyzerFactory::class,
+        ReportTypes::ET_SCHEMA  => EtSchemaAnalyzerFactory::class,
     ];
 
     /**
@@ -72,6 +74,7 @@ class ReportBuilder
         ReportTypes::SYSTEM_XML => SystemXmlAnalyzerFactory::class,
         ReportTypes::XSD        => XsdAnalyzerFactory::class,
         ReportTypes::LESS       => LessAnalyzerFactory::class,
+        ReportTypes::ET_SCHEMA  => EtSchemaAnalyzerFactory::class,
     ];
 
     /**
@@ -225,7 +228,6 @@ class ReportBuilder
                 $report = $report->merge($tmpReport);
             }
         }
-
         return $report;
     }
 
