@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
@@ -29,11 +30,11 @@ use Magento\SemanticVersionChecker\Operation\Mftf\Test\TestRemoveActionAdded;
  */
 class TestAnalyzer extends AbstractEntityAnalyzer implements AnalyzerInterface
 {
-    const MFTF_ANOTATION_ELEMENT = "{}annotations";
-    const MFTF_BEFORE_ELEMENT = "{}before";
-    const MFTF_AFTER_ELEMENT = "{}after";
-    const MFTF_GROUP_ELEMENT = "{}group";
-    const MFTF_DATA_TYPE = 'test';
+    public const MFTF_ANOTATION_ELEMENT = "{}annotations";
+    public const MFTF_BEFORE_ELEMENT = "{}before";
+    public const MFTF_AFTER_ELEMENT = "{}after";
+    public const MFTF_GROUP_ELEMENT = "{}group";
+    public const MFTF_DATA_TYPE = 'test';
 
     /**
      * operations array
@@ -185,7 +186,6 @@ class TestAnalyzer extends AbstractEntityAnalyzer implements AnalyzerInterface
                 TestAdded::class,
                 $module . '/Test'
             );
-
         }
         return $this->getReport();
     }

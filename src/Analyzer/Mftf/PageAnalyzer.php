@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
@@ -21,8 +22,8 @@ use PHPSemVerChecker\Report\Report;
  */
 class PageAnalyzer extends AbstractEntityAnalyzer implements AnalyzerInterface
 {
-    const MFTF_SECTION_ELEMENT = "{}section";
-    const MFTF_DATA_TYPE = 'page';
+    public const MFTF_SECTION_ELEMENT = "{}section";
+    public const MFTF_DATA_TYPE = 'page';
 
     /**
      * MFTF page.xml analyzer

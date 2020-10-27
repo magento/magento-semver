@@ -137,7 +137,11 @@ class ScannerRegistryFactory
                     'pattern' => [
                         'et_schema.xml'
                     ],
-                    'scanner' => new EtSchemaScanner(new XmlRegistry(), $moduleNameResolver, new EtSchema\XmlConverter()),
+                    'scanner' => new EtSchemaScanner(
+                        new XmlRegistry(),
+                        $moduleNameResolver,
+                        new EtSchema\XmlConverter()
+                    ),
                 ],
             ];
     }

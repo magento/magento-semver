@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
@@ -29,11 +30,11 @@ use PHPSemVerChecker\Report\Report;
  */
 class SuiteAnalyzer extends AbstractEntityAnalyzer implements AnalyzerInterface
 {
-    const MFTF_SUITE_BEFORE_ELEMENT = "{}before";
-    const MFTF_SUITE_AFTER_ELEMENT = "{}after";
-    const MFTF_SUITE_INCLUDE_ELEMENT = "{}include";
-    const MFTF_SUITE_EXCLUDE_ELEMENT = "{}exclude";
-    const MFTF_DATA_TYPE = 'suite';
+    public const MFTF_SUITE_BEFORE_ELEMENT = "{}before";
+    public const MFTF_SUITE_AFTER_ELEMENT = "{}after";
+    public const MFTF_SUITE_INCLUDE_ELEMENT = "{}include";
+    public const MFTF_SUITE_EXCLUDE_ELEMENT = "{}exclude";
+    public const MFTF_DATA_TYPE = 'suite';
 
     /**
      * Action operations array

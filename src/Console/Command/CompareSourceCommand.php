@@ -8,6 +8,7 @@ declare(strict_types=1);
 // @codingStandardsIgnoreFile
 namespace Magento\SemanticVersionChecker\Console\Command;
 
+use Exception;
 use Magento\SemanticVersionChecker\DbSchemaReporter;
 use Magento\SemanticVersionChecker\FileChangeDetector;
 use Magento\SemanticVersionChecker\ReportBuilder;
@@ -15,6 +16,7 @@ use Magento\SemanticVersionChecker\Reporter\HtmlDbSchemaReporter;
 use Magento\SemanticVersionChecker\ReportTypes;
 use Magento\SemanticVersionChecker\SemanticVersionChecker;
 use PHPSemVerChecker\SemanticVersioning\Level;
+use ReflectionClass;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -24,8 +26,8 @@ use Symfony\Component\Console\Output\StreamOutput;
 
 class CompareSourceCommand extends Command
 {
-    const REPORT_FORMAT_HTML = 'html';
-    const REPORT_FORMAT_TEXT = 'text';
+    public const REPORT_FORMAT_HTML = 'html';
+    public const REPORT_FORMAT_TEXT = 'text';
 
     private $changeLevels = [
         Level::NONE  => 'none',
@@ -224,19 +226,19 @@ class CompareSourceCommand extends Command
     {
         $allowed = array_keys($this->changeLevels);
         if (!in_array($input, $allowed)) {
-            throw new \Exception("Invalid allowed-change-level argument \"$input\"");
+            throw new Exception("Invalid allowed-change-level argument \"$input\"");
         }
     }
 
     /**
      * @param $input
-     * @throws \Exception
+     * @throws Exception
      */
     private function validateAllowedReportType($input)
     {
         $allowed = array_values($this->getAllReportTypes());
         if (count(array_intersect($input, $allowed)) === 0) {
-            throw new \Exception('Invalid report-type argument "' . implode(', ', $input) . '"');
+            throw new Exception('Invalid report-type argument "' . implode(', ', $input) . '"');
         }
     }
 
@@ -245,7 +247,7 @@ class CompareSourceCommand extends Command
      */
     private function getAllReportTypes()
     {
-        $typesClass = new \ReflectionClass(\Magento\SemanticVersionChecker\ReportTypes::class);
+        $typesClass = new ReflectionClass(ReportTypes::class);
         return $typesClass->getConstants();
     }
 
@@ -260,7 +262,7 @@ class CompareSourceCommand extends Command
 
         return <<<HEADER
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html">
 <title>Semantic Version Checker</title>
