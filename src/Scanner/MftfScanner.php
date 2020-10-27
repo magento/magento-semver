@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
@@ -10,13 +11,14 @@ namespace Magento\SemanticVersionChecker\Scanner;
 
 use Magento\SemanticVersionChecker\Registry\XmlRegistry;
 use PHPSemVerChecker\Registry\Registry;
+use Sabre\Xml\Service;
 
 /**
  * Class MftfScanner
  */
 class MftfScanner implements ScannerInterface
 {
-    const MFTF_ENTITY = 'mftfEntity';
+    public const MFTF_ENTITY = 'mftfEntity';
 
     /**
      * @var XmlRegistry
@@ -47,11 +49,11 @@ class MftfScanner implements ScannerInterface
      * @return void
      * @throws \Exception
      */
-    public function scan($file): void
+    public function scan(string $file): void
     {
         // Set the current file used by the registry so that we can tell where the change was scanned.
         $this->registry->setCurrentFile($file);
-        $service = new \Sabre\Xml\Service();
+        $service = new Service();
         $xml = $service->parse(file_get_contents($file));
         $xmlResult = json_decode(json_encode($xml), true);
         foreach ($xmlResult as $entityNode) {
@@ -80,7 +82,7 @@ class MftfScanner implements ScannerInterface
      * @param array $entityNode
      * @return void
      */
-    private function registerEntityNode(array $entityNode) :void
+    private function registerEntityNode(array $entityNode): void
     {
         $name             = $entityNode['attributes']['name'];
         $file             = $this->registry->getCurrentFile();

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
@@ -28,8 +29,8 @@ use Magento\SemanticVersionChecker\Operation\Mftf\ActionGroup\ActionGroupRemoveA
  */
 class ActionGroupAnalyzer extends AbstractEntityAnalyzer implements AnalyzerInterface
 {
-    const MFTF_ARGUMENTS_ELEMENT = "{}arguments";
-    const MFTF_DATA_TYPE = 'actionGroup';
+    public const MFTF_ARGUMENTS_ELEMENT = "{}arguments";
+    public const MFTF_DATA_TYPE = 'actionGroup';
 
     /**
      * operations array

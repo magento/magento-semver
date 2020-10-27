@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
@@ -22,7 +23,7 @@ use PHPSemVerChecker\Report\Report;
  */
 class MetadataAnalyzer extends AbstractEntityAnalyzer implements AnalyzerInterface
 {
-    const MFTF_DATA_TYPE = 'operation';
+    public const MFTF_DATA_TYPE = 'operation';
 
     /**
      * MFTF test.xml analyzer
@@ -60,14 +61,14 @@ class MetadataAnalyzer extends AbstractEntityAnalyzer implements AnalyzerInterfa
                 }
 
                // Validate metadata attribute changes
-               $this->matchAndValidateAttributes(
-                   $beforeEntity['attributes'],
-                   $afterEntities[$module][$entityName]['attributes'],
-                   $this->getReport(),
-                   $filenames,
-                   [AbstractEntityAnalyzer::DEFAULT_OPERATION_KEY => MetadataChanged::class],
-                   $operationTarget
-               );
+                $this->matchAndValidateAttributes(
+                    $beforeEntity['attributes'],
+                    $afterEntities[$module][$entityName]['attributes'],
+                    $this->getReport(),
+                    $filenames,
+                    [AbstractEntityAnalyzer::DEFAULT_OPERATION_KEY => MetadataChanged::class],
+                    $operationTarget
+                );
 
                 // Validate child elements removed
                 $this->recursiveCompare(
@@ -117,8 +118,14 @@ class MetadataAnalyzer extends AbstractEntityAnalyzer implements AnalyzerInterfa
      * @param Report $report
      * @return void
      */
-    public function recursiveCompare($beforeEntity, $afterEntity, $operationClass, $operationTarget, $filenames, $report)
-    {
+    public function recursiveCompare(
+        $beforeEntity,
+        $afterEntity,
+        $operationClass,
+        $operationTarget,
+        $filenames,
+        $report
+    ) {
         $beforeChildren = $beforeEntity['value'] ?? [];
         $afterChildren = $afterEntity['value'] ?? [];
         if (!is_array($beforeChildren)) {

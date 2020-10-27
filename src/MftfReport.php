@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
@@ -10,7 +11,7 @@ use PHPSemVerChecker\SemanticVersioning\Level;
 
 class MftfReport extends MergedReport
 {
-    const MFTF_REPORT_CONTEXT = 'mftf';
+    public const MFTF_REPORT_CONTEXT = 'mftf';
     /**
      * Report constructor.
      */

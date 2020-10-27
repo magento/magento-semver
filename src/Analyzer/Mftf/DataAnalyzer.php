@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
@@ -28,11 +29,11 @@ use PHPSemVerChecker\Report\Report;
  */
 class DataAnalyzer extends AbstractEntityAnalyzer implements AnalyzerInterface
 {
-    const MFTF_DATA_FIELD_ELEMENT = "{}data";
-    const MFTF_VAR_ELEMENT = "{}var";
-    const MFTF_REQ_ELEMENT = "{}requiredEntity";
-    const MFTF_ARRAY_ELEMENT = "{}array";
-    const MFTF_DATA_TYPE = 'entity';
+    public const MFTF_DATA_FIELD_ELEMENT = "{}data";
+    public const MFTF_VAR_ELEMENT = "{}var";
+    public const MFTF_REQ_ELEMENT = "{}requiredEntity";
+    public const MFTF_ARRAY_ELEMENT = "{}array";
+    public const MFTF_DATA_TYPE = 'entity';
 
     /**
      * MFTF data.xml analyzer
@@ -67,7 +68,7 @@ class DataAnalyzer extends AbstractEntityAnalyzer implements AnalyzerInterface
                     $operation = new DataEntityRemoved($filenames, $operationTarget);
                     $this->getReport()->add(MftfReport::MFTF_REPORT_CONTEXT, $operation);
                     continue;
-                }                
+                }
 
                 // Sort Elements
                 $beforeDataFields = [];
@@ -132,7 +133,7 @@ class DataAnalyzer extends AbstractEntityAnalyzer implements AnalyzerInterface
                 // Validate <var> fields
                 foreach ($beforeVarFields as $beforeField) {
                     $beforeFieldKey = $beforeField['attributes']['key'];
-                    $matchingElement = $this->findMatchingElement($beforeField, $afterVarFields,'key');
+                    $matchingElement = $this->findMatchingElement($beforeField, $afterVarFields, 'key');
                     if ($matchingElement === null) {
                         $operation = new DataEntityVarRemoved(
                             $filenames,

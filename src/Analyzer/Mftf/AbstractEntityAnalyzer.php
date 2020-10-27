@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
@@ -14,7 +15,7 @@ use PHPSemVerChecker\Report\Report;
  */
 abstract class AbstractEntityAnalyzer
 {
-    const DEFAULT_OPERATION_KEY = '*';
+    public const DEFAULT_OPERATION_KEY = '*';
 
     /**
      * @var Report
@@ -69,8 +70,10 @@ abstract class AbstractEntityAnalyzer
         $beforeFieldKey = $beforeElement['attributes'][$elementIdentifier];
         $beforeFieldValue = $beforeElement['value'];
         foreach ($afterElements as $afterElement) {
-            if ($afterElement['attributes'][$elementIdentifier] === $beforeFieldKey
-                    && $afterElement['value'] === $beforeFieldValue) {
+            if (
+                $afterElement['attributes'][$elementIdentifier] === $beforeFieldKey
+                    && $afterElement['value'] === $beforeFieldValue
+            ) {
                 return $afterElement;
             }
         }
@@ -185,19 +188,19 @@ abstract class AbstractEntityAnalyzer
         $operationClass,
         $fullOperationTarget
     ) {
-            if (is_array($afterArray) || is_object($afterArray)) {
-                foreach ($afterArray as $newChild) {
-                    if (!isset($newChild['attributes'][$elementIdentifier])) {
-                        continue;
-                    }
-                    $afterFieldKey = $newChild['attributes'][$elementIdentifier];
-                    $matchingElement = $this->findMatchingElement($newChild, $beforeArray, $elementIdentifier);
-                    if ($matchingElement === null) {
-                        $operation = new $operationClass($filenames, $fullOperationTarget . '/' . $afterFieldKey);
-                        $report->add(MftfReport::MFTF_REPORT_CONTEXT, $operation);
-                    }
+        if (is_array($afterArray) || is_object($afterArray)) {
+            foreach ($afterArray as $newChild) {
+                if (!isset($newChild['attributes'][$elementIdentifier])) {
+                    continue;
+                }
+                $afterFieldKey = $newChild['attributes'][$elementIdentifier];
+                $matchingElement = $this->findMatchingElement($newChild, $beforeArray, $elementIdentifier);
+                if ($matchingElement === null) {
+                    $operation = new $operationClass($filenames, $fullOperationTarget . '/' . $afterFieldKey);
+                    $report->add(MftfReport::MFTF_REPORT_CONTEXT, $operation);
                 }
             }
+        }
     }
     /**
      * Finds all added child elements in afterArray, compared to beforeArray, using both key and value for matching

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
@@ -25,9 +26,9 @@ use PHPSemVerChecker\Report\Report;
  */
 class SectionAnalyzer extends AbstractEntityAnalyzer implements AnalyzerInterface
 {
-    const MFTF_ELEMENT_ELEMENT = "{}element";
-    const MFTF_DATA_TYPE = 'section';
-    const MFTF_ELEMENT_PARAM = 'parameterized';
+    public const MFTF_ELEMENT_ELEMENT = "{}element";
+    public const MFTF_DATA_TYPE = 'section';
+    public const MFTF_ELEMENT_PARAM = 'parameterized';
 
     /**
      * operations array
@@ -122,7 +123,7 @@ class SectionAnalyzer extends AbstractEntityAnalyzer implements AnalyzerInterfac
                             if (!isset($beforeAttributes[self::MFTF_ELEMENT_PARAM])) {
                                 $operation = new SectionElementParameterizedChanged(
                                     $filenames,
-                                    "$operationTarget/$beforeFieldKey/". self::MFTF_ELEMENT_PARAM
+                                    "$operationTarget/$beforeFieldKey/" . self::MFTF_ELEMENT_PARAM
                                 );
                                 $this->getReport()->add(MftfReport::MFTF_REPORT_CONTEXT, $operation);
                             }
