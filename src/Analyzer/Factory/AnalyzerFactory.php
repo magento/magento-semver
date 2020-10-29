@@ -11,8 +11,8 @@ namespace Magento\SemanticVersionChecker\Analyzer\Factory;
 
 use Magento\SemanticVersionChecker\Analyzer\Analyzer;
 use Magento\SemanticVersionChecker\Analyzer\AnalyzerInterface;
-use Magento\SemanticVersionChecker\Analyzer\ClassAnalyzer;
-use Magento\SemanticVersionChecker\Analyzer\InterfaceAnalyzer;
+use Magento\SemanticVersionChecker\Analyzer\ApiClassAnalyzer;
+use Magento\SemanticVersionChecker\Analyzer\ApiInterfaceAnalyzer;
 use Magento\SemanticVersionChecker\Analyzer\TraitAnalyzer;
 use Magento\SemanticVersionChecker\ClassHierarchy\DependencyGraph;
 
@@ -21,7 +21,6 @@ use Magento\SemanticVersionChecker\ClassHierarchy\DependencyGraph;
  */
 class AnalyzerFactory implements AnalyzerFactoryInterface
 {
-
     /**
      * @param DependencyGraph|null $dependencyGraph
      * @return AnalyzerInterface
@@ -29,8 +28,8 @@ class AnalyzerFactory implements AnalyzerFactoryInterface
     public function create(DependencyGraph $dependencyGraph = null): AnalyzerInterface
     {
         $analyzers = [
-            new ClassAnalyzer(null, null, null, $dependencyGraph),
-            new InterfaceAnalyzer(null, null, null, $dependencyGraph),
+            new ApiClassAnalyzer(null, null, null, $dependencyGraph),
+            new ApiInterfaceAnalyzer(null, null, null, $dependencyGraph),
             new TraitAnalyzer(),
         ];
 

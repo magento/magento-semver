@@ -51,10 +51,13 @@ class ScannerRegistryFactory
 
     /**
      * @param DependencyGraph|null $dependencyGraph
+     * @param DependencyGraph|null $dependencyGraphCompare
      * @return Scanner
      */
-    private function buildApiScanner(DependencyGraph $dependencyGraph = null)
-    {
+    private function buildApiScanner(
+        DependencyGraph $dependencyGraph = null,
+        DependencyGraph $dependencyGraphCompare = null
+    ) {
         $registry    = new Registry();
         $parser      = new Parser(new Emulative());
         $traverser   = new NodeTraverser();
@@ -62,9 +65,9 @@ class ScannerRegistryFactory
         $apiVisitors = [
             new NameResolver(),
             new ParentConnector(),
-            new ApiClassVisitor($registry, $nodeHelper, $dependencyGraph),
-            new ApiInterfaceVisitor($registry, $nodeHelper, $dependencyGraph),
-            new ApiTraitVisitor($registry, $nodeHelper, $dependencyGraph),
+            new ApiClassVisitor($registry, $nodeHelper, $dependencyGraph, $dependencyGraphCompare),
+            new ApiInterfaceVisitor($registry, $nodeHelper, $dependencyGraph, $dependencyGraphCompare),
+            new ApiTraitVisitor($registry, $nodeHelper, $dependencyGraph, $dependencyGraphCompare),
             new FunctionVisitor($registry),
         ];
 
@@ -73,9 +76,10 @@ class ScannerRegistryFactory
 
     /**
      * @param DependencyGraph|null $dependencyGraph
+     * @param DependencyGraph|null $dependencyGraphCompare
      * @return array
      */
-    public function create(DependencyGraph $dependencyGraph = null)
+    public function create(DependencyGraph $dependencyGraph = null, DependencyGraph $dependencyGraphCompare = null)
     {
         $moduleNameResolver = new ModuleNamespaceResolver();
 
@@ -90,7 +94,7 @@ class ScannerRegistryFactory
                 'pattern' => [
                     '*.php',
                 ],
-                'scanner' => $this->buildApiScanner($dependencyGraph),
+                'scanner' => $this->buildApiScanner($dependencyGraph, $dependencyGraphCompare),
             ],
             ReportTypes::DB_SCHEMA => [
                 'pattern' => [

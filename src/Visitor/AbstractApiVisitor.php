@@ -25,6 +25,9 @@ abstract class AbstractApiVisitor extends NodeVisitorAbstract
     /** @var DependencyGraph */
     private $dependencyGraph;
 
+    /** @var DependencyGraph */
+    private $dependencyGraphComapre;
+
     /** @var NodeHelper */
     private $nodeHelper;
 
@@ -32,19 +35,23 @@ abstract class AbstractApiVisitor extends NodeVisitorAbstract
      * @param Registry $registry
      * @param NodeHelper $nodeHelper
      * @param DependencyGraph|null $dependencyGraph
+     * @param DependencyGraph|null $dependencyGraphCompare
      */
     public function __construct(
         Registry $registry,
         NodeHelper $nodeHelper,
-        DependencyGraph $dependencyGraph = null
+        DependencyGraph $dependencyGraph = null,
+        DependencyGraph $dependencyGraphCompare = null
     ) {
-        $this->dependencyGraph = $dependencyGraph;
-        $this->nodeHelper      = $nodeHelper;
-        $this->registry        = $registry;
+        $this->dependencyGraph        = $dependencyGraph;
+        $this->dependencyGraphComapre = $dependencyGraphCompare;
+        $this->nodeHelper             = $nodeHelper;
+        $this->registry               = $registry;
     }
 
     /**
-     * Halt walking when we reach Classlike node
+     * Halt walking when we reach ClassLike node
+     *
      * @param Node $node
      * @return int
      */
@@ -90,15 +97,7 @@ abstract class AbstractApiVisitor extends NodeVisitorAbstract
      */
     public function pruneNonApiNodes(Node $classNode)
     {
-        $entity = $this->dependencyGraph
-            ? $this->dependencyGraph->findEntityByName((string)$classNode->namespacedName)
-            : null;
-
-        if ($entity) {
-            $isApi = $entity->isApi() || $entity->hasApiDescendant();
-        } else {
-            $isApi = $this->nodeHelper->isApiNode($classNode);
-        }
+        $isApi = $this->isApiNode($classNode);
 
         if (!$isApi) {
             $apiNodes = [];
@@ -114,6 +113,38 @@ abstract class AbstractApiVisitor extends NodeVisitorAbstract
             }
         }
         return $classNode;
+    }
+
+    /**
+     * Check if node is API node.
+     *
+     * Check previous scan graph to include also nodes that became API or was API.
+     *
+     * @param Node $classNode
+     * @return bool
+     */
+    private function isApiNode(Node $classNode)
+    {
+        $entity = $this->dependencyGraph
+            ? $this->dependencyGraph->findEntityByName((string)$classNode->namespacedName)
+            : null;
+
+        if ($entity) {
+            $isApi = $entity->isApi() || $entity->hasApiDescendant();
+        } else {
+            $isApi = $this->nodeHelper->isApiNode($classNode);
+        }
+
+        $entityCompare = $this->dependencyGraphComapre
+            ? $this->dependencyGraphComapre->findEntityByName((string)$classNode->namespacedName)
+            : null;
+
+        $isApiPrevious = false;
+        if ($entityCompare) {
+            $isApiPrevious = $entityCompare->isApi() || $entityCompare->hasApiDescendant();
+        }
+
+        return ($isApi || $isApiPrevious);
     }
 
     /**
