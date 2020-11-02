@@ -10,8 +10,8 @@ declare(strict_types=1);
 namespace Magento\SemanticVersionChecker\Helper;
 
 use Magento\SemanticVersionChecker\SemanticVersionChecker;
+use PhpParser\Comment\Doc as DocComment;
 use PhpParser\Node as PhpNode;
-use PhpParser\Node\Stmt\TraitUse;
 
 /**
  * Implements a helper that deals with nodes.
@@ -26,9 +26,18 @@ class Node
      */
     public function isApiNode(PhpNode $node)
     {
-        $comment = $node->getAttribute('comments');
+        $comments = $node->getAttribute('comments');
 
-        return isset($comment[0])
-               && strpos($comment[0]->getText(), SemanticVersionChecker::ANNOTATION_API) !== false;
+        $result = false;
+        if (is_array($comments) && !empty($comments)) {
+            foreach ($comments as $comment) {
+                if ($comment instanceof DocComment) {
+                    $result = $result || (strpos($comment->getText(),
+                                SemanticVersionChecker::ANNOTATION_API) !== false);
+                }
+            }
+        }
+
+        return $result;
     }
 }

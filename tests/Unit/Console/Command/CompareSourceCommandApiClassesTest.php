@@ -479,6 +479,14 @@ class CompareSourceCommandApiClassesTest extends AbstractTestCase
                 ],
                 'Major change is detected.',
             ],
+            'api-annotation-not-changed' => [
+                $pathToFixtures . '/annotation-not-changed/source-code-before',
+                $pathToFixtures . '/annotation-not-changed/source-code-after',
+                [
+                    'Suggested semantic versioning change: NONE',
+                ],
+                'Patch change is detected.',
+            ],
         ];
     }
 }
