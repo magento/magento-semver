@@ -21,12 +21,12 @@ abstract class AbstractTestCaseWithRegExp extends TestCase
     /**
      * @var CompareSourceCommand
      */
-    private $command;
+    protected $command;
 
     /**
      * @var string
      */
-    private $svcLogPath;
+    protected $svcLogPath;
 
     protected function setUp()
     {
@@ -96,7 +96,7 @@ abstract class AbstractTestCaseWithRegExp extends TestCase
      * @param $pathToSourceCodeAfter
      * @return CommandTester
      */
-    private function executeCommand($pathToSourceCodeBefore, $pathToSourceCodeAfter): CommandTester
+    protected function executeCommand($pathToSourceCodeBefore, $pathToSourceCodeAfter): CommandTester
     {
         $commandTester = new CommandTester($this->command);
         $commandTester->execute(

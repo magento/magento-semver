@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="SampleTest">
+        <annotations>
+            <features value="Tools"/>
+            <stories value="Story Value"/>
+            <title value="Story Title"/>
+            <description value="Story Description"/>
+            <severity value="CRITICAL"/>
+            <group value="sampleGroup"/>
+        </annotations>
+        <before>
+            <comment userInput="beforecomment1" stepKey="key1"/>
+        </before>
+        <after>
+            <comment userInput="aftercomment2" stepKey="key2"/>
+            <comment userInput="aftercomment1" stepKey="key1"/>
+        </after>
+        <comment userInput="newComment" stepKey="key1"/>
+        <comment userInput="comment2" stepKey="key2"/>
+    </test>
+</tests>
+

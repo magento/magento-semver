@@ -1,1 +1,5 @@
-Test/
+Test/Unit
+Test/Integration
+Test/Api
+Test/GraphQL
+Test/_files

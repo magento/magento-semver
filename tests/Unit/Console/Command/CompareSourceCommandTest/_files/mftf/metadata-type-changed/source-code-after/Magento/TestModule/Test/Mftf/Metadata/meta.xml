@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<operations xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:noNamespaceSchemaLocation="urn:magento:mftf:DataGenerator/etc/dataOperation.xsd">
+    <operation name="createEntity" dataType="entity" type="update"
+               auth="adminFormKey" url="/url/path/" method="POST" successRegex="/messages-message-success/" returnRegex="" >
+        <contentType>application/x-www-form-urlencoded</contentType>
+        <object dataType="entity" key="toplevelObj">
+            <field key="childField">string</field>
+        </object>
+        <field key="toplevelField">string</field>
+        <array key="toplevelArray">
+            <value>val1</value>
+            <value>val2</value>
+            <value>val3</value>
+        </array>
+    </operation>
+</operations>
