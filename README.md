@@ -1,5 +1,6 @@
 # Magento Semantic Version Checker
 
+
 ## Installation
 
 - `git clone git@github.com:magento/magento-semver.git`
