@@ -682,10 +682,10 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/test-action-group-ref-changed/source-code-before',
                 $pathToFixtures . '/test-action-group-ref-changed/source-code-after',
                 [
-                    'Mftf (MAJOR)',
+                    'Mftf (MINOR)',
                     'Test/SampleTest/key2/ref | <test> <actionGroup> ref was changed | M241'
                 ],
-                'Major change is detected.'
+                'Minor change is detected.'
             ],
             'suite-added' => [
                 $pathToFixtures . '/suite-added/source-code-before',
@@ -745,10 +745,10 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/suite-after-action-group-ref-changed/source-code-before',
                 $pathToFixtures . '/suite-after-action-group-ref-changed/source-code-after',
                 [
-                    'Mftf (MAJOR)',
+                    'Mftf (MINOR)',
                     'Suite/SampleSuite/after/z/ref | <suite> <before/after> <actionGroup> ref was changed | M417'
                 ],
-                'Major change is detected.'
+                'Minor change is detected.'
             ],
             'suite-after-action-sequence-changed' => [
                 $pathToFixtures . '/suite-after-action-sequence-changed/source-code-before',
@@ -799,10 +799,10 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/suite-before-action-group-ref-changed/source-code-before',
                 $pathToFixtures . '/suite-before-action-group-ref-changed/source-code-after',
                 [
-                    'Mftf (MAJOR)',
+                    'Mftf (MINOR)',
                     'Suite/SampleSuite/before/c/ref | <suite> <before/after> <actionGroup> ref was changed | M417'
                 ],
-                'Major change is detected.'
+                'Minor change is detected.'
             ],
             'suite-before-action-sequence-changed' => [
                 $pathToFixtures . '/suite-before-action-sequence-changed/source-code-before',

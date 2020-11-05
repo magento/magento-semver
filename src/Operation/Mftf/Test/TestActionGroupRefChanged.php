@@ -21,7 +21,7 @@ class TestActionGroupRefChanged extends MftfOperation
      * Operation Severity
      * @var int
      */
-    protected $level = Level::MAJOR;
+    protected $level = Level::MINOR;
 
     /**
      * Operation message.
