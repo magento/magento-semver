@@ -207,6 +207,14 @@ class CompareSourceCommandNonApiClassesTest extends AbstractTestCase
                 ],
                 'Patch change is detected.'
             ],
+            'docblock-return-type-not-changed' => [
+                $pathToFixtures . '/docblock-return-type-not-changed/source-code-before',
+                $pathToFixtures . '/docblock-return-type-not-changed/source-code-after',
+                [
+                    'Suggested semantic versioning change: NONE'
+                ],
+                'Patch change is detected.'
+            ],
         ];
     }
 }

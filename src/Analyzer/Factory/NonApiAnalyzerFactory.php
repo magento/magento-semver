@@ -28,8 +28,8 @@ class NonApiAnalyzerFactory implements AnalyzerFactoryInterface
     public function create(DependencyGraph $dependencyGraph = null): AnalyzerInterface
     {
         $analyzers = [
-            new ClassAnalyzer(),
-            new InterfaceAnalyzer(),
+            new ClassAnalyzer(null, null, null, $dependencyGraph),
+            new InterfaceAnalyzer(null, null, null, $dependencyGraph),
             new TraitAnalyzer(),
         ];
 
