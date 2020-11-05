@@ -66,6 +66,7 @@ class FileChangeDetector
                 });
             }
         }
+
         return array_merge($afterFiles, $beforeFiles);
     }
 

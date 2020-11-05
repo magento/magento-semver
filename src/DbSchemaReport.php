@@ -6,10 +6,10 @@
 // @codingStandardsIgnoreFile
 namespace Magento\SemanticVersionChecker;
 
-use PHPSemVerChecker\Report\Report as ReportAlias;
 use PHPSemVerChecker\SemanticVersioning\Level;
+use Magento\SemanticVersionChecker\Analyzer\EtSchemaAnalyzer;
 
-class DbSchemaReport extends ReportAlias
+class DbSchemaReport extends MergedReport
 {
     /**
      * Report constructor.
@@ -24,5 +24,6 @@ class DbSchemaReport extends ReportAlias
         $this->differences['system'] = $levels;
         $this->differences['xsd'] = $levels;
         $this->differences['less'] = $levels;
+        $this->differences[EtSchemaAnalyzer::CONTEXT] = $levels;
     }
 }
