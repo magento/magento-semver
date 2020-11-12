@@ -204,10 +204,10 @@ class CompareSourceCommandDatabaseSchemasTest extends AbstractTestCaseWithRegExp
                 $pathToFixtures . '/whitelist-was-reduced/source-code-after',
                 [
                     '/Database \(MAJOR\)/',
-                    '/Magento_DbSchema:0\s*\|\s*unit_test_table\s*\|\s*Module db schema whitelist reduced \(unit\_test\_table\).\s*\|\s*M110/',
-                    '/Magento_DbSchema:0\s*\|\s*unit_test_table3\s*\|\s*Module db schema whitelist reduced \(unit\_test\_table3\).\s*\|\s*M110/',
-                    '/Magento_DbSchemaSecond:0\s*\|\s*unit_test_table2\s*\|\s*Module db schema whitelist reduced \(unit\_test\_table2\).\s*\|\s*M110/',
-                    '/Magento_DbSchemaSecond:0\s*\|\s*unit_test_table3\s*\|\s*Module db schema whitelist reduced \(unit\_test\_table3\).\s*\|\s*M110/'
+                    '/Magento\/DbSchema\/etc\/db_schema_whitelist.json:0\s*\|\s*unit_test_table\s*\|\s*Module db schema whitelist reduced \(unit\_test\_table\).\s*\|\s*M110/',
+                    '/Magento\/DbSchemaSecond\/etc\/db_schema_whitelist\.json:0\s*\|\s*unit_test_table3\s*\|\s*Module db schema whitelist reduced \(unit\_test\_table3\).\s*\|\s*M110/',
+                    '/Magento\/DbSchemaSecond\/etc\/db_schema_whitelist\.json:0\s*\|\s*unit_test_table2\s*\|\s*Module db schema whitelist reduced \(unit\_test\_table2\).\s*\|\s*M110/',
+                    '/Magento\/DbSchema\/etc\/db_schema_whitelist.json:0\s*\|\s*unit_test_table3\s*\|\s*Module db schema whitelist reduced \(unit\_test\_table3\).\s*\|\s*M110/'
                 ],
                 'Major change is detected.'
             ],
@@ -216,7 +216,7 @@ class CompareSourceCommandDatabaseSchemasTest extends AbstractTestCaseWithRegExp
                 $pathToFixtures . '/whitelist-was-removed/source-code-after',
                 [
                     '/Database \(MAJOR\)/',
-                    '/Magento_DbSchema\s*\|\s*Db Whitelist from module Magento_DbSchema was removed\s*\|\s*M109/'
+                    '/Magento\/DbSchema\/etc\/db_schema_whitelist\.json:0\s*\|\s*Magento_DbSchema\s*|\s*Db Whitelist from module Magento_DbSchema was removed\s*\|\s*M109/'
                 ],
                 'Major change is detected.'
             ]

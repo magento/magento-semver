@@ -49,8 +49,9 @@ class DbSchemaWhitelistReductionOrRemovalAnalyzer implements AnalyzerInterface
 
         /** @var array $tablesData */
         foreach ($whiteListBefore as $moduleName => $beforeModuleTablesData) {
+            $fileBefore = $registryBefore->mapping['whitelist_json'][$moduleName];
             if (!isset($whiteListAfter[$moduleName])) {
-                $operation = new WhiteListWasRemoved($moduleName);
+                $operation = new WhiteListWasRemoved($fileBefore, $moduleName);
                 $this->report->add('database', $operation);
                 continue;
             }
@@ -58,14 +59,14 @@ class DbSchemaWhitelistReductionOrRemovalAnalyzer implements AnalyzerInterface
             /** @var array $beforeTableData */
             foreach ($beforeModuleTablesData as $tableName => $beforeTableData) {
                 if (!$this->isArrayExistsAndHasSameSize($afterModuleTablesData, $beforeTableData, $tableName)) {
-                    $this->addReport($moduleName, $tableName);
+                    $this->addReport($fileBefore, $tableName);
                     continue;
                 }
                 $afterTableData = $afterModuleTablesData[$tableName];
                 /**  @var array $beforeTablePartData */
                 foreach ($beforeTableData as $tablePartName => $beforeTablePartData) {
                     if (!$this->isArrayExistsAndHasSameSize($afterTableData, $beforeTablePartData, $tablePartName)) {
-                        $this->addReport($moduleName, $tableName .  '/' . $tablePartName);
+                        $this->addReport($fileBefore, $tableName .  '/' . $tablePartName);
                         continue;
                     }
                     $afterTablePartData = $afterTableData[$tablePartName];
@@ -73,7 +74,7 @@ class DbSchemaWhitelistReductionOrRemovalAnalyzer implements AnalyzerInterface
                     foreach ($beforeTablePartData as $name => $beforeStatus) {
                         //checks if array exists in new whitelist.json and if it has different amount of items inside
                         if (!isset($afterTablePartData[$name])) {
-                            $this->addReport($moduleName, $tableName .  '/' . $tablePartName . '/' . $name);
+                            $this->addReport($fileBefore, $tableName .  '/' . $tablePartName . '/' . $name);
                         }
                     }
                 }
@@ -102,14 +103,14 @@ class DbSchemaWhitelistReductionOrRemovalAnalyzer implements AnalyzerInterface
     }
 
     /**
-     * @param string $moduleName
+     * @param string $filePath
      * @param string $target
      *
      * @return void
      */
-    public function addReport(string $moduleName, string $target): void
+    public function addReport(string $filePath, string $target): void
     {
-        $operation = new WhiteListReduced($moduleName, $target);
+        $operation = new WhiteListReduced($filePath, $target);
         $this->report->add('database', $operation);
     }
 }

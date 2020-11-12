@@ -51,9 +51,11 @@ class LayoutConfigScanner implements ScannerInterface
      */
     public function scan(string $file): void
     {
+        $this->registry->setCurrentFile($file);
         $doc = new DOMDocument();
         $doc->loadXML(file_get_contents($file));
         $moduleName = $this->getModuleNameByPath->resolveByViewDirFilePath($file);
+
         $this->registerContainerNodes($doc->getElementsByTagName('container'), $moduleName);
         $this->registerBlockNodes($doc->getElementsByTagName('block'), $moduleName);
         $this->registerUpdateNodes($doc->getElementsByTagName('update'), $moduleName);
@@ -77,7 +79,10 @@ class LayoutConfigScanner implements ScannerInterface
         foreach ($getElementsByTagName as $node) {
             $name = $node->getAttribute('name') ?? '';
             $label = $node->getAttribute('label') ?? '';
-            $this->registry->addXmlNode($moduleName, new Container($name, $label));
+            $layoutNode = new Container($name, $label);
+            $uniqueKey = $layoutNode->getUniqueKey();
+            $this->registry->mapping[XmlRegistry::NODES_KEY][$moduleName][$uniqueKey] = $this->getRegistry()->getCurrentFile();
+            $this->registry->addXmlNode($moduleName, $layoutNode);
         }
     }
 
@@ -96,8 +101,11 @@ class LayoutConfigScanner implements ScannerInterface
             if ($node->getAttribute('cacheable') === 'false') {
                 $cacheable = false;
             }
+            $layoutNode = new Block($name, $class, $template, $cacheable);
+            $uniqueKey = $layoutNode->getUniqueKey();
+            $this->registry->mapping[XmlRegistry::NODES_KEY][$moduleName][$uniqueKey] = $this->getRegistry()->getCurrentFile();
 
-            $this->registry->addXmlNode($moduleName, new Block($name, $class, $template, $cacheable));
+            $this->registry->addXmlNode($moduleName, $layoutNode);
         }
     }
 
@@ -110,7 +118,10 @@ class LayoutConfigScanner implements ScannerInterface
         /** @var DOMNode $node */
         foreach ($getElementsByTagName as $node) {
             $handle =  $node->getAttribute('handle') ?? '';
-            $this->registry->addXmlNode($moduleName, new Update($handle));
+            $layoutNode = new Update($handle);
+            $uniqueKey = $layoutNode->getUniqueKey();
+            $this->registry->mapping[XmlRegistry::NODES_KEY][$moduleName][$uniqueKey] = $this->getRegistry()->getCurrentFile();
+            $this->registry->addXmlNode($moduleName, $layoutNode);
         }
     }
 }

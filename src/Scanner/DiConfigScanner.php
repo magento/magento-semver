@@ -55,6 +55,8 @@ class DiConfigScanner implements ScannerInterface
     private function registerVirtualTypeNodes(DOMNodeList $virtualTypeNodes, string $fileName): void
     {
         $moduleName = $this->getModuleNameByPath->resolveByEtcDirFilePath($fileName);
+        $this->getRegistry()->mapping[XmlRegistry::NODES_KEY][$moduleName] = $fileName;
+
         $scope = $this->getScopeFromFile($fileName);
         /** @var DOMNode $node */
         foreach ($virtualTypeNodes as $node) {
