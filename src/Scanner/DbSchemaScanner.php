@@ -106,6 +106,7 @@ class DbSchemaScanner implements ScannerInterface
     {
         $tables = json_decode(file_get_contents($filePath), true);
         $moduleName = $this->getModuleNameByPath->resolveByEtcDirFilePath($this->registry->getCurrentFile());
+        $this->getRegistry()->mapping['whitelist_json'][$moduleName] = $filePath;
         foreach ($tables as $tableName => $tableData) {
             $this->getRegistry()->data['whitelist_json'][$moduleName][$tableName] = $tableData;
         }
@@ -155,7 +156,9 @@ class DbSchemaScanner implements ScannerInterface
     private function processTable(array $data)
     {
         $name = $data['@attributes']['name'];
-        $moduleName = $this->getModuleNameByPath->resolveByEtcDirFilePath($this->registry->getCurrentFile());
+        $file = $this->getRegistry()->getCurrentFile();
+        $moduleName = $this->getModuleNameByPath->resolveByEtcDirFilePath($file);
+        $this->getRegistry()->mapping['table'][$moduleName] = $file;
         $resource = isset($data['@attributes']['resource']) ? $data['@attributes']['resource'] : 'default';
         $this->getRegistry()->data['table'][$moduleName][$name]['resource'] = $resource;
 

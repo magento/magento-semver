@@ -59,6 +59,7 @@ class SystemXmlScanner implements ScannerInterface
     {
         $doc        = new DOMDocument();
         $moduleName = $this->moduleNameResolver->resolveByEtcDirFilePath($file);
+        $this->getRegistry()->mapping[XmlRegistry::NODES_KEY][$moduleName] = $file;
 
         $doc->load($file);
         $this->xPath = new DOMXPath($doc);

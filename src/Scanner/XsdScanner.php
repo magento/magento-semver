@@ -138,6 +138,11 @@ class XsdScanner implements ScannerInterface
         $relativeFilePath = $this->getRelativePath($file, $moduleName);
 
         $this->registry->data[XmlRegistry::NODES_KEY][$moduleName][$relativeFilePath][] = $node;
+        $this->registry->mapping[XmlRegistry::NODES_KEY][$moduleName][$relativeFilePath] = $file;
+
+        //addModulePath
+        $this->registry->mapping[XmlRegistry::NODES_KEY][$moduleName]['path'] = $this->getModulePath($file, $moduleName);
+
     }
 
     /**
@@ -153,5 +158,10 @@ class XsdScanner implements ScannerInterface
         $moduleSubPathPosition = strpos($file, $moduleSubPath);
 
         return substr($file, $moduleSubPathPosition + strlen($moduleSubPath));
+    }
+
+    private function getModulePath(string $file, string $module) {
+        $relativePath = $this->getRelativePath($file, $module);
+        return substr($file, 0, strlen($file) - strlen($relativePath));
     }
 }

@@ -56,17 +56,18 @@ class VirtualTypeAnalyzer implements AnalyzerInterface
 
         foreach ($nodesBefore as $moduleName => $moduleNodes) {
             /* @var VirtualType $nodeBefore */
+            $fileBefore = $registryBefore->mapping[XmlRegistry::NODES_KEY][$moduleName];
             foreach ($moduleNodes as $name => $nodeBefore) {
                 // search nodesAfter the by name
                 $nodeAfter = $nodesAfter[$moduleName][$name] ?? false;
 
                 if ($nodeAfter !== false && $nodeBefore !== $nodeAfter) {
                     /* @var VirtualType $nodeAfter */
-                    $this->triggerNodeChange($nodeBefore, $nodeAfter);
+                    $this->triggerNodeChange($nodeBefore, $nodeAfter, $fileBefore);
                     continue;
                 }
 
-                $operation = new VirtualTypeRemoved($moduleName, $name);
+                $operation = new VirtualTypeRemoved($fileBefore, $name);
                 $this->report->add('di', $operation);
             }
         }
@@ -103,8 +104,9 @@ class VirtualTypeAnalyzer implements AnalyzerInterface
      *
      * @param VirtualType $nodeBefore
      * @param VirtualType $nodeAfter
+     * @param string $beforeFilePath
      */
-    private function triggerNodeChange(VirtualType $nodeBefore, VirtualType $nodeAfter): void
+    private function triggerNodeChange(VirtualType $nodeBefore, VirtualType $nodeAfter, string $beforeFilePath): void
     {
         $bcFieldBefore = [
             'type' => $nodeBefore->getType(),
@@ -124,7 +126,7 @@ class VirtualTypeAnalyzer implements AnalyzerInterface
         foreach ($bcFieldBefore as $fieldName => $valueBefore) {
             $valueAfter = $bcFieldAfter[$fieldName];
             if ($valueBefore !== $valueAfter) {
-                $operation = new VirtualTypeChanged($nodeBefore->getName(), $fieldName);
+                $operation = new VirtualTypeChanged($beforeFilePath, $fieldName);
                 $this->report->add('di', $operation);
             }
         }

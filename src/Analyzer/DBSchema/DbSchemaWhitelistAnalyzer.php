@@ -54,17 +54,16 @@ class DbSchemaWhitelistAnalyzer implements AnalyzerInterface
         $dbWhiteListContent = $registryAfter->data['whitelist_json'] ?? [];
 
         foreach ($registryTablesAfter as $moduleName => $tablesData) {
+            $fileAfter = $registryAfter->mapping['table'][$moduleName];
             if (count($tablesData)) {
                 foreach (array_keys($tablesData) as $table) {
                     if (!isset($dbWhiteListContent[$moduleName][$table])) {
-                        $operation = new InvalidWhitelist($moduleName, $table);
+                        $operation = new InvalidWhitelist($fileAfter, $table);
                         $this->report->add('database', $operation);
                     }
                 }
             }
         }
-
-
         return $this->report;
     }
 }

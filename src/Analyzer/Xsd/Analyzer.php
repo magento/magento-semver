@@ -73,10 +73,10 @@ class Analyzer implements AnalyzerInterface
         $commonModules  = array_intersect(array_keys($nodesBefore), array_keys($nodesAfter));
 
         //process added modules
-        $this->reportAddedModules($addedModules);
+        $this->reportAddedModules($addedModules, $registryAfter);
 
         //process removed modules
-        $this->reportRemovedModules($removedModules);
+        $this->reportRemovedModules($removedModules, $registryBefore);
 
         //process common modules
         foreach ($commonModules as $moduleName) {
@@ -91,10 +91,10 @@ class Analyzer implements AnalyzerInterface
             $commonFiles  = array_intersect($filesBefore, $filesAfter);
 
             //process added files
-            $this->reportAddedSchemaDeclarations($moduleName, $addedFiles);
+            $this->reportAddedSchemaDeclarations($moduleName, $addedFiles, $registryAfter);
 
             //process removed files
-            $this->reportRemovedSchemaDeclarations($moduleName, $removedFiles);
+            $this->reportRemovedSchemaDeclarations($moduleName, $removedFiles, $registryBefore);
 
             //process common files
             foreach ($commonFiles as $fileName) {
@@ -106,10 +106,16 @@ class Analyzer implements AnalyzerInterface
                 $removedNodes = array_diff_key($nodesBefore, $nodesAfter);
 
                 //process added nodes
-                $this->reportAddedNodes($moduleName, $addedNodes);
+                if ($addedNodes) {
+                    $filePath = $registryAfter->mapping[XmlRegistry::NODES_KEY][$moduleName][$fileName];
+                    $this->reportAddedNodes($filePath, $addedNodes);
+                }
 
                 //process removed nodes
-                $this->reportRemovedNodes($moduleName, $removedNodes);
+                if($removedNodes) {
+                    $filePath = $registryBefore->mapping[XmlRegistry::NODES_KEY][$moduleName][$fileName];
+                    $this->reportRemovedNodes($filePath, $removedNodes);
+                }
             }
         }
 
@@ -159,12 +165,13 @@ class Analyzer implements AnalyzerInterface
      * Creates reports for <var>$modules</var> that have been added.
      *
      * @param array $modules
+     * @param Registry $beforeRegistry
      */
-    private function reportAddedModules(array $modules): void
+    private function reportAddedModules(array $modules, Registry $beforeRegistry): void
     {
         foreach ($modules as $moduleName => $files) {
             $fileNames = array_keys($files);
-            $this->reportAddedSchemaDeclarations($moduleName, $fileNames);
+            $this->reportAddedSchemaDeclarations($moduleName, $fileNames, $beforeRegistry);
         }
     }
 
@@ -202,12 +209,14 @@ class Analyzer implements AnalyzerInterface
      * Creates reports for <var>$files</var> in <var>$module</var> that have been added.
      *
      * @param string $module
-     * @param string[] $files
+     * @param string[] $relativeFilePaths
+     * @param Registry $registry
      */
-    private function reportAddedSchemaDeclarations(string $module, array $files): void
+    private function reportAddedSchemaDeclarations(string $module, array $relativeFilePaths, Registry $registry): void
     {
-        foreach ($files as $file) {
-            $this->report->add(self::CONTEXT, new SchemaDeclarationAdded($module, $file));
+        foreach ($relativeFilePaths as $relativeFilePath) {
+            $fullFilePath = $registry->mapping[XmlRegistry::NODES_KEY][$module][$relativeFilePath];
+            $this->report->add(self::CONTEXT, new SchemaDeclarationAdded($fullFilePath, $relativeFilePath));
         }
     }
 
@@ -215,32 +224,33 @@ class Analyzer implements AnalyzerInterface
      * Creates reports for <var>$modules</var> that have been removed.
      *
      * @param array $modules
+     * @param Registry $registryBefore
      */
-    private function reportRemovedModules(array $modules): void
+    private function reportRemovedModules(array $modules, Registry $registryBefore): void
     {
         foreach ($modules as $moduleName => $files) {
             $fileNames = array_keys($files);
-            $this->reportRemovedSchemaDeclarations($moduleName, $fileNames);
+            $this->reportRemovedSchemaDeclarations($moduleName, $fileNames, $registryBefore);
         }
     }
 
     /**
      * Creates reports for <var>$nodes</var> that have been removed from <var>$file</var> in <var>$module</var>.
      *
-     * @param string $module
+     * @param string $filePath
      * @param NodeInterface[] $nodes
      */
-    private function reportRemovedNodes(string $module, array $nodes): void
+    private function reportRemovedNodes(string $filePath, array $nodes): void
     {
         foreach ($nodes as $node) {
             switch (true) {
                 case $node instanceof AttributeNode:
-                    $data = new AttributeRemoved($module, $node->getName());
+                    $data = new AttributeRemoved($filePath, $node->getName());
 
                     $this->report->add(self::CONTEXT, $data);
                     break;
                 case $node instanceof ElementNode:
-                    $data = new NodeRemoved($module, $node->getName());
+                    $data = new NodeRemoved($filePath, $node->getName());
 
                     $this->report->add(self::CONTEXT, $data);
                     break;
@@ -254,12 +264,14 @@ class Analyzer implements AnalyzerInterface
      * Creates reports for <var>$files</var> that have been removed in <var>$module</var>
      *
      * @param string $module
-     * @param array $files
+     * @param array $relativeFilePaths
+     * @param Registry $registryBefore
      */
-    private function reportRemovedSchemaDeclarations(string $module, array $files): void
+    private function reportRemovedSchemaDeclarations(string $module, array $relativeFilePaths, Registry $registryBefore): void
     {
-        foreach ($files as $file) {
-            $this->report->add(self::CONTEXT, new SchemaDeclarationRemoved($module, $file));
+        foreach ($relativeFilePaths as $relativeFilePath) {
+            $fullPath = $registryBefore->mapping[XmlRegistry::NODES_KEY][$module][$relativeFilePath];
+            $this->report->add(self::CONTEXT, new SchemaDeclarationRemoved($fullPath, $relativeFilePath));
         }
     }
 }

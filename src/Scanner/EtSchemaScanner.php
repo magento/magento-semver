@@ -61,6 +61,7 @@ class EtSchemaScanner
         $moduleName = $this->getModuleNameByPath->resolveByEtcDirFilePath($file);
         $data = $this->converter->convert($doc);
         $this->getRegistry()->data[EtSchemaAnalyzer::CONTEXT][$moduleName] = $data;
+        $this->getRegistry()->mapping[EtSchemaAnalyzer::CONTEXT][$moduleName] = $file;
     }
 
     /**

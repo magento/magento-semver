@@ -55,7 +55,7 @@ class DbSchemaWhitelistAnalyzer implements AnalyzerInterface
                     $dbWhiteListFile
                 );
                 if (!file_exists($dbWhiteListFile)) {
-                    $operation = new WhiteListWasRemoved($moduleName);
+                    $operation = new WhiteListWasRemoved($dbWhiteListFile, $moduleName);
                     $report->add('database', $operation);
                     continue;
                 } else {
