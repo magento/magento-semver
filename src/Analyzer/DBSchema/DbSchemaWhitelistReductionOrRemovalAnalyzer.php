@@ -103,14 +103,14 @@ class DbSchemaWhitelistReductionOrRemovalAnalyzer implements AnalyzerInterface
     }
 
     /**
-     * @param string $filePath
+     * @param string $location
      * @param string $target
      *
      * @return void
      */
-    public function addReport(string $filePath, string $target): void
+    public function addReport(string $location, string $target): void
     {
-        $operation = new WhiteListReduced($filePath, $target);
+        $operation = new WhiteListReduced($location, $target);
         $this->report->add('database', $operation);
     }
 }

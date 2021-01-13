@@ -88,13 +88,15 @@ class Analyzer implements AnalyzerInterface
             $moduleNodesAfter  = $nodesAfter[$moduleName];
             $addedNodes        = array_diff_key($moduleNodesAfter, $moduleNodesBefore);
             $removedNodes      = array_diff_key($moduleNodesBefore, $moduleNodesAfter);
-            $afterFile = $registryAfter->mapping[XmlRegistry::NODES_KEY][$moduleName];
-
-
-            $this->reportAddedNodes($afterFile, $addedNodes);
-            $this->reportRemovedNodes($afterFile, $removedNodes);
+            if (isset($registryBefore->mapping[XmlRegistry::NODES_KEY][$moduleName])) {
+                $beforeFile = $registryBefore->mapping[XmlRegistry::NODES_KEY][$moduleName];
+                $this->reportRemovedNodes($beforeFile, $removedNodes);
+            }
+            if (isset($registryAfter->mapping[XmlRegistry::NODES_KEY][$moduleName])) {
+                $afterFile = $registryAfter->mapping[XmlRegistry::NODES_KEY][$moduleName];
+                $this->reportAddedNodes($afterFile, $addedNodes);
+            }
         }
-
         return $this->report;
     }
 

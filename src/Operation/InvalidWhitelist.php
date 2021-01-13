@@ -46,12 +46,12 @@ class InvalidWhitelist extends Operation
     protected $fileBefore;
 
     /**
-     * @param string $fileBefore
+     * @param string $fileAfter
      * @param string $target
      */
-    public function __construct($fileBefore, $target)
+    public function __construct($fileAfter, $target)
     {
-        $this->fileBefore = $fileBefore;
+        $this->fileBefore = $fileAfter;
         $this->target = $target;
     }
 
