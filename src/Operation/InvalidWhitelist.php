@@ -43,15 +43,15 @@ class InvalidWhitelist extends Operation
      *
      * @var string
      */
-    protected $fileBefore;
+    protected $location;
 
     /**
-     * @param string $fileAfter
+     * @param string $location
      * @param string $target
      */
-    public function __construct($fileAfter, $target)
+    public function __construct($location, $target)
     {
-        $this->fileBefore = $fileAfter;
+        $this->location = $location;
         $this->target = $target;
     }
 
@@ -62,7 +62,7 @@ class InvalidWhitelist extends Operation
      */
     public function getLocation()
     {
-        return $this->fileBefore;
+        return $this->location;
     }
 
     public function getReason()
