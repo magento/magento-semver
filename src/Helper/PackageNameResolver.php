@@ -46,8 +46,8 @@ class PackageNameResolver
             && $composerDirPath !== $sourceAfterDir
             && $composerDirPath !== '.') {
 
-            $composerPath = '$composerDirPath' . '/composer.json';
-            if (is_readable($composerPath)) {
+            $composerPath = $composerDirPath . '/composer.json';
+            if (is_file($composerPath)) {
                 return $composerPath;
             }
             $composerDirPath = dirname($filepath, ++$level);
