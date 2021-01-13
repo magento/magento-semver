@@ -14,8 +14,7 @@ use PHPSemVerChecker\Registry\Registry;
 use PHPSemVerChecker\Report\Report;
 
 /**
- * Class DbSchemaAnalyzer
- * @package Magento\SemanticVersionChecker\Analyzer
+ * Implements an analyzer for the database schema whitelist files
  */
 class DbSchemaWhitelistAnalyzer implements AnalyzerInterface
 {
@@ -25,6 +24,18 @@ class DbSchemaWhitelistAnalyzer implements AnalyzerInterface
      * @var string
      */
     protected $context = 'db_schema';
+    /**
+     * @var Report
+     */
+    private $report;
+
+    /**
+     * DbSchemaWhitelistAnalyzer constructor.
+     * @param Report $report
+     */
+    public function __construct(Report $report) {
+        $this->report = $report;
+    }
 
     /**
      * Class analyzer.
@@ -35,29 +46,25 @@ class DbSchemaWhitelistAnalyzer implements AnalyzerInterface
      */
     public function analyze($registryBefore, $registryAfter)
     {
-        $report = new Report();
         $registryTablesAfter = $registryAfter->data['table'] ?? [];
         $registryTablesBefore = $registryBefore->data['table'] ?? [];
 
+        //Take file like an example
+        //We will replace module_name in file_path in order to get
+        //correct module
+        $dbFile = $registryAfter->getCurrentFile();
         foreach ($registryTablesAfter as $moduleName => $tablesData) {
             if (count($tablesData)) {
-                //Take file like an example
-                //We will replace module_name in file_path in order to get
-                //correct module
-                $dbFile = $registryAfter->getCurrentFile();
+                $dbWhiteListFile =
                 $dbWhiteListFile = preg_replace(
-                    '/(.*Magento\/)\w+(\/.*)/',
-                    '$1' . explode("_", $moduleName)[1] . '$2',
+                    '/(.*Magento\/)\w+(\/.*)(db_schema\.xml)/',
+                    '$1' . explode("_", $moduleName)[1] . '$2'
+                    . 'db_schema_whitelist.json',
                     $dbFile
-                );
-                $dbWhiteListFile = str_replace(
-                    'db_schema.xml',
-                    'db_schema_whitelist.json',
-                    $dbWhiteListFile
                 );
                 if (!file_exists($dbWhiteListFile)) {
                     $operation = new WhiteListWasRemoved($dbWhiteListFile, $moduleName);
-                    $report->add('database', $operation);
+                    $this->report->add('database', $operation);
                     continue;
                 } else {
                     $dbWhiteListContent = json_decode(
@@ -70,13 +77,11 @@ class DbSchemaWhitelistAnalyzer implements AnalyzerInterface
                 foreach (array_keys($tables) as $table) {
                     if (!isset($dbWhiteListContent[$table])) {
                         $operation = new InvalidWhitelist($dbWhiteListFile, $table);
-                        $report->add('database', $operation);
+                        $this->report->add('database', $operation);
                     }
                 }
             }
         }
-
-
-        return $report;
+        return $this->report;
     }
 }
