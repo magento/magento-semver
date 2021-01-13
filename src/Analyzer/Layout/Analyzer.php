@@ -63,13 +63,6 @@ class Analyzer implements AnalyzerInterface
             $moduleNodesAfter = [];
 
             /**
-             * @var LayoutNodeInterface $node
-             */
-            foreach ($nodesAfter[$moduleName] ?? [] as $node) {
-                $moduleNodesAfter[$moduleName][$node->getUniqueKey()] = $node;
-            }
-
-            /**
              * @var string $nodeName
              * @var LayoutNodeInterface $node
              */
