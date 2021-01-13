@@ -170,8 +170,8 @@ class Analyzer implements AnalyzerInterface
     private function reportAddedModules(array $modules, Registry $beforeRegistry): void
     {
         foreach ($modules as $moduleName => $files) {
-            $fileNames = array_keys($files);
-            $this->reportAddedSchemaDeclarations($moduleName, $fileNames, $beforeRegistry);
+            $relativeFilePaths = array_keys($files);
+            $this->reportAddedSchemaDeclarations($moduleName, $relativeFilePaths, $beforeRegistry);
         }
     }
 
@@ -229,8 +229,8 @@ class Analyzer implements AnalyzerInterface
     private function reportRemovedModules(array $modules, Registry $registryBefore): void
     {
         foreach ($modules as $moduleName => $files) {
-            $fileNames = array_keys($files);
-            $this->reportRemovedSchemaDeclarations($moduleName, $fileNames, $registryBefore);
+            $relativeFilePaths = array_keys($files);
+            $this->reportRemovedSchemaDeclarations($moduleName, $relativeFilePaths, $registryBefore);
         }
     }
 

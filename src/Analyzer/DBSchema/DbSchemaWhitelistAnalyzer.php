@@ -5,18 +5,17 @@
  * See COPYING.txt for license details.
  */
 
-declare(strict_types=1);
-
 namespace Magento\SemanticVersionChecker\Analyzer\DBSchema;
 
 use Magento\SemanticVersionChecker\Analyzer\AnalyzerInterface;
 use Magento\SemanticVersionChecker\Operation\InvalidWhitelist;
+use Magento\SemanticVersionChecker\Operation\WhiteListWasRemoved;
 use PHPSemVerChecker\Registry\Registry;
 use PHPSemVerChecker\Report\Report;
 
 /**
- * Implements an analyzer fdr the database schema whitelist files.
- * @noinspection PhpUnused
+ * Class DbSchemaAnalyzer
+ * @package Magento\SemanticVersionChecker\Analyzer
  */
 class DbSchemaWhitelistAnalyzer implements AnalyzerInterface
 {
@@ -26,44 +25,58 @@ class DbSchemaWhitelistAnalyzer implements AnalyzerInterface
      * @var string
      */
     protected $context = 'db_schema';
-    /**
-     * @var Report
-     */
-    private $report;
-
-    /**
-     * @param Report $report
-     */
-    public function __construct(
-        Report $report
-    ) {
-        $this->report = $report;
-    }
 
     /**
      * Class analyzer.
      *
      * @param Registry $registryBefore
      * @param Registry $registryAfter
-     *
      * @return Report
      */
     public function analyze($registryBefore, $registryAfter)
     {
+        $report = new Report();
         $registryTablesAfter = $registryAfter->data['table'] ?? [];
-        $dbWhiteListContent = $registryAfter->data['whitelist_json'] ?? [];
+        $registryTablesBefore = $registryBefore->data['table'] ?? [];
 
         foreach ($registryTablesAfter as $moduleName => $tablesData) {
-            $fileAfter = $registryAfter->mapping['table'][$moduleName];
             if (count($tablesData)) {
-                foreach (array_keys($tablesData) as $table) {
-                    if (!isset($dbWhiteListContent[$moduleName][$table])) {
-                        $operation = new InvalidWhitelist($fileAfter, $table);
-                        $this->report->add('database', $operation);
+                //Take file like an example
+                //We will replace module_name in file_path in order to get
+                //correct module
+                $dbFile = $registryAfter->getCurrentFile();
+                $dbWhiteListFile = preg_replace(
+                    '/(.*Magento\/)\w+(\/.*)/',
+                    '$1' . explode("_", $moduleName)[1] . '$2',
+                    $dbFile
+                );
+                $dbWhiteListFile = str_replace(
+                    'db_schema.xml',
+                    'db_schema_whitelist.json',
+                    $dbWhiteListFile
+                );
+                if (!file_exists($dbWhiteListFile)) {
+                    $operation = new WhiteListWasRemoved($dbWhiteListFile, $moduleName);
+                    $report->add('database', $operation);
+                    continue;
+                } else {
+                    $dbWhiteListContent = json_decode(
+                        file_get_contents($dbWhiteListFile),
+                        true
+                    );
+                }
+
+                $tables = array_replace($tablesData, $registryTablesBefore[$moduleName] ?? []);
+                foreach (array_keys($tables) as $table) {
+                    if (!isset($dbWhiteListContent[$table])) {
+                        $operation = new InvalidWhitelist($dbWhiteListFile, $table);
+                        $report->add('database', $operation);
                     }
                 }
             }
         }
-        return $this->report;
+
+
+        return $report;
     }
 }

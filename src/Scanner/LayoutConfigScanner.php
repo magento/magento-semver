@@ -80,9 +80,7 @@ class LayoutConfigScanner implements ScannerInterface
             $name = $node->getAttribute('name') ?? '';
             $label = $node->getAttribute('label') ?? '';
             $layoutNode = new Container($name, $label);
-            $uniqueKey = $layoutNode->getUniqueKey();
-            $this->registry->mapping[XmlRegistry::NODES_KEY][$moduleName][$uniqueKey] = $this->getRegistry()->getCurrentFile();
-            $this->registry->addXmlNode($moduleName, $layoutNode);
+            $this->registry->addLayoutContainerNode($layoutNode, $moduleName);
         }
     }
 
@@ -102,10 +100,7 @@ class LayoutConfigScanner implements ScannerInterface
                 $cacheable = false;
             }
             $layoutNode = new Block($name, $class, $template, $cacheable);
-            $uniqueKey = $layoutNode->getUniqueKey();
-            $this->registry->mapping[XmlRegistry::NODES_KEY][$moduleName][$uniqueKey] = $this->getRegistry()->getCurrentFile();
-
-            $this->registry->addXmlNode($moduleName, $layoutNode);
+            $this->registry->addLayoutContainerNode($layoutNode, $moduleName);
         }
     }
 
@@ -119,9 +114,7 @@ class LayoutConfigScanner implements ScannerInterface
         foreach ($getElementsByTagName as $node) {
             $handle =  $node->getAttribute('handle') ?? '';
             $layoutNode = new Update($handle);
-            $uniqueKey = $layoutNode->getUniqueKey();
-            $this->registry->mapping[XmlRegistry::NODES_KEY][$moduleName][$uniqueKey] = $this->getRegistry()->getCurrentFile();
-            $this->registry->addXmlNode($moduleName, $layoutNode);
+            $this->registry->addLayoutContainerNode($layoutNode, $moduleName);
         }
     }
 }

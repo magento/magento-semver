@@ -46,8 +46,8 @@ class Analyzer implements AnalyzerInterface
     /**
      * Compared registryBefore and registryAfter find changes for layout block types
      *
-     * @param XmlRegistry|Registry $registryBefore
-     * @param XmlRegistry|Registry $registryAfter
+     * @param XmlRegistry $registryBefore
+     * @param XmlRegistry $registryAfter
      * @return Report
      */
     public function analyze($registryBefore, $registryAfter)
@@ -74,9 +74,10 @@ class Analyzer implements AnalyzerInterface
              * @var LayoutNodeInterface $node
              */
             foreach ($moduleNodesBefore as $nodeName => $node) {
-                $nodeAfter = $moduleNodesAfter[$moduleName][$node->getUniqueKey()] ?? false;
-                $beforeFilePath = $registryBefore->mapping[XmlRegistry::NODES_KEY][$moduleName][$node->getUniqueKey()];
+                $uniqueKey = $node->getUniqueKey();
+                $nodeAfter = $moduleNodesAfter[$moduleName][$uniqueKey] ?? false;
                 if ($nodeAfter === false) {
+                    $beforeFilePath = $registryBefore->getLayoutFile($moduleName, $uniqueKey);
                     $this->triggerNodeRemoved($moduleName, $node, $beforeFilePath);
                 }
             }

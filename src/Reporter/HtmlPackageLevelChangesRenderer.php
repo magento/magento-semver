@@ -40,7 +40,20 @@ class HtmlPackageLevelChangesRenderer
     /**
      * @var array
      */
-    private $contexts;
+    private static $contexts = [
+        'class',
+        'function',
+        'interface',
+        'trait',
+        'database',
+        'layout',
+        'di',
+        'system',
+        'xsd',
+        'less',
+        'mftf',
+        EtSchemaAnalyzer::CONTEXT
+    ];
 
     /**
      * @var PackageNameResolver
@@ -48,7 +61,6 @@ class HtmlPackageLevelChangesRenderer
     private $packageNameResolver;
 
     /**
-     * HtmlPackagingJsonRenderer constructor.
      * @param Report $report
      * @param InputInterface $input
      * @param OutputInterface $output
@@ -59,20 +71,6 @@ class HtmlPackageLevelChangesRenderer
         $this->report = $report;
         $this->input = $input;
         $this->output = $output;
-        $this->contexts = [
-            'class',
-            'function',
-            'interface',
-            'trait',
-            'database',
-            'layout',
-            'di',
-            'system',
-            'xsd',
-            'less',
-            'mftf',
-            EtSchemaAnalyzer::CONTEXT
-        ];
         $this->packageNameResolver = new PackageNameResolver($input);
     }
 
@@ -154,19 +152,19 @@ COPY_PKG_JSON_SCRIPT
     private function getPackageChanges():array
     {
         $results = [];
-        foreach ($this->contexts as $context) {
+        foreach (self::$contexts as $context) {
             foreach (Level::asList('desc') as $level) {
                 $reportForLevel = $this->report[$context][$level] ?? [];
                 /** @var \PHPSemVerChecker\Operation\Operation $operation */
                 foreach ($reportForLevel as $operation) {
-                    $pkgName = $this->getPackageName($operation);
+                    $pkgName = $this->packageNameResolver->getPackageName($operation->getLocation());
                     if ($pkgName === null) {
                         $error = "Unable to resolve package name for composer.json for change to file: "
                             . $operation->getLocation();
                         $this->output->writeln('<pre>' . $error  . '</pre>');
                         continue;
                     }
-                    $this->insertPackageChange($pkgName, $level, $results);
+                    $this->saveLevelOfChange($pkgName, $level, $results);
                 }
             }
         }
@@ -181,7 +179,7 @@ COPY_PKG_JSON_SCRIPT
      * @param int $level
      * @param array $results
      */
-    private function insertPackageChange(string $pkgName, int $level, array &$results) {
+    private function saveLevelOfChange(string $pkgName, int $level, array &$results) {
         if(isset($results[$pkgName]))
         {
             if ($level <= $results[$pkgName]) {
@@ -199,7 +197,7 @@ COPY_PKG_JSON_SCRIPT
      * @param array $pkgChanges
      * @return array
      */
-    private function transformOutputArray(array &$pkgChanges) {
+    private function transformOutputArray(array $pkgChanges) {
         $results = [];
         foreach ($pkgChanges as $pkgName => $level) {
             $results[] = [
@@ -208,15 +206,5 @@ COPY_PKG_JSON_SCRIPT
             ];
         }
         return $results;
-    }
-
-    /**
-     * Get ModulePackage name given the changed file's location
-     *
-     * @param Operation $operation
-     * @return string|null
-     */
-    private function getPackageName(Operation $operation):?string {
-        return $this->packageNameResolver->getPackageName($operation->getLocation());
     }
 }
