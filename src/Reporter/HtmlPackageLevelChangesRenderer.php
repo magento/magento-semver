@@ -186,9 +186,7 @@ COPY_PKG_JSON_SCRIPT
                 return;
             }
         }
-        if($level > Level::PATCH) {
-            $results[$pkgName] = $level;
-        }
+        $results[$pkgName] = $level;
     }
 
     /**
@@ -199,11 +197,14 @@ COPY_PKG_JSON_SCRIPT
      */
     private function transformOutputArray(array $pkgChanges) {
         $results = [];
+        $minimumChangeLevel = $this->input->getArgument('allowed-change-level');
         foreach ($pkgChanges as $pkgName => $level) {
-            $results[] = [
-                'name' => $pkgName,
-                'level' => Level::toString($level)
-            ];
+            if ($level > $minimumChangeLevel) {
+                $results[] = [
+                    'name' => $pkgName,
+                    'level' => Level::toString($level)
+                ];
+            }
         }
         return $results;
     }
