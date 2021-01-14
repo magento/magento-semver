@@ -16,7 +16,7 @@ use Magento\SemanticVersionChecker\Analyzer\DBSchema\DbSchemaPrimaryKeyAnalyzer;
 use Magento\SemanticVersionChecker\Analyzer\DBSchema\DbSchemaUniqueKeyAnalyzer;
 use Magento\SemanticVersionChecker\Analyzer\DBSchema\DbSchemaTableAnalyzer;
 use Magento\SemanticVersionChecker\Analyzer\DBSchema\DbSchemaColumnAnalyzer;
-use Magento\SemanticVersionChecker\Analyzer\DbSchema\DbSchemaWhitelistAnalyzer;
+use Magento\SemanticVersionChecker\Analyzer\DBSchema\DbSchemaWhitelistAnalyzer;
 use Magento\SemanticVersionChecker\Analyzer\DBSchema\DbSchemaWhitelistReductionOrRemovalAnalyzer;
 use Magento\SemanticVersionChecker\ClassHierarchy\DependencyGraph;
 use PHPSemVerChecker\Report\Report;
