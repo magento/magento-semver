@@ -83,7 +83,7 @@ class HtmlPackageLevelChangesRenderer
         $this->output->writeln('<tr class="text"><td class="test-name">Package Level Changes</td>');
         //Skip writing table if no severe changes are detected
        if (!$pkgChangesJson) {
-           $this->output->writeln('<td>No severe changes found to packages.</td></tr>');
+           $this->output->writeln('<td>No BIC changes found to packages</td></tr>');
            return;
        }
         $this->output->writeln('<td><button class="btn-danger collapsible">Details</button><div class="content">');
