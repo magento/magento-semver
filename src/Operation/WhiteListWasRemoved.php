@@ -48,13 +48,13 @@ class WhiteListWasRemoved extends Operation
     private $location;
 
     /**
+     * @param string $location
      * @param string $target
-     * @param string $module
      */
-    public function __construct($target, $module)
+    public function __construct($location, $target)
     {
-        $this->location = $target;
-        $this->target = $module;
+        $this->location = $location;
+        $this->target = $target;
     }
 
     /**

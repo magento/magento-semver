@@ -60,7 +60,7 @@ class Analyzer implements AnalyzerInterface
 
         foreach (array_keys($nodesBefore) as $moduleName) {
             $moduleNodesBefore = $nodesBefore[$moduleName] ?? [];
-            $moduleNodesAfter = [];
+            $moduleNodesAfter = $nodesAfter[$moduleName] ?? [];
 
             /**
              * @var string $nodeName
@@ -68,7 +68,7 @@ class Analyzer implements AnalyzerInterface
              */
             foreach ($moduleNodesBefore as $nodeName => $node) {
                 $uniqueKey = $node->getUniqueKey();
-                $nodeAfter = $moduleNodesAfter[$moduleName][$uniqueKey] ?? false;
+                $nodeAfter = $moduleNodesAfter[$uniqueKey] ?? false;
                 if ($nodeAfter === false) {
                     $beforeFilePath = $registryBefore->getLayoutFile($moduleName, $uniqueKey);
                     $this->triggerNodeRemoved($moduleName, $node, $beforeFilePath);
