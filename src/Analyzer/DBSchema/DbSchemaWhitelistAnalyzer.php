@@ -16,7 +16,7 @@ use PHPSemVerChecker\Registry\Registry;
 use PHPSemVerChecker\Report\Report;
 
 /**
- * Implements an analyzer fdr the database schema whitelist files.
+ * Implements an analyzer for the database schema whitelist files.
  * @noinspection PhpUnused
  */
 class DbSchemaWhitelistAnalyzer implements AnalyzerInterface
