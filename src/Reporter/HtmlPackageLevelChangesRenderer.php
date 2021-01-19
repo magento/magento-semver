@@ -180,7 +180,7 @@ COPY_PKG_JSON_SCRIPT
      * @param array $results
      */
     private function saveLevelOfChange(string $pkgName, int $level, array &$results) {
-        if (isset($results[$pkgName]) && $level <= $results[$pkgName]) {
+        if (!isset($results[$pkgName]) || $level > $results[$pkgName]) {
             $results[$pkgName] = $level;
         }
     }
