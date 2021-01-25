@@ -18,28 +18,13 @@ class HtmlParseInfoContainer
      */
     public $pattern;
 
-    const checkOnlyFirstXPathMatch = 0;
-    const checkAllXpathMatches = 1;
-
-    /**
-     * @var bool
-     */
-    public $isRegex;
-
-    /**
-     * @var int
-     */
-    public $xpathSearchType;
-
-    public function __construct(?string $pattern,
-                                ?string $xpath = null,
-                                bool $isRegex = false,
-                                int $xpathSearchType = self::checkOnlyFirstXPathMatch)
+    public function __construct(?string $pattern, ?string $xpath = null)
     {
+        if( !($pattern || $xpath) ) {
+            throw new \InvalidArgumentException('$pattern and $xpath can not both be empty');
+        }
         $this->xpath = $xpath;
         $this->pattern = $pattern;
-        $this->isRegex = $isRegex;
-        $this->xpathSearchType = $xpathSearchType;
     }
 
 }
