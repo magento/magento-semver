@@ -60,7 +60,7 @@ class CompareSourceCommandXsdSchemasTest extends AbstractTestCase
                 $pathToFixtures . '/optional-node-added/source-code-after',
                 [
                     'Suggested semantic versioning change: MINOR',
-                    'CompareSourceCommandTest/_files/xsd-schema/optional-node-added/source-code-after/Magento/TestModule/etc/test-schema.xsd:0',
+                    'optional-node-added/source-code-after/Magento/TestModule/etc/test-schema.xsd:0',
                     'addedOptionalElement | An optional node was added | M0133',
                 ],
                 'Minor change is detected.',
@@ -70,7 +70,7 @@ class CompareSourceCommandXsdSchemasTest extends AbstractTestCase
                 $pathToFixtures . '/optional-attribute-added/source-code-after',
                 [
                     'Suggested semantic versioning change: MINOR',
-                    'CompareSourceCommandTest/_files/xsd-schema/optional-attribute-added/source-code-after/Magento/TestModule/etc/test-schema.xsd:0',
+                    'optional-attribute-added/source-code-after/Magento/TestModule/etc/test-schema.xsd:0',
                     'optionalAttribute | An optional attribute was added | M0134',
                 ],
                 'Minor change is detected.',
@@ -80,7 +80,7 @@ class CompareSourceCommandXsdSchemasTest extends AbstractTestCase
                 $pathToFixtures . '/required-node-added/source-code-after',
                 [
                     'Suggested semantic versioning change: MAJOR',
-                    'CompareSourceCommandTest/_files/xsd-schema/required-node-added/source-code-after/Magento/TestModule/etc/test-schema.xsd:0',
+                    'required-node-added/source-code-after/Magento/TestModule/etc/test-schema.xsd:0',
                     'addedRequiredElement | A required node was added | M0135',
                 ],
                 'Major change is detected.',
@@ -90,7 +90,7 @@ class CompareSourceCommandXsdSchemasTest extends AbstractTestCase
                 $pathToFixtures . '/required-attribute-added/source-code-after',
                 [
                     'Suggested semantic versioning change: MAJOR',
-                    'CompareSourceCommandTest/_files/xsd-schema/required-attribute-added/source-code-after/Magento/TestModule/etc/test-schema.xsd:0',
+                    'required-attribute-added/source-code-after/Magento/TestModule/etc/test-schema.xsd:0',
                     'requiredAttribute | A required attribute was added | M0136',
                 ],
                 'Major change is detected.',
@@ -100,8 +100,8 @@ class CompareSourceCommandXsdSchemasTest extends AbstractTestCase
                 $pathToFixtures . '/node-removed/source-code-after',
                 [
                     'Suggested semantic versioning change: MAJOR',
-                    'CompareSourceCommandTest/_files/xsd-schema/node-removed/source-code-before/Magento/TestModule/etc/test-schema.xsd:0 | requiredElement | A node was removed | M0137',
-                    'CompareSourceCommandTest/_files/xsd-schema/node-removed/source-code-before/Magento/TestModule/etc/test-schema.xsd:0 | optionalElement | A node was removed | M0137',
+                    'node-removed/source-code-before/Magento/TestModule/etc/test-schema.xsd:0 | requiredElement | A node was removed | M0137',
+                    'node-removed/source-code-before/Magento/TestModule/etc/test-schema.xsd:0 | optionalElement | A node was removed | M0137',
                 ],
                 'Major change is detected.',
             ],
@@ -110,8 +110,8 @@ class CompareSourceCommandXsdSchemasTest extends AbstractTestCase
                 $pathToFixtures . '/attribute-removed/source-code-after',
                 [
                     'Suggested semantic versioning change: MAJOR',
-                    'CompareSourceCommandTest/_files/xsd-schema/attribute-removed/source-code-before/Magento/TestModule/etc/test-schema.xsd:0 | requiredAttribute | An attribute was removed | M0138',
-                    'CompareSourceCommandTest/_files/xsd-schema/attribute-removed/source-code-before/Magento/TestModule/etc/test-schema.xsd:0 | optionalAttribute | An attribute was removed | M0138',
+                    'attribute-removed/source-code-before/Magento/TestModule/etc/test-schema.xsd:0 | requiredAttribute | An attribute was removed | M0138',
+                    'attribute-removed/source-code-before/Magento/TestModule/etc/test-schema.xsd:0 | optionalAttribute | An attribute was removed | M0138',
                 ],
                 'Major change is detected.',
             ],
@@ -120,7 +120,7 @@ class CompareSourceCommandXsdSchemasTest extends AbstractTestCase
                 $pathToFixtures . '/schema-declaration-removed/source-code-after',
                 [
                     'Suggested semantic versioning change: MAJOR',
-                    'CompareSourceCommandTest/_files/xsd-schema/schema-declaration-removed/source-code-before/Magento/TestModule/etc/test-schema.xsd:0',
+                    'schema-declaration-removed/source-code-before/Magento/TestModule/etc/test-schema.xsd:0',
                     '/etc/test-schema.xsd | A schema declaration was removed | M0139'
                 ],
                 'Major change is detected.',
@@ -130,7 +130,7 @@ class CompareSourceCommandXsdSchemasTest extends AbstractTestCase
                 $pathToFixtures . '/schema-declaration-added/source-code-after',
                 [
                     'Suggested semantic versioning change: MINOR',
-                    'CompareSourceCommandTest/_files/xsd-schema/schema-declaration-added/source-code-after/Magento/TestModule/etc/test-schema.xsd:0',
+                    'schema-declaration-added/source-code-after/Magento/TestModule/etc/test-schema.xsd:0',
                     '/etc/test-schema.xsd | A schema declaration was added | M0140',
                 ],
                 'Minor change is detected.',
@@ -140,7 +140,7 @@ class CompareSourceCommandXsdSchemasTest extends AbstractTestCase
                 $pathToFixtures . '/module-added/source-code-after',
                 [
                     'Suggested semantic versioning change: MINOR',
-                    'CompareSourceCommandTest/_files/xsd-schema/module-added/source-code-after/Magento/TestModule/etc/test-schema.xsd:0',
+                    'module-added/source-code-after/Magento/TestModule/etc/test-schema.xsd:0',
                     '/etc/test-schema.xsd | A schema declaration was added | M0140',
                 ],
                 'Minor change is detected.',
@@ -150,7 +150,7 @@ class CompareSourceCommandXsdSchemasTest extends AbstractTestCase
                 $pathToFixtures . '/module-removed/source-code-after',
                 [
                     'Suggested semantic versioning change: MAJOR',
-                    'CompareSourceCommandTest/_files/xsd-schema/module-removed/source-code-before/Magento/TestModule/etc/test-schema.xsd:0',
+                    'module-removed/source-code-before/Magento/TestModule/etc/test-schema.xsd:0',
                     '/etc/test-schema.xsd | A schema declaration was removed | M0139',
                 ],
                 'Major change is detected.',

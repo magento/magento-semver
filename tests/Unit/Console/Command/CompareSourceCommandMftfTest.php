@@ -89,7 +89,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/actionGroup-removed/source-code-after',
                 [
                     'Mftf (MAJOR)',
-                    'CompareSourceCommandTest/_files/mftf/actionGroup-removed/source-code-before/Magento/TestModule/Test/Mftf/ActionGroup/actionGroup.xml:0',
+                    'actionGroup-removed/source-code-before/Magento/TestModule/Test/Mftf/ActionGroup/actionGroup.xml:0',
                     'ActionGroup/ActionGroup1 | <actionGroup> was removed | M200'
                 ],
                 'Major change is detected.'
@@ -99,7 +99,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/actionGroup-added/source-code-after',
                 [
                     'Mftf (MINOR)',
-                    'CompareSourceCommandTest/_files/mftf/actionGroup-added/source-code-after/Magento/TestModule/Test/Mftf/ActionGroup/actionGroup.xml:0',
+                    'actionGroup-added/source-code-after/Magento/TestModule/Test/Mftf/ActionGroup/actionGroup.xml:0',
                     'ActionGroup/ActionGroup2 | <actionGroup> was added | M225'
                 ],
                 'Minor change is detected.'
@@ -109,7 +109,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/new-module-actionGroup-added/source-code-after',
                 [
                     'Mftf (MINOR)',
-                    'CompareSourceCommandTest/_files/mftf/new-module-actionGroup-added/source-code-after/Magento/TestModuleTwo/Test/Mftf/ActionGroup/actionGroup.xml:0',
+                    'new-module-actionGroup-added/source-code-after/Magento/TestModuleTwo/Test/Mftf/ActionGroup/actionGroup.xml:0',
                     'ActionGroup/ActionGroup2 | <actionGroup> was added | M225'
                 ],
                 'Minor change is detected.'
@@ -129,7 +129,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/actionGroup-argument-removed/source-code-after',
                 [
                     'Mftf (MAJOR)',
-                    'CompareSourceCommandTest/_files/mftf/actionGroup-argument-removed/source-code-before/Magento/TestModule/Test/Mftf/ActionGroup/actionGroup.xml:0',
+                    'actionGroup-argument-removed/source-code-before/Magento/TestModule/Test/Mftf/ActionGroup/actionGroup.xml:0',
                     'ActionGroup/ActionGroup1/Arguments/arg1 | <actionGroup> <argument> was removed | M201'
                 ],
                 'Major change is detected.'
@@ -139,7 +139,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/actionGroup-argument-added/source-code-after',
                 [
                     'Mftf (MAJOR)',
-                    'CompareSourceCommandTest/_files/mftf/actionGroup-argument-added/source-code-before/Magento/TestModule/Test/Mftf/ActionGroup/actionGroup.xml:0',
+                    'actionGroup-argument-added/source-code-before/Magento/TestModule/Test/Mftf/ActionGroup/actionGroup.xml:0',
                     'ActionGroup/ActionGroup1/arg2 | <actionGroup> <argument> was added | M227'
                 ],
                 'Major change is detected.'
@@ -149,7 +149,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/actionGroup-action-changed/source-code-after',
                 [
                     'Mftf (PATCH)',
-                    'CompareSourceCommandTest/_files/mftf/actionGroup-action-changed/source-code-before/Magento/TestModule/Test/Mftf/ActionGroup/actionGroup.xml:0',
+                    'actionGroup-action-changed/source-code-before/Magento/TestModule/Test/Mftf/ActionGroup/actionGroup.xml:0',
                     'ActionGroup/ActionGroup1/action1/userInput | <actionGroup> <action> was changed | M204'
                 ],
                 'Patch change is detected.'
@@ -159,7 +159,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/actionGroup-action-type-changed/source-code-after',
                 [
                     'Mftf (PATCH)',
-                    'CompareSourceCommandTest/_files/mftf/actionGroup-action-type-changed/source-code-before/Magento/TestModule/Test/Mftf/ActionGroup/actionGroup.xml:0',
+                    'actionGroup-action-type-changed/source-code-before/Magento/TestModule/Test/Mftf/ActionGroup/actionGroup.xml:0',
                     'ActionGroup/ActionGroup1/action1 | <actionGroup> <action> type was changed | M223'
                 ],
                 'Patch change is detected.'
@@ -179,7 +179,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/actionGroup-action-added/source-code-after',
                 [
                     'Mftf (MINOR)',
-                    'CompareSourceCommandTest/_files/mftf/actionGroup-action-added/source-code-before/Magento/TestModule/Test/Mftf/ActionGroup/actionGroup.xml:0',
+                    'actionGroup-action-added/source-code-before/Magento/TestModule/Test/Mftf/ActionGroup/actionGroup.xml:0',
                     'ActionGroup/ActionGroup1/action3 | <actionGroup> <action> was added | M226'
                 ],
                 'Minor change is detected.'
@@ -189,7 +189,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/data-removed/source-code-after',
                 [
                     'Mftf (MAJOR)',
-                    'CompareSourceCommandTest/_files/mftf/data-removed/source-code-before/Magento/TestModule/Test/Mftf/Data/data.xml:0',
+                    'data-removed/source-code-before/Magento/TestModule/Test/Mftf/Data/data.xml:0',
                     'Data/DataEntity1 | Entity was removed | M205'
                 ],
                 'Major change is detected.'
@@ -199,7 +199,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/data-added/source-code-after',
                 [
                     'Mftf (MINOR)',
-                    'CompareSourceCommandTest/_files/mftf/data-added/source-code-after/Magento/TestModule/Test/Mftf/Data/data.xml:0',
+                    'data-added/source-code-after/Magento/TestModule/Test/Mftf/Data/data.xml:0',
                     'Data/DataEntity2 | <entity> was added | M228'
                 ],
                 'Minor change is detected.'
@@ -209,7 +209,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/new-module-data-added/source-code-after',
                 [
                     'Mftf (MINOR)',
-                    'CompareSourceCommandTest/_files/mftf/new-module-data-added/source-code-after/Magento/TestModuleTwo/Test/Mftf/Data/data.xml:0',
+                    'new-module-data-added/source-code-after/Magento/TestModuleTwo/Test/Mftf/Data/data.xml:0',
                     'Data/DataEntity2 | <entity> was added | M228'
                 ],
                 'Minor change is detected.'
@@ -219,7 +219,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/data-array-removed/source-code-after',
                 [
                     'Mftf (MAJOR)',
-                    'CompareSourceCommandTest/_files/mftf/data-array-removed/source-code-before/Magento/TestModule/Test/Mftf/Data/data.xml:0',
+                    'data-array-removed/source-code-before/Magento/TestModule/Test/Mftf/Data/data.xml:0',
                     'Data/DataEntity1/arraykey | Entity <array> element was removed | M206'
                 ],
                 'Major change is detected.'
@@ -229,7 +229,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/data-array-added/source-code-after',
                 [
                     'Mftf (MINOR)',
-                    'CompareSourceCommandTest/_files/mftf/data-array-added/source-code-before/Magento/TestModule/Test/Mftf/Data/data.xml:0',
+                    'data-array-added/source-code-before/Magento/TestModule/Test/Mftf/Data/data.xml:0',
                     'Data/DataEntity1/arraykeynew | <entity> <array> was added | M229'
                 ],
                 'Minor change is detected.'
@@ -239,7 +239,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/data-array-item-removed/source-code-after',
                 [
                     'Mftf (MINOR)',
-                    'CompareSourceCommandTest/_files/mftf/data-array-item-removed/source-code-before/Magento/TestModule/Test/Mftf/Data/data.xml:0',
+                    'data-array-item-removed/source-code-before/Magento/TestModule/Test/Mftf/Data/data.xml:0',
                     'Data/DataEntity1/arraykey/(tre) | Entity <array> <item> element was removed | M207'
                 ],
                 'Minor change is detected.'
@@ -249,7 +249,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/data-field-removed/source-code-after',
                 [
                     'Mftf (MAJOR)',
-                    'CompareSourceCommandTest/_files/mftf/data-field-removed/source-code-before/Magento/TestModule/Test/Mftf/Data/data.xml:0',
+                    'data-field-removed/source-code-before/Magento/TestModule/Test/Mftf/Data/data.xml:0',
                     'Data/DataEntity1/datakey | Entity <data> element was removed | M208'
                 ],
                 'Major change is detected.'
@@ -259,7 +259,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/data-field-added/source-code-after',
                 [
                     'Mftf (MINOR)',
-                    'CompareSourceCommandTest/_files/mftf/data-field-added/source-code-before/Magento/TestModule/Test/Mftf/Data/data.xml:0',
+                    'data-field-added/source-code-before/Magento/TestModule/Test/Mftf/Data/data.xml:0',
                     'Data/DataEntity1/datakeynew | Entity <data> element was added | M230'
                 ],
                 'Minor change is detected.'
@@ -269,7 +269,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/data-reqentity-removed/source-code-after',
                 [
                     'Mftf (MAJOR)',
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/data-reqentity-removed/source-code-before/Magento/TestModule/Test/Mftf/Data/data.xml:0',
+                    'data-reqentity-removed/source-code-before/Magento/TestModule/Test/Mftf/Data/data.xml:0',
                     'Data/DataEntity1/reqentity | Entity <required-entity> element was removed | M209'
                 ],
                 'Major change is detected.'
@@ -278,7 +278,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/data-reqentity-added/source-code-before',
                 $pathToFixtures . '/data-reqentity-added/source-code-after',
                 [
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/data-reqentity-added/source-code-before/Magento/TestModule/Test/Mftf/Data/data.xml:0',
+                    'data-reqentity-added/source-code-before/Magento/TestModule/Test/Mftf/Data/data.xml:0',
                     'Mftf (PATCH)',
                     'Data/DataEntity1/reqnew | <entity> <required-entity> element was added | M231'
                 ],
@@ -288,7 +288,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/data-var-removed/source-code-before',
                 $pathToFixtures . '/data-var-removed/source-code-after',
                 [
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/data-var-removed/source-code-before/Magento/TestModule/Test/Mftf/Data/data.xml:0',
+                    'data-var-removed/source-code-before/Magento/TestModule/Test/Mftf/Data/data.xml:0',
                     'Mftf (MAJOR)',
                     'Data/DataEntity1/var1 | Entity <var> element was removed | M210'
                 ],
@@ -299,7 +299,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/data-var-added/source-code-after',
                 [
                     'Mftf (MINOR)',
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/data-var-added/source-code-before/Magento/TestModule/Test/Mftf/Data/data.xml:0',
+                    'data-var-added/source-code-before/Magento/TestModule/Test/Mftf/Data/data.xml:0',
                     'Data/DataEntity1/var2 | <entity> <var> element was added | M232'
                 ],
                 'Minor change is detected.'
@@ -308,7 +308,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/metadata-removed/source-code-before',
                 $pathToFixtures . '/metadata-removed/source-code-after',
                 [
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/metadata-removed/source-code-before/Magento/TestModule/Test/Mftf/Metadata/meta.xml:0',
+                    'metadata-removed/source-code-before/Magento/TestModule/Test/Mftf/Metadata/meta.xml:0',
                     'Mftf (MAJOR)',
                     'Metadata/createEntity | <operation> was removed | M211'
                 ],
@@ -319,7 +319,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/metadata-added/source-code-after',
                 [
                     'Mftf (MINOR)',
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/metadata-added/source-code-after/Magento/TestModule/Test/Mftf/Metadata/meta.xml:0',
+                    'metadata-added/source-code-after/Magento/TestModule/Test/Mftf/Metadata/meta.xml:0',
                     'Metadata/createEntity2 | <operation> was added | M240'
                 ],
                 'Minor change is detected.'
@@ -329,7 +329,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/new-module-metadata-added/source-code-after',
                 [
                     'Mftf (MINOR)',
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/new-module-metadata-added/source-code-after/Magento/TestModuleTwo/Test/Mftf/Metadata/meta.xml:0',
+                    'new-module-metadata-added/source-code-after/Magento/TestModuleTwo/Test/Mftf/Metadata/meta.xml:0',
                     'Metadata/createEntity2 | <operation> was added | M240'
                 ],
                 'Minor change is detected.'
@@ -339,7 +339,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/metadata-datatype-changed/source-code-after',
                 [
                     'Mftf (MINOR)',
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/metadata-datatype-changed/source-code-before/Magento/TestModule/Test/Mftf/Metadata/meta.xml:0',
+                    'metadata-datatype-changed/source-code-before/Magento/TestModule/Test/Mftf/Metadata/meta.xml:0',
                     'Metadata/createEntity/dataType | <operation> was changed | M241'
                 ],
                 'Minor change is detected.'
@@ -348,7 +348,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/metadata-type-changed/source-code-before',
                 $pathToFixtures . '/metadata-type-changed/source-code-after',
                 [
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/metadata-type-changed/source-code-before/Magento/TestModule/Test/Mftf/Metadata/meta.xml:0',
+                    'metadata-type-changed/source-code-before/Magento/TestModule/Test/Mftf/Metadata/meta.xml:0',
                     'Mftf (MINOR)',
                     'Metadata/createEntity/type | <operation> was changed | M241'
                 ],
@@ -358,7 +358,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/metadata-auth-changed/source-code-before',
                 $pathToFixtures . '/metadata-auth-changed/source-code-after',
                 [
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/metadata-auth-changed/source-code-before/Magento/TestModule/Test/Mftf/Metadata/meta.xml:0',
+                    'metadata-auth-changed/source-code-before/Magento/TestModule/Test/Mftf/Metadata/meta.xml:0',
                     'Mftf (MINOR)',
                     'Metadata/createEntity/auth | <operation> was changed | M241'
                 ],
@@ -368,7 +368,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/metadata-url-changed/source-code-before',
                 $pathToFixtures . '/metadata-url-changed/source-code-after',
                 [
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/metadata-url-changed/source-code-before/Magento/TestModule/Test/Mftf/Metadata/meta.xml:0',
+                    'metadata-url-changed/source-code-before/Magento/TestModule/Test/Mftf/Metadata/meta.xml:0',
                     'Mftf (MINOR)',
                     'Metadata/createEntity/url | <operation> was changed | M241'
                 ],
@@ -379,7 +379,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/metadata-method-changed/source-code-after',
                 [
                     'Mftf (MINOR)',
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/metadata-method-changed/source-code-before/Magento/TestModule/Test/Mftf/Metadata/meta.xml:0',
+                    'metadata-method-changed/source-code-before/Magento/TestModule/Test/Mftf/Metadata/meta.xml:0',
                     'Metadata/createEntity/method | <operation> was changed | M241'
                 ],
                 'Minor change is detected.'
@@ -388,7 +388,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/metadata-top-level-child-removed/source-code-before',
                 $pathToFixtures . '/metadata-top-level-child-removed/source-code-after',
                 [
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/metadata-top-level-child-removed/source-code-before/Magento/TestModule/Test/Mftf/Metadata/meta.xml:0',
+                    'metadata-top-level-child-removed/source-code-before/Magento/TestModule/Test/Mftf/Metadata/meta.xml:0',
                     'Mftf (MAJOR)',
                     'Metadata/createEntity/toplevelField | <operation> child element was removed | M212'
                 ],
@@ -399,7 +399,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/metadata-top-level-child-added/source-code-after',
                 [
                     'Mftf (MINOR)',
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/metadata-top-level-child-added/source-code-before/Magento/TestModule/Test/Mftf/Metadata/meta.xml:0',
+                    'metadata-top-level-child-added/source-code-before/Magento/TestModule/Test/Mftf/Metadata/meta.xml:0',
                     'Metadata/createEntity/toplevelField | <operation> child element was added | M242'
                 ],
                 'Minor change is detected.'
@@ -409,7 +409,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/metadata-bottom-level-child-removed/source-code-after',
                 [
                     'Mftf (MAJOR)',
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/metadata-bottom-level-child-removed/source-code-before/Magento/TestModule/Test/Mftf/Metadata/meta.xml:0',
+                    'metadata-bottom-level-child-removed/source-code-before/Magento/TestModule/Test/Mftf/Metadata/meta.xml:0',
                     'Metadata/createEntity/toplevelObj/childField | <operation> child element was removed | M212'
                 ],
                 'Major change is detected.'
@@ -419,7 +419,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/metadata-bottom-level-child-added/source-code-after',
                 [
                     'Mftf (MINOR)',
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/metadata-bottom-level-child-added/source-code-before/Magento/TestModule/Test/Mftf/Metadata/meta.xml:0',
+                    'metadata-bottom-level-child-added/source-code-before/Magento/TestModule/Test/Mftf/Metadata/meta.xml:0',
                     'Metadata/createEntity/toplevelObj/childField | <operation> child element was added | M242'
                 ],
                 'Minor change is detected.'
@@ -429,7 +429,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/page-removed/source-code-after',
                 [
                     'Mftf (MAJOR)',
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/page-removed/source-code-before/Magento/TestModule/Test/Mftf/Page/page.xml:0',
+                    'page-removed/source-code-before/Magento/TestModule/Test/Mftf/Page/page.xml:0',
                     'Page/SamplePage | <page> was removed | M213'
                 ],
                 'Major change is detected.'
@@ -438,7 +438,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/page-added/source-code-before',
                 $pathToFixtures . '/page-added/source-code-after',
                 [
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/page-added/source-code-after/Magento/TestModule/Test/Mftf/Page/page.xml:0',
+                    'page-added/source-code-after/Magento/TestModule/Test/Mftf/Page/page.xml:0',
                     'Mftf (MINOR)',
                     'Page/SamplePageNew | <page> was added | M233'
                 ],
@@ -448,7 +448,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/new-module-page-added/source-code-before',
                 $pathToFixtures . '/new-module-page-added/source-code-after',
                 [
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/new-module-page-added/source-code-after/Magento/TestModuleTwo/Test/Mftf/Page/page.xml:0',
+                    'new-module-page-added/source-code-after/Magento/TestModuleTwo/Test/Mftf/Page/page.xml:0',
                     'Mftf (MINOR)',
                     'Page/SamplePageNew | <page> was added | M233'
                 ],
@@ -459,7 +459,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/page-section-removed/source-code-after',
                 [
                     'Mftf (MAJOR)',
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/page-section-removed/source-code-before/Magento/TestModule/Test/Mftf/Page/page.xml:0',
+                    'page-section-removed/source-code-before/Magento/TestModule/Test/Mftf/Page/page.xml:0',
                     'Page/SamplePage/Section2 | <page> <section> was removed | M214'
                 ],
                 'Major change is detected.'
@@ -469,7 +469,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/page-section-added/source-code-after',
                 [
                     'Mftf (MINOR)',
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/page-section-added/source-code-before/Magento/TestModule/Test/Mftf/Page/page.xml:0',
+                    'page-section-added/source-code-before/Magento/TestModule/Test/Mftf/Page/page.xml:0',
                     'Page/SamplePage/SectionNew | <page> <section> was added | M234'
                 ],
                 'Minor change is detected.'
@@ -478,7 +478,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/section-removed/source-code-before',
                 $pathToFixtures . '/section-removed/source-code-after',
                 [
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/section-removed/source-code-before/Magento/TestModule/Test/Mftf/Section/section.xml:0',
+                    'section-removed/source-code-before/Magento/TestModule/Test/Mftf/Section/section.xml:0',
                     'Mftf (MAJOR)',
                     'Section/SampleSection | <section> was removed | M215'
                 ],
@@ -489,7 +489,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/section-added/source-code-after',
                 [
                     'Mftf (MINOR)',
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/section-added/source-code-after/Magento/TestModule/Test/Mftf/Section/section.xml:0',
+                    'section-added/source-code-after/Magento/TestModule/Test/Mftf/Section/section.xml:0',
                     'Section/NewSection | <section> was added | M235'
                 ],
                 'Minor change is detected.'
@@ -499,7 +499,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/new-module-section-added/source-code-after',
                 [
                     'Mftf (MINOR)',
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/new-module-section-added/source-code-after/Magento/TestModuleTwo/Test/Mftf/Section/section.xml:0',
+                    'new-module-section-added/source-code-after/Magento/TestModuleTwo/Test/Mftf/Section/section.xml:0',
                     'Section/NewSection | <section> was added | M235'
                 ],
                 'Minor change is detected.'
@@ -509,7 +509,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/section-element-removed/source-code-after',
                 [
                     'Mftf (MAJOR)',
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/section-element-removed/source-code-before/Magento/TestModule/Test/Mftf/Section/section.xml:0',
+                    'section-element-removed/source-code-before/Magento/TestModule/Test/Mftf/Section/section.xml:0',
                     'Section/SampleSection/element2 | <section> <element> was removed | M216'
                 ],
                 'Major change is detected.'
@@ -519,7 +519,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/section-element-selector-changed/source-code-after',
                 [
                     'Mftf (PATCH)',
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/section-element-selector-changed/source-code-before/Magento/TestModule/Test/Mftf/Section/section.xml:0',
+                    'section-element-selector-changed/source-code-before/Magento/TestModule/Test/Mftf/Section/section.xml:0',
                     'Section/SampleSection/element1/selector | <section> <element> selector was changed | M219'
                 ],
                 'Patch change is detected.'
@@ -529,7 +529,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/section-element-type-changed/source-code-after',
                 [
                     'Mftf (PATCH)',
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/section-element-type-changed/source-code-before/Magento/TestModule/Test/Mftf/Section/section.xml:0',
+                    'section-element-type-changed/source-code-before/Magento/TestModule/Test/Mftf/Section/section.xml:0',
                     'Section/SampleSection/element1/type | <section> <element> type was changed | M218'
                 ],
                 'Patch change is detected.'
@@ -538,7 +538,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/section-element-parameterized-added/source-code-before',
                 $pathToFixtures . '/section-element-parameterized-added/source-code-after',
                 [
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/section-element-parameterized-added/source-code-before/Magento/TestModule/Test/Mftf/Section/section.xml:0',
+                    'section-element-parameterized-added/source-code-before/Magento/TestModule/Test/Mftf/Section/section.xml:0',
                     'Mftf (MAJOR)',
                     'Section/SampleSection/element1/parameterized | <section> <element> parameterized was changed | M250'
                 ],
@@ -549,7 +549,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/section-element-parameterized-removed/source-code-after',
                 [
                     'Mftf (MAJOR)',
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/section-element-parameterized-removed/source-code-before/Magento/TestModule/Test/Mftf/Section/section.xml:0',
+                    'section-element-parameterized-removed/source-code-before/Magento/TestModule/Test/Mftf/Section/section.xml:0',
                     'Section/SampleSection/element1/parameterized | <section> <element> parameterized was changed | M250'
                 ],
                 'Major change is detected.'
@@ -559,7 +559,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/section-element-added/source-code-after',
                 [
                     'Mftf (MINOR)',
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/section-element-added/source-code-before/Magento/TestModule/Test/Mftf/Section/section.xml:0',
+                    'section-element-added/source-code-before/Magento/TestModule/Test/Mftf/Section/section.xml:0',
                     'Section/SampleSection/newElement | <section> <element> was added | M236'
                 ],
                 'Minor change is detected.'
@@ -569,7 +569,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/test-removed/source-code-after',
                 [
                     'Mftf (MAJOR)',
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/test-removed/source-code-before/Magento/TestModule/Test/Mftf/Test/test.xml:0',
+                    'test-removed/source-code-before/Magento/TestModule/Test/Mftf/Test/test.xml:0',
                     'Test/SampleTest | <test> was removed | M218'
                 ],
                 'Major change is detected.'
@@ -579,7 +579,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/test-added/source-code-after',
                 [
                     'Mftf (MINOR)',
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/test-added/source-code-after/Magento/TestModule/Test/Mftf/Test/test.xml:0',
+                    'test-added/source-code-after/Magento/TestModule/Test/Mftf/Test/test.xml:0',
                     'Test/NewTest | <test> was added | M237'
                 ],
                 'Minor change is detected.'
@@ -589,7 +589,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/new-module-test-added/source-code-after',
                 [
                     'Mftf (MINOR)',
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/new-module-test-added/source-code-after/Magento/TestModuleTwo/Test/Mftf/Test/test.xml:0',
+                    'new-module-test-added/source-code-after/Magento/TestModuleTwo/Test/Mftf/Test/test.xml:0',
                     'Test/NewTest | <test> was added | M237'
                 ],
                 'Minor change is detected.'
@@ -599,7 +599,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/test-action-changed/source-code-after',
                 [
                     'Mftf (PATCH)',
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/test-action-changed/source-code-before/Magento/TestModule/Test/Mftf/Test/test.xml:0',
+                    'test-action-changed/source-code-before/Magento/TestModule/Test/Mftf/Test/test.xml:0',
                     'Test/SampleTest/key1/userInput | <test> <action> was changed | M222'
                 ],
                 'Patch change is detected.'
@@ -609,7 +609,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/test-action-sequence-changed/source-code-after',
                 [
                     'Mftf (MAJOR)',
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/test-action-sequence-changed/source-code-before/Magento/TestModule/Test/Mftf/Test/test.xml:0',
+                    'test-action-sequence-changed/source-code-before/Magento/TestModule/Test/Mftf/Test/test.xml:0',
                     'Test/SampleTest | <test> <action> sequence was changed | M223'
                 ],
                 'Major change is detected.'
@@ -619,7 +619,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/test-action-type-changed/source-code-after',
                 [
                     'Mftf (PATCH)',
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/test-action-type-changed/source-code-before/Magento/TestModule/Test/Mftf/Test/test.xml:0',
+                    'test-action-type-changed/source-code-before/Magento/TestModule/Test/Mftf/Test/test.xml:0',
                     'Test/SampleTest/action1 | <test> <action> type was changed | M224'
                 ],
                 'Patch change is detected.'
@@ -629,7 +629,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/test-action-removed/source-code-after',
                 [
                     'Mftf (MAJOR)',
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/test-action-removed/source-code-before/Magento/TestModule/Test/Mftf/Test/test.xml:0',
+                    'test-action-removed/source-code-before/Magento/TestModule/Test/Mftf/Test/test.xml:0',
                     'Test/SampleTest/key2 | <test> <action> was removed | M219'
                 ],
                 'Major change is detected.'
@@ -639,7 +639,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/test-action-added/source-code-after',
                 [
                     'Mftf (MINOR)',
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/test-action-added/source-code-before/Magento/TestModule/Test/Mftf/Test/test.xml:0',
+                    'test-action-added/source-code-before/Magento/TestModule/Test/Mftf/Test/test.xml:0',
                     'Test/SampleTest/newAction | <test> <action> was added | M238'
                 ],
                 'Minor change is detected.'
@@ -649,7 +649,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/test-before-action-removed/source-code-after',
                 [
                     'Mftf (MAJOR)',
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/test-before-action-removed/source-code-before/Magento/TestModule/Test/Mftf/Test/test.xml:0',
+                    'test-before-action-removed/source-code-before/Magento/TestModule/Test/Mftf/Test/test.xml:0',
                     'Test/SampleTest/before/key1 | <test> <action> was removed | M219'
                 ],
                 'Major change is detected.'
@@ -659,7 +659,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/test-before-action-added/source-code-after',
                 [
                     'Mftf (MINOR)',
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/test-before-action-added/source-code-before/Magento/TestModule/Test/Mftf/Test/test.xml:0',
+                    'test-before-action-added/source-code-before/Magento/TestModule/Test/Mftf/Test/test.xml:0',
                     'Test/SampleTest/before/newAction | <test> <action> was added | M238'
                 ],
                 'Minor change is detected.'
@@ -669,7 +669,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/test-before-action-sequence-changed/source-code-after',
                 [
                     'Mftf (MAJOR)',
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/test-before-action-sequence-changed/source-code-before/Magento/TestModule/Test/Mftf/Test/test.xml:0',
+                    'test-before-action-sequence-changed/source-code-before/Magento/TestModule/Test/Mftf/Test/test.xml:0',
                     'Test/SampleTest/before | <test> <action> sequence was changed | M223'
                 ],
                 'Major change is detected.'
@@ -678,7 +678,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/test-after-action-removed/source-code-before',
                 $pathToFixtures . '/test-after-action-removed/source-code-after',
                 [
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/test-after-action-removed/source-code-before/Magento/TestModule/Test/Mftf/Test/test.xml:0',
+                    'test-after-action-removed/source-code-before/Magento/TestModule/Test/Mftf/Test/test.xml:0',
                     'Mftf (MAJOR)',
                     'Test/SampleTest/after/key1 | <test> <action> was removed | M219'
                 ],
@@ -689,7 +689,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/test-after-action-added/source-code-after',
                 [
                     'Mftf (MINOR)',
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/test-after-action-added/source-code-before/Magento/TestModule/Test/Mftf/Test/test.xml:0',
+                    'test-after-action-added/source-code-before/Magento/TestModule/Test/Mftf/Test/test.xml:0',
                     'Test/SampleTest/after/newAction | <test> <action> was added | M238'
                 ],
                 'Minor change is detected.'
@@ -699,7 +699,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/test-after-action-sequence-changed/source-code-after',
                 [
                     'Mftf (MAJOR)',
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/test-after-action-sequence-changed/source-code-before/Magento/TestModule/Test/Mftf/Test/test.xml:0',
+                    'test-after-action-sequence-changed/source-code-before/Magento/TestModule/Test/Mftf/Test/test.xml:0',
                     'Test/SampleTest/after | <test> <action> sequence was changed | M223'
                 ],
                 'Major change is detected.'
@@ -709,7 +709,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/test-annotation-changed/source-code-after',
                 [
                     'Mftf (PATCH)',
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/test-annotation-changed/source-code-before/Magento/TestModule/Test/Mftf/Test/test.xml:0',
+                    'test-annotation-changed/source-code-before/Magento/TestModule/Test/Mftf/Test/test.xml:0',
                     'Test/SampleTest/annotations/{}description | <test> <annotation> was removed or changed | M221'
                 ],
                 'Patch change is detected.'
@@ -719,7 +719,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/test-group-removed/source-code-after',
                 [
                     'Mftf (MAJOR)',
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/test-group-removed/source-code-before/Magento/TestModule/Test/Mftf/Test/test.xml:0',
+                    'test-group-removed/source-code-before/Magento/TestModule/Test/Mftf/Test/test.xml:0',
                     'Test/SampleTest/annotations/{}group(sampleGroup) | <test> <annotation> <group> was removed | M220'
                 ],
                 'Major change is detected.'
@@ -729,7 +729,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/test-remove-action-added/source-code-after',
                 [
                     'Mftf (MAJOR)',
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/test-remove-action-added/source-code-before/Magento/TestModule/Test/Mftf/Test/test.xml:0',
+                    'test-remove-action-added/source-code-before/Magento/TestModule/Test/Mftf/Test/test.xml:0',
                     'Test/SampleTest/newRemoveAction | <test> <remove action> was added | M401'
                 ],
                 'Major change is detected.'
@@ -739,7 +739,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/test-remove-action-removed/source-code-after',
                 [
                     'Mftf (MAJOR)',
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/test-remove-action-removed/source-code-before/Magento/TestModule/Test/Mftf/Test/test.xml:0',
+                    'test-remove-action-removed/source-code-before/Magento/TestModule/Test/Mftf/Test/test.xml:0',
                     'Test/SampleTest/key2 | <test> <remove action> was removed | M402'
                 ],
                 'Major change is detected.'
@@ -749,7 +749,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/test-action-group-ref-changed/source-code-after',
                 [
                     'Mftf (MINOR)',
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/test-action-group-ref-changed/source-code-before/Magento/TestModule/Test/Mftf/Test/test.xml:0',
+                    'test-action-group-ref-changed/source-code-before/Magento/TestModule/Test/Mftf/Test/test.xml:0',
                     'Test/SampleTest/key2/ref | <test> <actionGroup> ref was changed | M241'
                 ],
                 'Minor change is detected.'
@@ -759,7 +759,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/suite-added/source-code-after',
                 [
                     'Mftf (MINOR)',
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/suite-added/source-code-after/Magento/TestModule/Test/Mftf/Suite/suite.xml:0',
+                    'suite-added/source-code-after/Magento/TestModule/Test/Mftf/Suite/suite.xml:0',
                     'Suite/Sample2Suite | <suite> was added | M407'
                 ],
                 'Minor change is detected.'
@@ -769,7 +769,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/new-module-suite-added/source-code-after',
                 [
                     'Mftf (MINOR)',
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/new-module-suite-added/source-code-after/Magento/TestModuleTwo/Test/Mftf/Suite/suite.xml:0',
+                    'new-module-suite-added/source-code-after/Magento/TestModuleTwo/Test/Mftf/Suite/suite.xml:0',
                     'Suite/Sample2Suite | <suite> was added | M407'
                 ],
                 'Minor change is detected.'
@@ -779,7 +779,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/suite-removed/source-code-after',
                 [
                     'Mftf (MAJOR)',
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/suite-removed/source-code-before/Magento/TestModule/Test/Mftf/Suite/suite.xml:0',
+                    'suite-removed/source-code-before/Magento/TestModule/Test/Mftf/Suite/suite.xml:0',
                     'Suite/Sample2Suite | <suite> was removed | M408'
                 ],
                 'Major change is detected.'
@@ -789,7 +789,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/suite-after-action-added/source-code-after',
                 [
                     'Mftf (MINOR)',
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/suite-after-action-added/source-code-before/Magento/TestModule/Test/Mftf/Suite/suite.xml:0',
+                    'suite-after-action-added/source-code-before/Magento/TestModule/Test/Mftf/Suite/suite.xml:0',
                     'Suite/SampleSuite/after/y | <suite> <before/after> <action> was added | M415'
                 ],
                 'Minor change is detected.'
@@ -799,7 +799,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/suite-after-action-changed/source-code-after',
                 [
                     'Mftf (PATCH)',
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/suite-after-action-changed/source-code-before/Magento/TestModule/Test/Mftf/Suite/suite.xml:0',
+                    'suite-after-action-changed/source-code-before/Magento/TestModule/Test/Mftf/Suite/suite.xml:0',
                     'Suite/SampleSuite/after/x/url | <suite> <before/after> <action> was changed | M416'
                 ],
                 'Patch change is detected.'
@@ -809,7 +809,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/suite-after-action-removed/source-code-after',
                 [
                     'Mftf (MAJOR)',
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/suite-after-action-removed/source-code-before/Magento/TestModule/Test/Mftf/Suite/suite.xml:0',
+                    'suite-after-action-removed/source-code-before/Magento/TestModule/Test/Mftf/Suite/suite.xml:0',
                     'Suite/SampleSuite/after/y | <suite> <before/after> <action> was removed | M412'
                 ],
                 'Major change is detected.'
@@ -819,7 +819,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/suite-after-action-group-ref-changed/source-code-after',
                 [
                     'Mftf (MINOR)',
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/suite-after-action-group-ref-changed/source-code-before/Magento/TestModule/Test/Mftf/Suite/suite.xml:0',
+                    'suite-after-action-group-ref-changed/source-code-before/Magento/TestModule/Test/Mftf/Suite/suite.xml:0',
                     'Suite/SampleSuite/after/z/ref | <suite> <before/after> <actionGroup> ref was changed | M417'
                 ],
                 'Minor change is detected.'
@@ -829,7 +829,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/suite-after-action-sequence-changed/source-code-after',
                 [
                     'Mftf (MAJOR)',
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/suite-after-action-sequence-changed/source-code-before/Magento/TestModule/Test/Mftf/Suite/suite.xml:0',
+                    'suite-after-action-sequence-changed/source-code-before/Magento/TestModule/Test/Mftf/Suite/suite.xml:0',
                     'Suite/SampleSuite/after | <suite> <before/after> <action> sequence was changed | M418'
                 ],
                 'Major change is detected.'
@@ -839,7 +839,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/suite-after-action-type-changed/source-code-after',
                 [
                     'Mftf (PATCH)',
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/suite-after-action-type-changed/source-code-before/Magento/TestModule/Test/Mftf/Suite/suite.xml:0',
+                    'suite-after-action-type-changed/source-code-before/Magento/TestModule/Test/Mftf/Suite/suite.xml:0',
                     'Suite/SampleSuite/after/y | <suite> <before/after> <action> type was changed | M419'
                 ],
                 'Patch change is detected.'
@@ -849,7 +849,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/suite-before-action-added/source-code-after',
                 [
                     'Mftf (MINOR)',
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/suite-before-action-added/source-code-before/Magento/TestModule/Test/Mftf/Suite/suite.xml:0',
+                    'suite-before-action-added/source-code-before/Magento/TestModule/Test/Mftf/Suite/suite.xml:0',
                     'Suite/SampleSuite/before/b | <suite> <before/after> <action> was added | M415'
                 ],
                 'Minor change is detected.'
@@ -859,7 +859,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/suite-before-action-changed/source-code-after',
                 [
                     'Mftf (PATCH)',
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/suite-before-action-changed/source-code-before/Magento/TestModule/Test/Mftf/Suite/suite.xml:0',
+                    'suite-before-action-changed/source-code-before/Magento/TestModule/Test/Mftf/Suite/suite.xml:0',
                     'Suite/SampleSuite/before/b/userInput | <suite> <before/after> <action> was changed | M416'
                 ],
                 'Patch change is detected.'
@@ -869,7 +869,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/suite-before-action-removed/source-code-after',
                 [
                     'Mftf (MAJOR)',
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/suite-before-action-removed/source-code-before/Magento/TestModule/Test/Mftf/Suite/suite.xml:0',
+                    'suite-before-action-removed/source-code-before/Magento/TestModule/Test/Mftf/Suite/suite.xml:0',
                     'Suite/SampleSuite/before/b | <suite> <before/after> <action> was removed | M412'
                 ],
                 'Major change is detected.'
@@ -879,7 +879,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/suite-before-action-group-ref-changed/source-code-after',
                 [
                     'Mftf (MINOR)',
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/suite-before-action-group-ref-changed/source-code-before/Magento/TestModule/Test/Mftf/Suite/suite.xml:0',
+                    'suite-before-action-group-ref-changed/source-code-before/Magento/TestModule/Test/Mftf/Suite/suite.xml:0',
                     'Suite/SampleSuite/before/c/ref | <suite> <before/after> <actionGroup> ref was changed | M417'
                 ],
                 'Minor change is detected.'
@@ -889,7 +889,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/suite-before-action-sequence-changed/source-code-after',
                 [
                     'Mftf (MAJOR)',
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/suite-before-action-sequence-changed/source-code-before/Magento/TestModule/Test/Mftf/Suite/suite.xml:0',
+                    'suite-before-action-sequence-changed/source-code-before/Magento/TestModule/Test/Mftf/Suite/suite.xml:0',
                     'Suite/SampleSuite/before | <suite> <before/after> <action> sequence was changed | M418'
                 ],
                 'Major change is detected.'
@@ -899,7 +899,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/suite-before-action-type-changed/source-code-after',
                 [
                     'Mftf (PATCH)',
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/suite-before-action-type-changed/source-code-before/Magento/TestModule/Test/Mftf/Suite/suite.xml:0',
+                    'suite-before-action-type-changed/source-code-before/Magento/TestModule/Test/Mftf/Suite/suite.xml:0',
                     'Suite/SampleSuite/before/b | <suite> <before/after> <action> type was changed | M419'
                 ],
                 'Patch change is detected.'
@@ -909,7 +909,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/suite-exclude-added/source-code-after',
                 [
                     'Mftf (PATCH)',
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/suite-exclude-added/source-code-before/Magento/TestModule/Test/Mftf/Suite/suite.xml:0',
+                    'suite-exclude-added/source-code-before/Magento/TestModule/Test/Mftf/Suite/suite.xml:0',
                     'Suite/SampleSuite/exclude/module1 | <suite> <include/exclude> <group/test/module> was added | M409',
                     'Suite/SampleSuite/exclude/test1 | <suite> <include/exclude> <group/test/module> was added | M409',
                 ],
@@ -920,7 +920,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/suite-exclude-removed/source-code-after',
                 [
                     'Mftf (PATCH)',
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/suite-exclude-removed/source-code-before/Magento/TestModule/Test/Mftf/Suite/suite.xml:0',
+                    'suite-exclude-removed/source-code-before/Magento/TestModule/Test/Mftf/Suite/suite.xml:0',
                     'Suite/SampleSuite/exclude/module1 | <suite> <include/exclude> <group/test/module> was removed | M410'
                 ],
                 'Patch change is detected.'
@@ -930,7 +930,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/suite-include-added/source-code-after',
                 [
                     'Mftf (PATCH)',
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/suite-include-added/source-code-before/Magento/TestModule/Test/Mftf/Suite/suite.xml:0',
+                    'suite-include-added/source-code-before/Magento/TestModule/Test/Mftf/Suite/suite.xml:0',
                     'Suite/SampleSuite/include/module1 | <suite> <include/exclude> <group/test/module> was added | M409',
                     'Suite/SampleSuite/include/test1 | <suite> <include/exclude> <group/test/module> was added | M409',
                 ],
@@ -941,7 +941,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/suite-include-removed/source-code-after',
                 [
                     'Mftf (PATCH)',
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/suite-include-removed/source-code-before/Magento/TestModule/Test/Mftf/Suite/suite.xml:0',
+                    'suite-include-removed/source-code-before/Magento/TestModule/Test/Mftf/Suite/suite.xml:0',
                     'Suite/SampleSuite/include/module1 | <suite> <include/exclude> <group/test/module> was removed | M410'
                 ],
                 'Patch change is detected.'
@@ -951,7 +951,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/suite-include-changed/source-code-after',
                 [
                     'Mftf (PATCH)',
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/suite-include-changed/source-code-before/Magento/TestModule/Test/Mftf/Suite/suite.xml:0',
+                    'suite-include-changed/source-code-before/Magento/TestModule/Test/Mftf/Suite/suite.xml:0',
                     'Suite/SampleSuite/include/group1 | <suite> <include/exclude> <group/test/module> was removed | M410',
                     'Suite/SampleSuite/include/group2 | <suite> <include/exclude> <group/test/module> was added | M409',
                 ],
@@ -962,7 +962,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/suite-exclude-changed/source-code-after',
                 [
                     'Mftf (PATCH)',
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/suite-exclude-changed/source-code-before/Magento/TestModule/Test/Mftf/Suite/suite.xml:0',
+                    'suite-exclude-changed/source-code-before/Magento/TestModule/Test/Mftf/Suite/suite.xml:0',
                     'Suite/SampleSuite/exclude/group1 | <suite> <include/exclude> <group/test/module> was removed | M410',
                     'Suite/SampleSuite/exclude/group2 | <suite> <include/exclude> <group/test/module> was added | M409',
                 ],
@@ -973,7 +973,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/suite-after-remove-action-added/source-code-after',
                 [
                     'Mftf (MAJOR)',
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/suite-after-remove-action-added/source-code-before/Magento/TestModule/Test/Mftf/Suite/suite.xml:0',
+                    'suite-after-remove-action-added/source-code-before/Magento/TestModule/Test/Mftf/Suite/suite.xml:0',
                     'Suite/SampleSuite/after/x | <suite> <before/after> <remove> <action> was added | M420'
                 ],
                 'Major change is detected.'
@@ -983,7 +983,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/suite-after-remove-action-removed/source-code-after',
                 [
                     'Mftf (MAJOR)',
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/suite-after-remove-action-removed/source-code-before/Magento/TestModule/Test/Mftf/Suite/suite.xml:0',
+                    'suite-after-remove-action-removed/source-code-before/Magento/TestModule/Test/Mftf/Suite/suite.xml:0',
                     'Suite/SampleSuite/after/x | <suite> <before/after> <remove> <action> was removed | M421'
                 ],
                 'Major change is detected.'
@@ -993,7 +993,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/suite-before-remove-action-added/source-code-after',
                 [
                     'Mftf (MAJOR)',
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/suite-before-remove-action-added/source-code-before/Magento/TestModule/Test/Mftf/Suite/suite.xml:0',
+                    'suite-before-remove-action-added/source-code-before/Magento/TestModule/Test/Mftf/Suite/suite.xml:0',
                     'Suite/SampleSuite/before/x | <suite> <before/after> <remove> <action> was added | M420'
                 ],
                 'Major change is detected.'
@@ -1003,7 +1003,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/suite-before-remove-action-removed/source-code-after',
                 [
                     'Mftf (MAJOR)',
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/suite-before-remove-action-removed/source-code-before/Magento/TestModule/Test/Mftf/Suite/suite.xml:0',
+                    'suite-before-remove-action-removed/source-code-before/Magento/TestModule/Test/Mftf/Suite/suite.xml:0',
                     'Suite/SampleSuite/before/x | <suite> <before/after> <remove> <action> was removed | M421'
                 ],
                 'Major change is detected.'
@@ -1013,7 +1013,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/actionGroup-remove-action-key-changed/source-code-after',
                 [
                     'Mftf (MAJOR)',
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/actionGroup-remove-action-key-changed/source-code-before/Magento/TestModule/Test/Mftf/ActionGroup/actionGroup.xml:0',
+                    'actionGroup-remove-action-key-changed/source-code-before/Magento/TestModule/Test/Mftf/ActionGroup/actionGroup.xml:0',
                     'ActionGroup/ActionGroup1/action2 | <actionGroup> <remove action> was removed | M406',
                     'ActionGroup/ActionGroup1/action1 | <actionGroup> <remove action> was added | M404',
                 ],
@@ -1024,7 +1024,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/suite-before-remove-action-key-changed/source-code-after',
                 [
                     'Mftf (MAJOR)',
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/suite-before-remove-action-key-changed/source-code-before/Magento/TestModule/Test/Mftf/Suite/suite.xml:0',
+                    'suite-before-remove-action-key-changed/source-code-before/Magento/TestModule/Test/Mftf/Suite/suite.xml:0',
                     'Suite/SampleSuite/before/a | <suite> <before/after> <remove> <action> was removed | M421',
                     'Suite/SampleSuite/before/b | <suite> <before/after> <remove> <action> was added | M420',
                 ],
@@ -1035,7 +1035,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/suite-after-remove-action-key-changed/source-code-after',
                 [
                     'Mftf (MAJOR)',
-                    ' Console/Command/CompareSourceCommandTest/_files/mftf/suite-after-remove-action-key-changed/source-code-before/Magento/TestModule/Test/Mftf/Suite/suite.xml:0',
+                    ' suite-after-remove-action-key-changed/source-code-before/Magento/TestModule/Test/Mftf/Suite/suite.xml:0',
                     'Suite/SampleSuite/after/a | <suite> <before/after> <remove> <action> was removed | M421',
                     'Suite/SampleSuite/after/b | <suite> <before/after> <remove> <action> was added | M420',
                 ],
@@ -1046,7 +1046,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/test-remove-action-key-changed/source-code-after',
                 [
                     'Mftf (MAJOR)',
-                    'Console/Command/CompareSourceCommandTest/_files/mftf/test-remove-action-key-changed/source-code-before/Magento/TestModule/Test/Mftf/Test/test.xml:0',
+                    'test-remove-action-key-changed/source-code-before/Magento/TestModule/Test/Mftf/Test/test.xml:0',
                     'Test/SampleTest/key2 | <test> <remove action> was removed | M402',
                     'Test/SampleTest/key1 | <test> <remove action> was added | M401',
                 ],
