@@ -64,8 +64,11 @@ class CompareSourceCommandDatabaseSchemasTest extends AbstractTestCaseWithRegExp
                 $pathToFixtures . '/drop-foreign-key/source-code-before',
                 $pathToFixtures . '/drop-foreign-key/source-code-after',
                 [
-                    '/Database \(MAJOR\)/',
-                    '/unit_test_table\/FL_ALLOWED_SEVERITIES\s*\|\s*Foreign key was removed\s*\|\s*M108/'
+                    '#Database \(MAJOR\)#',
+                    '#Console/Command/CompareSourceCommandTest/_files/db_schema/drop-foreign-key/source-code-before/Magento/DbSchema/etc/db_schema\.xml:0#',
+                    '#unit_test_table/FL_ALLOWED_SEVERITIES\s*\|\s*Foreign key was removed\s*\|\s*M108#',
+                    '#Console/Command/CompareSourceCommandTest/_files/db_schema/drop-foreign-key/source-code-before/Magento/DbSchema/etc/db_schema_whitelist\.json:0 \| unit_test_table/constraint#',
+                    '#unit_test_table/constraint\s*\|\s*Module db schema whitelist reduced \(unit_test_table/constraint\)#'
                 ],
                 'Major change is detected.'
             ],
@@ -73,8 +76,9 @@ class CompareSourceCommandDatabaseSchemasTest extends AbstractTestCaseWithRegExp
                 $pathToFixtures . '/change-foreign-key/source-code-before',
                 $pathToFixtures . '/change-foreign-key/source-code-after',
                 [
-                    '/Database \(MAJOR\)/',
-                    '/unit_test_table\/FL_ALLOWED_SEVERITIES\/referenceTable\s*\|\s*Foreign key was changed\s*\|\s*M205/'
+                    '#Database \(MAJOR\)#',
+                    '#Console/Command/CompareSourceCommandTest/_files/db_schema/change-foreign-key/source-code-before/Magento/DbSchema/etc/db_schema\.xml:0#',
+                    '#unit_test_table/FL_ALLOWED_SEVERITIES/referenceTable\s*\|\s*Foreign key was changed\s*\|\s*M205#'
                 ],
                 'Major change is detected.'
             ],
@@ -82,8 +86,9 @@ class CompareSourceCommandDatabaseSchemasTest extends AbstractTestCaseWithRegExp
                 $pathToFixtures . '/add-foreign-key/source-code-before',
                 $pathToFixtures . '/add-foreign-key/source-code-after',
                 [
-                    '/Database \(MAJOR\)/',
-                    '/unit_test_table\/FL_ALLOWED_SEVERITIES\s*\|\s*Foreign key was added\s*\|\s*M204/'
+                    '#Database \(MAJOR\)#',
+                    '#Console/Command/CompareSourceCommandTest/_files/db_schema/add-foreign-key/source-code-after/Magento/DbSchema/etc/db_schema\.xml:0#',
+                    '#unit_test_table/FL_ALLOWED_SEVERITIES\s*\|\s*Foreign key was added\s*\|\s*M204#'
                 ],
                 'Major change is detected.'
             ],
@@ -91,8 +96,11 @@ class CompareSourceCommandDatabaseSchemasTest extends AbstractTestCaseWithRegExp
                 $pathToFixtures . '/drop-primary-key/source-code-before',
                 $pathToFixtures . '/drop-primary-key/source-code-after',
                 [
-                    '/Database \(MAJOR\)/',
-                    '/unit_test_table\/PRIMARY\s*\|\s*Primary key was removed\s*\|\s*M207/'
+                    '#Database \(MAJOR\)#',
+                    '#Console/Command/CompareSourceCommandTest/_files/db_schema/drop-primary-key/source-code-before/Magento/DbSchema/etc/db_schema\.xml:0#',
+                    '#Console/Command/CompareSourceCommandTest/_files/db_schema/drop-primary-key/source-code-before/Magento/DbSchema/etc/db_schema_whitelist.json:0#',
+                    '#unit_test_table\s*\|\s*Module db schema whitelist reduced \(unit_test_table\)\.\s*\|\s*M110#',
+                    '#unit_test_table/PRIMARY\s*\|\s*Primary key was removed\s*\|\s*M207#'
                 ],
                 'Major change is detected.'
             ],

@@ -71,7 +71,7 @@ class Analyzer implements AnalyzerInterface
                 $nodeAfter = $moduleNodesAfter[$uniqueKey] ?? false;
                 if ($nodeAfter === false) {
                     $beforeFilePath = $registryBefore->getLayoutFile($moduleName, $uniqueKey);
-                    $this->triggerNodeRemoved($moduleName, $node, $beforeFilePath);
+                    $this->triggerNodeRemoved($node, $beforeFilePath);
                 }
             }
         }
@@ -80,11 +80,10 @@ class Analyzer implements AnalyzerInterface
     }
 
     /**
-     * @param string $moduleName
      * @param $node
      * @param string $beforeFilePath
      */
-    private function triggerNodeRemoved(string $moduleName, $node, string $beforeFilePath): void
+    private function triggerNodeRemoved($node, string $beforeFilePath): void
     {
         if ($node instanceof Block) {
             $this->report->add('layout', new BlockRemoved($beforeFilePath, $node->getName()));

@@ -173,7 +173,7 @@ COPY_PKG_JSON_SCRIPT
     }
 
     /**
-     * Insert package into results array. Skip displaying patch-level changes
+     * Insert package into results array. Skip inserting if change is less severe than currently stored packageChange
      *
      * @param string $pkgName
      * @param int $level

@@ -97,7 +97,6 @@ class CompareSourceCommand extends Command
     /**
      * @param InputInterface $input
      * @param OutputInterface $cliOutput
-     * @return void
      */
     protected function execute(InputInterface $input, OutputInterface $cliOutput)
     {
@@ -221,8 +220,9 @@ class CompareSourceCommand extends Command
                 "It exceeds the allowed change level, which is $allowedChangeLevel " .
                 '(' . $versionIncWord . ').'
             );
-            exit(-1);
+            return -1;
         }
+        return 0;
     }
 
     private function validateAllowedLevel($input)
