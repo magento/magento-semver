@@ -7,12 +7,12 @@
 
 namespace Magento\SemanticVersionChecker\Test\Unit\Console\Command;
 
-use Magento\SemanticVersionChecker\Test\Unit\Console\Command\CompareSourceCommandTest\AbstractTestCase;
+use Magento\SemanticVersionChecker\Test\Unit\Console\Command\CompareSourceCommandTest\AbstractTestCaseWithRegExp;
 
 /**
  * Test semantic version checker CLI command dealing with di.xml
  */
-class CompareSourceCommandDiXmlTest extends AbstractTestCase
+class CompareSourceCommandDiXmlTest extends AbstractTestCaseWithRegExp
 {
     /**
      * Test semantic version checker CLI command for changes of the database schema.
@@ -21,7 +21,7 @@ class CompareSourceCommandDiXmlTest extends AbstractTestCase
      * @param string $pathToSourceCodeAfter
      * @param string[] $expectedLogEntries
      * @param string $expectedOutput
-     * @param string[] $unexpectedLogEntries
+     * @param bool $shouldSkipTest
      * @return void
      * @throws \Exception
      * @dataProvider changesDataProvider
@@ -31,14 +31,14 @@ class CompareSourceCommandDiXmlTest extends AbstractTestCase
         $pathToSourceCodeAfter,
         $expectedLogEntries,
         $expectedOutput,
-        $unexpectedLogEntries = []
+        $shouldSkipTest = false
     ) {
         $this->doTestExecute(
             $pathToSourceCodeBefore,
             $pathToSourceCodeAfter,
             $expectedLogEntries,
             $expectedOutput,
-            $unexpectedLogEntries
+            $shouldSkipTest
         );
     }
 
@@ -51,7 +51,7 @@ class CompareSourceCommandDiXmlTest extends AbstractTestCase
                 $pathToFixtures . '/no-change/source-code-before',
                 $pathToFixtures . '/no-change/source-code-after',
                 [
-
+                    '#Suggested semantic versioning change: NONE#',
                 ],
                 ''
             ],
@@ -59,7 +59,7 @@ class CompareSourceCommandDiXmlTest extends AbstractTestCase
                 $pathToFixtures . '/moved-to-global/source-code-before',
                 $pathToFixtures . '/moved-to-global/source-code-after',
                 [
-                    'Suggested semantic versioning change: NONE',
+                    '#Suggested semantic versioning change: NONE#',
                 ],
                 'Patch change is detected.',
             ],
@@ -67,7 +67,9 @@ class CompareSourceCommandDiXmlTest extends AbstractTestCase
                 $pathToFixtures . '/moved-to-specific/source-code-before',
                 $pathToFixtures . '/moved-to-specific/source-code-after',
                 [
-                    'Suggested semantic versioning change: MAJOR',
+                    '#Suggested semantic versioning change: MAJOR#',
+                    '#MAJOR\s*\|\s*Console/Command/CompareSourceCommandTest/_files/di_xml/moved-to-specific/source-code-before/Magento/TestModule/etc/di\.xml:0#',
+                    '#scope\s*\|\s*Virtual Type was changed\s*\|\s*M201#'
                 ],
                 'Major change is detected.',
             ],
@@ -75,7 +77,9 @@ class CompareSourceCommandDiXmlTest extends AbstractTestCase
                 $pathToFixtures . '/remove-type/source-code-before',
                 $pathToFixtures . '/remove-type/source-code-after',
                 [
-                    'Suggested semantic versioning change: MAJOR',
+                    '#Suggested semantic versioning change: MAJOR#',
+                    '#MAJOR\s*\|\s*Console/Command/CompareSourceCommandTest/_files/di_xml/remove-type/source-code-before/Magento/TestModule/etc/di\.xml:0#',
+                    '#customCacheInstance2\s*\|\s*Virtual Type was removed\s*\|\s*M200\s*#'
                 ],
                 'Major change is detected.',
             ],
@@ -83,15 +87,19 @@ class CompareSourceCommandDiXmlTest extends AbstractTestCase
                 $pathToFixtures . '/change-type/source-code-before',
                 $pathToFixtures . '/change-type/source-code-after',
                 [
-                    'Suggested semantic versioning change: MAJOR',
+                    '#Suggested semantic versioning change: MAJOR#',
+                    '#MAJOR\s*\|\s*Console/Command/CompareSourceCommandTest/_files/di_xml/change-type/source-code-before/Magento/TestModule/etc/di\.xml:0#',
+                    '#type\s*\|\s*Virtual Type was changed\s*\|\s*M201#'
                 ],
                 'Major change is detected.',
             ],
             'change-name' => [
-                $pathToFixtures . '/change-type/source-code-before',
-                $pathToFixtures . '/change-type/source-code-after',
+                $pathToFixtures . '/change-name/source-code-before',
+                $pathToFixtures . '/change-name/source-code-after',
                 [
-                    'Suggested semantic versioning change: MAJOR',
+                    '#Suggested semantic versioning change: MAJOR#',
+                    '#MAJOR\s*\|\s*Console/Command/CompareSourceCommandTest/_files/di_xml/change-name/source-code-before/Magento/TestModule/etc/di\.xml:0#',
+                    '#cacheInstance\s*\|\s*Virtual Type was removed\s*\|\s*M200#'
                 ],
                 'Major change is detected.',
             ],

@@ -89,6 +89,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/actionGroup-removed/source-code-after',
                 [
                     'Mftf (MAJOR)',
+                    'CompareSourceCommandTest/_files/mftf/actionGroup-removed/source-code-before/Magento/TestModule/Test/Mftf/ActionGroup/actionGroup.xml:0',
                     'ActionGroup/ActionGroup1 | <actionGroup> was removed | M200'
                 ],
                 'Major change is detected.'
@@ -98,6 +99,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/actionGroup-added/source-code-after',
                 [
                     'Mftf (MINOR)',
+                    'CompareSourceCommandTest/_files/mftf/actionGroup-added/source-code-after/Magento/TestModule/Test/Mftf/ActionGroup/actionGroup.xml:0',
                     'ActionGroup/ActionGroup2 | <actionGroup> was added | M225'
                 ],
                 'Minor change is detected.'
@@ -107,6 +109,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/new-module-actionGroup-added/source-code-after',
                 [
                     'Mftf (MINOR)',
+                    'CompareSourceCommandTest/_files/mftf/new-module-actionGroup-added/source-code-after/Magento/TestModuleTwo/Test/Mftf/ActionGroup/actionGroup.xml:0',
                     'ActionGroup/ActionGroup2 | <actionGroup> was added | M225'
                 ],
                 'Minor change is detected.'
@@ -116,6 +119,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/actionGroup-argument-changed/source-code-after',
                 [
                     'Mftf (MAJOR)',
+                    'actionGroup-argument-changed/source-code-before/Magento/TestModule/Test/Mftf/ActionGroup/actionGroup.xml:0',
                     'ActionGroup/ActionGroup1/arg1/type | <actionGroup> <argument> was changed | M203'
                 ],
                 'Major change is detected.'
@@ -125,6 +129,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/actionGroup-argument-removed/source-code-after',
                 [
                     'Mftf (MAJOR)',
+                    'CompareSourceCommandTest/_files/mftf/actionGroup-argument-removed/source-code-before/Magento/TestModule/Test/Mftf/ActionGroup/actionGroup.xml:0',
                     'ActionGroup/ActionGroup1/Arguments/arg1 | <actionGroup> <argument> was removed | M201'
                 ],
                 'Major change is detected.'
@@ -134,6 +139,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/actionGroup-argument-added/source-code-after',
                 [
                     'Mftf (MAJOR)',
+                    'CompareSourceCommandTest/_files/mftf/actionGroup-argument-added/source-code-before/Magento/TestModule/Test/Mftf/ActionGroup/actionGroup.xml:0',
                     'ActionGroup/ActionGroup1/arg2 | <actionGroup> <argument> was added | M227'
                 ],
                 'Major change is detected.'
@@ -143,6 +149,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/actionGroup-action-changed/source-code-after',
                 [
                     'Mftf (PATCH)',
+                    'CompareSourceCommandTest/_files/mftf/actionGroup-action-changed/source-code-before/Magento/TestModule/Test/Mftf/ActionGroup/actionGroup.xml:0',
                     'ActionGroup/ActionGroup1/action1/userInput | <actionGroup> <action> was changed | M204'
                 ],
                 'Patch change is detected.'
@@ -152,6 +159,7 @@ class CompareSourceCommandMftfTest extends AbstractTestCase
                 $pathToFixtures . '/actionGroup-action-type-changed/source-code-after',
                 [
                     'Mftf (PATCH)',
+                    'CompareSourceCommandTest/_files/mftf/actionGroup-action-type-changed/source-code-before/Magento/TestModule/Test/Mftf/ActionGroup/actionGroup.xml:0',
                     'ActionGroup/ActionGroup1/action1 | <actionGroup> <action> type was changed | M223'
                 ],
                 'Patch change is detected.'
