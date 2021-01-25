@@ -57,6 +57,8 @@ class DbSchemaWhitelistAnalyzer implements AnalyzerInterface
         foreach ($registryTablesAfter as $moduleName => $tablesData) {
             $whiteListFileAfter = $registryAfter->mapping['whitelist_json'][$moduleName] ?? '';
             if (!file_exists($whiteListFileAfter)) {
+                $tableFileAfter = $registryAfter->mapping['table'][$moduleName];
+                $whiteListFileAfter = dirname($tableFileAfter) . '/db_schema_whitelist.json';
                 $operation = new WhiteListWasRemoved($whiteListFileAfter, $moduleName);
                 $this->report->add('database', $operation);
                 continue;

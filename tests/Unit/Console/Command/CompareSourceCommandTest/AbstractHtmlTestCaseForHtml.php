@@ -97,7 +97,7 @@ abstract class AbstractHtmlTestCaseForHtml extends TestCase
         } else {
             $docXpath = new DOMXPath($docDom);
             $xpathQuery = '//*[@id="packageChangesJson"]/text()';
-            static::assertHtml($xpathQuery, null, $docDom);
+            static::assertHtml($xpathQuery, null, $docDom); //ensure xpath resolves
             $jsonText = $docDom->saveHTML($docXpath->query($xpathQuery)->item(0));
             $encodedJson = json_decode($jsonText);
             //store expectedJson in same format
@@ -107,29 +107,28 @@ abstract class AbstractHtmlTestCaseForHtml extends TestCase
     }
 
     /**
-     * Assert HTML document resolves xpath, finding pattern, or finding pattern within resolving xpath
+     * Assert HTML document resolves xpath, resolves finding pattern, or resolves finding pattern within resolved xpath
      * @param HtmlParseInfoContainer $container
      * @param DOMXPath $docXpath
      */
-    public static function assertHtml(?string $xpathQuery, ?string $pattern, DOMDocument $docDom) {
+    public static function assertHtml($xpathQuery, $regex, DOMDocument $docDom)
+    {
         $docXpath = new DOMXPath($docDom);
-
         if ($xpathQuery) {
             $nodeList = $docXpath->query($xpathQuery);
             if (!$nodeList || !$nodeList->length) {
                 $body = $docXpath->document->saveHTML();
                 static::fail('xpath selector: ' . $xpathQuery . " was invalid. Unable to return result from document:\n" . $body); //throws exception
             }
-            $body = $docDom->saveHTML($nodeList->item(-1));
-        }
-        else {
+            if ($regex) {
+                $body = $docDom->saveHTML($nodeList->item(0));
+                static::assertRegExp($regex, $body);
+            }
+        } else {
             $body = $docXpath->document->saveHTML();
-        }
-        if ($pattern) {
-            static::assertRegExp($pattern, $body);
+            static::assertRegExp($regex, $body);
         }
     }
-
 
     /**
      * Executes {@link CompareSourceCommandTest::$command} via {@link CommandTester}, using the arguments as command
