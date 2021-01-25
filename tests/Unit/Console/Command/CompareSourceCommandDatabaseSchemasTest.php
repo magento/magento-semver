@@ -65,9 +65,9 @@ class CompareSourceCommandDatabaseSchemasTest extends AbstractTestCaseWithRegExp
                 $pathToFixtures . '/drop-foreign-key/source-code-after',
                 [
                     '#Database \(MAJOR\)#',
-                    '#Console/Command/CompareSourceCommandTest/_files/db_schema/drop-foreign-key/source-code-before/Magento/DbSchema/etc/db_schema\.xml:0#',
+                    '#[\w/]+' . '/drop-foreign-key/source-code-before/Magento/DbSchema/etc/db_schema\.xml:0#',
                     '#unit_test_table/FL_ALLOWED_SEVERITIES\s*\|\s*Foreign key was removed\s*\|\s*M108#',
-                    '#Console/Command/CompareSourceCommandTest/_files/db_schema/drop-foreign-key/source-code-before/Magento/DbSchema/etc/db_schema_whitelist\.json:0 \| unit_test_table/constraint#',
+                    '#[\w/]+' . '/drop-foreign-key/source-code-before/Magento/DbSchema/etc/db_schema_whitelist\.json:0 \| unit_test_table/constraint#',
                     '#unit_test_table/constraint\s*\|\s*Module db schema whitelist reduced \(unit_test_table/constraint\)#'
                 ],
                 'Major change is detected.'
@@ -77,7 +77,7 @@ class CompareSourceCommandDatabaseSchemasTest extends AbstractTestCaseWithRegExp
                 $pathToFixtures . '/change-foreign-key/source-code-after',
                 [
                     '#Database \(MAJOR\)#',
-                    '#Console/Command/CompareSourceCommandTest/_files/db_schema/change-foreign-key/source-code-before/Magento/DbSchema/etc/db_schema\.xml:0#',
+                    '#[\w/]+' . 'change-foreign-key/source-code-before/Magento/DbSchema/etc/db_schema\.xml:0#',
                     '#unit_test_table/FL_ALLOWED_SEVERITIES/referenceTable\s*\|\s*Foreign key was changed\s*\|\s*M205#'
                 ],
                 'Major change is detected.'
@@ -87,7 +87,7 @@ class CompareSourceCommandDatabaseSchemasTest extends AbstractTestCaseWithRegExp
                 $pathToFixtures . '/add-foreign-key/source-code-after',
                 [
                     '#Database \(MAJOR\)#',
-                    '#Console/Command/CompareSourceCommandTest/_files/db_schema/add-foreign-key/source-code-after/Magento/DbSchema/etc/db_schema\.xml:0#',
+                    '#[\w/]+' . 'add-foreign-key/source-code-after/Magento/DbSchema/etc/db_schema\.xml:0#',
                     '#unit_test_table/FL_ALLOWED_SEVERITIES\s*\|\s*Foreign key was added\s*\|\s*M204#'
                 ],
                 'Major change is detected.'
@@ -97,8 +97,8 @@ class CompareSourceCommandDatabaseSchemasTest extends AbstractTestCaseWithRegExp
                 $pathToFixtures . '/drop-primary-key/source-code-after',
                 [
                     '#Database \(MAJOR\)#',
-                    '#Console/Command/CompareSourceCommandTest/_files/db_schema/drop-primary-key/source-code-before/Magento/DbSchema/etc/db_schema\.xml:0#',
-                    '#Console/Command/CompareSourceCommandTest/_files/db_schema/drop-primary-key/source-code-before/Magento/DbSchema/etc/db_schema_whitelist.json:0#',
+                    '#[\w/]+' . 'drop-primary-key/source-code-before/Magento/DbSchema/etc/db_schema\.xml:0#',
+                    '#[\w/]+' . 'drop-primary-key/source-code-before/Magento/DbSchema/etc/db_schema_whitelist.json:0#',
                     '#unit_test_table\s*\|\s*Module db schema whitelist reduced \(unit_test_table\)\.\s*\|\s*M110#',
                     '#unit_test_table/PRIMARY\s*\|\s*Primary key was removed\s*\|\s*M207#'
                 ],
@@ -109,8 +109,8 @@ class CompareSourceCommandDatabaseSchemasTest extends AbstractTestCaseWithRegExp
                 $pathToFixtures . '/change-primary-key/source-code-after',
                 [
                     '/Database \(MAJOR\)/',
-                    '#Console/Command/CompareSourceCommandTest/_files/db_schema/change-primary-key/source-code-after/Magento/DbSchema/etc/db_schema\.xml:0#',
-                    '#Console/Command/CompareSourceCommandTest/_files/db_schema/change-primary-key/source-code-before/Magento/DbSchema/etc/db_schema\.xml:0#',
+                    '#[\w/]+' . 'change-primary-key/source-code-after/Magento/DbSchema/etc/db_schema\.xml:0#',
+                    '#[\w/]+' . 'change-primary-key/source-code-before/Magento/DbSchema/etc/db_schema\.xml:0#',
                     '/unit_test_table\/PRIMARY\s*\|\s*Primary key was changed\s*\|\s*M206/'
                 ],
                 'Major change is detected.'
@@ -120,7 +120,7 @@ class CompareSourceCommandDatabaseSchemasTest extends AbstractTestCaseWithRegExp
                 $pathToFixtures . '/add-primary-key/source-code-after',
                 [
                     '/Database \(MAJOR\)/',
-                    '#Console/Command/CompareSourceCommandTest/_files/db_schema/add-primary-key/source-code-after/Magento/DbSchema/etc/db_schema\.xml:0#',
+                    '#[\w/]+' . 'add-primary-key/source-code-after/Magento/DbSchema/etc/db_schema\.xml:0#',
                     '/unit_test_table\/PRIMARY\s*\|\s*Primary key was added\s*\|\s*M205/'
                 ],
                 'Major change is detected.'
@@ -132,8 +132,8 @@ class CompareSourceCommandDatabaseSchemasTest extends AbstractTestCaseWithRegExp
                     '/Database \(MAJOR\)/',
                     '/unit_test_table\/UNIQUE_KEY\s*\|\s*Unique key was removed\s*\|\s*M209/',
                     '#unit_test_table/constraint\s*\|\s*Module db schema whitelist reduced \(unit_test_table/constraint\)\.\s*\|\s*M110#',
-                    '#Console/Command/CompareSourceCommandTest/_files/db_schema/drop-unique-key/source-code-before/Magento/DbSchema/etc/db_schema.xml:0#',
-                    '#Console/Command/CompareSourceCommandTest/_files/db_schema/drop-unique-key/source-code-before/Magento/DbSchema/etc/db_schema_whitelist.json:0#'
+                    '#[\w/]+' . 'drop-unique-key/source-code-before/Magento/DbSchema/etc/db_schema.xml:0#',
+                    '#[\w/]+' . 'drop-unique-key/source-code-before/Magento/DbSchema/etc/db_schema_whitelist.json:0#'
                 ],
                 'Major change is detected.'
             ],
@@ -143,8 +143,8 @@ class CompareSourceCommandDatabaseSchemasTest extends AbstractTestCaseWithRegExp
                 [
                     '/Database \(MAJOR\)/',
                     '/unit_test_table\/UNIQUE_KEY\s*\|\s*Unique key was changed\s*\|\s*M210/',
-                    '#Console/Command/CompareSourceCommandTest/_files/db_schema/change-unique-key/source-code-before/Magento/DbSchema/etc/db_schema\.xml:0#',
-                    '#Console/Command/CompareSourceCommandTest/_files/db_schema/change-unique-key/source-code-after/Magento/DbSchema/etc/db_schema\.xml:0#'
+                    '#[\w/]+' . 'change-unique-key/source-code-before/Magento/DbSchema/etc/db_schema\.xml:0#',
+                    '#[\w/]+' . 'change-unique-key/source-code-after/Magento/DbSchema/etc/db_schema\.xml:0#'
                 ],
                 'Major change is detected.'
             ],
@@ -154,7 +154,7 @@ class CompareSourceCommandDatabaseSchemasTest extends AbstractTestCaseWithRegExp
                 [
                     '/Database \(MAJOR\)/',
                     '/unit_test_table\/UNIQUE_KEY\s*\|\s*Unique key was added\s*\|\s*M208/',
-                    '#Console/Command/CompareSourceCommandTest/_files/db_schema/add-unique-key/source-code-after/Magento/DbSchema/etc/db_schema\.xml:0#'
+                    '#[\w/]+' . 'add-unique-key/source-code-after/Magento/DbSchema/etc/db_schema\.xml:0#'
                 ],
                 'Major change is detected.'
             ],
@@ -165,8 +165,8 @@ class CompareSourceCommandDatabaseSchemasTest extends AbstractTestCaseWithRegExp
                     '/Database \(MAJOR\)/',
                     '/unit_test_table\/time_occurred\s*\|\s*Column was removed\s*\|\s*M107/',
                     '/Module db schema whitelist reduced \(unit\_test\_table\/column\).\s*\|\s*M110/',
-                    '#Console/Command/CompareSourceCommandTest/_files/db_schema/column-removed/source-code-before/Magento/DbSchema/etc/db_schema_whitelist\.json:0#',
-                    '#Console/Command/CompareSourceCommandTest/_files/db_schema/column-removed/source-code-before/Magento/DbSchema/etc/db_schema\.xml:0#'
+                    '#[\w/]+' . 'column-removed/source-code-before/Magento/DbSchema/etc/db_schema_whitelist\.json:0#',
+                    '#[\w/]+' . 'column-removed/source-code-before/Magento/DbSchema/etc/db_schema\.xml:0#'
                 ],
                 'Major change is detected.'
             ],
@@ -175,7 +175,7 @@ class CompareSourceCommandDatabaseSchemasTest extends AbstractTestCaseWithRegExp
                 $pathToFixtures . '/column-added/source-code-after',
                 [
                     '/Database \(MINOR\)/',
-                    '#Console/Command/CompareSourceCommandTest/_files/db_schema/column-added/source-code-after/Magento/DbSchema/etc/db_schema\.xml:0#',
+                    '#[\w/]+' . 'column-added/source-code-after/Magento/DbSchema/etc/db_schema\.xml:0#',
                     '/unit_test_table\/time_occurred\s*\|\s*Column was added\s*\|\s*M203/'
                 ],
                 'Minor change is detected.'
@@ -187,8 +187,8 @@ class CompareSourceCommandDatabaseSchemasTest extends AbstractTestCaseWithRegExp
                     '/Database \(MAJOR\)/',
                     '/other_unit_test_table\s*\|\s*Table was dropped\s*\|\s*M104/',
                     '/Module db schema whitelist reduced \(other\_unit\_test\_table\).\s*\|\s*M110/',
-                    '#Console/Command/CompareSourceCommandTest/_files/db_schema/table-dropped/source-code-before/Magento/DbSchema/etc/db_schema\.xml:0#',
-                    '#Console/Command/CompareSourceCommandTest/_files/db_schema/table-dropped/source-code-before/Magento/DbSchema/etc/db_schema_whitelist\.json:0#'
+                    '#[\w/]+' . '/table-dropped/source-code-before/Magento/DbSchema/etc/db_schema\.xml:0#',
+                    '#[\w/]+' . '/table-dropped/source-code-before/Magento/DbSchema/etc/db_schema_whitelist\.json:0#'
                 ],
                 'Major change is detected.'
             ],
@@ -200,8 +200,8 @@ class CompareSourceCommandDatabaseSchemasTest extends AbstractTestCaseWithRegExp
                     '/other_unit_test_table\s*\|\s*Table was added\s*\|\s*M202/',
                     '#other_table\s*\|\s*Table was added\s*\|\s*M202#',
                     '#other_table\s*\|\s*Whitelist do not have table other_table declared in db_schema\.xml\s*\|\s*M109#',
-                    '#Console/Command/CompareSourceCommandTest/_files/db_schema/table-added/source-code-after/Magento/DbSchema/etc/db_schema\.xml:0#',
-                    '#Console/Command/CompareSourceCommandTest/_files/db_schema/table-added/source-code-after/Magento/DbSchema/etc/db_schema_whitelist\.json:0#',
+                    '#[\w/]+' . '/table-added/source-code-after/Magento/DbSchema/etc/db_schema\.xml:0#',
+                    '#[\w/]+' . '/table-added/source-code-after/Magento/DbSchema/etc/db_schema_whitelist\.json:0#',
 
                 ],
                 'Minor change is detected.'
@@ -212,9 +212,9 @@ class CompareSourceCommandDatabaseSchemasTest extends AbstractTestCaseWithRegExp
                 [
                     '/Database \(MAJOR\)/',
                     '/unit_test_table\s*\|\s*Table was dropped\s*\|\s*M104/',
-                    '#Console/Command/CompareSourceCommandTest/_files/db_schema/table-changed/source-code-after/Magento/DbSchema/etc/db_schema\.xml:0#',
-                    '#Console/Command/CompareSourceCommandTest/_files/db_schema/table-changed/source-code-before/Magento/DbSchema/etc/db_schema\.xml:0#',
-                    '#Console/Command/CompareSourceCommandTest/_files/db_schema/table-changed/source-code-before/Magento/DbSchema/etc/db_schema_whitelist\.json:0#',
+                    '#[\w/]+' . 'table-changed/source-code-after/Magento/DbSchema/etc/db_schema\.xml:0#',
+                    '#[\w/]+' . 'table-changed/source-code-before/Magento/DbSchema/etc/db_schema\.xml:0#',
+                    '#[\w/]+' . 'table-changed/source-code-before/Magento/DbSchema/etc/db_schema_whitelist\.json:0#',
                     '/unit_test_table\s*\|\s*Module db schema whitelist reduced \(unit\_test\_table\).\s*\|\s*M110/',
                     '/new_unit_test_table\s*\|\s*Table was added\s*\|\s*M202/'
                 ],
@@ -225,7 +225,7 @@ class CompareSourceCommandDatabaseSchemasTest extends AbstractTestCaseWithRegExp
                 $pathToFixtures . '/table-resource-changed/source-code-after',
                 [
                     '/Database \(MAJOR\)/',
-                    '#Console/Command/CompareSourceCommandTest/_files/db_schema/table-resource-changed/source-code-before/Magento/DbSchema/etc/db_schema\.xml:0#',
+                    '#[\w/]+' . '/table-resource-changed/source-code-before/Magento/DbSchema/etc/db_schema\.xml:0#',
                     '/unit_test_table\s*\|\s*Table chard was changed from default to sales\s*\|\s*M105/'
                 ],
                 'Major change is detected.'
@@ -239,8 +239,8 @@ class CompareSourceCommandDatabaseSchemasTest extends AbstractTestCaseWithRegExp
                     '/Magento\/DbSchemaSecond\/etc\/db_schema_whitelist\.json:0\s*\|\s*unit_test_table3\s*\|\s*Module db schema whitelist reduced \(unit\_test\_table3\).\s*\|\s*M110/',
                     '/Magento\/DbSchemaSecond\/etc\/db_schema_whitelist\.json:0\s*\|\s*unit_test_table2\s*\|\s*Module db schema whitelist reduced \(unit\_test\_table2\).\s*\|\s*M110/',
                     '/Magento\/DbSchema\/etc\/db_schema_whitelist.json:0\s*\|\s*unit_test_table3\s*\|\s*Module db schema whitelist reduced \(unit\_test\_table3\).\s*\|\s*M110/',
-                    '#Console/Command/CompareSourceCommandTest/_files/db_schema/whitelist-was-reduced/source-code-before/Magento/DbSchemaSecond/etc/db_schema\.xml:0#',
-                    '#Console/Command/CompareSourceCommandTest/_files/db_schema/whitelist-was-reduced/source-code-before/Magento/DbSchema/etc/db_schema\.xml:0#'
+                    '#[\w/]+' . '/whitelist-was-reduced/source-code-before/Magento/DbSchemaSecond/etc/db_schema\.xml:0#',
+                    '#[\w/]+' . '/whitelist-was-reduced/source-code-before/Magento/DbSchema/etc/db_schema\.xml:0#'
                 ],
                 'Major change is detected.'
             ],

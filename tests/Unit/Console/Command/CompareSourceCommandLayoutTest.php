@@ -45,6 +45,7 @@ class CompareSourceCommandLayoutTest extends AbstractTestCaseWithRegExp
     public function changesDataProvider()
     {
         $pathToFixtures = __DIR__ . '/CompareSourceCommandTest/_files/layout_xml';
+        getcwd();
 
         return [
             'block_remove' => [
@@ -52,7 +53,7 @@ class CompareSourceCommandLayoutTest extends AbstractTestCaseWithRegExp
                 $pathToFixtures . '/block_remove/source-code-after',
                 [
                     '#Suggested semantic versioning change: MAJOR#',
-                    '#MAJOR\s*\|\s*Console/Command/CompareSourceCommandTest/_files/layout_xml/block_remove/source-code-before/Magento/Customer/view/adminhtml/layout/customer_index_viewwishlist\.xml:0#',
+                    '#MAJOR\s*\|\s' .  '[\w/]+' . '/block_remove/source-code-before/Magento/Customer/view/adminhtml/layout/customer_index_viewwishlist\.xml:0#',
                     '#admin\.customer\.view\.wishlist\s*\|\s*Block was removed\s*\|\s*M220#'
                 ],
                 'Major change is detected.',
@@ -62,7 +63,7 @@ class CompareSourceCommandLayoutTest extends AbstractTestCaseWithRegExp
                 $pathToFixtures . '/container_remove/source-code-after',
                 [
                     '#Suggested semantic versioning change: MAJOR#',
-                    '#MAJOR\s*\|\s*Console/Command/CompareSourceCommandTest/_files/layout_xml/container_remove/source-code-before/Magento/Customer/view/adminhtml/layout/customer_index_viewwishlist\.xml:0#',
+                    '#MAJOR\s*\|\s*' . '[\w/]+' . '/container_remove/source-code-before/Magento/Customer/view/adminhtml/layout/customer_index_viewwishlist\.xml:0#',
                     '#root\s*\|\s*Container was removed\s*\|\s*M221#'
                 ],
                 'Major change is detected.',
@@ -72,8 +73,8 @@ class CompareSourceCommandLayoutTest extends AbstractTestCaseWithRegExp
                 $pathToFixtures . '/update_remove/source-code-after',
                 [
                     '#Suggested semantic versioning change: MAJOR#',
-                    '#MAJOR\s*\|\s*Console/Command/CompareSourceCommandTest/_files/layout_xml/update_remove/source-code-before/Magento/ConfigurableProduct/view/adminhtml/layout/catalog_product_configurable\.xml:0',
-                    '#catalog_product_superconfig_config\s*\|\s*An Update was removed\s*\|\s*M222'
+                    '#MAJOR\s*\|\s*' . '[\w/]+' . '/update_remove/source-code-before/Magento/ConfigurableProduct/view/adminhtml/layout/catalog_product_configurable\.xml:0#',
+                    '#catalog_product_superconfig_config\s*\|\s*An Update was removed\s*\|\s*M222#'
                 ],
                 'Major change is detected.',
             ],

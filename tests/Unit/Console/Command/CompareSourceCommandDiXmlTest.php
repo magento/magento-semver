@@ -68,7 +68,7 @@ class CompareSourceCommandDiXmlTest extends AbstractTestCaseWithRegExp
                 $pathToFixtures . '/moved-to-specific/source-code-after',
                 [
                     '#Suggested semantic versioning change: MAJOR#',
-                    '#MAJOR\s*\|\s*Console/Command/CompareSourceCommandTest/_files/di_xml/moved-to-specific/source-code-before/Magento/TestModule/etc/di\.xml:0#',
+                    '#MAJOR\s*\|\s' . '[\w/]+'  . '/moved-to-specific/source-code-before/Magento/TestModule/etc/di\.xml:0#',
                     '#scope\s*\|\s*Virtual Type was changed\s*\|\s*M201#'
                 ],
                 'Major change is detected.',
@@ -78,7 +78,7 @@ class CompareSourceCommandDiXmlTest extends AbstractTestCaseWithRegExp
                 $pathToFixtures . '/remove-type/source-code-after',
                 [
                     '#Suggested semantic versioning change: MAJOR#',
-                    '#MAJOR\s*\|\s*Console/Command/CompareSourceCommandTest/_files/di_xml/remove-type/source-code-before/Magento/TestModule/etc/di\.xml:0#',
+                    '#MAJOR\s*\|\s' . '[\w/]+' . 'remove-type/source-code-before/Magento/TestModule/etc/di\.xml:0#',
                     '#customCacheInstance2\s*\|\s*Virtual Type was removed\s*\|\s*M200\s*#'
                 ],
                 'Major change is detected.',
@@ -88,7 +88,7 @@ class CompareSourceCommandDiXmlTest extends AbstractTestCaseWithRegExp
                 $pathToFixtures . '/change-type/source-code-after',
                 [
                     '#Suggested semantic versioning change: MAJOR#',
-                    '#MAJOR\s*\|\s*Console/Command/CompareSourceCommandTest/_files/di_xml/change-type/source-code-before/Magento/TestModule/etc/di\.xml:0#',
+                    '#MAJOR\s*\|\s' . '[\w/]+' . '/change-type/source-code-before/Magento/TestModule/etc/di\.xml:0#',
                     '#type\s*\|\s*Virtual Type was changed\s*\|\s*M201#'
                 ],
                 'Major change is detected.',
@@ -98,7 +98,7 @@ class CompareSourceCommandDiXmlTest extends AbstractTestCaseWithRegExp
                 $pathToFixtures . '/change-name/source-code-after',
                 [
                     '#Suggested semantic versioning change: MAJOR#',
-                    '#MAJOR\s*\|\s*Console/Command/CompareSourceCommandTest/_files/di_xml/change-name/source-code-before/Magento/TestModule/etc/di\.xml:0#',
+                    '#MAJOR\s*\|\s*' . '[\w/]+' . '/change-name/source-code-before/Magento/TestModule/etc/di\.xml:0#',
                     '#cacheInstance\s*\|\s*Virtual Type was removed\s*\|\s*M200#'
                 ],
                 'Major change is detected.',

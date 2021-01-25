@@ -6,6 +6,9 @@
 declare(strict_types=1);
 namespace Magento\SemanticVersionChecker\Test\Unit\Console\Command\CompareSourceCommandTest;
 
+/**
+ * Container for pattern and xpath used to validate SVC Report html
+ */
 class HtmlParseInfoContainer
 {
     /**
@@ -18,6 +21,11 @@ class HtmlParseInfoContainer
      */
     public $pattern;
 
+    /**
+     * HtmlParseInfoContainer constructor.
+     * @param string|null $pattern
+     * @param string|null $xpath
+     */
     public function __construct(?string $pattern, ?string $xpath = null)
     {
         if( !($pattern || $xpath) ) {
