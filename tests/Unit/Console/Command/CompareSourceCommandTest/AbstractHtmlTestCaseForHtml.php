@@ -11,8 +11,10 @@ use \DOMDocument;
 use DOMXPath;
 use Exception;
 use Magento\SemanticVersionChecker\Console\Command\CompareSourceCommand;
+use Magento\SemanticVersionChecker\ReportTypes;
 use PHPSemVerChecker\SemanticVersioning\Level;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 use Symfony\Component\Console\Tester\CommandTester;
 
 /**
@@ -53,26 +55,28 @@ abstract class AbstractHtmlTestCaseForHtml extends TestCase
      *
      * @param string $pathToSourceCodeBefore
      * @param string $pathToSourceCodeAfter
-     * @param $allowedChangeLevel
+     * @param int $allowedChangeLevel
      * @param HtmlParseInfoContainer[] $expectedHtmlEntries
      * @param array $expectedPackageSection
      * @param string $expectedOutput
      * @param $expectedStatusCode
+     * @param $reportTypes
      * @param bool $shouldSkipTest
      * @throws Exception
      */
     protected function doTestExecute(
-        $pathToSourceCodeBefore,
-        $pathToSourceCodeAfter,
-        $allowedChangeLevel,
-        $expectedHtmlEntries,
-        $expectedPackageSection,
-        $expectedOutput,
-        $expectedStatusCode,
-        $shouldSkipTest
+        string $pathToSourceCodeBefore,
+        string $pathToSourceCodeAfter,
+        int $allowedChangeLevel,
+        array $expectedHtmlEntries,
+        array $expectedPackageSection,
+        string $expectedOutput,
+        int $expectedStatusCode,
+        array $reportTypes,
+        bool $shouldSkipTest
     ): void {
         try {
-            $commandTester = $this->executeCommand($pathToSourceCodeBefore, $pathToSourceCodeAfter, $allowedChangeLevel);
+            $commandTester = $this->executeCommand($pathToSourceCodeBefore, $pathToSourceCodeAfter, $allowedChangeLevel, $reportTypes);
             $svcDom = $this->getSvcReportDOM();
             self::assertJsonContent($expectedPackageSection, $svcDom);
             foreach ($expectedHtmlEntries as $expectedHtmlEntry) {
@@ -89,6 +93,12 @@ abstract class AbstractHtmlTestCaseForHtml extends TestCase
         }
     }
 
+    /**
+     * Validate json in html svc document
+     *
+     * @param array $expectedJson
+     * @param DOMDocument $docDom
+     */
     private static function assertJsonContent(array $expectedJson, DOMDocument $docDom) {
         if (!$expectedJson) {
             $xpathQuery = '/html/body/table/tbody/tr[last()]/td[2]';
@@ -102,14 +112,18 @@ abstract class AbstractHtmlTestCaseForHtml extends TestCase
             $encodedJson = json_decode($jsonText);
             //store expectedJson in same format
             $expectedJson = json_decode(json_encode($expectedJson));
-            self::assertEquals(sort($expectedJson), sort($encodedJson));
+            sort($expectedJson);
+            sort($encodedJson);
+            self::assertEquals($expectedJson, $encodedJson);
         }
     }
 
     /**
      * Assert HTML document resolves xpath, resolves finding pattern, or resolves finding pattern within resolved xpath
-     * @param HtmlParseInfoContainer $container
-     * @param DOMXPath $docXpath
+     *
+     * @param $xpathQuery
+     * @param $regex
+     * @param DOMDocument $docDom
      */
     public static function assertHtml($xpathQuery, $regex, DOMDocument $docDom)
     {
@@ -142,12 +156,13 @@ abstract class AbstractHtmlTestCaseForHtml extends TestCase
      *   <li><kbd>--include-patterns</kbd>: The path to the file <kbd>./_files/application_includes.txt</kbd></li>
      * </ul>
      *
-     * @param $pathToSourceCodeBefore
-     * @param $pathToSourceCodeAfter
-     * @param $allowedChangeLevel
+     * @param string $pathToSourceCodeBefore
+     * @param string $pathToSourceCodeAfter
+     * @param int $allowedChangeLevel
+     * @param array $reportTypes
      * @return CommandTester
      */
-    protected function executeCommand($pathToSourceCodeBefore, $pathToSourceCodeAfter, $allowedChangeLevel): CommandTester
+    protected function executeCommand(string $pathToSourceCodeBefore, string $pathToSourceCodeAfter, int $allowedChangeLevel, array $reportTypes): CommandTester
     {
         $commandTester = new CommandTester($this->command);
         $commandTester->execute(
@@ -156,6 +171,7 @@ abstract class AbstractHtmlTestCaseForHtml extends TestCase
                 'source-after'          => $pathToSourceCodeAfter,
                 '--log-output-location' => $this->svcLogPath,
                 '--include-patterns'    => __DIR__ . '/_files/application_includes.txt',
+                '--report-type'         => $reportTypes,
                 'allowed-change-level'  => $allowedChangeLevel,
             ]
         );
