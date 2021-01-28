@@ -104,7 +104,7 @@ class DataAnalyzer extends AbstractEntityAnalyzer implements AnalyzerInterface
                         $afterArrayFields[] = $afterChild;
                     }
                 }
-                
+
                 // Validate <data> fields
                 foreach ($beforeDataFields as $beforeField) {
                     $beforeFieldKey = $beforeField['attributes']['key'];
