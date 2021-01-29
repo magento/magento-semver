@@ -37,7 +37,8 @@ class XmlRegistry extends Registry
      * @param LayoutNodeInterface $layoutNode
      * @param string $moduleName
      */
-    public function addLayoutContainerNode(LayoutNodeInterface $layoutNode, string $moduleName) {
+    public function addLayoutContainerNode(LayoutNodeInterface $layoutNode, string $moduleName)
+    {
         $this->data[self::NODES_KEY][$moduleName][$layoutNode->getUniqueKey()] = $layoutNode;
         $this->mapping[self::NODES_KEY][$moduleName][$layoutNode->getUniqueKey()] = $this->getCurrentFile();
     }
@@ -49,7 +50,8 @@ class XmlRegistry extends Registry
      * @param string $uniqueKey
      * @return mixed
      */
-    public function getLayoutFile(string $moduleName, string $uniqueKey) {
+    public function getLayoutFile(string $moduleName, string $uniqueKey)
+    {
         return $this->mapping[self::NODES_KEY][$moduleName][$uniqueKey];
     }
 

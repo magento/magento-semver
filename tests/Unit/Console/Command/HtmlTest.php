@@ -156,8 +156,9 @@ class HtmlTest extends AbstractHtmlTestCaseForHtml
      *
      * @return array
      */
-    private static function getAllReportTypes():array {
-        if(!self::$reportTypesList) {
+    private static function getAllReportTypes(): array
+    {
+        if (!self::$reportTypesList) {
             self::$reportTypesList = (new ReflectionClass(ReportTypes::class))->getConstants();
         }
         return self::$reportTypesList;

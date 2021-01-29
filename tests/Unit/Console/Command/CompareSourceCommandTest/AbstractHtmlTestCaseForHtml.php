@@ -7,7 +7,7 @@
 
 namespace Magento\SemanticVersionChecker\Test\Unit\Console\Command\CompareSourceCommandTest;
 
-use \DOMDocument;
+use DOMDocument;
 use DOMXPath;
 use Exception;
 use Magento\SemanticVersionChecker\Console\Command\CompareSourceCommand;
@@ -99,7 +99,8 @@ abstract class AbstractHtmlTestCaseForHtml extends TestCase
      * @param array $expectedJson
      * @param DOMDocument $docDom
      */
-    private static function assertJsonContent(array $expectedJson, DOMDocument $docDom) {
+    private static function assertJsonContent(array $expectedJson, DOMDocument $docDom)
+    {
         if (!$expectedJson) {
             $xpathQuery = '/html/body/table/tbody/tr[last()]/td[2]';
             $pattern = '#No BIC changes found to packages#i';
@@ -183,7 +184,7 @@ abstract class AbstractHtmlTestCaseForHtml extends TestCase
      *
      * @return DOMDocument
      */
-    private function getSvcReportDOM() : ?DOMDocument
+    private function getSvcReportDOM(): ?DOMDocument
     {
         $source = file_get_contents($this->svcLogPath);
         if (!$source) {

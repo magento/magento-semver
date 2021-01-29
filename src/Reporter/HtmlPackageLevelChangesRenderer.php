@@ -82,10 +82,10 @@ class HtmlPackageLevelChangesRenderer
         $pkgChangesJson = $this->getPackageChanges();
         $this->output->writeln('<tr class="text"><td class="test-name">Package Level Changes</td>');
         //Skip writing table if no severe changes are detected
-       if (!$pkgChangesJson) {
-           $this->output->writeln('<td>No BIC changes found to packages</td></tr>');
-           return;
-       }
+        if (!$pkgChangesJson) {
+            $this->output->writeln('<td>No BIC changes found to packages</td></tr>');
+            return;
+        }
         $this->output->writeln('<td><button class="btn-danger collapsible">Details</button><div class="content">');
         $this->output->writeln(
             '<table class="table table-striped"><tr><th class="column10">Level</th>' .
@@ -94,7 +94,7 @@ class HtmlPackageLevelChangesRenderer
 
         foreach ($pkgChangesJson as $pkg) {
             $this->output->writeln(
-                '<tr class="text-danger"><td>'. $pkg['level'] . '</td><td>' . $pkg['name'] . '</td></tr>'
+                '<tr class="text-danger"><td>' . $pkg['level'] . '</td><td>' . $pkg['name'] . '</td></tr>'
             );
         }
         $this->output->writeln('</table>');
@@ -109,8 +109,9 @@ class HtmlPackageLevelChangesRenderer
     /**
      * Outputs JS to copy JSON to clipboard
      */
-    private function printClipboardJS() {
-        $this->output->writeln( <<<COPY_PKG_JSON_SCRIPT
+    private function printClipboardJS()
+    {
+        $this->output->writeln(<<<COPY_PKG_JSON_SCRIPT
 <input type="hidden" id="copyBuffer" value="">
 <button class="btn-info btn-tooltip" id="copy_pkg_json_btn">Copy</button>
 <script>
@@ -149,7 +150,7 @@ COPY_PKG_JSON_SCRIPT
      *
      * @return array
      */
-    private function getPackageChanges():array
+    private function getPackageChanges(): array
     {
         $results = [];
         foreach (self::$contexts as $context) {
@@ -179,7 +180,8 @@ COPY_PKG_JSON_SCRIPT
      * @param int $level
      * @param array $results
      */
-    private function saveLevelOfChange(string $pkgName, int $level, array &$results) {
+    private function saveLevelOfChange(string $pkgName, int $level, array &$results)
+    {
         if (!isset($results[$pkgName]) || $level > $results[$pkgName]) {
             $results[$pkgName] = $level;
         }
@@ -191,7 +193,8 @@ COPY_PKG_JSON_SCRIPT
      * @param array $pkgChanges
      * @return array
      */
-    private function transformOutputArray(array $pkgChanges) {
+    private function transformOutputArray(array $pkgChanges)
+    {
         $results = [];
         $minimumChangeLevel = $this->input->getArgument('allowed-change-level');
         foreach ($pkgChanges as $pkgName => $level) {

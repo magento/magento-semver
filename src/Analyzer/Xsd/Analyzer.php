@@ -112,7 +112,7 @@ class Analyzer implements AnalyzerInterface
                 }
 
                 //process removed nodes
-                if($removedNodes) {
+                if ($removedNodes) {
                     $filePath = $registryBefore->mapping[XmlRegistry::NODES_KEY][$moduleName][$fileName];
                     $this->reportRemovedNodes($filePath, $removedNodes);
                 }
@@ -267,8 +267,11 @@ class Analyzer implements AnalyzerInterface
      * @param array $relativeFilePaths
      * @param Registry $registryBefore
      */
-    private function reportRemovedSchemaDeclarations(string $module, array $relativeFilePaths, Registry $registryBefore): void
-    {
+    private function reportRemovedSchemaDeclarations(
+        string $module,
+        array $relativeFilePaths,
+        Registry $registryBefore
+    ): void {
         foreach ($relativeFilePaths as $relativeFilePath) {
             $fullPath = $registryBefore->mapping[XmlRegistry::NODES_KEY][$module][$relativeFilePath];
             $this->report->add(self::CONTEXT, new SchemaDeclarationRemoved($fullPath, $relativeFilePath));

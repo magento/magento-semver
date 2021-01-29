@@ -37,15 +37,17 @@ class PackageNameResolver
      * @param string $filepath
      * @return string|null
      */
-    private function getComposerPackageLocation(string $filepath):?string {
+    private function getComposerPackageLocation(string $filepath): ?string
+    {
         $sourceBeforeDir = realpath($this->input->getArgument('source-before'));
         $sourceAfterDir = realpath($this->input->getArgument('source-after'));
         $level = 1;
         $composerDirPath = dirname($filepath, $level);
-        while ($composerDirPath !== $sourceBeforeDir
+        while (
+            $composerDirPath !== $sourceBeforeDir
             && $composerDirPath !== $sourceAfterDir
-            && $composerDirPath !== '.') {
-
+            && $composerDirPath !== '.'
+        ) {
             $composerPath = $composerDirPath . '/composer.json';
             if (is_file($composerPath)) {
                 return $composerPath;
@@ -61,7 +63,8 @@ class PackageNameResolver
      * @param string $filepath
      * @return string|null
      */
-    public function getPackageName(string $filepath):?string {
+    public function getPackageName(string $filepath): ?string
+    {
         $composerFilePath = $this->getComposerPackageLocation($filepath);
         if (!$composerFilePath) {
             return null;
@@ -70,5 +73,4 @@ class PackageNameResolver
         $composerJson = json_decode($composerFile);
         return $composerJson->name;
     }
-
 }

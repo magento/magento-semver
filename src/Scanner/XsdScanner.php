@@ -155,9 +155,4 @@ class XsdScanner implements ScannerInterface
 
         return substr($file, $moduleSubPathPosition + strlen($moduleSubPath));
     }
-
-    private function getModulePath(string $file, string $module) {
-        $relativePath = $this->getRelativePath($file, $module);
-        return substr($file, 0, strlen($file) - strlen($relativePath));
-    }
 }
