@@ -15,6 +15,7 @@ use Magento\SemanticVersionChecker\Operation\Less\MixinParameterAdded;
 use Magento\SemanticVersionChecker\Operation\Less\VariableRemoved;
 use Magento\SemanticVersionChecker\Operation\Less\MixinRemoved;
 use Magento\SemanticVersionChecker\Registry\LessRegistry;
+use Magento\SemanticVersionChecker\Registry\XmlRegistry;
 use PHPSemVerChecker\Registry\Registry;
 use PHPSemVerChecker\Report\Report;
 use Less_Tree;
@@ -74,6 +75,7 @@ class Analyzer implements AnalyzerInterface
         foreach ($commonModules as $moduleName) {
             $moduleLessFilesBefore = $nodesBefore[$moduleName];
             $moduleLessFilesAfter = $nodesAfter[$moduleName];
+
             $commonLessFiles = array_intersect_key($moduleLessFilesBefore, $moduleLessFilesAfter);
 
             foreach (array_keys($commonLessFiles) as $lessFileName) {
@@ -86,10 +88,12 @@ class Analyzer implements AnalyzerInterface
                 if (count($removedNodeNames)) {
                     //report removals
                     $removedNodes = array_intersect_key($lessNodesBefore, array_flip($removedNodeNames));
-                    $this->reportRemovedNodes($lessFileName, $removedNodes);
+                    $fileBefore = $registryBefore->mapping[LessRegistry::NODES_KEY][$moduleName][$lessFileName];
+                    $this->reportRemovedNodes($fileBefore, $removedNodes);
                 } elseif (!count($addedNodeNames) && !count($removedNodeNames)) {
                     //report changes inside nodes
-                    $this->reportUpdatedNodes($lessFileName, $lessNodesBefore, $lessNodesAfter);
+                    $fileAfter = $registryAfter->mapping[LessRegistry::NODES_KEY][$moduleName][$lessFileName];
+                    $this->reportUpdatedNodes($fileAfter, $lessNodesBefore, $lessNodesAfter);
                 }
             }
         }

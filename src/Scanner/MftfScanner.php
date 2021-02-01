@@ -87,8 +87,7 @@ class MftfScanner implements ScannerInterface
         $name             = $entityNode['attributes']['name'];
         $file             = $this->registry->getCurrentFile();
         $moduleName       = $this->moduleNamespaceResolver->resolveByTestMftfPath($file);
-        $relativeFilePath = $this->getRelativePath($file, $moduleName);
-        $entityNode['filePaths'][] = $relativeFilePath;
+        $entityNode['filePaths'][] = $file;
         // trim {}test => test
         $entityNode['type'] = str_replace(['{', '}'], '', $entityNode['name']);
 

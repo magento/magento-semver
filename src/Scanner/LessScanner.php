@@ -75,6 +75,7 @@ class LessScanner implements ScannerInterface
         $relativeFilePath = $this->getRelativePath($file, $moduleName);
 
         $this->registry->data[LessRegistry::NODES_KEY][$moduleName][$relativeFilePath][] = $node;
+        $this->registry->mapping[LessRegistry::NODES_KEY][$moduleName][$relativeFilePath] = $file;
     }
 
     /**

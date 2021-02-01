@@ -11,11 +11,12 @@ namespace Magento\SemanticVersionChecker\Analyzer\DBSchema;
 
 use Magento\SemanticVersionChecker\Analyzer\AnalyzerInterface;
 use Magento\SemanticVersionChecker\Operation\InvalidWhitelist;
+use Magento\SemanticVersionChecker\Operation\WhiteListWasRemoved;
 use PHPSemVerChecker\Registry\Registry;
 use PHPSemVerChecker\Report\Report;
 
 /**
- * Implements an analyzer fdr the database schema whitelist files.
+ * Implements an analyzer for the database schema whitelist files.
  * @noinspection PhpUnused
  */
 class DbSchemaWhitelistAnalyzer implements AnalyzerInterface
@@ -54,17 +55,23 @@ class DbSchemaWhitelistAnalyzer implements AnalyzerInterface
         $dbWhiteListContent = $registryAfter->data['whitelist_json'] ?? [];
 
         foreach ($registryTablesAfter as $moduleName => $tablesData) {
+            $whiteListFileAfter = $registryAfter->mapping['whitelist_json'][$moduleName] ?? '';
+            if (!file_exists($whiteListFileAfter)) {
+                $tableFileAfter = $registryAfter->mapping['table'][$moduleName];
+                $whiteListFileAfter = dirname($tableFileAfter) . '/db_schema_whitelist.json';
+                $operation = new WhiteListWasRemoved($whiteListFileAfter, $moduleName);
+                $this->report->add('database', $operation);
+                continue;
+            }
             if (count($tablesData)) {
                 foreach (array_keys($tablesData) as $table) {
                     if (!isset($dbWhiteListContent[$moduleName][$table])) {
-                        $operation = new InvalidWhitelist($moduleName, $table);
+                        $operation = new InvalidWhitelist($whiteListFileAfter, $table);
                         $this->report->add('database', $operation);
                     }
                 }
             }
         }
-
-
         return $this->report;
     }
 }

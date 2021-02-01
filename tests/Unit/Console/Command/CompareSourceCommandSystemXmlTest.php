@@ -60,7 +60,7 @@ class CompareSourceCommandSystemXmlTest extends AbstractTestCase
                 $pathToFixtures . '/file-added/source-code-after',
                 [
                     'Suggested semantic versioning change: MINOR',
-                    'Magento_TestModule:0 | system.xml | System configuration file was added | M300',
+                    'Magento/TestModule/etc/adminhtml/system.xml:0 | system.xml | System configuration file was added | M300',
                 ],
                 'Minor change is detected.',
             ],
@@ -69,7 +69,7 @@ class CompareSourceCommandSystemXmlTest extends AbstractTestCase
                 $pathToFixtures . '/file-removed/source-code-after',
                 [
                     'Suggested semantic versioning change: MAJOR',
-                    'Magento_TestModule:0 | system.xml | System configuration file was added | M301',
+                    'Magento/TestModule/etc/adminhtml/system.xml:0 | system.xml | System configuration file was added | M301',
                 ],
                 'Major change is detected.',
             ],
@@ -78,7 +78,7 @@ class CompareSourceCommandSystemXmlTest extends AbstractTestCase
                 $pathToFixtures . '/section-added/source-code-after',
                 [
                     'Suggested semantic versioning change: MINOR',
-                    'Magento_TestModule:0 | added_section | A section-node was added | M306',
+                    'Magento/TestModule/etc/adminhtml/system.xml:0 | added_section | A section-node was added | M306',
                 ],
                 'Minor change is detected.',
             ],
@@ -87,7 +87,7 @@ class CompareSourceCommandSystemXmlTest extends AbstractTestCase
                 $pathToFixtures . '/section-removed/source-code-after',
                 [
                     'Suggested semantic versioning change: MAJOR',
-                    'Magento_TestModule:0 | removed_section | a section-node was removed | MM307',
+                    'Magento/TestModule/etc/adminhtml/system.xml:0 | removed_section | a section-node was removed | MM307',
                 ],
                 'Major change is detected.',
             ],
@@ -96,7 +96,7 @@ class CompareSourceCommandSystemXmlTest extends AbstractTestCase
                 $pathToFixtures . '/group-added/source-code-after',
                 [
                     'Suggested semantic versioning change: MINOR',
-                    'Magento_TestModule:0 | magento_testmodule/added_group | A group-node was added | M304',
+                    'Magento/TestModule/etc/adminhtml/system.xml:0 | magento_testmodule/added_group | A group-node was added | M304',
                 ],
                 'Minor change is detected.',
             ],
@@ -105,7 +105,7 @@ class CompareSourceCommandSystemXmlTest extends AbstractTestCase
                 $pathToFixtures . '/group-removed/source-code-after',
                 [
                     'Suggested semantic versioning change: MAJOR',
-                    'Magento_TestModule:0 | magento_testmodule/removed_group | A group-node was removed | M305',
+                    'Magento/TestModule/etc/adminhtml/system.xml:0 | magento_testmodule/removed_group | A group-node was removed | M305',
                 ],
                 'Major change is detected.',
             ],
@@ -114,7 +114,7 @@ class CompareSourceCommandSystemXmlTest extends AbstractTestCase
                 $pathToFixtures . '/field-added/source-code-after',
                 [
                     'Suggested semantic versioning change: MINOR',
-                    'Magento_TestModule:0 | magento_testmodule/general/added_field | A field-node was added | M302',
+                    'Magento/TestModule/etc/adminhtml/system.xml:0 | magento_testmodule/general/added_field | A field-node was added | M302',
                 ],
                 'Minor change is detected.',
             ],
@@ -123,7 +123,7 @@ class CompareSourceCommandSystemXmlTest extends AbstractTestCase
                 $pathToFixtures . '/field-removed/source-code-after',
                 [
                     'Suggested semantic versioning change: MAJOR',
-                    'Magento_TestModule:0 | magento_testmodule/general/removed_field | A field-node was removed | M303',
+                    'Magento/TestModule/etc/adminhtml/system.xml:0 | magento_testmodule/general/removed_field | A field-node was removed | M303',
                 ],
                 'Major change is detected.',
             ],

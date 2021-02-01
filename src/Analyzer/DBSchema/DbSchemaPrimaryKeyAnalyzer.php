@@ -55,6 +55,7 @@ class DbSchemaPrimaryKeyAnalyzer implements AnalyzerInterface
         $registryTablesAfter = $registryAfter->data['table'] ?? [];
 
         foreach ($registryTablesBefore as $moduleName => $moduleTables) {
+            $fileBefore = $registryBefore->mapping['table'][$moduleName];
             foreach ($moduleTables as $tableName => $tableData) {
                 $keys = $tableData['primary'] ?? [];
                 foreach ($keys as $name => $key) {
@@ -62,7 +63,7 @@ class DbSchemaPrimaryKeyAnalyzer implements AnalyzerInterface
                         continue;
                     }
                     if ($key !== null && !isset($registryTablesAfter[$moduleName][$tableName]['primary'][$name])) {
-                        $operation = new PrimaryKeyDrop($moduleName, $tableName . '/' . $name);
+                        $operation = new PrimaryKeyDrop($fileBefore, $tableName . '/' . $name);
                         $this->getReport()->add($this->context, $operation);
                         continue;
                     }
@@ -76,7 +77,7 @@ class DbSchemaPrimaryKeyAnalyzer implements AnalyzerInterface
                             }
                         }
                         if (!$matchedColumnFlag) {
-                            $operation = new PrimaryKeyChange($moduleName, $tableName . '/' . $name);
+                            $operation = new PrimaryKeyChange($fileBefore, $tableName . '/' . $name);
                             $this->getReport()->add($this->context, $operation);
                             break;
                         }
@@ -86,6 +87,7 @@ class DbSchemaPrimaryKeyAnalyzer implements AnalyzerInterface
         }
 
         foreach ($registryTablesAfter as $moduleName => $moduleTables) {
+            $fileAfter = $registryAfter->mapping['table'][$moduleName];
             foreach ($moduleTables as $tableName => $tableData) {
                 $keys = $tableData['primary'] ?? [];
                 foreach ($keys as $name => $key) {
@@ -93,7 +95,7 @@ class DbSchemaPrimaryKeyAnalyzer implements AnalyzerInterface
                         continue;
                     }
                     if ($key !== null && !isset($registryTablesBefore[$moduleName][$tableName]['primary'][$name])) {
-                        $operation = new PrimaryKeyAdd($moduleName, $tableName . '/' . $name);
+                        $operation = new PrimaryKeyAdd($fileAfter, $tableName . '/' . $name);
                         $this->getReport()->add($this->context, $operation);
                         continue;
                     }
@@ -108,7 +110,7 @@ class DbSchemaPrimaryKeyAnalyzer implements AnalyzerInterface
                             }
                         }
                         if (!$matchedColumnFlag) {
-                            $operation = new PrimaryKeyChange($moduleName, $tableName . '/' . $name);
+                            $operation = new PrimaryKeyChange($fileAfter, $tableName . '/' . $name);
                             $this->getReport()->add($this->context, $operation);
                             break;
                         }

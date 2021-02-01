@@ -58,19 +58,21 @@ class DbSchemaColumnAnalyzer implements AnalyzerInterface
 
         foreach ($registryTablesBefore as $moduleName => $moduleTables) {
             foreach ($moduleTables as $tableName => $tableData) {
+                $fileBefore = $registryBefore->mapping['table'][$moduleName];
                 $columns = $tableData['column'] ?? [];
                 foreach ($columns as $column) {
                     if (
                         isset($registryTablesAfter[$moduleName][$tableName])
                         && !isset($registryTablesAfter[$moduleName][$tableName]['column'][$column])
                     ) {
-                        $operation = new ColumnRemove($moduleName, $tableName . '/' . $column);
+                        $operation = new ColumnRemove($fileBefore, $tableName . '/' . $column);
                         $this->getReport()->add($this->context, $operation);
                     }
                 }
             }
         }
         foreach ($registryTablesAfter as $moduleName => $moduleTables) {
+            $fileAfter = $registryAfter->mapping['table'][$moduleName];
             foreach ($moduleTables as $tableName => $tableData) {
                 $columns = $tableData['column'] ?? [];
                 foreach ($columns as $column) {
@@ -78,7 +80,7 @@ class DbSchemaColumnAnalyzer implements AnalyzerInterface
                         isset($registryTablesBefore[$moduleName][$tableName])
                         && !isset($registryTablesBefore[$moduleName][$tableName]['column'][$column])
                     ) {
-                        $operation = new ColumnAdd($moduleName, $tableName . '/' . $column);
+                        $operation = new ColumnAdd($fileAfter, $tableName . '/' . $column);
                         $this->getReport()->add($this->context, $operation);
                     }
                 }

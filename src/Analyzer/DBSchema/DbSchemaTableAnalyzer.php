@@ -55,15 +55,16 @@ class DbSchemaTableAnalyzer implements AnalyzerInterface
         $registryTablesAfter = $registryAfter->data['table'] ?? [];
 
         foreach ($registryTablesBefore as $moduleName => $moduleTables) {
+            $fileBefore = $registryBefore->mapping['table'][$moduleName];
             foreach ($moduleTables as $tableName => $tableData) {
                 if (!isset($registryTablesAfter[$moduleName][$tableName])) {
-                    $operation = new TableDropped($moduleName, $tableName);
+                    $operation = new TableDropped($fileBefore, $tableName);
                     $this->getReport()->add($this->context, $operation);
                     continue;
                 }
                 if ($tableData['resource'] !== $registryTablesAfter[$moduleName][$tableName]['resource']) {
                     $operation = new TableChangeResource(
-                        $moduleName,
+                        $fileBefore,
                         $tableName,
                         $tableData['resource'],
                         $registryTablesAfter[$moduleName][$tableName]['resource']
@@ -73,12 +74,13 @@ class DbSchemaTableAnalyzer implements AnalyzerInterface
             }
         }
         foreach ($registryTablesAfter as $moduleName => $moduleTables) {
+            $fileAfter = $registryAfter->mapping['table'][$moduleName];
             foreach ($moduleTables as $tableName => $tableData) {
                 if (
                     !isset($registryTablesBefore[$moduleName][$tableName])
                     && !$this->isModificationTableDeclaration($registryTablesAfter, $moduleName, $tableName)
                 ) {
-                    $operation = new TableAdded($moduleName, $tableName);
+                    $operation = new TableAdded($fileAfter, $tableName);
                     $this->getReport()->add($this->context, $operation);
                 }
             }
