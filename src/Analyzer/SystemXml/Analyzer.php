@@ -77,10 +77,10 @@ class Analyzer implements AnalyzerInterface
         $removedModules = array_diff($modulesBefore, $modulesAfter);
 
         //process added files
-        $this->reportAddedFiles($addedModules);
+        $this->reportAddedFiles($addedModules, $registryAfter);
 
         //process removed files
-        $this->reportRemovedFiles($removedModules);
+        $this->reportRemovedFiles($removedModules, $registryBefore);
 
         //process common files
         foreach ($commonModules as $moduleName) {
@@ -88,11 +88,15 @@ class Analyzer implements AnalyzerInterface
             $moduleNodesAfter  = $nodesAfter[$moduleName];
             $addedNodes        = array_diff_key($moduleNodesAfter, $moduleNodesBefore);
             $removedNodes      = array_diff_key($moduleNodesBefore, $moduleNodesAfter);
-
-            $this->reportAddedNodes($moduleName, $addedNodes);
-            $this->reportRemovedNodes($moduleName, $removedNodes);
+            if ($removedNodes) {
+                $beforeFile = $registryBefore->mapping[XmlRegistry::NODES_KEY][$moduleName];
+                $this->reportRemovedNodes($beforeFile, $removedNodes);
+            }
+            if ($addedNodes) {
+                $afterFile = $registryAfter->mapping[XmlRegistry::NODES_KEY][$moduleName];
+                $this->reportAddedNodes($afterFile, $addedNodes);
+            }
         }
-
         return $this->report;
     }
 
@@ -125,11 +129,13 @@ class Analyzer implements AnalyzerInterface
      * Creates reports for <var>$modules</var> considering that <kbd>system.xml</kbd> has been added to them.
      *
      * @param string[] $modules
+     * @param XmlRegistry $registryAfter
      */
-    private function reportAddedFiles(array $modules)
+    private function reportAddedFiles(array $modules, XmlRegistry $registryAfter)
     {
         foreach ($modules as $module) {
-            $this->report->add('system', new FileAdded($module, 'system.xml'));
+            $afterFile = $registryAfter->mapping[XmlRegistry::NODES_KEY][$module];
+            $this->report->add('system', new FileAdded($afterFile, 'system.xml'));
         }
     }
 
@@ -162,11 +168,13 @@ class Analyzer implements AnalyzerInterface
      * Creates reports for <var>$modules</var> considering that <kbd>system.xml</kbd> has been removed from them.
      *
      * @param array $modules
+     * @param XmlRegistry $registryBefore
      */
-    private function reportRemovedFiles(array $modules)
+    private function reportRemovedFiles(array $modules, XmlRegistry $registryBefore)
     {
         foreach ($modules as $module) {
-            $this->report->add('system', new FileRemoved($module, 'system.xml'));
+            $beforeFile = $registryBefore->mapping[XmlRegistry::NODES_KEY][$module];
+            $this->report->add('system', new FileRemoved($beforeFile, 'system.xml'));
         }
     }
 

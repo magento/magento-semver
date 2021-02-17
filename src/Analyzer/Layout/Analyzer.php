@@ -46,8 +46,8 @@ class Analyzer implements AnalyzerInterface
     /**
      * Compared registryBefore and registryAfter find changes for layout block types
      *
-     * @param XmlRegistry|Registry $registryBefore
-     * @param XmlRegistry|Registry $registryAfter
+     * @param XmlRegistry $registryBefore
+     * @param XmlRegistry $registryAfter
      * @return Report
      */
     public function analyze($registryBefore, $registryAfter)
@@ -60,23 +60,18 @@ class Analyzer implements AnalyzerInterface
 
         foreach (array_keys($nodesBefore) as $moduleName) {
             $moduleNodesBefore = $nodesBefore[$moduleName] ?? [];
-            $moduleNodesAfter = [];
-
-            /**
-             * @var LayoutNodeInterface $node
-             */
-            foreach ($nodesAfter[$moduleName] ?? [] as $node) {
-                $moduleNodesAfter[$moduleName][$node->getUniqueKey()] = $node;
-            }
+            $moduleNodesAfter = $nodesAfter[$moduleName] ?? [];
 
             /**
              * @var string $nodeName
              * @var LayoutNodeInterface $node
              */
             foreach ($moduleNodesBefore as $nodeName => $node) {
-                $nodeAfter = $moduleNodesAfter[$moduleName][$node->getUniqueKey()] ?? false;
+                $uniqueKey = $node->getUniqueKey();
+                $nodeAfter = $moduleNodesAfter[$uniqueKey] ?? false;
                 if ($nodeAfter === false) {
-                    $this->triggerNodeRemoved($moduleName, $node);
+                    $beforeFilePath = $registryBefore->getLayoutFile($moduleName, $uniqueKey);
+                    $this->triggerNodeRemoved($node, $beforeFilePath);
                 }
             }
         }
@@ -85,23 +80,23 @@ class Analyzer implements AnalyzerInterface
     }
 
     /**
-     * @param string $moduleName
      * @param $node
+     * @param string $beforeFilePath
      */
-    private function triggerNodeRemoved(string $moduleName, $node): void
+    private function triggerNodeRemoved($node, string $beforeFilePath): void
     {
         if ($node instanceof Block) {
-            $this->report->add('layout', new BlockRemoved($moduleName, $node->getName()));
+            $this->report->add('layout', new BlockRemoved($beforeFilePath, $node->getName()));
             return;
         }
 
         if ($node instanceof Container) {
-            $this->report->add('layout', new ContainerRemoved($moduleName, $node->getName()));
+            $this->report->add('layout', new ContainerRemoved($beforeFilePath, $node->getName()));
             return;
         }
 
         if ($node instanceof Update) {
-            $this->report->add('layout', new UpdateRemoved($moduleName, $node->getHandle()));
+            $this->report->add('layout', new UpdateRemoved($beforeFilePath, $node->getHandle()));
             return;
         }
     }

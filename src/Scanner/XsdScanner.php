@@ -138,6 +138,7 @@ class XsdScanner implements ScannerInterface
         $relativeFilePath = $this->getRelativePath($file, $moduleName);
 
         $this->registry->data[XmlRegistry::NODES_KEY][$moduleName][$relativeFilePath][] = $node;
+        $this->registry->mapping[XmlRegistry::NODES_KEY][$moduleName][$relativeFilePath] = $file;
     }
 
     /**

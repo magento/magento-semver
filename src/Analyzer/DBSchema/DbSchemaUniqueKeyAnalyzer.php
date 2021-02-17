@@ -56,6 +56,7 @@ class DbSchemaUniqueKeyAnalyzer implements AnalyzerInterface
         $registryTablesAfter = $registryAfter->data['table'] ?? [];
 
         foreach ($registryTablesBefore as $moduleName => $moduleTables) {
+            $fileBefore = $registryBefore->mapping['table'][$moduleName];
             foreach ($moduleTables as $tableName => $tableData) {
                 $keys = $tableData['unique'] ?? [];
                 foreach ($keys as $name => $key) {
@@ -63,7 +64,7 @@ class DbSchemaUniqueKeyAnalyzer implements AnalyzerInterface
                         continue;
                     }
                     if ($key !== null && !isset($registryTablesAfter[$moduleName][$tableName]['unique'][$name])) {
-                        $operation = new UniqueKeyDrop($moduleName, $tableName . '/' . $name);
+                        $operation = new UniqueKeyDrop($fileBefore, $tableName . '/' . $name);
                         $this->getReport()->add($this->context, $operation);
                         continue;
                     }
@@ -77,7 +78,7 @@ class DbSchemaUniqueKeyAnalyzer implements AnalyzerInterface
                             }
                         }
                         if (!$matchedColumnFlag) {
-                            $operation = new UniqueKeyChange($moduleName, $tableName . '/' . $name);
+                            $operation = new UniqueKeyChange($fileBefore, $tableName . '/' . $name);
                             $this->getReport()->add($this->context, $operation);
                             break;
                         }
@@ -87,6 +88,7 @@ class DbSchemaUniqueKeyAnalyzer implements AnalyzerInterface
         }
 
         foreach ($registryTablesAfter as $moduleName => $moduleTables) {
+            $fileAfter = $registryAfter->mapping['table'][$moduleName];
             foreach ($moduleTables as $tableName => $tableData) {
                 $keys = $tableData['unique'] ?? [];
                 foreach ($keys as $name => $key) {
@@ -94,7 +96,7 @@ class DbSchemaUniqueKeyAnalyzer implements AnalyzerInterface
                         continue;
                     }
                     if ($key !== null && !isset($registryTablesBefore[$moduleName][$tableName]['unique'][$name])) {
-                        $operation = new UniqueKeyAdd($moduleName, $tableName . '/' . $name);
+                        $operation = new UniqueKeyAdd($fileAfter, $tableName . '/' . $name);
                         $this->getReport()->add($this->context, $operation);
                         continue;
                     }
@@ -109,7 +111,7 @@ class DbSchemaUniqueKeyAnalyzer implements AnalyzerInterface
                             }
                         }
                         if (!$matchedColumnFlag) {
-                            $operation = new UniqueKeyChange($moduleName, $tableName . '/' . $name);
+                            $operation = new UniqueKeyChange($fileAfter, $tableName . '/' . $name);
                             $this->getReport()->add($this->context, $operation);
                             break;
                         }

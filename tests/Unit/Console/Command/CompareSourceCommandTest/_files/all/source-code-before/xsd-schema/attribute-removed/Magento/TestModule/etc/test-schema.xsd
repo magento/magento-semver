@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="rootElement"/>
+    <xs:complexType name="testType">
+        <xs:annotation>
+            <xs:documentation>Type from which attributes are removed</xs:documentation>
+        </xs:annotation>
+
+        <xs:attribute name="requiredAttribute" type="xs:string" use="required"/>
+        <xs:attribute name="optionalAttribute" type="xs:string" use="optional"/>
+    </xs:complexType>
+</xs:schema>

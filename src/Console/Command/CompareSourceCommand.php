@@ -13,6 +13,7 @@ use Magento\SemanticVersionChecker\DbSchemaReporter;
 use Magento\SemanticVersionChecker\FileChangeDetector;
 use Magento\SemanticVersionChecker\ReportBuilder;
 use Magento\SemanticVersionChecker\Reporter\HtmlDbSchemaReporter;
+use Magento\SemanticVersionChecker\Reporter\HtmlPackageLevelChangesRenderer;
 use Magento\SemanticVersionChecker\ReportTypes;
 use Magento\SemanticVersionChecker\SemanticVersionChecker;
 use PHPSemVerChecker\SemanticVersioning\Level;
@@ -96,7 +97,6 @@ class CompareSourceCommand extends Command
     /**
      * @param InputInterface $input
      * @param OutputInterface $cliOutput
-     * @return void
      */
     protected function execute(InputInterface $input, OutputInterface $cliOutput)
     {
@@ -180,6 +180,8 @@ class CompareSourceCommand extends Command
                     '<tr class="text"><td class="test-name">Changed files</td><td>No changed files found.</td></tr>'
                 );
             }
+            $pkgLevelChangeRenderer = new HtmlPackageLevelChangesRenderer($versionReport, $input, $logOutputStream);
+            $pkgLevelChangeRenderer->outputPackageChanges();
 
             $logOutputStream->writeln($this->getHtmlFooter());
         } else {
@@ -218,8 +220,9 @@ class CompareSourceCommand extends Command
                 "It exceeds the allowed change level, which is $allowedChangeLevel " .
                 '(' . $versionIncWord . ').'
             );
-            exit(-1);
+            return -1;
         }
+        return 0;
     }
 
     private function validateAllowedLevel($input)
@@ -342,6 +345,19 @@ th.column60 {
 th.column30 {
     width: 30%;
 }
+.btn-tooltip:hover:after {
+    content: "Click to Copy JSON";
+    position: absolute;
+    background-color: gray;
+    color: white;
+}
+ .btn-tooltip-copied:hover:after {
+     content: "Copied!";
+     position: absolute;
+     background-color: gray;
+     color: white;
+ }
+
 </style>
 </head>
 <body>

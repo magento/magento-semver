@@ -56,6 +56,7 @@ class DbSchemaForeignKeyAnalyzer implements AnalyzerInterface
         $registryTablesAfter = $registryAfter->data['table'] ?? [];
 
         foreach ($registryTablesBefore as $moduleName => $moduleTables) {
+            $fileBefore = $registryBefore->mapping['table'][$moduleName];
             foreach ($moduleTables as $tableName => $tableData) {
                 $keys = $tableData['foreign'] ?? [];
                 foreach ($keys as $name => $key) {
@@ -63,13 +64,13 @@ class DbSchemaForeignKeyAnalyzer implements AnalyzerInterface
                         continue;
                     }
                     if ($key !== null && !isset($registryTablesAfter[$moduleName][$tableName]['foreign'][$name])) {
-                        $operation = new ForeignKeyDrop($moduleName, $tableName . '/' . $name);
+                        $operation = new ForeignKeyDrop($fileBefore, $tableName . '/' . $name);
                         $this->getReport()->add($this->context, $operation);
                         continue;
                     }
                     foreach ($key as $item => $value) {
                         if ($value !== $registryTablesAfter[$moduleName][$tableName]['foreign'][$name][$item]) {
-                            $operation = new ForeignKeyChange($moduleName, $tableName . '/' . $name . '/' . $item);
+                            $operation = new ForeignKeyChange($fileBefore, $tableName . '/' . $name . '/' . $item);
                             $this->getReport()->add($this->context, $operation);
                         }
                     }
@@ -78,6 +79,7 @@ class DbSchemaForeignKeyAnalyzer implements AnalyzerInterface
         }
 
         foreach ($registryTablesAfter as $moduleName => $moduleTables) {
+            $fileAfter = $registryAfter->mapping['table'][$moduleName];
             foreach ($moduleTables as $tableName => $tableData) {
                 $keys = $tableData['foreign'] ?? [];
                 foreach ($keys as $name => $key) {
@@ -85,7 +87,7 @@ class DbSchemaForeignKeyAnalyzer implements AnalyzerInterface
                         continue;
                     }
                     if ($key !== null && !isset($registryTablesBefore[$moduleName][$tableName]['foreign'][$name])) {
-                        $operation = new ForeignKeyAdd($moduleName, $tableName . '/' . $name);
+                        $operation = new ForeignKeyAdd($fileAfter, $tableName . '/' . $name);
                         $this->getReport()->add($this->context, $operation);
                     }
                 }
