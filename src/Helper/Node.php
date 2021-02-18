@@ -32,7 +32,7 @@ class Node
         if (is_array($comments) && !empty($comments)) {
             foreach ($comments as $comment) {
                 if ($comment instanceof DocComment) {
-                    $result = (strpos($comment->getText(),SemanticVersionChecker::ANNOTATION_API) !== false);
+                    $result = (strpos($comment->getText(), SemanticVersionChecker::ANNOTATION_API) !== false);
                     if ($result) {
                         break;
                     }
