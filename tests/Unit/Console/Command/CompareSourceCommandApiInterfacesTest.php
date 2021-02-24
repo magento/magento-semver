@@ -231,7 +231,33 @@ class CompareSourceCommandApiInterfacesTest extends AbstractTestCase
                     'Test\Vcs\TestInterface::movedNonNativeType | [public] Method variable typehint was moved from in-line to doc block annotation. | M150',
                 ],
                 'Major change is detected.'
-            ]
+            ],
+            'api-annotation-added-to-interface' => [
+                $pathToFixtures . '/annotation-added/source-code-before',
+                $pathToFixtures . '/annotation-added/source-code-after',
+                [
+                    'Interface (MINOR)',
+                    'Test\Vcs\TestInterface | @api annotation has been added. | M0141',
+                ],
+                'Minor change is detected.',
+            ],
+            'api-annotation-removed-from-interface' => [
+                $pathToFixtures . '/annotation-removed/source-code-before',
+                $pathToFixtures . '/annotation-removed/source-code-after',
+                [
+                    'Interface (MAJOR)',
+                    'Test\Vcs\TestInterface | @api annotation has been removed. | M0142',
+                ],
+                'Major change is detected.',
+            ],
+            'api-annotation-not-changed' => [
+                $pathToFixtures . '/annotation-not-changed/source-code-before',
+                $pathToFixtures . '/annotation-not-changed/source-code-after',
+                [
+                    'Suggested semantic versioning change: NONE',
+                ],
+                'Patch change is detected.',
+            ],
         ];
     }
 }

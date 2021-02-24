@@ -124,7 +124,7 @@ class Entity
      */
     public function isApi(): bool
     {
-        return $this->isApi;
+        return (bool)$this->isApi;
     }
 
     /**
