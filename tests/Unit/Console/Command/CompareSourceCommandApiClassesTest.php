@@ -487,6 +487,15 @@ class CompareSourceCommandApiClassesTest extends AbstractTestCase
                 ],
                 'Patch change is detected.',
             ],
+            'api-class-added-method-subclass-overwrite-transition' => [
+                $pathToFixtures . '/added-method-subclass-overwrite-transition/source-code-before',
+                $pathToFixtures . '/added-method-subclass-overwrite-transition/source-code-after',
+                [
+                    'Class (PATCH)',
+                    'Test\Vcs\ApiClass::testFunction | [public] Method overwrite has been added. | V028'
+                ],
+                'Patch change is detected.'
+            ],
         ];
     }
 }
