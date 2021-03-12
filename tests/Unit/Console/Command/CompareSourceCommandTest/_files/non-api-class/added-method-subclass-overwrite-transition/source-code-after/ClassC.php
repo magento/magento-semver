@@ -1,29 +1,22 @@
 <?php
-/**
- *
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
+
 namespace Test\Vcs;
 
-/**
- * @api
- */
-class ApiClass extends BaseNonApiClass
+class ClassC
 {
-    public function testFunction():  string
+    public function testFunction(): string
     {
-        return 'ApiClass';
+        return 'ClassC';
     }
 
     protected function testFunctionProtected(): string
     {
-        return 'ApiClass';
+        return 'ClassC';
     }
 
     public function __construct()
     {
-        parent::__construct();
+
     }
 
     public function __destruct()

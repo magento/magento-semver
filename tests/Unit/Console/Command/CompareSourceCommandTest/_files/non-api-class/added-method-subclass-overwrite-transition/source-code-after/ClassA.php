@@ -6,19 +6,16 @@
  */
 namespace Test\Vcs;
 
-/**
- * @api
- */
-class ApiClass extends BaseNonApiClass
+class ClassA extends ClassB
 {
     public function testFunction():  string
     {
-        return 'ApiClass';
+        return 'ClassA';
     }
 
     protected function testFunctionProtected(): string
     {
-        return 'ApiClass';
+        return 'ClassA';
     }
 
     public function __construct()

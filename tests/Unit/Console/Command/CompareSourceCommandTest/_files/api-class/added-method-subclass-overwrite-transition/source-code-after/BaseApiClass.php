@@ -12,6 +12,11 @@ class BaseApiClass
         return 'baseApiClass';
     }
 
+    protected function testFunctionProtected(): string
+    {
+        return 'baseApiClass';
+    }
+
     public function __construct()
     {
 
