@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Magento\SemanticVersionChecker\Analyzer;
 
+use Magento\SemanticVersionChecker\ClassHierarchy\Entity;
 use Magento\SemanticVersionChecker\Comparator\Signature;
 use Magento\SemanticVersionChecker\Comparator\Visibility;
 use Magento\SemanticVersionChecker\Operation\ClassConstructorLastParameterRemoved;
@@ -117,20 +118,44 @@ class ClassMethodAnalyzer extends AbstractCodeAnalyzer
         $class = $this->dependencyGraph->findEntityByName((string) $classAfter->namespacedName);
 
         if ($class !== null) {
-            foreach ($class->getExtends() as $entity) {
-                $methods = $entity->getMethodList();
-                // checks if the method is already exiting in parent class
-                if (isset($methods[$methodAfter->name->toString()])) {
-                    $report->add(
-                        $this->context,
-                        new ClassMethodOverwriteAdded($this->context, $fileAfter, $classAfter, $methodAfter)
-                    );
-                    return;
-                }
+            $methodOverwritten = $this->searchMethodExistsRecursive($class, $methodAfter->name->toString());
+            if ($methodOverwritten) {
+                $report->add(
+                    $this->context,
+                    new ClassMethodOverwriteAdded($this->context, $fileAfter, $classAfter, $methodAfter)
+                );
+
+                return;
             }
         }
 
         $report->add($this->context, new ClassMethodAdded($this->context, $fileAfter, $classAfter, $methodAfter));
+    }
+
+    /**
+     * Check if there is such method in class inheritance chain.
+     *
+     * @param Entity $class
+     * @param string $methodName
+     * @return boolean
+     */
+    private function searchMethodExistsRecursive($class, $methodName)
+    {
+        /** @var Entity $entity */
+        foreach ($class->getExtends() as $entity) {
+            $methods = $entity->getMethodList();
+            // checks if the method is already exiting in parent class
+            if (isset($methods[$methodName])) {
+                return true;
+            }
+
+            $result = $this->searchMethodExistsRecursive($entity, $methodName);
+            if ($result) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
