@@ -9,8 +9,10 @@ declare(strict_types=1);
 
 namespace Magento\SemanticVersionChecker\Analyzer;
 
+use Magento\SemanticVersionChecker\ClassHierarchy\Entity;
 use Magento\SemanticVersionChecker\Comparator\Visibility;
 use Magento\SemanticVersionChecker\Operation\PropertyMoved;
+use Magento\SemanticVersionChecker\Operation\PropertyOverwriteAdded;
 use Magento\SemanticVersionChecker\Operation\Visibility\PropertyDecreased as VisibilityPropertyDecreased;
 use Magento\SemanticVersionChecker\Operation\Visibility\PropertyIncreased as VisibilityPropertyIncreased;
 use PhpParser\Node;
@@ -62,7 +64,48 @@ class PropertyAnalyzer extends AbstractCodeAnalyzer
      */
     protected function reportAddedNode($report, $fileAfter, $classAfter, $propertyAfter)
     {
+        if ($this->dependencyGraph !== null) {
+            $class = $this->dependencyGraph->findEntityByName((string)$classAfter->namespacedName);
+            if ($class !== null) {
+                $propertyOverwritten = $this->searchPropertyExistsRecursive($class, $propertyAfter->props[0]->name->toString());
+                if ($propertyOverwritten) {
+                    $report->add(
+                        $this->context,
+                        new PropertyOverwriteAdded($this->context, $fileAfter, $classAfter, $propertyAfter)
+                    );
+
+                    return;
+                }
+            }
+        }
+
         $report->add($this->context, new PropertyAdded($this->context, $fileAfter, $classAfter, $propertyAfter));
+    }
+
+    /**
+     * Check if there is such property in class inheritance chain.
+     *
+     * @param Entity $class
+     * @param string $propertyName
+     * @return boolean
+     */
+    private function searchPropertyExistsRecursive($class, $propertyName)
+    {
+        /** @var Entity $entity */
+        foreach ($class->getExtends() as $entity) {
+            $properties = $entity->getPropertyList();
+            // checks if the property is already exiting in parent class
+            if (isset($properties[$propertyName])) {
+                return true;
+            }
+
+            $result = $this->searchPropertyExistsRecursive($entity, $propertyName);
+            if ($result) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**

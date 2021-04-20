@@ -387,11 +387,11 @@ class Entity
     }
 
     /**
-     * @param PropertyProperty $property
+     * @param Property $property
      */
-    public function addProperty(PropertyProperty $property): void
+    public function addProperty(Property $property): void
     {
-        $this->propertyList[$property->name] = $property;
+        $this->propertyList[$property->props[0]->name->toString()] = $property;
     }
 
     /**

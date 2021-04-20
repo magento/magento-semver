@@ -15,7 +15,7 @@ use PhpParser\Node\Stmt\Class_ as ClassNode;
 use PhpParser\Node\Stmt\ClassLike;
 use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\Node\Stmt\Interface_ as InterfaceNode;
-use PhpParser\Node\Stmt\PropertyProperty;
+use PhpParser\Node\Stmt\Property;
 use PhpParser\Node\Stmt\Trait_ as TraitNode;
 use PhpParser\Node\Stmt\TraitUse;
 use PhpParser\NodeTraverser;
@@ -86,7 +86,7 @@ class DependencyInspectionVisitor extends NodeVisitorAbstract
                     $this->currentClassLike->addUses($traitEntity);
                 }
                 return NodeTraverser::DONT_TRAVERSE_CHILDREN;
-            case $node instanceof PropertyProperty:
+            case $node instanceof Property:
                 $this->currentClassLike->addProperty($node);
                 return NodeTraverser::DONT_TRAVERSE_CHILDREN;
             default:
