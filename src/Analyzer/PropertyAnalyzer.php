@@ -67,7 +67,10 @@ class PropertyAnalyzer extends AbstractCodeAnalyzer
         if ($this->dependencyGraph !== null) {
             $class = $this->dependencyGraph->findEntityByName((string)$classAfter->namespacedName);
             if ($class !== null) {
-                $propertyOverwritten = $this->searchPropertyExistsRecursive($class, $propertyAfter->props[0]->name->toString());
+                $propertyOverwritten = $this->searchPropertyExistsRecursive(
+                    $class,
+                    $propertyAfter->props[0]->name->toString()
+                );
                 if ($propertyOverwritten) {
                     $report->add(
                         $this->context,
