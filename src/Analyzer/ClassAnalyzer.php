@@ -130,7 +130,7 @@ class ClassAnalyzer extends AbstractCodeAnalyzer
     {
         return [
             new ClassMethodAnalyzer($context, $fileBefore, $fileAfter, $this->dependencyGraph),
-            new PropertyAnalyzer($context, $fileBefore, $fileAfter),
+            new PropertyAnalyzer($context, $fileBefore, $fileAfter, $this->dependencyGraph),
             new ClassConstantAnalyzer($context, $fileBefore, $fileAfter),
             new ClassMethodExceptionAnalyzer($context, $fileBefore, $fileAfter),
             new ClassImplementsAnalyzer($context, $fileBefore, $fileAfter),

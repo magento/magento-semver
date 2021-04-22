@@ -242,6 +242,24 @@ class CompareSourceCommandNonApiClassesTest extends AbstractTestCase
                 ],
                 'Patch change is detected.'
             ],
+            'protected-property-overwrite' => [
+                $pathToFixtures . '/protected-property-overwrite/source-code-before',
+                $pathToFixtures . '/protected-property-overwrite/source-code-after',
+                [
+                    'Class (PATCH)',
+                    'Test\Vcs\TestClass::$_cacheTag | [protected] Property overwrite has been added. | M020'
+                ],
+                'Patch change is detected.'
+            ],
+            'public-property-overwrite' => [
+                $pathToFixtures . '/public-property-overwrite/source-code-before',
+                $pathToFixtures . '/public-property-overwrite/source-code-after',
+                [
+                    'Class (PATCH)',
+                    'Test\Vcs\TestClass::$_cacheTag | [public] Property overwrite has been added. | M019'
+                ],
+                'Patch change is detected.'
+            ],
         ];
     }
 }
