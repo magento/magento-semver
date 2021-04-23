@@ -125,10 +125,31 @@ class VirtualTypeAnalyzer implements AnalyzerInterface
 
         foreach ($bcFieldBefore as $fieldName => $valueBefore) {
             $valueAfter = $bcFieldAfter[$fieldName];
-            if ($valueBefore !== $valueAfter) {
+            $changed = false;
+            switch ($fieldName) {
+                case 'type':
+                    $changed = $this->isTypeChanged($valueBefore, $valueAfter);
+                    break;
+                default:
+                    $changed = $valueBefore !== $valueAfter;
+                    break;
+            }
+            if ($changed) {
                 $operation = new VirtualTypeChanged($beforeFilePath, $fieldName);
                 $this->report->add('di', $operation);
             }
         }
+    }
+
+    /**
+     * Trim leading backslashes and than compare types
+     *
+     * @param $typeBefore
+     * @param $typeAfter
+     * @return bool
+     */
+    private function isTypeChanged($typeBefore, $typeAfter): bool
+    {
+        return ltrim(trim($typeBefore), "\\") !== ltrim(trim($typeAfter), "\\");
     }
 }
