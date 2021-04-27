@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <virtualType name="testVirtualType" type="Path\To\Type">
+        <arguments>
+            <argument name="type" xsi:type="string">schema</argument>
+        </arguments>
+    </virtualType>
+
+    <preference for="Path\To\Interface" type="Path\To\Type" />
+
+    <type name="Path\To\Type">
+        <arguments>
+            <argument name="argumentName" xsi:type="array">
+                <item name="itemName" xsi:type="const">Path\To\Type\Item</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Path\To\Type">
+        <plugin name="pluginName" type="Path\To\Type\Plugin"/>
+    </type>
+</config>

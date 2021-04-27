@@ -103,6 +103,14 @@ class CompareSourceCommandDiXmlTest extends AbstractTestCaseWithRegExp
                 ],
                 'Major change is detected.',
             ],
+            'removing-leading-slash-from-type' => [
+                $pathToFixtures . '/removing-leading-slash-from-type/source-code-before',
+                $pathToFixtures . '/removing-leading-slash-from-type/source-code-after',
+                [
+                    '#Suggested semantic versioning change: NONE#',
+                ],
+                'Patch change is detected.',
+            ],
         ];
     }
 }
