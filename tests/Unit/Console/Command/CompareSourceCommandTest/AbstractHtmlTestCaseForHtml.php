@@ -5,6 +5,8 @@
  * See COPYING.txt for license details.
  */
 
+declare(strict_types=1);
+
 namespace Magento\SemanticVersionChecker\Test\Unit\Console\Command\CompareSourceCommandTest;
 
 use DOMDocument;
@@ -33,13 +35,13 @@ abstract class AbstractHtmlTestCaseForHtml extends TestCase
      */
     protected $svcLogPath;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->command = new CompareSourceCommand();
         $this->svcLogPath = TESTS_TEMP_DIR . '/svc-' . time() . '.html';
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
         unlink($this->svcLogPath);
@@ -82,7 +84,7 @@ abstract class AbstractHtmlTestCaseForHtml extends TestCase
             foreach ($expectedHtmlEntries as $expectedHtmlEntry) {
                 $this->assertHtml($expectedHtmlEntry->xpath, $expectedHtmlEntry->pattern, $svcDom);
             }
-            $this->assertContains($expectedOutput, $commandTester->getDisplay());
+            $this->assertStringContainsString($expectedOutput, $commandTester->getDisplay());
             $this->assertEquals($expectedStatusCode, $commandTester->getStatusCode());
         } catch (Exception $e) {
             if ($shouldSkipTest) {
@@ -137,11 +139,11 @@ abstract class AbstractHtmlTestCaseForHtml extends TestCase
             }
             if ($regex) {
                 $body = $docDom->saveHTML($nodeList->item(0));
-                static::assertRegExp($regex, $body);
+                static::assertMatchesRegularExpression($regex, $body);
             }
         } else {
             $body = $docXpath->document->saveHTML();
-            static::assertRegExp($regex, $body);
+            static::assertMatchesRegularExpression($regex, $body);
         }
     }
 

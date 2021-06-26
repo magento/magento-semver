@@ -5,6 +5,8 @@
  * See COPYING.txt for license details.
  */
 
+declare(strict_types=1);
+
 namespace Magento\SemanticVersionChecker\Test\Unit\Console\Command\CompareSourceCommandTest;
 
 use Magento\SemanticVersionChecker\Console\Command\CompareSourceCommand;
@@ -27,13 +29,13 @@ abstract class AbstractTestCase extends TestCase
      */
     protected $svcLogPath;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->command = new CompareSourceCommand();
         $this->svcLogPath = TESTS_TEMP_DIR . '/svc-' . time() . '.log';
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
         unlink($this->svcLogPath);
@@ -66,20 +68,20 @@ abstract class AbstractTestCase extends TestCase
         $preparedSvcLogContents = preg_replace('/\s+/', '', $actualSvcLogContents);
 
         foreach ($expectedLogEntries as $expectedLogEntry) {
-            $this->assertContains(
+            $this->assertStringContainsString(
                 preg_replace('/\s+/', '', $expectedLogEntry),
                 $preparedSvcLogContents,
                 'Failed asserting that "' . $actualSvcLogContents . '" contains "' . $expectedLogEntry . '"'
             );
         }
         foreach ($unexpectedLogEntries as $unexpectedLogEntry) {
-            $this->assertNotContains(
+            $this->assertStringNotContainsString(
                 preg_replace('/\s+/', '', $unexpectedLogEntry),
                 $preparedSvcLogContents,
                 'Failed asserting that "' . $actualSvcLogContents . '" doesn\'t contain "' . $unexpectedLogEntry . '"'
             );
         }
-        $this->assertContains($expectedOutput, $commandTester->getDisplay());
+        $this->assertStringContainsString($expectedOutput, $commandTester->getDisplay());
         $this->assertEquals(0, $commandTester->getStatusCode());
     }
 

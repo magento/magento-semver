@@ -9,13 +9,13 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
 
     steps:
     - uses: actions/checkout@v2
 
     - name: Update PHP
-      run: sudo update-alternatives --set php /usr/bin/php7.2
+      run: sudo update-alternatives --set php /usr/bin/php7.3
 
     - name: Validate composer
       run: composer validate

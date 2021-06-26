@@ -32,7 +32,7 @@ class ClassParserTest extends TestCase
         $parser = new ClassParser($path);
         $result = $parser->getImplementedInterfacesNames();
         $this->assertCount(1, $result);
-        $this->assertArraySubset(['Test\VcsA\A\InterfaceA'], $parser->getImplementedInterfacesNames());
+        $this->assertContains('Test\VcsA\A\InterfaceA', $parser->getImplementedInterfacesNames());
     }
 
     public function testImplementsFull()
@@ -41,6 +41,6 @@ class ClassParserTest extends TestCase
         $parser = new ClassParser($path);
         $result = $parser->getImplementedInterfacesNames();
         $this->assertCount(1, $result);
-        $this->assertArraySubset(['Test\VcsA\A\InterfaceA'], $parser->getImplementedInterfacesNames());
+        $this->assertContains('Test\VcsA\A\InterfaceA', $parser->getImplementedInterfacesNames());
     }
 }
