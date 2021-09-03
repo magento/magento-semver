@@ -8,25 +8,29 @@
     ],
     "bin": ["bin/svc"],
     "require": {
-        "php": "~7.3.0||~7.4.0",
+        "php": "~7.3.0||~7.4.0||~8.0.0",
         "ext-json": "*",
-        "phpstan/phpdoc-parser": "^0.3.5",
+        "laminas/laminas-dependency-plugin": "^2.1.0",
+        "laminas/laminas-stdlib": "~3.5.0",
+        "nikic/php-parser": "~4.12.0",
+        "phpstan/phpdoc-parser": "^0.5.5",
+        "sabre/xml": "~2.2.3",
         "symfony/console": "~4.1.0||~4.4.0",
         "tomzx/php-semver-checker": "^0.14.0",
-        "wikimedia/less.php": "~1.8.0",
-        "zendframework/zend-stdlib": "^3.2.1",
-        "nikic/php-parser": "~4.4.0||~4.5.0||~4.6.0",
-        "sabre/xml": "^2.1"
+        "wikimedia/less.php": "~3.1.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^6.5.0",
         "ext-dom": "*",
-        "squizlabs/php_codesniffer": "^3.5.1"
+        "phpunit/phpunit": "~9.5.8",
+        "squizlabs/php_codesniffer": "~3.6.0"
     },
     "autoload": {
         "psr-4": {
             "Magento\\SemanticVersionChecker\\": "src/",
             "Magento\\SemanticVersionChecker\\Test\\": "tests/"
         }
+    },
+    "config": {
+        "sort-packages": true
     }
 }

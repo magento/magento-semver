@@ -28,13 +28,13 @@ abstract class AbstractTestCaseWithRegExp extends TestCase
      */
     protected $svcLogPath;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->command = new CompareSourceCommand();
         $this->svcLogPath = TESTS_TEMP_DIR . '/svc-' . time() . '.log';
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
         unlink($this->svcLogPath);
@@ -67,9 +67,9 @@ abstract class AbstractTestCaseWithRegExp extends TestCase
             $actualSvcLogContents = $this->getActualSvcLogContents();
 
             foreach ($expectedLogEntries as $expectedLogEntry) {
-                $this->assertRegExp($expectedLogEntry, $actualSvcLogContents);
+                $this->assertMatchesRegularExpression($expectedLogEntry, $actualSvcLogContents);
             }
-            $this->assertContains($expectedOutput, $commandTester->getDisplay());
+            $this->assertStringContainsString($expectedOutput, $commandTester->getDisplay());
             $this->assertEquals(0, $commandTester->getStatusCode());
         } catch (Exception $e) {
             if ($shouldSkipTest) {
