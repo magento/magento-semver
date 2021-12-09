@@ -14,9 +14,9 @@ jobs:
       fail-fast: false
       matrix:
         php-version:
-          - "7.3"
           - "7.4"
           - "8.0"
+          - "8.1"
         dependencies:
           - "lowest"
           - "highest"
@@ -40,6 +40,12 @@ jobs:
       with:
         dependency-versions: "${{ matrix.dependencies }}"
         composer-options: "${{ matrix.composer-options }}"
+
+      # Exclude E_DEPRECATED on PHP 8.1.
+      # Remove once https://github.com/tomzx/php-semver-checker/pull/112 fixed
+    - name: Sets error reporting
+      if: contains(${{ matrix.php-version }}, '8.1')
+      run: echo "error_reporting=24575" >> $GITHUB_ENV
 
     - name: Run unit tests suite
       run: vendor/bin/phpunit --configuration tests/Unit/phpunit.xml.dist
