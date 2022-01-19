@@ -1,14 +1,14 @@
 {
     "name": "magento/magento-semver",
     "description": "Magento Semantic Version Checker",
-    "version": "10.0.0",
+    "version": "11.0.0",
     "license": [
         "OSL-3.0",
         "AFL-3.0"
     ],
     "bin": ["bin/svc"],
     "require": {
-        "php": "~7.4.0||~8.0.0||~8.1.0",
+        "php": "~7.4.0||~8.1.0",
         "ext-json": "*",
         "laminas/laminas-dependency-plugin": "^2.2.0",
         "laminas/laminas-stdlib": "~3.6.0",
@@ -31,6 +31,9 @@
         }
     },
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "laminas/laminas-dependency-plugin": true
+        }
     }
 }

@@ -11,7 +11,6 @@ use PHPSemVerChecker\Registry\Registry;
 
 interface ScannerInterface
 {
-
     /**
      * @param string $file
      */

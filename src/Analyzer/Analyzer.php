@@ -15,7 +15,6 @@ use PHPSemVerChecker\Report\Report;
 
 class Analyzer implements AnalyzerInterface
 {
-
     /**
      * @var array|AnalyzerInterface[]
      */

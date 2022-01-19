@@ -32,7 +32,6 @@ use PHPStan\PhpDocParser\Parser\TypeParser;
  */
 class ClassMethodExceptionAnalyzer extends AbstractCodeAnalyzer
 {
-
     /**
      * Caches the ancestors of classes.
      *

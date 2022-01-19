@@ -16,7 +16,6 @@ use PHPSemVerChecker\Registry\Registry;
  */
 class ScannerRegistry
 {
-
     /**
      * @var array
      */
