@@ -20,7 +20,6 @@ use ReflectionClass;
  */
 class HtmlTest extends AbstractHtmlTestCaseForHtml
 {
-
     private static $reportTypesList;
 
 

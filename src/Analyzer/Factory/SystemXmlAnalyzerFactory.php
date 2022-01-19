@@ -20,7 +20,6 @@ use Magento\SemanticVersionChecker\DbSchemaReport;
  */
 class SystemXmlAnalyzerFactory implements AnalyzerFactoryInterface
 {
-
     /**
      * @param DependencyGraph|null $dependencyGraph
      * @return AnalyzerInterface

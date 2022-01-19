@@ -26,7 +26,6 @@ use PhpParser\NodeVisitorAbstract;
  */
 class DependencyInspectionVisitor extends NodeVisitorAbstract
 {
-
     /** @var DependencyGraph */
     private $dependencyGraph;
 

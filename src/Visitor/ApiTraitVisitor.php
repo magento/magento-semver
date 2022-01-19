@@ -17,7 +17,6 @@ use PhpParser\Node\Stmt\Trait_;
  */
 class ApiTraitVisitor extends AbstractApiVisitor
 {
-
     /** @var string  */
     protected $nodeType = Trait_::class;
 

@@ -20,7 +20,6 @@ use Magento\SemanticVersionChecker\Operation\EtSchema\EtSchemaOperation;
  */
 class EtSchemaAnalyzer implements AnalyzerInterface
 {
-
     /**
      * Analyser context
      */
