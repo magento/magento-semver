@@ -30,6 +30,9 @@ class CompareSourceCommand extends Command
     public const REPORT_FORMAT_HTML = 'html';
     public const REPORT_FORMAT_TEXT = 'text';
 
+    private const SUCCESS_EXIT_CODE = 0;
+    private const FAILURE_EXIT_CODE = 1;
+
     private $changeLevels = [
         Level::NONE  => 'none',
         Level::PATCH => 'patch',
@@ -37,6 +40,9 @@ class CompareSourceCommand extends Command
         Level::MAJOR => 'major',
     ];
 
+    /**
+     * @inheritdoc
+     */
     protected function configure()
     {
         $this
@@ -95,8 +101,7 @@ class CompareSourceCommand extends Command
     }
 
     /**
-     * @param InputInterface $input
-     * @param OutputInterface $cliOutput
+     * @inheritdoc
      */
     protected function execute(InputInterface $input, OutputInterface $cliOutput)
     {
@@ -220,11 +225,19 @@ class CompareSourceCommand extends Command
                 "It exceeds the allowed change level, which is $allowedChangeLevel " .
                 '(' . $versionIncWord . ').'
             );
-            return -1;
+            return self::FAILURE_EXIT_CODE;
         }
-        return 0;
+        return self::SUCCESS_EXIT_CODE;
     }
 
+    /**
+     * Method to validate allowed level.
+     *
+     * @param $input
+     *
+     * @return void
+     * @throws Exception
+     */
     private function validateAllowedLevel($input)
     {
         $allowed = array_keys($this->changeLevels);
@@ -234,7 +247,11 @@ class CompareSourceCommand extends Command
     }
 
     /**
+     * Method to validate allowed report type.
+     *
      * @param $input
+     *
+     * @return void
      * @throws Exception
      */
     private function validateAllowedReportType($input)
@@ -246,6 +263,8 @@ class CompareSourceCommand extends Command
     }
 
     /**
+     * Method to get all report types.
+     *
      * @return array
      */
     private function getAllReportTypes()
