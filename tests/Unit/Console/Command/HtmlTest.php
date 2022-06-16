@@ -88,7 +88,7 @@ class HtmlTest extends AbstractHtmlTestCaseForHtml
                     ['name' => 'test/mftf', 'level' => 'PATCH' ],
                 ],
                 'Major change is detected.',
-                -1,
+                1,
                 self::getAllReportTypes()
             ],
             'test disallowing only Major changes for all types (excludes Non-api php files)' => [
@@ -109,7 +109,7 @@ class HtmlTest extends AbstractHtmlTestCaseForHtml
                     ['name' => 'test/less', 'level' => 'MAJOR' ],
                 ],
                 'Major change is detected.',
-                -1,
+                1,
                 self::getAllReportTypes()
             ],
             'test allowing only patch changes for all types (excludes Non-api php files)' => [
@@ -131,7 +131,7 @@ class HtmlTest extends AbstractHtmlTestCaseForHtml
                     ['name' => 'test/less', 'level' => 'MAJOR' ],
                 ],
                 'Major change is detected.',
-                -1,
+                1,
                 self::getAllReportTypes()
             ],
             'test allowing all changes for all types (excludes Non-api php files)' => [
