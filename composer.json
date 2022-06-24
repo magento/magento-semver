@@ -37,6 +37,10 @@
         }
     },
     "archive": {
-        "exclude": [".github", ".gitignore"]
+        "exclude": [
+            ".github",
+            ".gitignore",
+            "composer.lock"
+        ]
     }
 }
