@@ -27,7 +27,7 @@
     "autoload": {
         "psr-4": {
             "Magento\\SemanticVersionChecker\\": "src/",
-            "Magento\\SemanticVersionChecker\\Test\\": "tests/"
+            "Magento\\SemanticVersionChecker\\Test\\": "dev/tests/"
         }
     },
     "config": {
@@ -40,7 +40,7 @@
         "exclude": [
             ".github",
             ".gitignore",
-            "tests",
+            "dev/tests",
             "composer.lock"
         ]
     }
