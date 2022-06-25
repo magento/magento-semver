@@ -47,10 +47,10 @@ jobs:
       run: echo "error_reporting=24575" >> $GITHUB_ENV
 
     - name: Run unit tests suite
-      run: vendor/bin/phpunit --configuration tests/Unit/phpunit.xml.dist
+      run: vendor/bin/phpunit --configuration dev/tests/Unit/phpunit.xml.dist
 
     - name: Run code style suite
       run: vendor/bin/phpcs --standard=psr12 src/ --ignore=*.min.css
 
     - name: Run tests code style
-      run: vendor/bin/phpcs --standard=psr12 tests/ --ignore=/_files/ -n
+      run: vendor/bin/phpcs --standard=psr12 dev/tests/ --ignore=/_files/ -n
