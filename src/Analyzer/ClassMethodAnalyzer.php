@@ -24,11 +24,12 @@ use Magento\SemanticVersionChecker\Operation\ClassMethodReturnTypingChanged;
 use Magento\SemanticVersionChecker\Operation\ExtendableClassConstructorOptionalParameterAdded;
 use Magento\SemanticVersionChecker\Operation\Visibility\MethodDecreased as VisibilityMethodDecreased;
 use Magento\SemanticVersionChecker\Operation\Visibility\MethodIncreased as VisibilityMethodIncreased;
-use PhpParser\Node\NullableType;
 use PhpParser\Node\Name;
+use PhpParser\Node\NullableType;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\ClassLike;
 use PhpParser\Node\Stmt\ClassMethod;
+use PhpParser\Node\UnionType;
 use PHPSemVerChecker\Comparator\Implementation;
 use PHPSemVerChecker\Operation\ClassMethodAdded;
 use PHPSemVerChecker\Operation\ClassMethodImplementationChanged;
@@ -410,12 +411,24 @@ class ClassMethodAnalyzer extends AbstractCodeAnalyzer
         if (!$this->isReturnsEqualByNullability($methodBefore, $methodAfter)) {
             return true;
         }
-        $beforeMethodReturnType = $methodBefore->returnType instanceof NullableType
-            ? (string) $methodBefore->returnType->type
-            : (string) $methodBefore->returnType;
-        $afterMethodReturnType = $methodAfter->returnType instanceof NullableType
-            ? (string) $methodAfter->returnType->type
-            : (string) $methodAfter->returnType;
+
+        $methodBeforeReturnType = $methodBefore->returnType;
+        if ($methodBeforeReturnType instanceof NullableType) {
+            $beforeMethodReturnType = (string)$methodBeforeReturnType->type;
+        } elseif ($methodBeforeReturnType instanceof UnionType) {
+            $beforeMethodReturnType = implode('&', $methodBeforeReturnType->types);
+        } else {
+            $beforeMethodReturnType = (string)$methodBeforeReturnType;
+        }
+
+        $methodAfterReturnType = $methodAfter->returnType;
+        if ($methodAfterReturnType instanceof NullableType) {
+            $afterMethodReturnType = (string)$methodAfterReturnType->type;
+        } elseif ($methodAfterReturnType instanceof UnionType) {
+            $afterMethodReturnType = implode('&', $methodAfterReturnType->types);
+        } else {
+            $afterMethodReturnType = (string)$methodAfterReturnType;
+        }
 
         return $beforeMethodReturnType !== $afterMethodReturnType;
     }
