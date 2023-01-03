@@ -137,7 +137,7 @@ class HtmlDbSchemaReporter extends DbSchemaReporter
                 } elseif (substr($location, 0, strlen($sourceAfterDir)) == $sourceAfterDir) {
                     $location = substr($location, strlen($sourceAfterDir));
                 }
-
+                $target = HtmlTargetDecorator::url($target, $context, $this->input);
                 $output->writeln(
                     '<tr class="text-' . ($level > $allowedChangeLevel  ? 'danger' : 'success') .
                     '"><td>' . $levelStr . '</td><td>' . $target . '<br/>' . $location . '</td><td>' . $code . ' ' .
