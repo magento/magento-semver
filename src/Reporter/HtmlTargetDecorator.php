@@ -9,6 +9,8 @@ use Symfony\Component\Console\Input\InputInterface;
  */
 class HtmlTargetDecorator
 {
+    private static string $optionName = 'report-html-target-url';
+
     /**
      * Create a link tag for specific report types
      *
@@ -19,7 +21,10 @@ class HtmlTargetDecorator
      */
     public static function url(string $target, string $context, InputInterface $input): string
     {
-        $urlContextJson = $input->getOption('report-html-target-url');
+        if (!$input->hasOption(self::$optionName)) {
+            return $target;
+        }
+        $urlContextJson = $input->getOption(self::$optionName);
         foreach (@json_decode($urlContextJson, true) ?? [] as $urlContext) {
             if (!in_array($context, $urlContext['reportTypes']) || !$urlContext['url']) {
                 continue;
