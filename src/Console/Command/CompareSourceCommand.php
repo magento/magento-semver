@@ -97,6 +97,13 @@ class CompareSourceCommand extends Command
                     . '. Example: --report-type=' . ReportTypes::MFTF . PHP_EOL,
                     []
                 ),
+                new InputOption(
+                    'report-html-target-url',
+                    '',
+                    InputOption::VALUE_OPTIONAL,
+                    'Json data to create url for Target field in HTML report of a specific type. Example: [{"reportTypes": ["interface", "class"], "url": "https://example.com/?target=%s"}]',
+                    ''
+                ),
             ]);
     }
 
