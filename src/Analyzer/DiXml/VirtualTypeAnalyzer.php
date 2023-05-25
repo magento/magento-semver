@@ -67,6 +67,17 @@ class VirtualTypeAnalyzer implements AnalyzerInterface
                     continue;
                 }
 
+                foreach ($nodesAfter as $newModuleNodes) {
+                    foreach ($newModuleNodes as $nodeAfter) {
+                        if ($nodeBefore->getName() !== $nodeAfter->getName()) {
+                            continue;
+                        }
+
+                        $this->triggerNodeChange($nodeBefore, $nodeAfter, $fileBefore);
+                        continue 3;
+                    }
+                }
+
                 $operation = new VirtualTypeRemoved($fileBefore, $name);
                 $this->report->add('di', $operation);
             }

@@ -1,4 +1,5 @@
 app/code
+app/etc
 lib/internal/Magento
 Inventory*
 Adobe*

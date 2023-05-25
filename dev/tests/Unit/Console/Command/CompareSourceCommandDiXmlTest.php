@@ -55,6 +55,22 @@ class CompareSourceCommandDiXmlTest extends AbstractTestCaseWithRegExp
                 ],
                 ''
             ],
+            'moved-to-app-etc' => [
+                $pathToFixtures . '/moved-to-app-etc/source-code-before',
+                $pathToFixtures . '/moved-to-app-etc/source-code-after',
+                [
+                    '#Suggested semantic versioning change: NONE#',
+                ],
+                'Patch change is detected.',
+            ],
+            'moved-to-another-module' => [
+                $pathToFixtures . '/moved-to-another-module/source-code-before',
+                $pathToFixtures . '/moved-to-another-module/source-code-after',
+                [
+                    '#Suggested semantic versioning change: NONE#',
+                ],
+                'Patch change is detected.',
+            ],
             'moved-to-global' => [
                 $pathToFixtures . '/moved-to-global/source-code-before',
                 $pathToFixtures . '/moved-to-global/source-code-after',
