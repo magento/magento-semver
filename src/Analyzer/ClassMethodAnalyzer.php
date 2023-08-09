@@ -459,7 +459,11 @@ class ClassMethodAnalyzer extends AbstractCodeAnalyzer
             ($parsedComment = $method->getAttribute('docCommentParsed'))
             && isset($parsedComment['return'])
         ) {
-            $result = implode('|', $parsedComment['return']);
+            if ($parsedComment['return'][0] instanceof NullableType) {
+                $result =  '?'.$parsedComment['return'][0]->type;
+            } else {
+                $result = implode('|', $parsedComment['return']);
+            }
 
             return $result;
         } elseif ($this->dependencyGraph !== null) {
