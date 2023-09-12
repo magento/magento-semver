@@ -479,6 +479,21 @@ class EntityTest extends TestCase
         );
     }
 
+    /**
+     * @dataProvider dataProviderIsEnum
+     * @param string $type
+     * @param bool $expected
+     */
+    public function testIsEnum(string $type, bool $expected)
+    {
+        $entity = new Entity('myName', $type);
+
+        $this->assertEquals(
+            $expected,
+            $entity->isEnum()
+        );
+    }
+
     /*
      * Data providers
      */
@@ -501,6 +516,10 @@ class EntityTest extends TestCase
             ],
             'entity-is-trait-returns-false'     => [
                 Entity::TYPE_TRAIT,
+                false,
+            ],
+            'entity-is-enum-returns-false' => [
+                Entity::TYPE_ENUM,
                 false,
             ],
         ];
@@ -526,6 +545,10 @@ class EntityTest extends TestCase
                 Entity::TYPE_TRAIT,
                 false,
             ],
+            'entity-is-enum-returns-false' => [
+                Entity::TYPE_ENUM,
+                false,
+            ],
         ];
     }
 
@@ -547,6 +570,37 @@ class EntityTest extends TestCase
             ],
             'entity-is-trait-returns-true'      => [
                 Entity::TYPE_TRAIT,
+                true,
+            ],
+            'entity-is-enum-returns-false' => [
+                Entity::TYPE_ENUM,
+                false,
+            ],
+        ];
+    }
+
+    /**
+     * Provides test data for {@link EntityTest::testIsEnum()}
+     *
+     * @return array
+     */
+    public function dataProviderIsEnum()
+    {
+        return [
+            'entity-is-class-returns-false'     => [
+                Entity::TYPE_CLASS,
+                false,
+            ],
+            'entity-is-interface-returns-false' => [
+                Entity::TYPE_INTERFACE,
+                false,
+            ],
+            'entity-is-trait-returns-false'      => [
+                Entity::TYPE_TRAIT,
+                false,
+            ],
+            'entity-is-enum-returns-true'      => [
+                Entity::TYPE_ENUM,
                 true,
             ],
         ];

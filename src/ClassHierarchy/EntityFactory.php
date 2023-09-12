@@ -40,4 +40,13 @@ class EntityFactory
     {
         return new Entity($name, Entity::TYPE_TRAIT);
     }
+
+    /**
+     * @param string $name
+     * @return Entity
+     */
+    public function createEnum(string $name): Entity
+    {
+        return new Entity($name, Entity::TYPE_ENUM);
+    }
 }
