@@ -122,7 +122,7 @@ class Analyzer implements AnalyzerInterface
                 /** @var Less_Tree $node */
                 foreach ($content as $node) {
                     //skip comments
-                    if ($node instanceof Less_Tree_Comment) {
+                    if ($node instanceof Less_Tree_Comment || $node instanceof Less_Tree_Import) {
                         continue;
                     }
                     if (property_exists($node, 'name')) {
