@@ -128,8 +128,9 @@ class Analyzer implements AnalyzerInterface
                     if (property_exists($node, 'name')) {
                         $nodeKey = $node->name;
                     } elseif (property_exists($node, 'type') && property_exists($node, 'path')) {
-                        if ($node->path->value instanceof \Less_Tree_Quoted || property_exists($node->path->value, 'value')) {
-                            $nodeKey = $node->type . ' with value: \'' . $node->path->value->value . '\'';
+                        if ($node->path->value instanceof \Less_Tree_Quoted 
+                            || property_exists($node->path->value, 'value')) 
+                        {                            $nodeKey = $node->type . ' with value: \'' . $node->path->value->value . '\'';
                         } else {
                             $nodeKey = $node->type . ' with value: \'' . $node->path->value . '\'';
                         }
