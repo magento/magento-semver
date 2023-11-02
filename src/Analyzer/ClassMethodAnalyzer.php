@@ -460,7 +460,7 @@ class ClassMethodAnalyzer extends AbstractCodeAnalyzer
             && isset($parsedComment['return'])
         ) {
             if ($parsedComment['return'][0] instanceof NullableType) {
-                $result =  '?'.$parsedComment['return'][0]->type;
+                $result =  '?' . $parsedComment['return'][0]->type;
             } else {
                 $result = implode('|', $parsedComment['return']);
             }
