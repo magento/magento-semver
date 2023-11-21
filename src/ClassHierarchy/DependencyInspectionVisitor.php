@@ -11,7 +11,6 @@ namespace Magento\SemanticVersionChecker\ClassHierarchy;
 
 use Magento\SemanticVersionChecker\Helper\Node as NodeHelper;
 use PhpParser\Node;
-use PhpParser\Node\Stmt\Enum_ as EnumNode;
 use PhpParser\Node\Stmt\Class_ as ClassNode;
 use PhpParser\Node\Stmt\ClassLike;
 use PhpParser\Node\Stmt\ClassMethod;
@@ -23,7 +22,7 @@ use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitorAbstract;
 
 /**
- * Implements a visitor for `class`, `interface`, `trait` and `enum` nodes that generates a dependency graph.
+ * Implements a visitor for `class`, `interface` and `trait` nodes that generates a dependency graph.
  */
 class DependencyInspectionVisitor extends NodeVisitorAbstract
 {
@@ -95,8 +94,8 @@ class DependencyInspectionVisitor extends NodeVisitorAbstract
     }
 
     /**
-     * Handles Class, Interface, Traits and Enum nodes. Sets currentClassLike entity and will populate extends,
-     * implements, and API information
+     * Handles Class, Interface, and Traits nodes. Sets currentClassLike entity and will populate extends, implements,
+     * and API information
      *
      * @param ClassLike $node
      * @return int|null
@@ -135,9 +134,6 @@ class DependencyInspectionVisitor extends NodeVisitorAbstract
                 break;
             case $node instanceof TraitNode:
                 $this->currentClassLike = $this->dependencyGraph->findOrCreateTrait((string)$namespacedName);
-                break;
-            case $node instanceof EnumNode:
-                $this->currentClassLike = $this->dependencyGraph->findOrCreateEnum((string)$namespacedName);
                 break;
         }
         $this->currentClassLike->setIsApi($this->nodeHelper->isApiNode($node));
