@@ -14,7 +14,7 @@ use PhpParser\Node\Stmt\Property;
 use PhpParser\Node\Stmt\PropertyProperty;
 
 /**
- * Implements an entity that reflects a `class`, `interface` or `trait` and its dependencies.
+ * Implements an entity that reflects a `class`, `interface`, `enum` or `trait` and its dependencies.
  */
 class Entity
 {
@@ -24,6 +24,7 @@ class Entity
     public const TYPE_CLASS     = 'class';
     public const TYPE_INTERFACE = 'interface';
     public const TYPE_TRAIT     = 'trait';
+    public const TYPE_ENUM      = 'enum';
     /**#@-*/
 
     /**
@@ -325,6 +326,16 @@ class Entity
     public function isTrait(): bool
     {
         return $this->type === self::TYPE_TRAIT;
+    }
+
+    /**
+     * Reflects whether current entity reflects an `enum`.
+     *
+     * @return bool
+     */
+    public function isEnum(): bool
+    {
+        return $this->type === self::TYPE_ENUM;
     }
 
     /*
