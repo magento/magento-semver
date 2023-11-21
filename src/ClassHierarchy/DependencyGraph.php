@@ -103,20 +103,4 @@ class DependencyGraph
 
         return $trait;
     }
-
-    /**
-     * @param string $fullyQualifiedName
-     * @return Entity
-     */
-    public function findOrCreateEnum(string $fullyQualifiedName): Entity
-    {
-        $enum = $this->findEntityByName($fullyQualifiedName);
-
-        if (!$enum) {
-            $enum = $this->entityFactory->createEnum($fullyQualifiedName);
-            $this->addEntity($enum);
-        }
-
-        return $enum;
-    }
 }
