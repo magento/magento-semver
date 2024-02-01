@@ -1,20 +1,20 @@
 {
     "name": "magento/magento-semver",
     "description": "Magento Semantic Version Checker",
-    "version": "13.0.0-beta2",
+    "version": "13.0.0-beta3",
     "license": [
         "OSL-3.0",
         "AFL-3.0"
     ],
     "bin": ["bin/svc"],
     "require": {
-        "php": "~8.1.0||~8.2.0",
+        "php": "~8.1.0||~8.2.0||~8.3.0",
         "ext-json": "*",
-        "laminas/laminas-stdlib": "^3.6",
+        "laminas/laminas-stdlib": "^3.18",
         "nikic/php-parser": "^4.15",
         "phpstan/phpdoc-parser": "^0.5.5",
         "sabre/xml": "~2.2.3",
-        "symfony/console": "~4.4.0||~5.4.0",
+        "symfony/console": "~4.4.0||~5.4.0||~6.4.0",
         "tomzx/php-semver-checker": "^0.15.0",
         "wikimedia/less.php": "^3.2"
     },
