@@ -47,7 +47,7 @@ class ClassMethodParameterTypingChanged extends ClassMethodOperationUnary
      *
      * @return mixed
      */
-    public function getLevel()
+    public function getLevel(): int
     {
         return $this->mapping[$this->getCode()];
     }

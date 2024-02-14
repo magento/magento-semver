@@ -69,7 +69,7 @@ class ClassConstantAdded extends ClassConstantOperation
     /**
      * @return string
      */
-    public function getLocation()
+    public function getLocation(): string
     {
         return $this->fileAfter;
     }
@@ -77,7 +77,7 @@ class ClassConstantAdded extends ClassConstantOperation
     /**
      * @return int
      */
-    public function getLine()
+    public function getLine(): int
     {
         return $this->constantAfter->getLine();
     }
@@ -85,7 +85,7 @@ class ClassConstantAdded extends ClassConstantOperation
     /**
      * @return string
      */
-    public function getTarget()
+    public function getTarget(): string
     {
         return ClassConstant::getFullyQualifiedName($this->contextAfter, $this->constantAfter);
     }

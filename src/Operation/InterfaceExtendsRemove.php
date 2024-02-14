@@ -53,7 +53,7 @@ class InterfaceExtendsRemove extends Operation
     /**
      * @return string
      */
-    public function getTarget()
+    public function getTarget(): string
     {
         return Interface_Statement::getFullyQualifiedName($this->interface);
     }
@@ -61,7 +61,7 @@ class InterfaceExtendsRemove extends Operation
     /**
      * @return string
      */
-    public function getLocation()
+    public function getLocation(): string
     {
         return $this->target;
     }
@@ -69,7 +69,7 @@ class InterfaceExtendsRemove extends Operation
     /**
      * @return int
      */
-    public function getLine()
+    public function getLine(): int
     {
         return 0;
     }
@@ -79,7 +79,7 @@ class InterfaceExtendsRemove extends Operation
      *
      * @return mixed
      */
-    public function getLevel()
+    public function getLevel(): int
     {
         return $this->level;
     }

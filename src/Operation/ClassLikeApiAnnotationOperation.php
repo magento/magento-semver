@@ -49,7 +49,7 @@ class ClassLikeApiAnnotationOperation extends Operation
     /**
      * @inheritDoc
      */
-    public function getTarget()
+    public function getTarget(): string
     {
         $result = '';
 
@@ -67,7 +67,7 @@ class ClassLikeApiAnnotationOperation extends Operation
     /**
      * @inheritDoc
      */
-    public function getLocation()
+    public function getLocation(): string
     {
         return $this->target;
     }
@@ -75,7 +75,7 @@ class ClassLikeApiAnnotationOperation extends Operation
     /**
      * @inheritDoc
      */
-    public function getLine()
+    public function getLine(): int
     {
         return 0;
     }
@@ -85,7 +85,7 @@ class ClassLikeApiAnnotationOperation extends Operation
      *
      * @inheritDoc
      */
-    public function getLevel()
+    public function getLevel(): int
     {
         return $this->level;
     }

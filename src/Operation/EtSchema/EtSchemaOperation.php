@@ -50,7 +50,7 @@ class EtSchemaOperation extends Operation
     /**
      * @return string
      */
-    public function getLocation()
+    public function getLocation(): string
     {
         return $this->location;
     }
@@ -58,15 +58,15 @@ class EtSchemaOperation extends Operation
     /**
      * @return int|string
      */
-    public function getLine()
+    public function getLine(): int
     {
-        return '';
+        return 0;
     }
 
     /**
      * @return int
      */
-    public function getLevel()
+    public function getLevel(): int
     {
         return $this->level;
     }
