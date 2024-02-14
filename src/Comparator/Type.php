@@ -19,7 +19,7 @@ class Type extends \PHPSemVerChecker\Comparator\Type
      * @param Name|NullableType|string|null $type
      * @return string|null
      */
-    public static function get($type)
+    public static function get($type): ?string
     {
         if (! is_object($type)) {
             return $type;
