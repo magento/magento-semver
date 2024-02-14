@@ -17,7 +17,7 @@ class MergedReport extends Report
      * @param Report $report
      * @return $this
      */
-    public function merge(Report $report)
+    public function merge(Report $report): Report
     {
         foreach ($report->differences as $context => $levels) {
             if (!key_exists($context, $this->differences)) {
