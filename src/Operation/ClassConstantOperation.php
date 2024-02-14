@@ -23,7 +23,7 @@ abstract class ClassConstantOperation extends Operation
      *
      * @return mixed
      */
-    public function getCode()
+    public function getCode(): string
     {
         return $this->code[$this->context];
     }
@@ -33,7 +33,7 @@ abstract class ClassConstantOperation extends Operation
      *
      * @return mixed
      */
-    public function getLevel()
+    public function getLevel(): int
     {
         return $this->level[$this->context];
     }

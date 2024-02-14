@@ -51,7 +51,7 @@ class ExceptionSuperclassAdded extends ClassMethodOperationDelta
      *
      * @return int
      */
-    public function getLevel()
+    public function getLevel(): int
     {
         return $this->level[$this->context];
     }

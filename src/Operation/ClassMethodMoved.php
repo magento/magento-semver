@@ -46,7 +46,7 @@ class ClassMethodMoved extends ClassMethodOperationUnary
      *
      * @return mixed
      */
-    public function getLevel()
+    public function getLevel(): int
     {
         return $this->level[$this->context];
     }

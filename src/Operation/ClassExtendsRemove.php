@@ -54,7 +54,7 @@ class ClassExtendsRemove extends Operation
     /**
      * @return string
      */
-    public function getTarget()
+    public function getTarget(): string
     {
         return Class_Alias::getFullyQualifiedName($this->class);
     }
@@ -62,7 +62,7 @@ class ClassExtendsRemove extends Operation
     /**
      * @return string
      */
-    public function getLocation()
+    public function getLocation(): string
     {
         return $this->target;
     }
@@ -70,7 +70,7 @@ class ClassExtendsRemove extends Operation
     /**
      * @return int
      */
-    public function getLine()
+    public function getLine(): int
     {
         return 0;
     }
@@ -80,7 +80,7 @@ class ClassExtendsRemove extends Operation
      *
      * @return mixed
      */
-    public function getLevel()
+    public function getLevel(): int
     {
         return $this->level;
     }
