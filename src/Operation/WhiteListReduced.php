@@ -68,7 +68,7 @@ class WhiteListReduced extends Operation
     /**
      * @return string
      */
-    public function getTarget()
+    public function getTarget(): string
     {
         return $this->target;
     }
@@ -86,7 +86,7 @@ class WhiteListReduced extends Operation
     /**
      * @return string
      */
-    public function getReason()
+    public function getReason(): string
     {
         return sprintf($this->reason, $this->getTarget());
     }

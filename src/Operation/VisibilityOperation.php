@@ -100,7 +100,7 @@ abstract class VisibilityOperation extends Operation
      *
      * @return mixed
      */
-    public function getCode()
+    public function getCode(): string
     {
         return $this->code;
     }
@@ -110,7 +110,7 @@ abstract class VisibilityOperation extends Operation
      *
      * @return string
      */
-    public function getLocation()
+    public function getLocation(): string
     {
         return $this->fileBefore;
     }
@@ -118,7 +118,7 @@ abstract class VisibilityOperation extends Operation
     /**
      * @return string
      */
-    public function getTarget()
+    public function getTarget(): string
     {
         $namespace = $this->getMemberName($this->memberAfter);
         if (isset($this->contextAfter->namespacedName)) {
@@ -132,7 +132,7 @@ abstract class VisibilityOperation extends Operation
      *
      * @return int
      */
-    public function getLine()
+    public function getLine(): int
     {
         return $this->memberBefore->getLine();
     }
@@ -142,7 +142,7 @@ abstract class VisibilityOperation extends Operation
      *
      * @return mixed
      */
-    public function getLevel()
+    public function getLevel(): int
     {
         return $this->level[$this->context];
     }
@@ -150,7 +150,7 @@ abstract class VisibilityOperation extends Operation
     /**
      * @return string
      */
-    public function getReason()
+    public function getReason(): string
     {
         return sprintf(
             $this->reason,

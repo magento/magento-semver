@@ -61,7 +61,7 @@ class TableAdded extends Operation
      *
      * @return string
      */
-    public function getLocation()
+    public function getLocation(): string
     {
         return $this->location;
     }
@@ -71,7 +71,7 @@ class TableAdded extends Operation
      *
      * @return int
      */
-    public function getLine()
+    public function getLine(): int
     {
         return 0;
     }
@@ -81,7 +81,7 @@ class TableAdded extends Operation
      *
      * @return mixed
      */
-    public function getLevel()
+    public function getLevel(): int
     {
         return $this->level;
     }

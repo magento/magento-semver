@@ -84,7 +84,7 @@ class PropertyMoved extends PropertyOperation
      *
      * @return string
      */
-    public function getLocation()
+    public function getLocation(): string
     {
         return $this->fileBefore;
     }
@@ -94,7 +94,7 @@ class PropertyMoved extends PropertyOperation
      *
      * @return int
      */
-    public function getLine()
+    public function getLine(): int
     {
         return $this->propertyBefore->getLine();
     }
@@ -104,7 +104,7 @@ class PropertyMoved extends PropertyOperation
      *
      * @return string
      */
-    public function getTarget()
+    public function getTarget(): string
     {
         return PProperty::getFullyQualifiedName($this->contextBefore, $this->propertyBefore);
     }
@@ -114,7 +114,7 @@ class PropertyMoved extends PropertyOperation
      *
      * @return mixed
      */
-    public function getLevel()
+    public function getLevel(): int
     {
         return $this->level[$this->context];
     }

@@ -72,7 +72,7 @@ class Signature extends \PHPSemVerChecker\Comparator\Signature
      * @param array $parametersB
      * @return array
      */
-    public static function analyze(array $parametersA, array $parametersB)
+    public static function analyze(array $parametersA, array $parametersB): array
     {
         // @TODO need to revert this change once new version of tomzx/php-semver-checker is released
         // After https://github.com/tomzx/php-semver-checker/issues/179 issue is addressed.

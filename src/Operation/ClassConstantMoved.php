@@ -84,7 +84,7 @@ class ClassConstantMoved extends ClassConstantOperation
      *
      * @return string
      */
-    public function getLocation()
+    public function getLocation(): string
     {
         return $this->fileBefore;
     }
@@ -94,7 +94,7 @@ class ClassConstantMoved extends ClassConstantOperation
      *
      * @return int
      */
-    public function getLine()
+    public function getLine(): int
     {
         return $this->constantBefore->getLine();
     }
@@ -104,7 +104,7 @@ class ClassConstantMoved extends ClassConstantOperation
      *
      * @return string
      */
-    public function getTarget()
+    public function getTarget(): string
     {
         return ClassConstant::getFullyQualifiedName($this->contextBefore, $this->constantBefore);
     }
