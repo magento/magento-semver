@@ -264,6 +264,11 @@ class ClassMethodAnalyzer extends AbstractCodeAnalyzer
                         $contextAfter,
                         $methodAfter
                     );
+                    echo "\nTemporary added code \n";
+                    print_r($data);
+                    echo "\n======\n";
+                    print_r($data, true);
+                    echo "\nEnd Temporary added code \n";
                     $report->add($this->context, $data);
                     $signatureChanged = true;
                 }
