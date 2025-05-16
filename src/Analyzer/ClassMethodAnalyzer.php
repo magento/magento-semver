@@ -272,7 +272,23 @@ class ClassMethodAnalyzer extends AbstractCodeAnalyzer
 
                         $beforeType = $paramBefore->type;
                         $afterType = $paramAfter->type;
+                        echo "\nBefore type\n";
+                        print_r($beforeType);
+                        echo "\nAfter type\n";
+                        print_r($afterType);
+                        echo "\nBefore Instance of Name\n";
+                        print_r($beforeType instanceof \PhpParser\Node\Name);
+                        echo "\nAfter Instance of NullableType\n";
+                        print_r($afterType instanceof \PhpParser\Node\NullableType);
+                        echo "\nAfter Instance of Name\n";
+                        echo "Beforetype is ".$beforeType->toString(). " Aftertype is ".$afterType->toString()."\n";
 
+
+                        echo "\n----------------------\n";
+                        echo "\nBefore Instance of NullableType\n";
+                        print_r($beforeType instanceof \PhpParser\Node\NullableType);
+
+                        echo "\n----------------------\n";
                         if ($beforeType && $afterType &&
                             $beforeType instanceof \PhpParser\Node\Name &&
                             $afterType instanceof \PhpParser\Node\NullableType &&
