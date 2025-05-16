@@ -266,8 +266,24 @@ class ClassMethodAnalyzer extends AbstractCodeAnalyzer
                         $beforeParam = $paramsBefore[$i];
                         $afterParam = $paramsAfter[$i];
 
+                     //   $beforeParam->
+
                         $beforeType = $beforeParam->type;
                         $afterType = $afterParam->type;
+                      //  $beforeParam->default->
+
+                        $beforeNullable = $this->isNullable($beforeType);
+                        $afterNullable = $this->isNullable($afterType);
+
+                        $beforeTypeName = $this->getTypeName($beforeType);
+                        $afterTypeName = $this->getTypeName($afterType);
+
+                        if ($beforeNullable !== $afterNullable && $beforeTypeName === $afterTypeName) {
+                            echo "️Nullable type change detected for parameter \${$beforeParam->var->name}:\n";
+                            echo "Before: " . ($beforeNullable ? '?' : '') . $beforeTypeName . "\n";
+                            echo "After: " . ($afterNullable ? '?' : '') . $afterTypeName . "\n";
+                        }
+
 
                         $beforeDefaultIsNull = isset($beforeParam->default) && $beforeParam->default->value === null;
                         print_r("Default value: $beforeParam->default->value\n");
@@ -419,6 +435,19 @@ class ClassMethodAnalyzer extends AbstractCodeAnalyzer
                 }
             }
         }
+    }
+
+    private function isNullable($type): bool {
+        return $type instanceof \PhpParser\Node\NullableType;
+    }
+
+    private function getTypeName($type): ?string {
+        if ($type instanceof \PhpParser\Node\NullableType) {
+            return $type->type instanceof \PhpParser\Node\Identifier ? $type->type->name : null;
+        } elseif ($type instanceof \PhpParser\Node\Identifier) {
+            return $type->name;
+        }
+        return null; // For union types or no type
     }
 
     /**
