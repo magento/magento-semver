@@ -20,6 +20,7 @@ use Magento\SemanticVersionChecker\Operation\ClassMethodMoved;
 use Magento\SemanticVersionChecker\Operation\ClassMethodOptionalParameterAdded;
 use Magento\SemanticVersionChecker\Operation\ClassMethodOverwriteAdded;
 use Magento\SemanticVersionChecker\Operation\ClassMethodParameterTypingChanged;
+use Magento\SemanticVersionChecker\Operation\ClassMethodParameterTypingChangedNullable;
 use Magento\SemanticVersionChecker\Operation\ClassMethodReturnTypingChanged;
 use Magento\SemanticVersionChecker\Operation\ExtendableClassConstructorOptionalParameterAdded;
 use Magento\SemanticVersionChecker\Operation\Visibility\MethodDecreased as VisibilityMethodDecreased;
@@ -258,17 +259,46 @@ class ClassMethodAnalyzer extends AbstractCodeAnalyzer
                     $report->add($this->context, $data);
                     $signatureChanged = true;
                 } elseif ($signatureChanges['parameter_typing_changed']) {
-                    $data = new ClassMethodParameterTypingChanged(
-                        $this->context,
-                        $this->fileAfter,
-                        $contextAfter,
-                        $methodAfter
-                    );
-                    echo "\nTemporary added code \n";
-                    print_r($data);
-                    echo "\n======\n";
-                    print_r($data, true);
-                    echo "\nEnd Temporary added code \n";
+                    $paramsBefore = $methodBefore->params;
+                    $paramsAfter = $methodAfter->params;
+
+                    $isSafeNullableChange = false;
+                    // Check if only difference is added explicit nullable `?` prefix
+                    foreach ($paramsBefore as $index => $paramBefore) {
+                        $paramAfter = $paramsAfter[$index] ?? null;
+                        if (!$paramAfter) {
+                            continue;
+                        }
+
+                        $beforeType = $paramBefore->type;
+                        $afterType = $paramAfter->type;
+
+                        if ($beforeType && $afterType &&
+                            $beforeType instanceof \PhpParser\Node\Name &&
+                            $afterType instanceof \PhpParser\Node\NullableType &&
+                            $afterType->type instanceof \PhpParser\Node\Name &&
+                            $beforeType->toString() === $afterType->type->toString()) {
+                            $isSafeNullableChange = true;
+                        } else {
+                            $isSafeNullableChange = false;
+                            break;
+                        }
+                    }
+                    if ($isSafeNullableChange) {
+                        $data = new ClassMethodParameterTypingChangedNullable(
+                            $this->context,
+                            $this->fileAfter,
+                            $contextAfter,
+                            $methodAfter
+                        );
+                    } else {
+                        $data = new ClassMethodParameterTypingChanged(
+                            $this->context,
+                            $this->fileAfter,
+                            $contextAfter,
+                            $methodAfter
+                        );
+                    }
                     $report->add($this->context, $data);
                     $signatureChanged = true;
                 }
