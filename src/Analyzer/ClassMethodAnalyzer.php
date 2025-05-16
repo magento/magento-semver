@@ -20,7 +20,6 @@ use Magento\SemanticVersionChecker\Operation\ClassMethodMoved;
 use Magento\SemanticVersionChecker\Operation\ClassMethodOptionalParameterAdded;
 use Magento\SemanticVersionChecker\Operation\ClassMethodOverwriteAdded;
 use Magento\SemanticVersionChecker\Operation\ClassMethodParameterTypingChanged;
-use Magento\SemanticVersionChecker\Operation\ClassMethodParameterTypingChangedNullable;
 use Magento\SemanticVersionChecker\Operation\ClassMethodReturnTypingChanged;
 use Magento\SemanticVersionChecker\Operation\ExtendableClassConstructorOptionalParameterAdded;
 use Magento\SemanticVersionChecker\Operation\Visibility\MethodDecreased as VisibilityMethodDecreased;
@@ -259,67 +258,20 @@ class ClassMethodAnalyzer extends AbstractCodeAnalyzer
                     $report->add($this->context, $data);
                     $signatureChanged = true;
                 } elseif ($signatureChanges['parameter_typing_changed']) {
-                    // Compare each param to detect if it's only an implicit-nullable to explicit-nullable change
-                    $isSafeNullableChange = true;
-                    $paramCount = min(count($paramsBefore), count($paramsAfter));
-                    for ($i = 0; $i < $paramCount; $i++) {
-                        $beforeParam = $paramsBefore[$i];
-                        $afterParam = $paramsAfter[$i];
+                    $paramBefore = $paramsBefore[$signatureChanges['changed_param_index']];
+                    $paramAfter = $paramsAfter[$signatureChanges['changed_param_index']];
 
-                     //   $beforeParam->
-
-                        $beforeType = $beforeParam->type;
-                        $afterType = $afterParam->type;
-                      //  $beforeParam->default->
-
-                        $beforeNullable = $this->isNullable($beforeType);
-                        $afterNullable = $this->isNullable($afterType);
-
-                        $beforeTypeName = $this->getTypeName($beforeType);
-                        $afterTypeName = $this->getTypeName($afterType);
-
-                        if ($beforeNullable !== $afterNullable && $beforeTypeName === $afterTypeName) {
-                            echo "️Nullable type change detected for parameter \${$beforeParam->var->name}:\n";
-                            echo "Before: " . ($beforeNullable ? '?' : '') . $beforeTypeName . "\n";
-                            echo "After: " . ($afterNullable ? '?' : '') . $afterTypeName . "\n";
-                        }
-
-
-                        $beforeDefaultIsNull = isset($beforeParam->default) && $beforeParam->default->value === null;
-                        print_r("Default value: $beforeParam->default->value\n");
-
-                        // Case: type changed from no type but default null → ?Type
-                        if ($beforeType === null && $afterType instanceof \PhpParser\Node\NullableType && $beforeDefaultIsNull) {
-                            continue; // safe
-                        }
-                        echo  "\nafter type nullable\n";
-                        var_dump($afterType instanceof \PhpParser\Node\NullableType);
-                        echo  "\nbefore type nullable\n";
-                        var_dump($beforeType instanceof \PhpParser\Node\NullableType);
-
-                        // Case: type changed from Type to ?Type (explicitly nullable)
-                        if (
-                            $beforeType instanceof \PhpParser\Node\Identifier &&
-                            $afterType instanceof \PhpParser\Node\NullableType &&
-                            $afterType->type instanceof \PhpParser\Node\Identifier &&
-                            $beforeType->name === $afterType->type->name &&
-                            $beforeDefaultIsNull
-                        ) {
-                            continue; // safe
-                        }
-
-                        $isSafeNullableChange = false;
-                        break;
-                    }
-                    if ($isSafeNullableChange) {
-                        // Treat as PATCH instead of MAJOR
-                        $data = new ClassMethodParameterTypingChangedNullable(
+                    if (
+                        $paramAfter->type instanceof NullableType &&
+                        !($paramBefore->type instanceof NullableType)
+                    ) {
+                        $data = new \Magento\SemanticVersionChecker\Operation\ClassMethodParameterTypingChangedNullable(
                             $this->context,
                             $this->fileAfter,
                             $contextAfter,
                             $methodAfter
                         );
-                       // $report->add($this->context, $data);
+                        $report->add($this->context, $data);
                     } else {
                         $data = new ClassMethodParameterTypingChanged(
                             $this->context,
@@ -327,9 +279,8 @@ class ClassMethodAnalyzer extends AbstractCodeAnalyzer
                             $contextAfter,
                             $methodAfter
                         );
-
+                        $report->add($this->context, $data);
                     }
-                    $report->add($this->context, $data);
                     $signatureChanged = true;
                 }
 
@@ -435,19 +386,6 @@ class ClassMethodAnalyzer extends AbstractCodeAnalyzer
                 }
             }
         }
-    }
-
-    private function isNullable($type): bool {
-        return $type instanceof \PhpParser\Node\NullableType;
-    }
-
-    private function getTypeName($type): ?string {
-        if ($type instanceof \PhpParser\Node\NullableType) {
-            return $type->type instanceof \PhpParser\Node\Identifier ? $type->type->name : null;
-        } elseif ($type instanceof \PhpParser\Node\Identifier) {
-            return $type->name;
-        }
-        return null; // For union types or no type
     }
 
     /**
