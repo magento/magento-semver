@@ -259,54 +259,51 @@ class ClassMethodAnalyzer extends AbstractCodeAnalyzer
                     $report->add($this->context, $data);
                     $signatureChanged = true;
                 } elseif ($signatureChanges['parameter_typing_changed']) {
-                    $paramsBefore = $methodBefore->params;
-                    $paramsAfter = $methodAfter->params;
+                    // Compare each param to detect if it's only an implicit-nullable to explicit-nullable change
+                    $isSafeNullableChange = true;
+                    $paramCount = min(count($paramsBefore), count($paramsAfter));
+                    for ($i = 0; $i < $paramCount; $i++) {
+                        $beforeParam = $paramsBefore[$i];
+                        $afterParam = $paramsAfter[$i];
 
-                    $isSafeNullableChange = false;
-                    // Check if only difference is added explicit nullable `?` prefix
-                    foreach ($paramsBefore as $index => $paramBefore) {
-                        $paramAfter = $paramsAfter[$index] ?? null;
-                        if (!$paramAfter) {
-                            continue;
+                        $beforeType = $beforeParam->type;
+                        $afterType = $afterParam->type;
+
+                        $beforeDefaultIsNull = isset($beforeParam->default) && $beforeParam->default->value === null;
+                        print_r("Default value: $beforeParam->default->value\n");
+
+                        // Case: type changed from no type but default null → ?Type
+                        if ($beforeType === null && $afterType instanceof \PhpParser\Node\NullableType && $beforeDefaultIsNull) {
+                            continue; // safe
                         }
+                        echo  "\nafter type nullable\n";
+                        var_dump($afterType instanceof \PhpParser\Node\NullableType);
+                        echo  "\nbefore type nullable\n";
+                        var_dump($beforeType instanceof \PhpParser\Node\NullableType);
 
-                        $beforeType = $paramBefore->type;
-                        $afterType = $paramAfter->type;
-                        echo "\nBefore type\n";
-                        print_r($beforeType);
-                        echo "\nAfter type\n";
-                        print_r($afterType);
-                        echo "\nBefore Instance of Name\n";
-                        print_r($beforeType instanceof \PhpParser\Node\Name);
-                        echo "\nAfter Instance of NullableType\n";
-                        print_r($afterType instanceof \PhpParser\Node\NullableType);
-                        echo "\nAfter Instance of Name\n";
-                        echo "Beforetype is ".$beforeType->toString(). " Aftertype is ".$afterType->toString()."\n";
-
-
-                        echo "\n----------------------\n";
-                        echo "\nBefore Instance of NullableType\n";
-                        print_r($beforeType instanceof \PhpParser\Node\NullableType);
-
-                        echo "\n----------------------\n";
-                        if ($beforeType && $afterType &&
-                            $beforeType instanceof \PhpParser\Node\Name &&
+                        // Case: type changed from Type to ?Type (explicitly nullable)
+                        if (
+                            $beforeType instanceof \PhpParser\Node\Identifier &&
                             $afterType instanceof \PhpParser\Node\NullableType &&
-                            $afterType->type instanceof \PhpParser\Node\Name &&
-                            $beforeType->toString() === $afterType->type->toString()) {
-                            $isSafeNullableChange = true;
-                        } else {
-                            $isSafeNullableChange = false;
-                            break;
+                            $afterType->type instanceof \PhpParser\Node\Identifier &&
+                            $beforeType->name === $afterType->type->name &&
+                            $beforeDefaultIsNull
+                        ) {
+                            continue; // safe
                         }
+
+                        $isSafeNullableChange = false;
+                        break;
                     }
                     if ($isSafeNullableChange) {
+                        // Treat as PATCH instead of MAJOR
                         $data = new ClassMethodParameterTypingChangedNullable(
                             $this->context,
                             $this->fileAfter,
                             $contextAfter,
                             $methodAfter
                         );
+                       // $report->add($this->context, $data);
                     } else {
                         $data = new ClassMethodParameterTypingChanged(
                             $this->context,
@@ -314,6 +311,7 @@ class ClassMethodAnalyzer extends AbstractCodeAnalyzer
                             $contextAfter,
                             $methodAfter
                         );
+
                     }
                     $report->add($this->context, $data);
                     $signatureChanged = true;
