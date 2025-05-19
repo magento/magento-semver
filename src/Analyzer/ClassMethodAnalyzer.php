@@ -41,6 +41,7 @@ use PHPSemVerChecker\Operation\ClassMethodParameterTypingAdded;
 use PHPSemVerChecker\Operation\ClassMethodParameterTypingRemoved;
 use PHPSemVerChecker\Operation\ClassMethodRemoved;
 use PHPSemVerChecker\Report\Report;
+use Magento\SemanticVersionChecker\Operation\ClassMethodParameterTypingChangedNullable;
 
 /**
  * Class method analyzer.
@@ -258,20 +259,17 @@ class ClassMethodAnalyzer extends AbstractCodeAnalyzer
                     $report->add($this->context, $data);
                     $signatureChanged = true;
                 } elseif ($signatureChanges['parameter_typing_changed']) {
-                    $paramBefore = $paramsBefore[$signatureChanges['changed_param_index']];
-                    $paramAfter = $paramsAfter[$signatureChanges['changed_param_index']];
 
                     if (
-                        $paramAfter->type instanceof NullableType &&
-                        !($paramBefore->type instanceof NullableType)
+                        $signatureChanges['parameter_nullable_type_added'] ||
+                        $signatureChanges['parameter_nullable_type_removed']
                     ) {
-                        $data = new \Magento\SemanticVersionChecker\Operation\ClassMethodParameterTypingChangedNullable(
+                        $data = new ClassMethodParameterTypingChangedNullable(
                             $this->context,
                             $this->fileAfter,
                             $contextAfter,
                             $methodAfter
                         );
-                        $report->add($this->context, $data);
                     } else {
                         $data = new ClassMethodParameterTypingChanged(
                             $this->context,
@@ -279,8 +277,8 @@ class ClassMethodAnalyzer extends AbstractCodeAnalyzer
                             $contextAfter,
                             $methodAfter
                         );
-                        $report->add($this->context, $data);
                     }
+                    $report->add($this->context, $data);
                     $signatureChanged = true;
                 }
 
