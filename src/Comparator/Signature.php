@@ -130,18 +130,28 @@ class Signature extends \PHPSemVerChecker\Comparator\Signature
         $changes = array_merge($changes, [
             'parameter_typing_added'          => false,
             'parameter_typing_removed'        => false,
-            'parameter_typing_changed'        => false
+            'parameter_typing_changed'        => false,
+            'parameter_nullable_type_added'   => false,
+            'parameter_nullable_type_removed' => false
         ]);
         $lengthA = count($parametersA);
         $lengthB = count($parametersB);
 
         $iterations = min($lengthA, $lengthB);
         for ($i = 0; $i < $iterations; ++$i) {
+            $typeBefore = $parametersA[$i]->type;
+            $typeAfter = $parametersB[$i]->type;
             // Re-implement type checking to handle type changes as a single operation instead of both add and remove
             if (Type::get($parametersA[$i]->type) !== Type::get($parametersB[$i]->type)) {
                 // This section changed from parent::analyze() to handle typing changes
                 if ($parametersA[$i]->type !== null && $parametersB[$i]->type !== null) {
                     $changes['parameter_typing_changed'] = true;
+                    // Custom: detect nullable added
+                    if ($typeBefore instanceof \PhpParser\Node\NullableType && !$typeAfter instanceof \PhpParser\Node\NullableType) {
+                        $changes['parameter_nullable_type_removed'] = true;
+                    } elseif (!$typeBefore instanceof \PhpParser\Node\NullableType && $typeAfter instanceof \PhpParser\Node\NullableType) {
+                        $changes['parameter_nullable_type_added'] = true;
+                    }
                 } elseif ($parametersA[$i]->type !== null) {
                     $changes['parameter_typing_removed'] = true;
                 } elseif ($parametersB[$i]->type !== null) {
@@ -149,7 +159,6 @@ class Signature extends \PHPSemVerChecker\Comparator\Signature
                 }
             }
         }
-
         return $changes;
     }
 }

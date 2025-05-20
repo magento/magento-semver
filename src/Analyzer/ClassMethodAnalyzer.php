@@ -41,6 +41,7 @@ use PHPSemVerChecker\Operation\ClassMethodParameterTypingAdded;
 use PHPSemVerChecker\Operation\ClassMethodParameterTypingRemoved;
 use PHPSemVerChecker\Operation\ClassMethodRemoved;
 use PHPSemVerChecker\Report\Report;
+use Magento\SemanticVersionChecker\Operation\ClassMethodParameterTypingChangedNullable;
 
 /**
  * Class method analyzer.
@@ -258,12 +259,24 @@ class ClassMethodAnalyzer extends AbstractCodeAnalyzer
                     $report->add($this->context, $data);
                     $signatureChanged = true;
                 } elseif ($signatureChanges['parameter_typing_changed']) {
-                    $data = new ClassMethodParameterTypingChanged(
-                        $this->context,
-                        $this->fileAfter,
-                        $contextAfter,
-                        $methodAfter
-                    );
+
+                    if ($signatureChanges['parameter_nullable_type_added'] ||
+                        $signatureChanges['parameter_nullable_type_removed']
+                    ) {
+                        $data = new ClassMethodParameterTypingChangedNullable(
+                            $this->context,
+                            $this->fileAfter,
+                            $contextAfter,
+                            $methodAfter
+                        );
+                    } else {
+                        $data = new ClassMethodParameterTypingChanged(
+                            $this->context,
+                            $this->fileAfter,
+                            $contextAfter,
+                            $methodAfter
+                        );
+                    }
                     $report->add($this->context, $data);
                     $signatureChanged = true;
                 }
@@ -455,8 +468,7 @@ class ClassMethodAnalyzer extends AbstractCodeAnalyzer
      */
     private function getDocReturnDeclaration(ClassMethod $method)
     {
-        if (
-            ($parsedComment = $method->getAttribute('docCommentParsed'))
+        if (($parsedComment = $method->getAttribute('docCommentParsed'))
             && isset($parsedComment['return'])
         ) {
             if ($parsedComment['return'][0] instanceof NullableType) {
