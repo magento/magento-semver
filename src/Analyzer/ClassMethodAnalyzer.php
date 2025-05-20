@@ -260,8 +260,7 @@ class ClassMethodAnalyzer extends AbstractCodeAnalyzer
                     $signatureChanged = true;
                 } elseif ($signatureChanges['parameter_typing_changed']) {
 
-                    if (
-                        $signatureChanges['parameter_nullable_type_added'] ||
+                    if ($signatureChanges['parameter_nullable_type_added'] ||
                         $signatureChanges['parameter_nullable_type_removed']
                     ) {
                         $data = new ClassMethodParameterTypingChangedNullable(
@@ -469,8 +468,7 @@ class ClassMethodAnalyzer extends AbstractCodeAnalyzer
      */
     private function getDocReturnDeclaration(ClassMethod $method)
     {
-        if (
-            ($parsedComment = $method->getAttribute('docCommentParsed'))
+        if (($parsedComment = $method->getAttribute('docCommentParsed'))
             && isset($parsedComment['return'])
         ) {
             if ($parsedComment['return'][0] instanceof NullableType) {
