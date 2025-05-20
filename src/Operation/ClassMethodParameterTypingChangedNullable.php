@@ -36,7 +36,6 @@ class ClassMethodParameterTypingChangedNullable extends ClassMethodOperationUnar
         'M119' => Level::MAJOR
     ];
 
-
     /**
      * @var string
      */

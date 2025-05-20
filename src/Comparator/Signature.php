@@ -132,8 +132,7 @@ class Signature extends \PHPSemVerChecker\Comparator\Signature
             'parameter_typing_removed'        => false,
             'parameter_typing_changed'        => false,
             'parameter_nullable_type_added' => false,
-            'parameter_nullable_type_removed' => false,
-            'changed_param_index' => 0
+            'parameter_nullable_type_removed' => false
         ]);
         $lengthA = count($parametersA);
         $lengthB = count($parametersB);
@@ -151,10 +150,8 @@ class Signature extends \PHPSemVerChecker\Comparator\Signature
                     // Custom: detect nullable added
                     if ($typeBefore instanceof \PhpParser\Node\NullableType && !$typeAfter instanceof \PhpParser\Node\NullableType) {
                         $changes['parameter_nullable_type_removed'] = true;
-                        $changes['changed_param_index'] = $i;
                     } elseif (!$typeBefore instanceof \PhpParser\Node\NullableType && $typeAfter instanceof \PhpParser\Node\NullableType) {
                         $changes['parameter_nullable_type_added'] = true;
-                        $changes['changed_param_index'] = $i;
                     }
                 } elseif ($parametersA[$i]->type !== null) {
                     $changes['parameter_typing_removed'] = true;
