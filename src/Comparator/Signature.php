@@ -131,7 +131,7 @@ class Signature extends \PHPSemVerChecker\Comparator\Signature
             'parameter_typing_added'          => false,
             'parameter_typing_removed'        => false,
             'parameter_typing_changed'        => false,
-            'parameter_nullable_type_added' => false,
+            'parameter_nullable_type_added'   => false,
             'parameter_nullable_type_removed' => false
         ]);
         $lengthA = count($parametersA);
@@ -139,7 +139,6 @@ class Signature extends \PHPSemVerChecker\Comparator\Signature
 
         $iterations = min($lengthA, $lengthB);
         for ($i = 0; $i < $iterations; ++$i) {
-
             $typeBefore = $parametersA[$i]->type;
             $typeAfter = $parametersB[$i]->type;
             // Re-implement type checking to handle type changes as a single operation instead of both add and remove
