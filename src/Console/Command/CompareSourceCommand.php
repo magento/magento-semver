@@ -110,7 +110,7 @@ class CompareSourceCommand extends Command
     /**
      * @inheritdoc
      */
-    protected function execute(InputInterface $input, OutputInterface $cliOutput)
+    protected function execute(InputInterface $input, OutputInterface $cliOutput): int
     {
         $sourceBeforeDirArg = $input->getArgument('source-before');
         $sourceBeforeDir = realpath($sourceBeforeDirArg);
