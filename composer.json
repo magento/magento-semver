@@ -7,6 +7,12 @@
         "AFL-3.0"
     ],
     "bin": ["bin/svc"],
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "git@github.com:cod62627/php-semver-checker.git"
+        }
+    ],
     "require": {
         "php": "~8.1.0||~8.2.0||~8.3.0||~8.4.0",
         "ext-json": "*",
@@ -14,9 +20,9 @@
         "nikic/php-parser": "^4.19",
         "phpstan/phpdoc-parser": "^0.5.5",
         "sabre/xml": "~4.0.5",
-        "symfony/console": "~6.4.17",
-        "symfony/string": "~6.4.15",
-        "tomzx/php-semver-checker": "^0.16.0",
+        "symfony/console": "^7.0",
+        "symfony/string": "^7.0",
+        "tomzx/php-semver-checker": "dev-AC-15170",
         "wikimedia/less.php": "^5.1"
     },
     "require-dev": {
