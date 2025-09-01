@@ -16,6 +16,7 @@ class BreakingChangeTableReporter extends TableReporter
     private $breakChangeLevels = [
         Level::MAJOR,
         Level::MINOR,
+        Level::PATCH,
     ];
 
     /**
@@ -96,7 +97,7 @@ class BreakingChangeTableReporter extends TableReporter
     protected function outputTable(OutputInterface $output, Report $report, $context)
     {
         $table = new HtmlTableRenderer($output);
-        $table->setHeaders(['What changed', 'How it changed']);
+        $table->setHeaders(['<strong>Change Level</strong>', '<strong>What Changed</strong>', '<strong>How It Changed</strong>']);
         $rows = [];
         foreach (Level::asList('desc') as $level) {
             if (!in_array($level, $this->breakChangeLevels)) {
@@ -105,13 +106,34 @@ class BreakingChangeTableReporter extends TableReporter
             $reportForLevel = $report[$context][$level];
             /** @var \PHPSemVerChecker\Operation\Operation $operation */
             foreach ($reportForLevel as $operation) {
+                $levelLabel = $this->getLevelLabel($level);
                 $target = $operation->getTarget();
                 $reason = $operation->getReason();
-                $rows[] = [$target, $reason];
+                $rows[] = [$levelLabel, $target, $reason];
             }
         }
         $table->setRows($rows);
         $table->render();
+    }
+
+    /**
+     * Get a human-readable label for the change level
+     *
+     * @param int $level
+     * @return string
+     */
+    private function getLevelLabel(int $level): string
+    {
+        switch ($level) {
+            case Level::MAJOR:
+                return '<span style="color: #d73a49; font-weight: bold;">MAJOR (Breaking)</span>';
+            case Level::MINOR:
+                return '<span style="color: #f6a434; font-weight: bold;">MINOR (Non-breaking)</span>';
+            case Level::PATCH:
+                return '<span style="color: #28a745; font-weight: bold;">PATCH</span>';
+            default:
+                return 'UNKNOWN';
+        }
     }
 
     /**
