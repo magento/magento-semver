@@ -107,7 +107,7 @@ class BreakingChangeTableReporter extends TableReporter
             /** @var \PHPSemVerChecker\Operation\Operation $operation */
             foreach ($reportForLevel as $operation) {
                 // Skip private method/property changes as they shouldn't be in breaking change reports
-                if ($this->isPrivateChange($operation)) {
+                if ($this->isPrivateMemberChange($operation)) {
                     continue;
                 }
                 
@@ -149,7 +149,7 @@ class BreakingChangeTableReporter extends TableReporter
      * @param \PHPSemVerChecker\Operation\Operation $operation
      * @return bool
      */
-    private function isPrivateChange($operation): bool
+    private function isPrivateMemberChange($operation): bool
     {
         $target = $operation->getTarget();
         $reason = $operation->getReason();
