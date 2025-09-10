@@ -149,7 +149,7 @@ class BreakingChangeTableReporter extends TableReporter
      * @param \PHPSemVerChecker\Operation\Operation $operation
      * @return bool
      */
-    private function isPrivateMemberChange($operation): bool
+    private function isPrivateMemberChange(\PHPSemVerChecker\Operation\Operation $operation): bool
     {
         $target = $operation->getTarget();
         $reason = $operation->getReason();
