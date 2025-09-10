@@ -10,6 +10,7 @@ namespace Magento\SemanticVersionChecker\Reporter;
 use PHPSemVerChecker\Report\Report;
 use PHPSemVerChecker\SemanticVersioning\Level;
 use Symfony\Component\Console\Output\OutputInterface;
+use PHPSemVerChecker\Operation\Operation;
 
 class BreakingChangeTableReporter extends TableReporter
 {
@@ -104,7 +105,7 @@ class BreakingChangeTableReporter extends TableReporter
                 continue;
             }
             $reportForLevel = $report[$context][$level];
-            /** @var \PHPSemVerChecker\Operation\Operation $operation */
+            /** @var Operation $operation */
             foreach ($reportForLevel as $operation) {
                 // Skip private method/property changes as they shouldn't be in breaking change reports
                 if ($this->isPrivateMemberChange($operation)) {
@@ -146,10 +147,10 @@ class BreakingChangeTableReporter extends TableReporter
      * 
      * Private changes are filtered out as they don't affect the public API contract.
      *
-     * @param \PHPSemVerChecker\Operation\Operation $operation
+     * @param Operation $operation
      * @return bool
      */
-    private function isPrivateMemberChange(\PHPSemVerChecker\Operation\Operation $operation): bool
+    private function isPrivateMemberChange(Operation $operation): bool
     {
         $target = $operation->getTarget();
         $reason = $operation->getReason();
