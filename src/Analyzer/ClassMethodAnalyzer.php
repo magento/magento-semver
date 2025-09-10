@@ -259,7 +259,10 @@ class ClassMethodAnalyzer extends AbstractCodeAnalyzer
                     $report->add($this->context, $data);
                     $signatureChanged = true;
                 } elseif ($signatureChanges['parameter_typing_changed']) {
-                    if ($signatureChanges['parameter_nullable_type_added']) {
+                    if (
+                        $signatureChanges['parameter_nullable_type_added']
+                        || $signatureChanges['parameter_nullable_type_removed']
+                    ) {
                         $data = new ClassMethodParameterTypingChangedNullable(
                             $this->context,
                             $this->fileAfter,
