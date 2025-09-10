@@ -149,11 +149,13 @@ class Signature extends \PHPSemVerChecker\Comparator\Signature
                 if ($parametersA[$i]->type !== null && $parametersB[$i]->type !== null) {
                     $changes['parameter_typing_changed'] = true;
                     // Custom: detect nullable added
-                    if ($typeBefore instanceof NullableType
+                    if (
+                        $typeBefore instanceof NullableType
                         && !$typeAfter instanceof NullableType
                     ) {
                         $changes['parameter_nullable_type_added'] = true;
-                    } elseif (!$typeBefore instanceof NullableType
+                    } elseif (
+                        !$typeBefore instanceof NullableType
                         && $typeAfter instanceof NullableType
                     ) {
                         $changes['parameter_nullable_type_removed'] = true;
