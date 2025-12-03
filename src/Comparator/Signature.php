@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Magento\SemanticVersionChecker\Comparator;
 
 use PHPSemVerChecker\Comparator\Node;
+use PhpParser\Node\NullableType;
 
 class Signature extends \PHPSemVerChecker\Comparator\Signature
 {
@@ -47,6 +48,7 @@ class Signature extends \PHPSemVerChecker\Comparator\Signature
 
     /**
      * Checks type hinting to determine if each parameter is non-Scalar.
+     *
      * It assumes proper PHP code style is followed, meaning only non-Scalar parameters have type hinting.
      *
      * @param array $params Array of PhpParser\Node\Param objects
@@ -148,10 +150,15 @@ class Signature extends \PHPSemVerChecker\Comparator\Signature
                     $changes['parameter_typing_changed'] = true;
                     // Custom: detect nullable added
                     if (
-                        $typeBefore instanceof \PhpParser\Node\NullableType
-                        && !$typeAfter instanceof \PhpParser\Node\NullableType
+                        $typeBefore instanceof NullableType
+                        && !$typeAfter instanceof NullableType
                     ) {
                         $changes['parameter_nullable_type_added'] = true;
+                    } elseif (
+                        !$typeBefore instanceof NullableType
+                        && $typeAfter instanceof NullableType
+                    ) {
+                        $changes['parameter_nullable_type_removed'] = true;
                     }
                 } elseif ($parametersA[$i]->type !== null) {
                     $changes['parameter_typing_removed'] = true;

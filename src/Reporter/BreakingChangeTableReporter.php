@@ -10,12 +10,14 @@ namespace Magento\SemanticVersionChecker\Reporter;
 use PHPSemVerChecker\Report\Report;
 use PHPSemVerChecker\SemanticVersioning\Level;
 use Symfony\Component\Console\Output\OutputInterface;
+use PHPSemVerChecker\Operation\Operation;
 
 class BreakingChangeTableReporter extends TableReporter
 {
     private $breakChangeLevels = [
         Level::MAJOR,
         Level::MINOR,
+        Level::PATCH,
     ];
 
     /**
@@ -96,22 +98,69 @@ class BreakingChangeTableReporter extends TableReporter
     protected function outputTable(OutputInterface $output, Report $report, $context)
     {
         $table = new HtmlTableRenderer($output);
-        $table->setHeaders(['What changed', 'How it changed']);
+        $table->setHeaders(['<strong>Change Level</strong>', '<strong>What Changed</strong>', '<strong>How It Changed</strong>']);
         $rows = [];
         foreach (Level::asList('desc') as $level) {
             if (!in_array($level, $this->breakChangeLevels)) {
                 continue;
             }
             $reportForLevel = $report[$context][$level];
-            /** @var \PHPSemVerChecker\Operation\Operation $operation */
+            /** @var Operation $operation */
             foreach ($reportForLevel as $operation) {
+                // Skip private method/property changes as they shouldn't be in breaking change reports
+                if ($this->isPrivateMemberChange($operation)) {
+                    continue;
+                }
+                
+                $levelLabel = $this->getLevelLabel($level);
                 $target = $operation->getTarget();
                 $reason = $operation->getReason();
-                $rows[] = [$target, $reason];
+                $rows[] = [$levelLabel, $target, $reason];
             }
         }
         $table->setRows($rows);
         $table->render();
+    }
+
+    /**
+     * Get a human-readable label for the change level
+     *
+     * @param int $level
+     * @return string
+     */
+    private function getLevelLabel(int $level): string
+    {
+        switch ($level) {
+            case Level::MAJOR:
+                return '<span style="color: #d73a49; font-weight: bold;">MAJOR (Breaking)</span>';
+            case Level::MINOR:
+                return '<span style="color: #f6a434; font-weight: bold;">MINOR (Non-breaking)</span>';
+            case Level::PATCH:
+                return '<span style="color: #28a745; font-weight: bold;">PATCH</span>';
+            default:
+                return 'UNKNOWN';
+        }
+    }
+
+    /**
+     * Check if the operation represents a private method or property change
+     * 
+     * Private changes are filtered out as they don't affect the public API contract.
+     *
+     * @param Operation $operation
+     * @return bool
+     */
+    private function isPrivateMemberChange(Operation $operation): bool
+    {
+        $target = $operation->getTarget();
+        $reason = $operation->getReason();
+
+        // Simple string check for 'private' keyword (covers all cases)
+        if (stripos($target, 'private') !== false || stripos($reason, 'private') !== false) {
+            return true;
+        }
+        
+        return false;
     }
 
     /**
