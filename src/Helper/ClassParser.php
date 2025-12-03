@@ -84,10 +84,11 @@ class ClassParser
         $nodeTree = $this->getNamespaceNode();
         foreach ($nodeTree->stmts as $stmt) {
             if ($stmt instanceof Class_ && $stmt->extends !== null) {
-                if (count($stmt->extends->parts) > 1) {
-                    return implode("\\", $stmt->extends->parts);
+                $extendsName = $stmt->extends;
+                if (count($extendsName->getParts()) > 1) {
+                    return $extendsName->toString();
                 }
-                $extendedClass = end($stmt->extends->parts);
+                $extendedClass = $extendsName->getLast();
             }
         }
 
@@ -96,8 +97,12 @@ class ClassParser
         }
 
         foreach ($nodeTree->stmts as $stmt) {
-            if ($stmt instanceof Use_ && $stmt->uses[0]->getAlias()->toString() === $extendedClass) {
-                return implode("\\", $stmt->uses[0]->name->parts);
+            if ($stmt instanceof Use_) {
+                foreach ($stmt->uses as $useUse) {
+                    if ($useUse->getAlias()->toString() === $extendedClass) {
+                        return $useUse->name->toString();
+                    }
+                }
             }
         }
 
