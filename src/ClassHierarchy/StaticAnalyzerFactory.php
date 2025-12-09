@@ -25,7 +25,7 @@ class StaticAnalyzerFactory
      */
     public function create(): StaticAnalyzer
     {
-        $parser                      = (new ParserFactory())->create(ParserFactory::PREFER_PHP7);
+        $parser                      = (new ParserFactory())->createForNewestSupportedVersion();
         $dependencyInspectionVisitor = new DependencyInspectionVisitor(
             new DependencyGraph(new EntityFactory()),
             new NodeHelper()
