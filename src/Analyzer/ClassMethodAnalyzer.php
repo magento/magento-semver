@@ -541,8 +541,7 @@ class ClassMethodAnalyzer extends AbstractCodeAnalyzer
     private function analyzeRemainingConstructorParams($contextAfter, $methodAfter, $remainingAfter)
     {
         if (Signature::isOptionalParams($remainingAfter)) {
-            $namespaceNode = $contextAfter->namespacedName ?? null;
-            $namespace = $namespaceNode instanceof Name ? $namespaceNode->toString() : '';
+            $namespace = implode('\\', $contextAfter->jsonSerialize()['namespacedName']->parts);
             if (in_array($namespace, $this->extendableApiClassList)) {
                 $data = new ExtendableClassConstructorOptionalParameterAdded(
                     $this->context,
