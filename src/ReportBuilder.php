@@ -130,7 +130,7 @@ class ReportBuilder
                 'V016' => Level::PATCH, // Add protected method
                 'V019' => Level::MINOR, // Add public property
                 'V020' => Level::MINOR, // Add protected property
-                'V034' => Level::MINOR, // Add public method to an interface
+                'V034' => Level::MAJOR, // Add public method to an interface
                 'V047' => Level::MINOR, // Add public method to trait
                 'V048' => Level::MINOR, // Add protected method to trait
                 'V057' => Level::MINOR, // Add private method to trait
